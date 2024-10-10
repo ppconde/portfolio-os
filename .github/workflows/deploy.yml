@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     name: 🕊 Deploy
     steps:
       - name: ⬇️ Checkout repo
@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: "20"
       - name: 🧰 Install
-        run: npm ci
+        run: npm i --production
 
       - name: 📦 Build
         run: npm run build
