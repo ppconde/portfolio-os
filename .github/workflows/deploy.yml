@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: "20"
       - name: 🧰 Install
-        run: npm i --production
+        run: npm i --omit=dev
 
       - name: 📦 Build
         run: npm run build
