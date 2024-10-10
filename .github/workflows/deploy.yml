@@ -1,5 +1,4 @@
-name: Deploy
-
+name: 🕊 Deploy
 on:
   push:
     branches:
@@ -8,10 +7,18 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    name: Deploy
+    name: 🕊 Deploy
     steps:
-      - uses: actions/checkout@v4
-      - name: Deploy
-        uses: cloudflare/wrangler-action@v3
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 🧰 Install
+        run: npm ci
+
+      - name: 📦 Build
+        run: npm run build
+
+      - name: 🚀 Publish
+        uses: cloudflare/wrangler-action@3.0.0
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
