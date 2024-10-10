@@ -18,7 +18,7 @@ jobs:
           node-version: "20"
 
       - name: 🧰 Install
-        run: npm ci
+        run: npm run ci
 
       - name: 📦 Build
         run: npm run build
