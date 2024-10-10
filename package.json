@@ -7,8 +7,9 @@
     "build": "remix vite:build",
     "deploy": "npm run build && wrangler pages deploy",
     "dev": "remix vite:dev",
+    "debug": "NODE_OPTIONS='--inspect-brk' npm run dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
-    "start": "wrangler pages dev ./build/client",
+    "start": "wrangler pages dev ./build/client --d1 DB=4ec0ad57-4294-4e1b-8ebe-0ff6e03b761b",
     "typecheck": "tsc",
     "typegen": "wrangler types",
     "preview": "npm run build && wrangler pages dev",
@@ -41,7 +42,7 @@
     "typescript": "^5.1.6",
     "vite": "^5.1.0",
     "vite-tsconfig-paths": "^4.2.1",
-    "wrangler": "3.57.1"
+    "wrangler": "3.80.3"
   },
   "engines": {
     "node": ">=20.0.0"

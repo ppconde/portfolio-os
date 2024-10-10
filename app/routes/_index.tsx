@@ -1,5 +1,6 @@
 import type { MetaFunction } from "@remix-run/cloudflare";
 import Desktop from "~/components/Desktop";
+import Test from "~/components/Test";
 
 export const meta: MetaFunction = () => {
   return [
@@ -10,7 +11,10 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   return (
-    <Desktop />
+    <>
+      <Test />
+      <Desktop />
+    </>
   );
 }
 
