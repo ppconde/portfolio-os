@@ -6,7 +6,7 @@ export const loader: LoaderFunction = async ({ context, params }) => {
     const { env } = context.cloudflare;
     const { results } = await env.DB.prepare(
         "SELECT * FROM Customers"
-    ).bind(params.productId).all();
+    ).bind(params.CompanyName).all();
     return json(results);
 };
 

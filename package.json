@@ -13,7 +13,8 @@
     "typecheck": "tsc",
     "typegen": "wrangler types",
     "preview": "npm run build && wrangler pages dev",
-    "cf-typegen": "wrangler types"
+    "cf-typegen": "wrangler types",
+    "d1-migrate": "wrangler d1 execute portfolio-d1 --remote --file=./schema.sql"
   },
   "dependencies": {
     "@remix-run/cloudflare": "^2.12.0",
