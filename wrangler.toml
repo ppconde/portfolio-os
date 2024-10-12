@@ -28,7 +28,7 @@ pages_build_output_dir = "./build/client"
 [[d1_databases]]
 binding = "DB" # i.e. available in your Worker on env.DB
 database_name = "portfolio-d1"
-database_id = "4ec0ad57-4294-4e1b-8ebe-0ff6e03b761b"
+database_id = "5c98e7f0-f7f6-47b9-af4c-e7ea32bd52b8"
 preview_database_id = "DB" 
 
 # Bind a Durable Object. Durable objects are a scale-to-zero compute primitive based on the actor model.
