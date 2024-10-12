@@ -3,6 +3,7 @@ import { json } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 
 export const loader: LoaderFunction = async ({ context, params }) => {
+
     const { env } = context.cloudflare;
     const { results } = await env.DB.prepare(
         "SELECT * FROM Customers"
