@@ -2,19 +2,20 @@ import type { LoaderFunction } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 
-export const loader: LoaderFunction = async ({ context, params }) => {
-
-    const { env } = context.cloudflare;
+export async function loader({ context, params }) {
+    const { env, cf, ctx } = context.cloudflare;
     const { results } = await env.DB.prepare(
         "SELECT * FROM Customers"
-    ).bind(params.CompanyName).all();
+    ).all();
+
+    console.log('here: ', results, params);
     return json(results);
 };
 
-export default function Test() {
+export default function Index() {
     const results = useLoaderData<typeof loader>();
     return (
-        <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
+        <div>
             <h1>Welcome to Remix</h1>
             <div>
                 A value from D1:
