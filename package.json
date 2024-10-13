@@ -9,11 +9,12 @@
     "dev": "remix vite:dev",
     "debug": "NODE_OPTIONS='--inspect-brk' npm run dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
-    "start": "wrangler pages dev ./build/client --d1 DB=5c98e7f0-f7f6-47b9-af4c-e7ea32bd52b8 --live-reload",
+    "start": "wrangler pages dev ./build/client --d1 DB=5c98e7f0-f7f6-47b9-af4c-e7ea32bd52b8 --live-reload --persist-to=./wrangler",
     "typecheck": "tsc",
     "typegen": "wrangler types",
     "preview": "npm run build && wrangler pages dev",
     "cf-typegen": "wrangler types",
+    "d1-local-setup": "wrangler d1 execute DB --local --command \"CREATE TABLE IF NOT EXISTS users ( user_id INTEGER PRIMARY KEY, email_address TEXT, created_at INTEGER, deleted INTEGER, settings TEXT);\"",
     "d1-migrate": "wrangler d1 execute portfolio-d1 --remote --file=./schema.sql"
   },
   "dependencies": {

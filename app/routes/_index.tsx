@@ -1,6 +1,7 @@
-import type { MetaFunction } from "@remix-run/cloudflare";
+import type { LoaderFunction, MetaFunction } from "@remix-run/cloudflare";
 import Desktop from "~/components/Desktop";
-import Test from "~/components/Test";
+import { json } from "@remix-run/cloudflare";
+import { useLoaderData } from "@remix-run/react";
 
 export const meta: MetaFunction = () => {
   return [
@@ -9,13 +10,25 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+export const loader: LoaderFunction = async ({ context }) => {
+  const { env } = context.cloudflare;
+  const { results } = await env.DB.prepare("SELECT * FROM posts LIMIT 5").all();
+  return json(results);
+};
+
 export default function Index() {
+  const results = useLoaderData<typeof loader>();
+
   return (
     <>
-      <Test />
+      <div>
+        <h1>Welcome to Remix</h1>
+        <div>
+          A value from D1:
+          <pre>{JSON.stringify(results)}</pre>
+        </div>
+      </div>
       <Desktop />
     </>
   );
 }
-
-
