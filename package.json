@@ -14,7 +14,7 @@
     "typegen": "wrangler types",
     "preview": "npm run build && wrangler pages dev",
     "cf-typegen": "wrangler types",
-    "d1-local-setup": "wrangler d1 execute DB --local --command \"CREATE TABLE IF NOT EXISTS users ( user_id INTEGER PRIMARY KEY, email_address TEXT, created_at INTEGER, deleted INTEGER, settings TEXT);\"",
+    "d1-migrate:local": "wrangler d1 execute portfolio-d1 --local --file=./schema.sql",
     "d1-migrate": "wrangler d1 execute portfolio-d1 --remote --file=./schema.sql"
   },
   "dependencies": {
