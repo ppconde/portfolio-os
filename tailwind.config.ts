@@ -1,18 +1,26 @@
 import type { Config } from "tailwindcss";
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 export default {
-  content: ["./app/**/{**,.client,.server}/**/*.{js,jsx,ts,tsx}"],
+  content: ["./app/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    fontFamily: {
-      sans: ["MS Sans Serif", "sans-serif"],
-    },
     extend: {
-      colors: {
-        "windows-teal": "#3e9697",
-      },
       fontFamily: {
-        "ps-sans-nouveaux": ["PS Sans Nouveaux", "sans-serif"],
-        "perfect-dos-vga": ["Perfect DOS VGA", "monospace"],
+        sans: ['"MS Reference Sans Serif"', ...defaultTheme.fontFamily.sans],
+        serif: [...defaultTheme.fontFamily.serif],
+        mono: [...defaultTheme.fontFamily.mono],
+        'ps-sans-nouveaux': ['"PX Sans Nouveaux"', 'sans-serif'],
+        'perfect-dos-vga': ['"Perfect DOS VGA 437"', 'sans-serif'],
+        'perfect-dos-vga-win': ['"Perfect DOS VGA 437 Win"', 'sans-serif'],
+        'ms-reference': ['"MS Reference Sans Serif"', 'sans-serif'],
+        'micro': ['"Micro 5"', 'sans-serif'],
+      },
+      colors: {
+        'windows-teal': '#008080',
+        'windows-gray-primary': '#c3c3c3',
+        'windows-white': '#fdffff',
+        'windows-gray-secondary': '#818181',
+        'windows-blue': '#010081',
       },
     },
   },
