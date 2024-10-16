@@ -74,8 +74,14 @@ export default function App() {
   const isBooting = useBootingEffect()
   return (
     <Layout>
-      {isProd && isBooting ? (
-        <Boot />
+      {isProd ? (
+        isBooting ? (
+          <Boot />
+        ) : (
+          <Desktop>
+            <Outlet />
+          </Desktop>
+        )
       ) : (
         <Desktop>
           <Outlet />
