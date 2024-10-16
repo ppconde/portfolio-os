@@ -1,15 +1,12 @@
 import { useEffect, useState } from "react"
 
 export const useBootingEffect = () => {
-    const isProd = process.env.NODE_ENV === 'production'
-    const [isBooting, setIsBooting] = useState(isProd)
+    const [isBooting, setIsBooting] = useState(true)
 
     useEffect(() => {
-        if (isProd) {
-            const timeout = setTimeout(() => setIsBooting(false), 3000)
-            return () => clearTimeout(timeout)
-        }
-    }, [isProd])
+        const timeout = setTimeout(() => setIsBooting(false), 3000)
+        return () => clearTimeout(timeout)
+    }, [])
 
     return isBooting
 }
