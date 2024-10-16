@@ -1,4 +1,4 @@
-import type { LinksFunction } from '@remix-run/cloudflare'
+import type { LinksFunction, MetaFunction } from '@remix-run/cloudflare'
 import {
   Links,
   Meta,
@@ -8,6 +8,9 @@ import {
 } from '@remix-run/react'
 
 import './tailwind.css'
+import { useBootingEffect } from './hooks/use-booting-effect'
+import Boot from './components/Boot'
+import Desktop from './components/Desktop'
 
 export const links: LinksFunction = () => [
   {
@@ -41,6 +44,13 @@ export const links: LinksFunction = () => [
   },
 ]
 
+export const meta: MetaFunction = () => {
+  return [
+    { title: 'Ppconde OS' },
+    { name: 'description', content: 'Welcome to Ppconde OS' },
+  ]
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -60,5 +70,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />
+  const isProd = process.env.NODE_ENV === 'production'
+  const isBooting = useBootingEffect()
+  return (
+    <Layout>
+      {isProd && isBooting ? (
+        <Boot />
+      ) : (
+        <Desktop>
+          <Outlet />
+        </Desktop>
+      )}
+    </Layout>
+  )
 }

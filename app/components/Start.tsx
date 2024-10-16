@@ -1,8 +1,9 @@
 export default function Start() {
   return (
-    <button className="flex h-full items-center border-2 border-b-black border-l-windows-white border-r-black border-t-windows-white p-1">
+    <button className="relative flex h-full items-center border-2 border-b-black border-l-windows-white border-r-black border-t-windows-white p-1">
+      <div className="pointer-events-none absolute inset-0 border-b border-r border-windows-gray-secondary"></div>
       <img
-        className="aspect-auto h-6 w-6 pr-1"
+        className="image-rendering-pixelated h-6 pr-1"
         src="/windows-0.png"
         alt="Windows logo"
       />
