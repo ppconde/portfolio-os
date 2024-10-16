@@ -70,18 +70,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  const isProd = process.env.NODE_ENV === 'production'
   const isBooting = useBootingEffect()
   return (
     <Layout>
-      {isProd ? (
-        isBooting ? (
-          <Boot />
-        ) : (
-          <Desktop>
-            <Outlet />
-          </Desktop>
-        )
+      {isBooting ? (
+        <Boot />
       ) : (
         <Desktop>
           <Outlet />
