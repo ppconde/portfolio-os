@@ -8,9 +8,10 @@ import {
 } from '@remix-run/react'
 
 import './tailwind.css'
-import { useBootingEffect } from './hooks/use-booting-effect'
-import Boot from './components/Boot'
-import Desktop from './components/Desktop'
+import { useBootingEffect } from '~/hooks/use-booting-effect'
+import Boot from '~/components/Boot'
+import Desktop from '~/components/Desktop'
+import { WindowProvider } from '~/contexts/WindowContext'
 
 export const links: LinksFunction = () => [
   {
@@ -73,12 +74,14 @@ export default function App() {
   const isBooting = useBootingEffect()
   return (
     <Layout>
-      {isBooting ? (
+      {false ? (
         <Boot />
       ) : (
-        <Desktop>
-          <Outlet />
-        </Desktop>
+        <WindowProvider>
+          <Desktop>
+            <Outlet />
+          </Desktop>
+        </WindowProvider>
       )}
     </Layout>
   )
