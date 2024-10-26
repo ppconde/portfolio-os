@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
 
-interface Window {
+export interface Window {
   id: string;
   title: string;
   isMinimized: boolean;

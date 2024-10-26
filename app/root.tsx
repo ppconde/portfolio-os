@@ -1,17 +1,17 @@
-import type { LinksFunction, MetaFunction } from '@remix-run/cloudflare'
+import type { LinksFunction, MetaFunction } from '@remix-run/cloudflare';
 import {
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
-} from '@remix-run/react'
+} from '@remix-run/react';
 
-import './tailwind.css'
-import { useBootingEffect } from '~/hooks/use-booting-effect'
-import Boot from '~/components/Boot'
-import Desktop from '~/components/Desktop'
-import { WindowProvider } from '~/contexts/WindowContext'
+import './tailwind.css';
+import { useBootingEffect } from '~/hooks/use-booting-effect';
+import Boot from '~/components/Boot';
+import Desktop from '~/components/Desktop';
+import { WindowProvider } from '~/contexts/WindowContext';
 
 export const links: LinksFunction = () => [
   {
@@ -43,14 +43,14 @@ export const links: LinksFunction = () => [
     href: 'https://fonts.cdnfonts.com/css/ms-reference-sans-serif',
     crossOrigin: 'anonymous',
   },
-]
+];
 
 export const meta: MetaFunction = () => {
   return [
     { title: 'Ppconde OS' },
     { name: 'description', content: 'Welcome to Ppconde OS' },
-  ]
-}
+  ];
+};
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -67,14 +67,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Scripts />
       </body>
     </html>
-  )
+  );
 }
 
 export default function App() {
-  const isBooting = useBootingEffect()
+  const isBooting = useBootingEffect();
   return (
-    <Layout>
-      {false ? (
+    <>
+      {isBooting ? (
         <Boot />
       ) : (
         <WindowProvider>
@@ -83,6 +83,6 @@ export default function App() {
           </Desktop>
         </WindowProvider>
       )}
-    </Layout>
-  )
+    </>
+  );
 }

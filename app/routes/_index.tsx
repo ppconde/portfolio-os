@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useRef } from 'react';
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
 import WindowButton from '~/components/WindowButton';
 import { WindowContext } from '~/contexts/WindowContext';
@@ -38,8 +38,11 @@ export default function BrowserIndex() {
     closeWindow('BrowserIndex');
   };
 
+  const nodeRef = useRef(null);
+
   return browserIndex?.isMinimized ? null : (
     <Draggable
+      nodeRef={nodeRef}
       handle=".handle"
       position={
         browserIndex?.isMinimized ? { x: 0, y: 0 } : browserIndex?.position
@@ -48,6 +51,7 @@ export default function BrowserIndex() {
       disabled={browserIndex?.isMinimized}
     >
       <div
+        ref={nodeRef}
         className={`absolute flex flex-col border-2 border-windows-white bg-windows-gray-primary shadow-md ${
           browserIndex?.isMaximized
             ? 'left-0 top-0 h-full w-full'
