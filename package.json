@@ -49,6 +49,11 @@
     "vite-tsconfig-paths": "^4.2.1",
     "wrangler": "^3.80.4"
   },
+  "overrides": {
+    "@remix-run/server-runtime": {
+      "cookie": "^0.7.2"
+    }
+  },
   "engines": {
     "node": ">=20.0.0"
   }
