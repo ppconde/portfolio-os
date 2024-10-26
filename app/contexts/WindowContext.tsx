@@ -16,7 +16,6 @@ type WindowContextType = {
   closeWindow: (id: string) => void;
   minimizeWindow: (id: string) => void;
   restoreWindow: (id: string) => void;
-  setFocusedWindow: (id: string) => void;
   maximizeWindow: (id: string) => void;
   toggleWindow: (id: string) => void;
   setWindowPosition: (id: string, position: { x: number; y: number }) => void;
@@ -24,7 +23,7 @@ type WindowContextType = {
 
 const initialWindows = [
   {
-    id: 'BrowserIndex',
+    id: 'Browser 1',
     title: 'Portfolio Hub',
     isMinimized: false,
     isMaximized: false,
@@ -40,7 +39,6 @@ export const WindowContext = createContext<WindowContextType>({
   closeWindow: () => {},
   minimizeWindow: () => {},
   restoreWindow: () => {},
-  setFocusedWindow: () => {},
   maximizeWindow: () => {},
   toggleWindow: () => {},
   setWindowPosition: () => {},
@@ -102,20 +100,6 @@ export function WindowProvider({ children }: { children: React.ReactNode }) {
     );
   };
 
-  const setFocusedWindow = (id: string) => {
-    setWindows((prev) =>
-      prev.map((window) =>
-        window.id === id
-          ? {
-              ...window,
-              isFocused: true,
-              zIndex: Math.max(...prev.map((w) => w.zIndex)) + 1,
-            }
-          : { ...window, isFocused: false }
-      )
-    );
-  };
-
   const toggleWindow = (id: string) => {
     setWindows((prev) =>
       prev.map((window) =>
@@ -146,7 +130,6 @@ export function WindowProvider({ children }: { children: React.ReactNode }) {
         maximizeWindow,
         minimizeWindow,
         restoreWindow,
-        setFocusedWindow,
         toggleWindow,
         setWindowPosition,
       }}
