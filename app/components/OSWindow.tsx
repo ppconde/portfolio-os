@@ -59,7 +59,7 @@ export default function OSWindow({ window }: { window: Window }) {
           >
             <div className="flex items-center">
               <img
-                src="/html-0.png"
+                src="/assets/html-0.png"
                 alt="Browser icon"
                 className="mr-1 h-4 w-4"
               />
@@ -68,17 +68,17 @@ export default function OSWindow({ window }: { window: Window }) {
             <div className="flex items-center">
               <WindowButton
                 onClick={handleMinimize}
-                imageName="/minimize.png"
+                imageName="/assets/minimize.png"
                 imageAlt="Minimize"
               />
               <WindowButton
                 onClick={toggleMaximize}
-                imageName="/maximize.png"
+                imageName="/assets/maximize.png"
                 imageAlt="Maximize"
               />
               <WindowButton
                 onClick={handleClose}
-                imageName="/close.png"
+                imageName="/assets/close.png"
                 imageAlt="Close"
               />
             </div>
@@ -102,7 +102,7 @@ export default function OSWindow({ window }: { window: Window }) {
           <div className="flex h-5 items-center justify-between border border-b-windows-white border-l-windows-gray-secondary border-r-windows-white border-t-windows-gray-secondary p-1">
             <span className="flex items-center">
               <img
-                src="/html-0.png"
+                src="/assets/html-0.png"
                 alt="Internet icon"
                 className="mr-1 h-4 w-4"
               />
@@ -110,7 +110,7 @@ export default function OSWindow({ window }: { window: Window }) {
             </span>
             <span className="flex items-center">
               <img
-                src="/world-1.png"
+                src="/assets/world-1.png"
                 alt="Internet icon"
                 className="mr-1 h-4 w-4"
               />
