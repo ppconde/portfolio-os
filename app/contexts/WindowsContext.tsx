@@ -10,9 +10,9 @@ export interface Window {
   zIndex: number;
 }
 
-type WindowContextType = {
+type WindowsContextType = {
   windows: Window[];
-  addWindow: (id: string, title: string) => void;
+  addWindow: (title: string) => void;
   closeWindow: (id: string) => void;
   minimizeWindow: (id: string) => void;
   restoreWindow: (id: string) => void;
@@ -33,7 +33,7 @@ const initialWindows = [
   },
 ];
 
-export const WindowContext = createContext<WindowContextType>({
+export const WindowsContext = createContext<WindowsContextType>({
   windows: [...initialWindows],
   addWindow: () => {},
   closeWindow: () => {},
@@ -47,7 +47,18 @@ export const WindowContext = createContext<WindowContextType>({
 export function WindowProvider({ children }: { children: React.ReactNode }) {
   const [windows, setWindows] = useState<Window[]>([...initialWindows]);
 
-  const addWindow = (id: string, title: string) => {
+  const addWindow = (title: string) => {
+    const id = title + Math.random().toString(36).substring(2, 15);
+    const positions = windows.reduce(
+      (max, window) => {
+        return {
+          x: Math.max(max.x, window.position.x),
+          y: Math.max(max.y, window.position.y),
+        };
+      },
+      { x: 0, y: 0 }
+    );
+    const position = { x: positions.x + 50, y: positions.y + 50 };
     setWindows((prev) => [
       ...prev,
       {
@@ -56,7 +67,7 @@ export function WindowProvider({ children }: { children: React.ReactNode }) {
         isMinimized: false,
         isMaximized: false,
         isFocused: false,
-        position: { x: 100, y: 100 },
+        position,
         zIndex: prev.length,
       },
     ]);
@@ -122,7 +133,7 @@ export function WindowProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <WindowContext.Provider
+    <WindowsContext.Provider
       value={{
         windows,
         addWindow,
@@ -135,6 +146,6 @@ export function WindowProvider({ children }: { children: React.ReactNode }) {
       }}
     >
       {children}
-    </WindowContext.Provider>
+    </WindowsContext.Provider>
   );
 }

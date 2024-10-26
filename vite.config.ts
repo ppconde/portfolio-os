@@ -5,9 +5,12 @@ import {
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { getLoadContext } from "./load-context";
+import { remixDevTools } from "remix-development-tools";
+
 
 export default defineConfig({
   plugins: [
+    remixDevTools(),
     remixCloudflareDevProxy({ getLoadContext }),
     remix({
       future: {

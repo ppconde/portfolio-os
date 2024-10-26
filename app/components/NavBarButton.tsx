@@ -1,8 +1,8 @@
 import { useContext } from 'react';
-import { WindowContext, Window } from '~/contexts/WindowContext';
+import { WindowsContext, Window } from '~/contexts/WindowsContext';
 
 export default function NavBarButton({ window }: { window: Window }) {
-  const { toggleWindow } = useContext(WindowContext);
+  const { toggleWindow } = useContext(WindowsContext);
 
   return (
     <button
@@ -23,7 +23,10 @@ export default function NavBarButton({ window }: { window: Window }) {
           alt="Browser icon"
           className="mr-1 h-3 w-3"
         />
-        <span>{window.title}</span>
+        {/** @TODO Fix this so it stretch the button */}
+        <span className="overflow-hidden text-ellipsis whitespace-nowrap">
+          {window.title}
+        </span>
       </div>
     </button>
   );

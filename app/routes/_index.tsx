@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import OSWindow from '~/components/OSWindow';
-import { WindowContext } from '~/contexts/WindowContext';
+import { WindowsContext } from '~/contexts/WindowsContext';
 
 export default function Index() {
-  const { windows } = useContext(WindowContext);
+  const { windows } = useContext(WindowsContext);
 
   return (
     <>

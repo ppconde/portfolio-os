@@ -11,7 +11,7 @@ import './tailwind.css';
 import { useBootingEffect } from '~/hooks/use-booting-effect';
 import Boot from '~/components/Boot';
 import Desktop from '~/components/Desktop';
-import { WindowProvider } from '~/contexts/WindowContext';
+import { WindowProvider } from '~/contexts/WindowsContext';
 
 export const links: LinksFunction = () => [
   {

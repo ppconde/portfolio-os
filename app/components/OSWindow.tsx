@@ -1,7 +1,7 @@
 import { useContext, useRef } from 'react';
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
 import WindowButton from '~/components/WindowButton';
-import { WindowContext, Window } from '~/contexts/WindowContext';
+import { WindowsContext, Window } from '~/contexts/WindowsContext';
 
 export default function OSWindow({ window }: { window: Window }) {
   const {
@@ -10,7 +10,7 @@ export default function OSWindow({ window }: { window: Window }) {
     restoreWindow,
     maximizeWindow,
     setWindowPosition,
-  } = useContext(WindowContext);
+  } = useContext(WindowsContext);
 
   const handleDrag = (_event: DraggableEvent, data: DraggableData) => {
     if (!window?.isMaximized) {
