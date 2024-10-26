@@ -1,8 +1,8 @@
 type ButtonProps = {
-  onClick?: () => void
-  imageName?: string
-  imageAlt?: string
-}
+  onClick?: () => void;
+  imageName?: string;
+  imageAlt?: string;
+};
 
 export default function WindowButton({
   onClick,
@@ -11,8 +11,10 @@ export default function WindowButton({
 }: ButtonProps) {
   return (
     <button
-      className={`relative flex items-center border-2 border-b-black border-l-windows-white border-r-black border-t-windows-white bg-windows-gray-primary p-1`}
+      className={`flex items-center border-2 border-b-black border-l-windows-white border-r-black border-t-windows-white bg-windows-gray-primary p-1`}
       onClick={onClick}
+      // Needed for mobile touch events
+      onTouchStart={onClick}
     >
       {imageName && (
         <img
@@ -22,5 +24,5 @@ export default function WindowButton({
         />
       )}
     </button>
-  )
+  );
 }

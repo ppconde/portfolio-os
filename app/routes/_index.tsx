@@ -15,7 +15,7 @@ export default function BrowserIndex() {
 
   const browserIndex = windows.find((window) => window.id === 'BrowserIndex');
 
-  const handleDrag = (e: DraggableEvent, data: DraggableData) => {
+  const handleDrag = (_event: DraggableEvent, data: DraggableData) => {
     if (!browserIndex?.isMinimized) {
       setWindowPosition('BrowserIndex', { x: data.x, y: data.y });
     }
@@ -27,7 +27,7 @@ export default function BrowserIndex() {
   const toggleMaximize = () => {
     if (browserIndex?.isMaximized) {
       restoreWindow('BrowserIndex');
-      setWindowPosition('BrowserIndex', { x: 200, y: 100 }); // Restore to default window position
+      setWindowPosition('BrowserIndex', { x: 100, y: 100 }); // Restore to default window position
     } else {
       maximizeWindow('BrowserIndex');
       setWindowPosition('BrowserIndex', { x: 0, y: 0 }); // Set position to top-left corner when maximized
