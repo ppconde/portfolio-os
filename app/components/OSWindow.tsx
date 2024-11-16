@@ -1,9 +1,14 @@
 import { useContext, useRef } from 'react';
 import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
 import WindowButton from '~/components/WindowButton';
-import { WindowsContext, Window } from '~/contexts/WindowsContext';
+import { WindowsContext, DesktopWindow } from '~/contexts/WindowsContext';
 
-export default function OSWindow({ window }: { window: Window }) {
+interface OSWindowProps {
+  window: DesktopWindow;
+  children: React.ReactNode;
+}
+
+export default function OSWindow({ window, children }: OSWindowProps) {
   const {
     closeWindow,
     minimizeWindow,
@@ -47,9 +52,8 @@ export default function OSWindow({ window }: { window: Window }) {
     >
       <div
         ref={nodeRef}
-        className={`absolute flex flex-col border-2 border-b-black border-l-windows-white border-r-black border-t-windows-white bg-windows-gray-primary shadow-md ${
-          window?.isMaximized ? 'bottom-8 left-0 right-0 top-0' : 'h-3/4 w-3/4'
-        } ${window?.isMinimized ? '' : 'resize overflow-auto'}`}
+        className={`absolute flex flex-col border-2 border-b-black border-l-windows-white border-r-black border-t-windows-white bg-windows-gray-primary shadow-md ${window?.isMaximized ? 'bottom-8 left-0 right-0 top-0' : 'h-3/4 w-3/4'
+          } ${window?.isMinimized ? '' : 'resize overflow-auto'}`}
         onDoubleClick={toggleMaximize}
       >
         {/* Title bar */}
@@ -89,11 +93,7 @@ export default function OSWindow({ window }: { window: Window }) {
         <div className="flex-grow bg-windows-gray-primary p-1">
           {/* White Area */}
           <div className="h-full overflow-auto border-2 border-b-windows-white border-l-windows-gray-secondary border-r-windows-white border-t-windows-gray-secondary bg-windows-white p-4 shadow-windows-inset">
-            <h1 className="mb-4 text-2xl font-bold">Welcome to Ppconde OS</h1>
-            <p className="mb-2">
-              This is a simulated Windows 98-style browser window.
-            </p>
-            <p>Explore the desktop icons and start menu for more features!</p>
+            {children}
           </div>
         </div>
 

@@ -1,33 +1,30 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
+import { Link } from '@remix-run/react';
 import { WindowsContext } from '~/contexts/WindowsContext';
-import { doubleTouch } from '~/handlers/double-touch.handler';
-import { isTouchDevice } from '~/utils/media-matcher';
 
 type IconProps = {
   name: string;
   icon: string;
+  to: string;
 };
 
-export default function Icon({ name, icon }: IconProps) {
+export default function Icon({ name, icon, to }: IconProps) {
   const { addWindow } = useContext(WindowsContext);
-  const [lastTap, setLastTap] = useState(0);
 
   const onDoubleClick = () => {
-    // Double touch doesn't work on mobile, so it needs to be handled differently
-    if (isTouchDevice()) {
-      setLastTap(doubleTouch(lastTap, () => addWindow(name)));
-    } else {
-      addWindow(name);
-    }
+    addWindow(name);
   };
   return (
-    <div
-      className="flex w-16 cursor-pointer flex-col items-center"
+    /** @TODO double click is not working using Link */
+    <Link
+      to={to}
       onDoubleClick={onDoubleClick}
-      onTouchStart={onDoubleClick}
+      prefetch="intent"
     >
-      <img src={icon} alt={name} className="mb-1 h-12 w-12" />
-      <span className="text-center text-xs text-windows-white">{name}</span>
-    </div>
+      <div className="flex w-16 cursor-pointer flex-col items-center">
+        <img src={icon} alt={name} className="mb-1 h-12 w-12" />
+        <span className="text-center text-xs text-windows-white">{name}</span>
+      </div>
+    </Link>
   );
 }

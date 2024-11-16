@@ -1,17 +1,12 @@
 import type { LinksFunction, MetaFunction } from '@remix-run/cloudflare';
-import {
-  Links,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from '@remix-run/react';
+import { Links, Meta, Scripts, ScrollRestoration } from '@remix-run/react';
 
 import './tailwind.css';
 import { useBootingEffect } from '~/hooks/use-booting-effect';
 import Boot from '~/components/Boot';
 import Desktop from '~/components/Desktop';
 import { WindowProvider } from '~/contexts/WindowsContext';
+import Windows from './components/Windows';
 
 export const links: LinksFunction = () => [
   {
@@ -72,14 +67,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   const isBooting = useBootingEffect();
+
   return (
     <>
-      {isBooting ? (
+      {false ? (
         <Boot />
       ) : (
         <WindowProvider>
           <Desktop>
-            <Outlet />
+            <Windows />
           </Desktop>
         </WindowProvider>
       )}

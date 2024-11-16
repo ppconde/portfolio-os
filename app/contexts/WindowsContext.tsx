@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
 
-export interface Window {
+export interface DesktopWindow {
   id: string;
   title: string;
   isMinimized: boolean;
@@ -11,7 +11,7 @@ export interface Window {
 }
 
 type WindowsContextType = {
-  windows: Window[];
+  windows: DesktopWindow[];
   addWindow: (title: string) => void;
   closeWindow: (id: string) => void;
   minimizeWindow: (id: string) => void;
@@ -23,7 +23,7 @@ type WindowsContextType = {
 
 const initialWindows = [
   {
-    id: 'Browser 1',
+    id: 'Portfolio Hub',
     title: 'Portfolio Hub',
     isMinimized: false,
     isMaximized: false,
@@ -35,20 +35,22 @@ const initialWindows = [
 
 export const WindowsContext = createContext<WindowsContextType>({
   windows: [...initialWindows],
-  addWindow: () => {},
-  closeWindow: () => {},
-  minimizeWindow: () => {},
-  restoreWindow: () => {},
-  maximizeWindow: () => {},
-  toggleWindow: () => {},
-  setWindowPosition: () => {},
+  addWindow: () => { },
+  closeWindow: () => { },
+  minimizeWindow: () => { },
+  restoreWindow: () => { },
+  maximizeWindow: () => { },
+  toggleWindow: () => { },
+  setWindowPosition: () => { },
 });
 
 export function WindowProvider({ children }: { children: React.ReactNode }) {
-  const [windows, setWindows] = useState<Window[]>([...initialWindows]);
+  const [windows, setWindows] = useState<DesktopWindow[]>([...initialWindows]);
 
   const addWindow = (title: string) => {
-    const id = title + Math.random().toString(36).substring(2, 15);
+    if (windows.find((window) => window.id === title)) {
+      return;
+    }
     const positions = windows.reduce(
       (max, window) => {
         return {
@@ -62,7 +64,7 @@ export function WindowProvider({ children }: { children: React.ReactNode }) {
     setWindows((prev) => [
       ...prev,
       {
-        id,
+        id: title,
         title,
         isMinimized: false,
         isMaximized: false,
@@ -82,10 +84,10 @@ export function WindowProvider({ children }: { children: React.ReactNode }) {
       prev.map((window) =>
         window.id === id
           ? {
-              ...window,
-              isMaximized: true,
-              isFocused: true,
-            }
+            ...window,
+            isMaximized: true,
+            isFocused: true,
+          }
           : window
       )
     );

@@ -1,17 +1,16 @@
 import { useContext } from 'react';
-import { WindowsContext, Window } from '~/contexts/WindowsContext';
+import { WindowsContext, DesktopWindow } from '~/contexts/WindowsContext';
 
-export default function NavBarButton({ window }: { window: Window }) {
+export default function NavBarButton({ window }: { window: DesktopWindow }) {
   const { toggleWindow } = useContext(WindowsContext);
 
   return (
     <button
       key={window.id}
-      className={`relative mx-1 flex h-full items-center p-2 text-sm ${
-        window.isMinimized
+      className={`relative mx-1 flex h-full items-center p-2 text-sm ${window.isMinimized
           ? 'border-2 border-b-black border-l-windows-white border-r-black border-t-windows-white bg-windows-gray-primary'
           : 'flex items-center border-2 border-b-windows-white border-l-black border-r-windows-white border-t-black bg-gray-200 p-2'
-      }`}
+        }`}
       onClick={() => toggleWindow(window.id)}
     >
       <div
