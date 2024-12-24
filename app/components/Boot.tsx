@@ -15,13 +15,18 @@ export default function Boot() {
             'Welcome to Windows 98!',
         ]
 
-        messages.forEach((msg, index) => {
-            setTimeout(() => {
+        const timeouts = messages.map((msg, index) => {
+            return setTimeout(() => {
                 setBootMessages((prev) => [...prev, msg])
             }, index * 1000) // 1 second delay for each message
         })
 
-        setTimeout(() => setIsBooting(false), messages.length * 1000)
+        const timeout = setTimeout(() => setIsBooting(false), messages.length * 1000)
+
+        return () => {
+            timeouts.forEach((timeout) => clearTimeout(timeout))
+            clearTimeout(timeout)
+        }
     }, [])
 
     return (

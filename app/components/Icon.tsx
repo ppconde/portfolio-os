@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Link } from '@remix-run/react';
+import { Link } from 'react-router';
 import { WindowsContext } from '~/contexts/WindowsContext';
 
 type IconProps = {
@@ -16,7 +16,7 @@ export default function Icon({ name, icon, to }: IconProps) {
   };
   return (
     /** @TODO double click is not working using Link */
-    <Link
+    (<Link
       to={to}
       onDoubleClick={onDoubleClick}
       prefetch="intent"
@@ -25,6 +25,6 @@ export default function Icon({ name, icon, to }: IconProps) {
         <img src={icon} alt={name} className="mb-1 h-12 w-12" />
         <span className="text-center text-xs text-windows-white">{name}</span>
       </div>
-    </Link>
+    </Link>)
   );
 }

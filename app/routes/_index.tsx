@@ -1,4 +1,4 @@
-import { redirect } from "@remix-run/react";
+import { redirect } from "react-router";
 
 /**
  * Not sure if this is the best approach,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useOutletContext, NavLink, Outlet } from '@remix-run/react';
+import { useOutletContext, NavLink, Outlet } from 'react-router';
 import { DesktopWindow } from '~/contexts/WindowsContext';
 import { NavItem } from '~/components/NavItem';
 

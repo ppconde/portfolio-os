@@ -1,5 +1,5 @@
-import type { LinksFunction, MetaFunction } from '@remix-run/cloudflare';
-import { Links, Meta, Scripts, ScrollRestoration } from '@remix-run/react';
+import type { LinksFunction, MetaFunction } from 'react-router';
+import { Links, Meta, Scripts, ScrollRestoration } from 'react-router';
 
 import './tailwind.css';
 import { useBootingEffect } from '~/hooks/use-booting-effect';

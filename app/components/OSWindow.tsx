@@ -40,7 +40,7 @@ export default function OSWindow({ window, children }: OSWindowProps) {
     closeWindow(window.id);
   };
 
-  const nodeRef = useRef(null);
+  const nodeRef = useRef<HTMLDivElement>(null!);
 
   return window?.isMinimized ? null : (
     <Draggable

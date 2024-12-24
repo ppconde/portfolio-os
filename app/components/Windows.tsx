@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Outlet } from '@remix-run/react';
+import { Outlet } from 'react-router';
 import { WindowsContext } from '~/contexts/WindowsContext';
 import OSWindow from '~/components/OSWindow';
 

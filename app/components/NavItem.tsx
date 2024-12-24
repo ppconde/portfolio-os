@@ -1,4 +1,4 @@
-import { NavLink } from "@remix-run/react";
+import { NavLink } from "react-router";
 
 export const NavItem = ({ to, children }: { to: string; children: React.ReactNode }) => (
     <NavLink
