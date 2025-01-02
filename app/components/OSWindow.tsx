@@ -67,7 +67,7 @@ export default function OSWindow({ window, children }: OSWindowProps) {
                 alt="Browser icon"
                 className="mr-1 h-4 w-4"
               />
-              <span className="font-micro text-xl">Portfolio Hub</span>
+              <span className="font-micro text-xl">My Portfolio</span>
             </div>
             <div className="flex items-center">
               <WindowButton

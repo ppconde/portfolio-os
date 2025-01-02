@@ -20,7 +20,7 @@ export default function Website() {
           <NavItem to="/website">Home</NavItem>
           <NavItem to="/website/about">About</NavItem>
           <NavItem to="/website/experience">Experience</NavItem>
-          <NavItem to="/website/education">Education</NavItem>
+          <NavItem to="/website/projects">Projects</NavItem>
           <NavItem to="/website/contact">Contact</NavItem>
         </div>
       </nav>

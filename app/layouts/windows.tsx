@@ -10,7 +10,7 @@ export default function Windows() {
     <>
       {windows.map((window) => (
         <OSWindow key={window.id} window={window}>
-          {window.id === 'Portfolio Hub' && <Outlet context={window} />}
+          {window.id === 'My Portfolio' && <Outlet context={window} />}
         </OSWindow>
       ))}
     </>

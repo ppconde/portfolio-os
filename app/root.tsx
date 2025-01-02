@@ -4,9 +4,8 @@ import { Links, Meta, Scripts, ScrollRestoration } from 'react-router';
 import './tailwind.css';
 import { useBootingEffect } from '~/hooks/use-booting-effect';
 import Boot from '~/components/Boot';
-import Desktop from '~/components/Desktop';
 import { WindowProvider } from '~/contexts/WindowsContext';
-import Windows from './components/Windows';
+import Desktop from './layouts/desktop';
 
 export const links: LinksFunction = () => [
   {
@@ -74,9 +73,7 @@ export default function App() {
         <Boot />
       ) : (
         <WindowProvider>
-          <Desktop>
-            <Windows />
-          </Desktop>
+          <Desktop />
         </WindowProvider>
       )}
     </>

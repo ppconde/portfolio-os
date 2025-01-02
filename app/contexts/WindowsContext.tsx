@@ -1,4 +1,5 @@
 import React, { createContext, useState } from 'react';
+import Desktop from '~/routes/Desktop';
 
 export interface DesktopWindow {
   id: string;
@@ -23,8 +24,8 @@ type WindowsContextType = {
 
 const initialWindows = [
   {
-    id: 'Portfolio Hub',
-    title: 'Portfolio Hub',
+    id: 'My Portfolio',
+    title: 'Pedro Conde',
     isMinimized: false,
     isMaximized: false,
     isFocused: true,
