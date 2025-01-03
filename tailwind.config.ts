@@ -1,8 +1,8 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
 
 export default {
-  content: ["./app/**/*.{js,jsx,ts,tsx}"],
+  content: ['./app/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
       fontFamily: {
@@ -13,7 +13,7 @@ export default {
         'perfect-dos-vga': ['"Perfect DOS VGA 437"', 'sans-serif'],
         'perfect-dos-vga-win': ['"Perfect DOS VGA 437 Win"', 'sans-serif'],
         'ms-reference': ['"MS Reference Sans Serif"', 'sans-serif'],
-        'micro': ['"Micro 5"', 'sans-serif'],
+        micro: ['"Micro 5"', 'sans-serif'],
       },
       colors: {
         'windows-teal': '#008080',
