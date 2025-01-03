@@ -1,11 +1,11 @@
 export default function About() {
   return (
-    <section className="space-y-6">
+    <section className="space-y-6 font-mono text-sm text-gray-600">
       <article>
-        <h2 className="border-b p-4 font-ps-sans-nouveaux text-3xl font-bold text-gray-900">
+        <h2 className="pb-4 font-ps-sans-nouveaux text-3xl font-bold text-gray-900">
           About Me
         </h2>
-        <p className="font-mono text-sm text-gray-600">
+        <p>
           My name is Pedro and I&apos;m a Software Engineer currently working at{' '}
           <a
             href="https://www.blip.pt/"
@@ -33,11 +33,11 @@ export default function About() {
         </p>
       </article>
 
-      <h3 className="border-b border-t p-4 font-ps-sans-nouveaux text-2xl font-bold text-gray-900">
+      <h3 className="border-t pt-4 font-ps-sans-nouveaux text-2xl font-bold text-gray-900">
         Experience
       </h3>
       <article>
-        <h4 className="mb-4 border-b pb-4 font-ps-sans-nouveaux font-bold text-gray-900">
+        <h4 className="mb-4 font-ps-sans-nouveaux font-bold text-gray-900">
           Altice Labs
         </h4>
         <p>
@@ -53,9 +53,11 @@ export default function About() {
       </article>
 
       <article>
-        <h4>Blip</h4>
+        <h4 className="mb-4 font-ps-sans-nouveaux font-bold text-gray-900">
+          Blip.pt
+        </h4>
         <p>
-          Afterward, I joined <strong>Blip</strong>, where I deepened my
+          Afterward, I joined <strong>Blip.pt</strong>, where I deepened my
           technical expertise and worked with a broad range of technologies,
           including{' '}
           <em>
