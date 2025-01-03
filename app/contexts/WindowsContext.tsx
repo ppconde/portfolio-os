@@ -1,9 +1,8 @@
 import React, { createContext, useState } from 'react';
-import Desktop from '~/routes/Desktop';
+import { WindowsNames } from '~/constants/windows-names.const';
 
 export interface DesktopWindow {
   id: string;
-  title: string;
   isMinimized: boolean;
   isMaximized: boolean;
   isFocused: boolean;
@@ -13,7 +12,7 @@ export interface DesktopWindow {
 
 type WindowsContextType = {
   windows: DesktopWindow[];
-  addWindow: (title: string) => void;
+  addWindow: (id: string) => void;
   closeWindow: (id: string) => void;
   minimizeWindow: (id: string) => void;
   restoreWindow: (id: string) => void;
@@ -24,8 +23,7 @@ type WindowsContextType = {
 
 const initialWindows = [
   {
-    id: 'My Portfolio',
-    title: 'Pedro Conde',
+    id: WindowsNames.PORTFOLIO,
     isMinimized: false,
     isMaximized: false,
     isFocused: true,
@@ -36,20 +34,20 @@ const initialWindows = [
 
 export const WindowsContext = createContext<WindowsContextType>({
   windows: [...initialWindows],
-  addWindow: () => { },
-  closeWindow: () => { },
-  minimizeWindow: () => { },
-  restoreWindow: () => { },
-  maximizeWindow: () => { },
-  toggleWindow: () => { },
-  setWindowPosition: () => { },
+  addWindow: () => {},
+  closeWindow: () => {},
+  minimizeWindow: () => {},
+  restoreWindow: () => {},
+  maximizeWindow: () => {},
+  toggleWindow: () => {},
+  setWindowPosition: () => {},
 });
 
 export function WindowProvider({ children }: { children: React.ReactNode }) {
   const [windows, setWindows] = useState<DesktopWindow[]>([...initialWindows]);
 
-  const addWindow = (title: string) => {
-    if (windows.find((window) => window.id === title)) {
+  const addWindow = (id: string) => {
+    if (windows.find((window) => window.id === id)) {
       return;
     }
     const positions = windows.reduce(
@@ -65,8 +63,7 @@ export function WindowProvider({ children }: { children: React.ReactNode }) {
     setWindows((prev) => [
       ...prev,
       {
-        id: title,
-        title,
+        id,
         isMinimized: false,
         isMaximized: false,
         isFocused: false,
@@ -85,10 +82,10 @@ export function WindowProvider({ children }: { children: React.ReactNode }) {
       prev.map((window) =>
         window.id === id
           ? {
-            ...window,
-            isMaximized: true,
-            isFocused: true,
-          }
+              ...window,
+              isMaximized: true,
+              isFocused: true,
+            }
           : window
       )
     );

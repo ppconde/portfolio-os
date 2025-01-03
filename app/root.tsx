@@ -1,11 +1,13 @@
 import type { LinksFunction, MetaFunction } from 'react-router';
-import { Links, Meta, Scripts, ScrollRestoration } from 'react-router';
+import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 
 import './tailwind.css';
 import { useBootingEffect } from '~/hooks/use-booting-effect';
 import Boot from '~/components/Boot';
 import { WindowProvider } from '~/contexts/WindowsContext';
 import Desktop from './layouts/desktop';
+import Icon from './components/Icon';
+import Navbar from './components/Navbar';
 
 export const links: LinksFunction = () => [
   {
@@ -19,7 +21,7 @@ export const links: LinksFunction = () => [
   },
   {
     rel: 'stylesheet',
-    href: 'https://fonts.googleapis.com/css2?family=Micro+5&display=swap', // Double-check if this font is available
+    href: 'https://fonts.googleapis.com/css2?family=Micro+5&display=swap',
     crossOrigin: 'anonymous',
   },
   {
@@ -73,7 +75,17 @@ export default function App() {
         <Boot />
       ) : (
         <WindowProvider>
-          <Desktop />
+          <div className="relative flex h-screen w-screen flex-col overflow-hidden bg-windows-teal">
+            <div className="relative flex flex-col gap-4 p-4">
+              <Icon
+                name="My Portfolio"
+                icon="/assets/accesibility_window_abc.png"
+                to="/website"
+              />
+            </div>
+            <Outlet />
+            <Navbar />
+          </div>
         </WindowProvider>
       )}
     </>

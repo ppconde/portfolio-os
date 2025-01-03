@@ -7,10 +7,11 @@ export default function NavBarButton({ window }: { window: DesktopWindow }) {
   return (
     <button
       key={window.id}
-      className={`relative mx-1 flex h-full items-center p-2 text-sm ${window.isMinimized
+      className={`relative mx-1 flex h-full items-center p-2 text-sm ${
+        window.isMinimized
           ? 'border-2 border-b-black border-l-windows-white border-r-black border-t-windows-white bg-windows-gray-primary'
           : 'flex items-center border-2 border-b-windows-white border-l-black border-r-windows-white border-t-black bg-gray-200 p-2'
-        }`}
+      }`}
       onClick={() => toggleWindow(window.id)}
     >
       <div
@@ -24,7 +25,7 @@ export default function NavBarButton({ window }: { window: DesktopWindow }) {
         />
         {/** @TODO Fix this so it stretch the button */}
         <span className="overflow-hidden text-ellipsis whitespace-nowrap">
-          {window.title}
+          {window.id}
         </span>
       </div>
     </button>

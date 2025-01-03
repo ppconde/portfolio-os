@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { Outlet } from 'react-router';
 import { WindowsContext } from '~/contexts/WindowsContext';
 import OSWindow from '~/components/OSWindow';
+import { WindowsNames } from '~/constants/windows-names.const';
 
 export default function Windows() {
   const { windows } = useContext(WindowsContext);
@@ -10,7 +11,7 @@ export default function Windows() {
     <>
       {windows.map((window) => (
         <OSWindow key={window.id} window={window}>
-          {window.id === 'My Portfolio' && <Outlet context={window} />}
+          {window.id === WindowsNames.PORTFOLIO && <Outlet context={window} />}
         </OSWindow>
       ))}
     </>

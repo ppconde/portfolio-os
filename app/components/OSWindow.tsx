@@ -52,8 +52,9 @@ export default function OSWindow({ window, children }: OSWindowProps) {
     >
       <div
         ref={nodeRef}
-        className={`absolute flex flex-col border-2 border-b-black border-l-windows-white border-r-black border-t-windows-white bg-windows-gray-primary shadow-md ${window?.isMaximized ? 'bottom-8 left-0 right-0 top-0' : 'h-3/4 w-3/4'
-          } ${window?.isMinimized ? '' : 'resize overflow-auto'}`}
+        className={`absolute flex flex-col border-2 border-b-black border-l-windows-white border-r-black border-t-windows-white bg-windows-gray-primary shadow-md ${
+          window?.isMaximized ? 'bottom-8 left-0 right-0 top-0' : 'h-3/4 w-3/4'
+        } ${window?.isMinimized ? '' : 'resize overflow-auto'}`}
         onDoubleClick={toggleMaximize}
       >
         {/* Title bar */}
@@ -67,7 +68,9 @@ export default function OSWindow({ window, children }: OSWindowProps) {
                 alt="Browser icon"
                 className="mr-1 h-4 w-4"
               />
-              <span className="font-micro text-xl">My Portfolio</span>
+              <span className="overflow-hidden whitespace-nowrap font-micro text-xl">
+                My Portfolio
+              </span>
             </div>
             <div className="flex items-center">
               <WindowButton
@@ -106,7 +109,7 @@ export default function OSWindow({ window, children }: OSWindowProps) {
                 alt="Internet icon"
                 className="mr-1 h-4 w-4"
               />
-              Done
+              © {new Date().getFullYear()} Portfolio. All rights reserved.
             </span>
             <span className="flex items-center">
               <img

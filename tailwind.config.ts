@@ -21,6 +21,8 @@ export default {
         'windows-white': '#fdffff',
         'windows-gray-secondary': '#818181',
         'windows-blue': '#010081',
+        'window-super-blue': '#0000ff',
+        'windows-purple': '#800080',
       },
       boxShadow: {
         'windows-inset': 'inset 1px 1px 3px #818181',
