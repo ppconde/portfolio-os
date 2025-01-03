@@ -75,7 +75,7 @@ export default function App() {
         <Boot />
       ) : (
         <WindowProvider>
-          <div className="relative flex h-screen w-screen flex-col overflow-hidden bg-windows-teal">
+          <div className="relative flex h-screen w-screen select-none flex-col overflow-hidden bg-windows-teal">
             <div className="relative flex flex-col gap-4 p-4">
               <Icon
                 name="My Portfolio"

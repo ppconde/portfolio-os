@@ -27,6 +27,9 @@ export default {
       boxShadow: {
         'windows-inset': 'inset 1px 1px 3px #818181',
       },
+      backgroundImage: {
+        'dot-pattern': `radial-gradient(#0000ff 0.5px, transparent 0.5px), radial-gradient(#0000ff 0.5px, #ffffff 0.5px)`,
+      },
     },
   },
   plugins: [],
