@@ -18,7 +18,7 @@ export default function OSWindow({ window, children }: OSWindowProps) {
   } = useContext(WindowsContext);
 
   const handleDrag = (_event: DraggableEvent, data: DraggableData) => {
-    if (!window?.isMaximized) {
+    if (!window.isMaximized) {
       setWindowPosition(window.id, { x: data.x, y: data.y });
     }
   };
@@ -27,10 +27,12 @@ export default function OSWindow({ window, children }: OSWindowProps) {
     minimizeWindow(window.id);
   };
   const toggleMaximize = () => {
-    if (window?.isMaximized) {
+    if (window.isMaximized) {
       restoreWindow(window.id);
       setWindowPosition(window.id, { x: 100, y: 100 }); // Restore to default window position
     } else {
+      // Hacky way to remove inline styles from Draggable component
+      nodeRef.current.style.cssText = '';
       maximizeWindow(window.id);
       setWindowPosition(window.id, { x: 0, y: 0 }); // Set position to top-left corner when maximized
     }
@@ -42,25 +44,25 @@ export default function OSWindow({ window, children }: OSWindowProps) {
 
   const nodeRef = useRef<HTMLDivElement>(null!);
 
-  return window?.isMinimized ? null : (
+  return window.isMinimized ? null : (
     <Draggable
       nodeRef={nodeRef}
       handle=".handle"
-      position={window?.isMinimized ? { x: 0, y: 0 } : window?.position}
+      position={window.isMinimized ? { x: 0, y: 0 } : window.position}
       onDrag={handleDrag}
-      disabled={window?.isMaximized}
+      disabled={window.isMaximized}
     >
       <div
         ref={nodeRef}
         className={`absolute flex flex-col border-2 border-b-black border-l-windows-white border-r-black border-t-windows-white bg-windows-gray-primary shadow-md ${
-          window?.isMaximized ? 'bottom-8 left-0 right-0 top-0' : 'h-3/4 w-3/4'
-        } ${window?.isMinimized ? '' : 'resize overflow-auto'}`}
+          window.isMaximized ? 'bottom-8 left-0 right-0 top-0' : 'h-3/4 w-3/4'
+        } ${window.isMinimized || window.isMaximized ? '' : 'resize overflow-auto'}`}
         onDoubleClick={toggleMaximize}
       >
         {/* Title bar */}
         <div className="bg-windows-gray-primary p-1">
           <div
-            className={`handle flex h-6 items-center justify-between bg-windows-blue px-1 text-windows-white ${window?.isMaximized ? '' : '[&:active]:cursor-move'} `}
+            className={`handle flex h-6 items-center justify-between bg-windows-blue px-1 text-windows-white ${window.isMaximized ? '' : '[&:active]:cursor-move'} `}
           >
             <div className="flex items-center">
               <img
