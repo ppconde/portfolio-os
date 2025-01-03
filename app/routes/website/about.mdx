@@ -1,12 +1,22 @@
+---
+meta:
+  - title: My First Post
+  - name: description
+    content: Isn't this just awesome?
+---
+
+import H2 from '~/components/website/H2';
+import Section from '~/components/website/Section';
+import Article from '~/components/website/Article';
+
 export default function About() {
   return (
-    <section className="space-y-6 font-mono text-sm text-gray-600">
+    <Section>
       <article>
-        <h2 className="pb-4 font-ps-sans-nouveaux text-3xl font-bold text-gray-900">
-          About Me
-        </h2>
-        <p>
-          My name is Pedro and I&apos;m a Software Engineer currently working at{' '}
+        <H2>About Me</H2>
+        <p className="mt-6">
+          Hey there! My name is Pedro and I&apos;m a Software Engineer currently
+          working at{' '}
           <a
             href="https://www.blip.pt/"
             target="_blank"
@@ -31,7 +41,11 @@ export default function About() {
           </a>{' '}
           in 2017.
         </p>
+        <p className="mt-4">
+          I appreciate the time you took to visit my website and I hope you find
+          it fun to navigate.
+        </p>
       </article>
-    </section>
+    </Section>
   );
 }

@@ -1,0 +1,45 @@
+---
+meta:
+  - title: Experience
+  - name: description
+    content: This page provides an overview of my professional experience, highlighting my roles, responsibilities, and the skills I have developed over the years.
+---
+
+import H2 from '~/components/website/H2';
+import JobEntry from '~/components/website/JobEntry';
+import Section from '~/components/website/Section';
+
+export default function Experience() {
+  return (
+    <Section>
+      <H2>Experience</H2>
+
+      <JobEntry title="Blip.pt - Frontend Engineer" subtitle="[2020-Present] - Porto">
+        <p>
+          I joined <strong>Blip.pt</strong>, where I deepened my technical expertise
+          and worked with a broad range of technologies, including{' '}
+          <em>
+            GraphQL, Node.js, TypeScript, PostgreSQL, React, Webpack, Jest, Redux
+          </em>
+          , and <em>Docker</em>. I contributed to unit and functional testing, and I
+          planned and developed features for multiple apps catering to betting brands.
+          This role not only expanded my technical skill set but also gave me the
+          chance to work on complex systems and deliver value to end-users.
+        </p>
+      </JobEntry>
+
+      <JobEntry title="Altice Labs - Informatics Consultant" subtitle="[2018-2020] - Aveiro">
+        <p>
+          I began my professional journey at <strong>Altice Labs</strong>, a
+          company dedicated to creating innovative solutions for the
+          telecommunications and IT sectors. During my time there, I was part
+          of the Operations Support System team, where I gained valuable
+          experience in organizing and planning XML workflows, developing
+          product features, debugging systems, and writing technical
+          specifications. It was a great opportunity to hone my
+          problem-solving skills and collaborate on impactful projects.
+        </p>
+      </JobEntry>
+    </Section>
+  );
+}

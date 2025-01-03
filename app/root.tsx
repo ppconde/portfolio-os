@@ -5,7 +5,6 @@ import './tailwind.css';
 import { useBootingEffect } from '~/hooks/use-booting-effect';
 import Boot from '~/components/Boot';
 import { WindowProvider } from '~/contexts/WindowsContext';
-import Desktop from './layouts/desktop';
 import Icon from './components/Icon';
 import Navbar from './components/Navbar';
 

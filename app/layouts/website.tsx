@@ -1,5 +1,15 @@
+import { MDXProvider } from '@mdx-js/react';
 import { Outlet } from 'react-router';
 import NavList from '~/components/NavList';
+import H2 from '~/components/website/H2';
+import H3 from '~/components/website/H3';
+import Section from '~/components/website/Section';
+
+const components = {
+  H2: (props: { children: React.ReactNode }) => <H2 {...props} />,
+  H3: (props: { title: string; subtitle: string }) => <H3 {...props} />,
+  Section: (props: { children: React.ReactNode }) => <Section {...props} />,
+};
 
 export default function Website() {
   return (
@@ -14,7 +24,9 @@ export default function Website() {
 
         {/* Main Content Area */}
         <main className="flex-1 overflow-auto p-6">
-          <Outlet />
+          <MDXProvider components={components}>
+            <Outlet />
+          </MDXProvider>
         </main>
       </div>
     </div>
