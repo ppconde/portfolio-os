@@ -23,7 +23,7 @@ export default function Website() {
         </nav>
 
         {/* Main Content Area */}
-        <main className="flex-1 overflow-y-scroll p-6">
+        <main className="no-scrollbar flex-1 overflow-y-scroll p-6">
           <MDXProvider components={components}>
             <Outlet />
           </MDXProvider>
