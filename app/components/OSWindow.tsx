@@ -95,9 +95,9 @@ export default function OSWindow({ window, children }: OSWindowProps) {
         </div>
 
         {/* Content area */}
-        <div className="flex-grow overflow-scroll bg-windows-gray-primary p-1">
+        <div className="flex-grow overflow-y-scroll bg-windows-gray-primary p-1">
           {/* White Area */}
-          <div className="h-full overflow-scroll border-2 border-b-windows-white border-l-windows-gray-secondary border-r-windows-white border-t-windows-gray-secondary bg-windows-white p-4 shadow-windows-inset">
+          <div className="h-full border-2 border-b-windows-white border-l-windows-gray-secondary border-r-windows-white border-t-windows-gray-secondary bg-windows-white p-4 shadow-windows-inset">
             {children}
           </div>
         </div>
