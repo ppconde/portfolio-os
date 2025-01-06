@@ -2,11 +2,11 @@ import type { LinksFunction, MetaFunction } from 'react-router';
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 
 import './tailwind.css';
-import { useBootingEffect } from '~/hooks/use-booting-effect';
-import Boot from '~/components/Boot';
+import BiosScreen from '~/components/BiosScreen';
 import { WindowProvider } from '~/contexts/WindowsContext';
 import Icon from './components/Icon';
 import Navbar from './components/Navbar';
+import { useState } from 'react';
 
 export const links: LinksFunction = () => [
   {
@@ -66,12 +66,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  const isBooting = useBootingEffect();
+  const [isBooting, setIsBooting] = useState(true);
+
+  const handleBiosScreenFinish = () => setIsBooting(false);
 
   return (
     <>
-      {false ? (
-        <Boot />
+      {isBooting ? (
+        <BiosScreen onFinish={handleBiosScreenFinish} />
       ) : (
         <WindowProvider>
           <div className="relative flex h-screen w-screen select-none flex-col overflow-hidden bg-windows-teal">

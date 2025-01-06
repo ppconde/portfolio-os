@@ -22,6 +22,7 @@ export const NavItem = ({
     }
     onClick={toggleMenu}
     viewTransition
+    prefetch="intent"
   >
     {children}
   </NavLink>

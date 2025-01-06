@@ -34,6 +34,19 @@ export default {
       transitionProperty: {
         'max-height': 'max-height',
       },
+      animation: {
+        blink: 'blink 0.333s infinite', // 3 times per second, infinite loop
+      },
+      keyframes: {
+        blink: {
+          '0%, 100%': {
+            opacity: '1',
+          },
+          '50%': {
+            opacity: '0',
+          },
+        },
+      },
     },
   },
   plugins: [require('@tailwindcss/container-queries')],
