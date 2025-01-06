@@ -1,26 +1,7 @@
-import { MDXProvider } from '@mdx-js/react';
 import { Outlet } from 'react-router';
 import { useState } from 'react';
 import NavList from '~/components/NavList';
-import H2 from '~/components/website/H2';
-import H3 from '~/components/website/H3';
-import Section from '~/components/website/Section';
-import A from '~/components/website/A';
-import HR from '~/components/website/HR';
 import HamburgerButton from '~/components/website/HamburgerButton';
-
-const components = {
-  H2: (props: { children: React.ReactNode }) => <H2 {...props} />,
-  H3: (props: { children: React.ReactNode }) => <H3 {...props} />,
-  Section: (props: { children: React.ReactNode }) => <Section {...props} />,
-  A: (props: {
-    href: string;
-    ariaLabel: string;
-    title: string;
-    children: React.ReactNode;
-  }) => <A {...props} />,
-  HR: () => <HR />,
-};
 
 export default function Website() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -50,9 +31,7 @@ export default function Website() {
         <main
           className={`no-scrollbar ${isMenuOpen ? 'hidden' : 'flex-1'} overflow-y-scroll p-6`}
         >
-          <MDXProvider components={components}>
-            <Outlet />
-          </MDXProvider>
+          <Outlet />
         </main>
       </div>
     </div>
