@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 import type { Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
 
@@ -28,9 +29,12 @@ export default {
         'windows-inset': 'inset 1px 1px 3px #818181',
       },
       backgroundImage: {
-        'dot-pattern': `radial-gradient(#0000ffcc 1px, transparent 1px), radial-gradient(#0000ffcc 1px, #ffffff 1px)`,
+        dots: 'radial-gradient(#0000ffcc 1px, transparent 1px), radial-gradient(#0000ffcc 1px, #ffffff 1px)',
+      },
+      transitionProperty: {
+        'max-height': 'max-height',
       },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/container-queries')],
 } satisfies Config;

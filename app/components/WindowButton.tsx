@@ -14,7 +14,11 @@ export default function WindowButton({
       className={`flex items-center border-2 border-b-black border-l-windows-white border-r-black border-t-windows-white bg-windows-gray-primary p-1`}
       onClick={onClick}
       // Needed for mobile touch events
-      onTouchStart={onClick}
+      onTouchEnd={(e) => {
+        // Prevents the default behavior to mess up with react draggable
+        e.preventDefault();
+        onClick?.();
+      }}
     >
       {imageName && (
         <img

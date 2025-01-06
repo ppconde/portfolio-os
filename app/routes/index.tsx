@@ -1,7 +1,6 @@
 import { redirect } from 'react-router';
 
 export function loader() {
-  console.log('loading index ');
   return redirect('/website');
 }
 

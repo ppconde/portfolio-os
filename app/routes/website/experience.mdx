@@ -6,17 +6,26 @@ meta:
 ---
 
 import H2 from '~/components/website/H2';
-import JobEntry from '~/components/website/JobEntry';
+import ContentEntry from '~/components/website/ContentEntry';
 import Section from '~/components/website/Section';
+import A from '~/components/website/A';
 
 export default function Experience() {
   return (
-    <Section>
+    <Section className="flex flex-col justify-center">
       <H2>Experience</H2>
 
-      <JobEntry title="Blip.pt - Frontend Engineer" subtitle="[2020-Present] - Porto">
-        <p>
-          I joined <strong>Blip.pt</strong>, where I deepened my technical expertise
+      <ContentEntry title="Blip.pt - Frontend Engineer" subtitle="[2020-Present] - Porto">
+        I joined <A
+            href="https://www.blip.pt/"
+            target="_blank"
+            rel="noopener noreferrer"
+            ariaLabel="Visit Blip.pt website"
+            className="text-window-super-blue underline hover:no-underline"
+            title="This is a cool company!"
+          >
+            Blip.pt
+          </A>, where I deepened my technical expertise
           and worked with a broad range of technologies, including{' '}
           <em>
             GraphQL, Node.js, TypeScript, PostgreSQL, React, Webpack, Jest, Redux
@@ -25,21 +34,28 @@ export default function Experience() {
           planned and developed features for multiple apps catering to betting brands.
           This role not only expanded my technical skill set but also gave me the
           chance to work on complex systems and deliver value to end-users.
-        </p>
-      </JobEntry>
+      </ContentEntry>
 
-      <JobEntry title="Altice Labs - Informatics Consultant" subtitle="[2018-2020] - Aveiro">
-        <p>
-          I began my professional journey at <strong>Altice Labs</strong>, a
+      <ContentEntry title="Altice Labs - Informatics Consultant" subtitle="[2018-2020] - Aveiro">
+        I began my professional journey at <A
+            href="https://www.alticelabs.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            ariaLabel="Visit Altice Labs website"
+            className="text-window-super-blue underline hover:no-underline"
+            title="This is another cool company!"
+          >
+            Altice Labs
+          </A>, a
           company dedicated to creating innovative solutions for the
           telecommunications and IT sectors. During my time there, I was part
           of the Operations Support System team, where I gained valuable
           experience in organizing and planning XML workflows, developing
           product features, debugging systems, and writing technical
-          specifications. It was a great opportunity to hone my
+          specifications. It was a great opportunity to sharpen my
           problem-solving skills and collaborate on impactful projects.
-        </p>
-      </JobEntry>
+      </ContentEntry>
     </Section>
-  );
+
+);
 }

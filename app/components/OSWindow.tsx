@@ -51,6 +51,7 @@ export default function OSWindow({ window, children }: OSWindowProps) {
       position={window.isMinimized ? { x: 0, y: 0 } : window.position}
       onDrag={handleDrag}
       disabled={window.isMaximized}
+      bounds="parent"
     >
       <div
         ref={nodeRef}
