@@ -16,7 +16,7 @@ export default function ContentEntry({
 }) {
   return (
     <Article>
-      <div className="flex flex-col gap-4 sm:flex-row">
+      <div className="flex flex-col gap-4 lg:flex-row">
         <div className="flex-1">
           <H3>
             {title}
