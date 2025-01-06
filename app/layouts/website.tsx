@@ -7,7 +7,7 @@ import H3 from '~/components/website/H3';
 import Section from '~/components/website/Section';
 import A from '~/components/website/A';
 import HR from '~/components/website/HR';
-import HamburgerButton from '~/components/website/HamburguerButton';
+import HamburgerButton from '~/components/website/HamburgerButton';
 
 const components = {
   H2: (props: { children: React.ReactNode }) => <H2 {...props} />,
