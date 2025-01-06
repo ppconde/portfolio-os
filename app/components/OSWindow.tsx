@@ -106,7 +106,7 @@ export default function OSWindow({ window, children }: OSWindowProps) {
         {/* Status bar */}
         <div className="bg-windows-gray-primary p-1 text-xs">
           <div className="flex h-5 items-center justify-between border border-b-windows-white border-l-windows-gray-secondary border-r-windows-white border-t-windows-gray-secondary p-1">
-            <span className="flex w-1/2 items-center overflow-hidden text-ellipsis whitespace-nowrap">
+            <span className="flex w-5/6 items-center overflow-hidden text-ellipsis whitespace-nowrap">
               <img
                 src="/assets/html-0.png"
                 alt="Internet icon"
