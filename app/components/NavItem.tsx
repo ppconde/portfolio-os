@@ -14,7 +14,7 @@ export const NavItem = ({
   <NavLink
     to={to}
     className={({ isActive }) =>
-      `text-windows-super-blue px-4 py-2 font-perfect-dos-vga-win underline transition-colors duration-200 ${
+      `px-4 py-2 font-perfect-dos-vga-win underline transition-colors duration-200 ${
         isActive && !disableIsActive
           ? 'text-windows-purple'
           : 'text-windows-super-blue hover:no-underline'
