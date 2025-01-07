@@ -11,7 +11,7 @@ export default function WindowButton({
 }: ButtonProps) {
   return (
     <button
-      className={`flex items-center border-2 border-b-black border-l-windows-white border-r-black border-t-windows-white bg-windows-gray-primary p-1`}
+      className={`border-windows flex items-center bg-windows-gray-primary p-1`}
       onClick={onClick}
       // Needed for mobile touch events
       onTouchEnd={(e) => {

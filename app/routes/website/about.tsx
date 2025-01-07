@@ -93,7 +93,7 @@ export default function About() {
         title="Volunteering"
         subtitle="[2016-2018] - Aveiro"
         img="/assets/esnaveiro.jpg"
-        caption="Figure 2: Raising awareness of the importance of terrain management in wildfire prevention, an initiative by ESN Aveiro."
+        caption="Figure 1: Raising awareness of the importance of terrain management in wildfire prevention, an initiative by ESN Aveiro."
       >
         During my university years, I was actively involved with{' '}
         <A

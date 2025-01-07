@@ -55,7 +55,7 @@ export default function OSWindow({ window, children }: OSWindowProps) {
     >
       <div
         ref={nodeRef}
-        className={`absolute flex flex-col border-2 border-b-black border-l-windows-white border-r-black border-t-windows-white bg-windows-gray-primary shadow-md ${
+        className={`border-windows absolute flex flex-col bg-windows-gray-primary shadow-md ${
           window.isMaximized ? 'bottom-8 left-0 right-0 top-0' : 'h-3/4 w-3/4'
         } ${window.isMinimized || window.isMaximized ? '' : 'resize overflow-auto'}`}
         onDoubleClick={toggleMaximize}

@@ -41,7 +41,7 @@ export default function BiosScreen({ onFinish }: BiosScreenProps) {
         <div
           className={`mt-6 space-y-1 text-center md:space-y-2 md:pl-2 md:text-left ${showFourthSection ? 'hidden' : ''}`}
         >
-          <p className="text-lg font-bold text-window-super-blue md:text-xl">
+          <p className="text-windows-super-blue text-lg font-bold md:text-xl">
             Overclocked Potato X3000
           </p>
           <p>BIOS Version 1.23.456</p>
@@ -51,7 +51,7 @@ export default function BiosScreen({ onFinish }: BiosScreenProps) {
         <div
           className={`mt-6 flex flex-col items-center text-center md:items-start md:pl-2 md:text-left ${showFourthSection ? 'hidden' : ''}`}
         >
-          <div className="font-micro text-5xl font-bold text-window-super-blue md:text-3xl">
+          <div className="text-windows-super-blue font-micro text-5xl font-bold md:text-3xl">
             PotatoChip™
           </div>
         </div>
@@ -95,7 +95,7 @@ export default function BiosScreen({ onFinish }: BiosScreenProps) {
         <div className={`flex-grow ${showFourthSection ? 'hidden' : ''}`}></div>
 
         <div
-          className={`mb-4 text-center text-window-super-blue md:mb-0 md:pl-2 md:text-left ${showFourthSection ? 'hidden' : ''}`}
+          className={`text-windows-super-blue mb-4 text-center md:mb-0 md:pl-2 md:text-left ${showFourthSection ? 'hidden' : ''}`}
         >
           <p>
             Press &lt;Del&gt; to enter SETUP or &lt;F1&gt; to question your life

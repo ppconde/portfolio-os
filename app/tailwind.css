@@ -2,14 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .border-windows {
+    @apply border-2 border-b-black border-l-windows-white border-r-black border-t-windows-white;
+  }
+
+  .border-windows-inverted {
+    @apply border-2 border-b-windows-white border-l-black border-r-windows-white border-t-black;
+  }
+
+  .btn-windows {
+    @apply border-windows bg-windows-gray-primary;
+  }
+
+  .btn-windows-inverted {
+    @apply border-windows-inverted bg-gray-200;
+  }
+}
+
 @layer utilities {
+
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
   /* Hide scrollbar for IE, Edge and Firefox */
   .no-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
   }
+
+  .writing-v-lr {
+    writing-mode: vertical-lr;
+    text-orientation: sideways;
+  }
+
 }
