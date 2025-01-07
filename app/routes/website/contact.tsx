@@ -1,8 +1,8 @@
 import { useFetcher } from 'react-router';
+import type { Route } from './+types/contact';
 import ContentEntry from '~/components/website/ContentEntry';
 import H2 from '~/components/website/H2';
 import Section from '~/components/website/Section';
-import type { Route } from './+types/contact';
 
 export function action({ params }: Route.ComponentProps) {
   return params;
