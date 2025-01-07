@@ -1,4 +1,4 @@
-export default function Education() {
+export default function Projects() {
   return (
     <div className="space-y-6">
       <h2 className="text-3xl font-bold text-gray-900">Projects</h2>
