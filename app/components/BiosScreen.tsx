@@ -14,8 +14,8 @@ export default function BiosScreen({ onFinish }: BiosScreenProps) {
     const firstTimer = setTimeout(() => setShowFirstSection(true), 1500);
     const secondTimer = setTimeout(() => setShowSecondSection(true), 1700);
     const thirdTimer = setTimeout(() => setShowThirdSection(true), 2000);
-    const fourthTimer = setTimeout(() => setShowFourthSection(true), 3000);
-    const finalTimer = setTimeout(() => onFinish(), 6000);
+    const fourthTimer = setTimeout(() => setShowFourthSection(true), 2500);
+    const finalTimer = setTimeout(() => onFinish(), 3500);
 
     return () => {
       clearTimeout(firstTimer);
