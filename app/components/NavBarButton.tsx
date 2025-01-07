@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { WindowsContext, DesktopWindow } from '~/contexts/WindowsContext';
+import { WindowsContext, type DesktopWindow } from '~/contexts/WindowsContext';
 
 export default function NavBarButton({ window }: { window: DesktopWindow }) {
   const { toggleWindow } = useContext(WindowsContext);

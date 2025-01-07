@@ -1,7 +1,10 @@
 import { useContext, useRef } from 'react';
-import Draggable, { DraggableData, DraggableEvent } from 'react-draggable';
+import Draggable, {
+  type DraggableData,
+  type DraggableEvent,
+} from 'react-draggable';
 import WindowButton from '~/components/WindowButton';
-import { WindowsContext, DesktopWindow } from '~/contexts/WindowsContext';
+import { WindowsContext, type DesktopWindow } from '~/contexts/WindowsContext';
 
 interface OSWindowProps {
   window: DesktopWindow;
