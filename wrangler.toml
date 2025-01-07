@@ -84,3 +84,7 @@ preview_database_id = "DB"
 # [[env.production.kv_namespaces]]
 # binding = "MY_KV_NAMESPACE"
 # id = "<PRODUCTION_NAMESPACE_ID>"
+
+# wrangler.toml (wrangler v3.88.0^)
+[observability.logs]
+enabled = true
