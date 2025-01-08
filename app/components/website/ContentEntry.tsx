@@ -8,7 +8,7 @@ export default function ContentEntry({
   caption,
   children,
 }: {
-  title: string;
+  title?: string;
   subtitle?: string;
   img?: string;
   caption?: string;
