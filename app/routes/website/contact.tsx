@@ -28,10 +28,6 @@ export async function action({ request }: Route.ActionArgs) {
 export default function Contact() {
   const fetcher = useFetcher();
 
-  const onChange = (value) => {
-    console.log('Captcha value:', value);
-  };
-
   return (
     <Section>
       <H2>Contact</H2>
