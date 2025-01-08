@@ -1,4 +1,4 @@
-import { Form, useFetcher } from 'react-router';
+import { useFetcher } from 'react-router';
 import type { Route } from './+types/contact';
 import ContentEntry from '~/components/website/ContentEntry';
 import H2 from '~/components/website/H2';
@@ -6,39 +6,31 @@ import Section from '~/components/website/Section';
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
-  const { email, subject, message } = Object.fromEntries(formData.entries());
-  const body = JSON.stringify({ subject, email, message });
-  console.log('Sending email: ', body);
+
+  console.log('Sending email: ', formData);
+
   try {
     const response = await fetch(
-      'https://send-email.pepconde-1993.workers.dev/',
+      'https://email-with-resend.pepconde-1993.workers.dev/',
       {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: formData,
       }
     );
-
-    console.log('Email sent:', response.ok);
-
-    if (!response.ok) {
-      const { error } = (await response.json()) as {
-        error: { message: string };
-      };
-      return new Response(error.message || 'Failed to send email', {
-        status: 500,
-      });
-    }
-
-    return new Response('Success', { status: 200 });
+    const x = await response.json();
+    console.log('Email sent: ', x);
   } catch (error) {
-    console.error(error);
-    return new Response('Failed to send email', { status: 500 });
+    console.error('Error sending email: ', error);
   }
 }
 
 export default function Contact() {
   const fetcher = useFetcher();
+
+  const onChange = (value) => {
+    console.log('Captcha value:', value);
+  };
 
   return (
     <Section>
@@ -56,7 +48,7 @@ export default function Contact() {
           </label>
           <label>
             Message:
-            <textarea name="message" required className="border" />
+            <textarea name="text" required className="border" />
           </label>
           <button type="submit" className="border">
             Send
