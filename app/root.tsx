@@ -77,7 +77,7 @@ export default function App() {
       ) : (
         <WindowProvider>
           <div className="relative flex h-screen w-screen select-none flex-col overflow-hidden bg-windows-teal">
-            <div className="relative flex flex-col gap-4 p-4">
+            <div className="relative flex flex-col gap-6 p-4">
               <Icon
                 name="My Portfolio"
                 icon="/assets/accesibility_window_abc.png"
