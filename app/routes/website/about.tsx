@@ -27,7 +27,7 @@ export default function About() {
 
       <HR />
 
-      <H2 /* className="mt-8" */>Education</H2>
+      <H2>Education</H2>
       <ContentEntry
         title="University of Aveiro"
         subtitle="[2011-2017] - Aveiro"

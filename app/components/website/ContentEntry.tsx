@@ -25,8 +25,12 @@ export default function ContentEntry({
           <div>{children}</div>
         </div>
         {img && (
-          <figure className="flex-1">
-            <img src={img} alt={title} className="h-auto w-full object-cover" />
+          <figure className="flex flex-1 flex-col items-center justify-center">
+            <img
+              src={img}
+              alt={title}
+              className="max-h-96 w-auto max-w-full object-contain"
+            />
             {caption && (
               <figcaption className="mt-2 text-center text-xs">
                 {caption}

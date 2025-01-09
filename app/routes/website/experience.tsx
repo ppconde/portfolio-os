@@ -5,7 +5,7 @@ import A from '~/components/website/A';
 
 export default function Experience() {
   return (
-    <Section /* className="flex flex-col justify-center" */>
+    <Section>
       <H2>Experience</H2>
 
       <ContentEntry
