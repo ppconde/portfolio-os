@@ -1,4 +1,5 @@
 import { createRef } from 'react';
+import { useBootContext } from '~/contexts/BootContext';
 import { useClickOutside } from '~/hooks/use-click-outside';
 
 type StartWindowProps = {
@@ -8,6 +9,7 @@ type StartWindowProps = {
 export default function StartWindow({ setIsOpen }: StartWindowProps) {
   const ref = createRef<HTMLDivElement>();
   useClickOutside(ref, () => setIsOpen(false));
+  const { setBootState } = useBootContext();
 
   return (
     <div
@@ -24,7 +26,10 @@ export default function StartWindow({ setIsOpen }: StartWindowProps) {
         <div className="border-b border-windows-gray-secondary" />
         <div className="border-t border-windows-white" />
         {/** Start buttons */}
-        <button className="flex items-center p-1 pr-4 hover:bg-windows-blue hover:text-white">
+        <button
+          className="flex items-center p-1 pr-4 hover:bg-windows-blue hover:text-white"
+          onClick={() => setBootState('shutting_down')}
+        >
           <img
             className="h-10 pr-1"
             src="/assets/shut_down_cool-5.png"

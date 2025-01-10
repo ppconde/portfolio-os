@@ -1,21 +1,19 @@
 import { useState, useEffect } from 'react';
+import { useBootContext } from '~/contexts/BootContext';
 
-interface BiosScreenProps {
-  onFinish: () => void;
-}
-
-export default function BiosScreen({ onFinish }: BiosScreenProps) {
+export default function BiosScreen() {
   const [showFirstSection, setShowFirstSection] = useState(false);
   const [showSecondSection, setShowSecondSection] = useState(false);
   const [showThirdSection, setShowThirdSection] = useState(false);
   const [showFourthSection, setShowFourthSection] = useState(false);
+  const { setBootState } = useBootContext();
 
   useEffect(() => {
     const firstTimer = setTimeout(() => setShowFirstSection(true), 1500);
     const secondTimer = setTimeout(() => setShowSecondSection(true), 1700);
     const thirdTimer = setTimeout(() => setShowThirdSection(true), 2000);
     const fourthTimer = setTimeout(() => setShowFourthSection(true), 2500);
-    const finalTimer = setTimeout(() => onFinish(), 3500);
+    const finalTimer = setTimeout(() => setBootState('loaded'), 3500);
 
     return () => {
       clearTimeout(firstTimer);
@@ -24,7 +22,7 @@ export default function BiosScreen({ onFinish }: BiosScreenProps) {
       clearTimeout(fourthTimer);
       clearTimeout(finalTimer);
     };
-  }, [onFinish]);
+  }, [setBootState]);
 
   return (
     <div className="h-screen w-screen bg-black font-perfect-dos-vga-win text-windows-teal">

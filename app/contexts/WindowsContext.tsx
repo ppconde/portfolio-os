@@ -27,7 +27,7 @@ const initialWindows = [
     isMinimized: false,
     isMaximized: false,
     isFocused: true,
-    position: { x: 100, y: 100 },
+    position: { x: 100, y: 40 },
     zIndex: 0,
   },
 ];
@@ -59,15 +59,15 @@ export function WindowProvider({ children }: { children: React.ReactNode }) {
       },
       { x: 0, y: 0 }
     );
-    const position = { x: positions.x + 50, y: positions.y + 50 };
+
     setWindows((prev) => [
       ...prev,
       {
         id,
         isMinimized: false,
         isMaximized: false,
-        isFocused: false,
-        position,
+        isFocused: true,
+        position: { x: positions.x + 50, y: positions.y + 50 },
         zIndex: prev.length,
       },
     ]);

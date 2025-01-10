@@ -1,12 +1,9 @@
 import type { LinksFunction, MetaFunction } from 'react-router';
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
+import { Links, Meta, Scripts, ScrollRestoration } from 'react-router';
 
 import './tailwind.css';
-import BiosScreen from '~/components/BiosScreen';
-import { WindowProvider } from '~/contexts/WindowsContext';
-import Icon from './components/Icon';
-import Navbar from './components/Navbar';
-import { useState } from 'react';
+import { Screen } from './components/Screen';
+import BootProvider from './contexts/BootContext';
 
 export const links: LinksFunction = () => [
   {
@@ -66,29 +63,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  const [isBooting, setIsBooting] = useState(true);
-
-  const handleBiosScreenFinish = () => setIsBooting(false);
-
   return (
-    <>
-      {isBooting ? (
-        <BiosScreen onFinish={handleBiosScreenFinish} />
-      ) : (
-        <WindowProvider>
-          <div className="relative flex h-screen w-screen select-none flex-col overflow-hidden bg-windows-teal">
-            <div className="relative flex flex-col gap-6 p-4">
-              <Icon
-                name="My Portfolio"
-                icon="/assets/accesibility_window_abc.png"
-                to="/website"
-              />
-            </div>
-            <Outlet />
-            <Navbar />
-          </div>
-        </WindowProvider>
-      )}
-    </>
+    <BootProvider>
+      <Screen />
+    </BootProvider>
   );
 }

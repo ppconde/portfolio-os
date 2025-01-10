@@ -32,7 +32,7 @@ export default function OSWindow({ window, children }: OSWindowProps) {
   const toggleMaximize = () => {
     if (window.isMaximized) {
       restoreWindow(window.id);
-      setWindowPosition(window.id, { x: 100, y: 100 }); // Restore to default window position
+      setWindowPosition(window.id, { x: 100, y: 40 }); // Restore to default window position
     } else {
       // Hacky way to remove inline styles from Draggable component
       nodeRef.current.style.cssText = '';
@@ -59,7 +59,7 @@ export default function OSWindow({ window, children }: OSWindowProps) {
       <div
         ref={nodeRef}
         className={`border-windows absolute flex flex-col bg-windows-gray-primary shadow-md ${
-          window.isMaximized ? 'bottom-8 left-0 right-0 top-0' : 'h-3/4 w-3/4'
+          window.isMaximized ? 'bottom-8 left-0 right-0 top-0' : 'h-4/5 w-4/5'
         } ${window.isMinimized || window.isMaximized ? '' : 'resize overflow-auto'}`}
         onDoubleClick={toggleMaximize}
       >
