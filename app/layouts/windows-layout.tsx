@@ -4,7 +4,7 @@ import { WindowsContext } from '~/contexts/WindowsContext';
 import OSWindow from '~/components/OSWindow';
 import { WindowsNames } from '~/constants/windows-names.const';
 
-export default function Windows() {
+export default function WindowsLayout() {
   const { windows } = useContext(WindowsContext);
 
   return (

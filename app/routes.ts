@@ -8,9 +8,9 @@ import {
 
 export default [
   index('routes/index.tsx'),
-  layout('layouts/windows.tsx', [
+  layout('layouts/windows-layout.tsx', [
     ...prefix('/website', [index('routes/website/home.tsx')]),
-    layout('layouts/website.tsx', [
+    layout('layouts/website-layout.tsx', [
       ...prefix('/website', [
         route('about', 'routes/website/about.tsx'),
         route('experience', 'routes/website/experience.tsx'),
