@@ -38,7 +38,7 @@
     "@react-router/dev": "^7.1.1",
     "@tailwindcss/container-queries": "^0.1.1",
     "@types/eslint__js": "^8.42.3",
-    "@types/react": "^19.0.0",
+    "@types/react": "^19.0.6",
     "@types/react-dom": "^19.0.0",
     "@types/react-google-recaptcha-enterprise": "^1.0.3",
     "@typescript-eslint/eslint-plugin": "8.19.0",
