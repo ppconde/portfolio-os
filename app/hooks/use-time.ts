@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 export function useTime() {
   const [time, setTime] = useState(
-    new Date().toLocaleTimeString(undefined, {
+    new Date().toLocaleTimeString('en-us', {
       hour: '2-digit',
       minute: '2-digit',
       hour12: true,
@@ -11,8 +11,7 @@ export function useTime() {
 
   useEffect(() => {
     const getFormattedTime = () => {
-      const now = new Date();
-      return now.toLocaleTimeString(undefined, {
+      return new Date().toLocaleTimeString('en-us', {
         hour: '2-digit',
         minute: '2-digit',
         hour12: true,
