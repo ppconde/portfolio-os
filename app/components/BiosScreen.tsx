@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useBootContext } from '~/contexts/BootContext';
+import BlinkCaret from './BlinkCaret';
 
 export default function BiosScreen() {
   const [showFirstSection, setShowFirstSection] = useState(false);
@@ -81,14 +82,7 @@ export default function BiosScreen() {
           </div>
         )}
 
-        {showFourthSection && (
-          <div className="absolute left-0 top-0 p-4">
-            {/* Horizontal caret */}
-            <p className="animate-blink text-lg font-bold text-windows-teal">
-              _
-            </p>
-          </div>
-        )}
+        {showFourthSection && <BlinkCaret />}
 
         <div className={`flex-grow ${showFourthSection ? 'hidden' : ''}`}></div>
 
