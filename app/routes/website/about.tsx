@@ -8,7 +8,7 @@ export default function About() {
   return (
     <Section>
       <H2>About Me</H2>
-      <ContentEntry title="Hey there and welcome to my portfolio!">
+      <ContentEntry title="Welcome to my portfolio!">
         I&apos;m <strong>Pedro Conde</strong>, a Software Engineer based in
         Portugal, currently working at{' '}
         <A
@@ -19,10 +19,6 @@ export default function About() {
           Blip.pt
         </A>
         .
-        <br />
-        Feel free to check my website to learn more about my professional
-        experience, education, and projects. I hope you enjoy exploring it out
-        as much as I enjoyed building it! :)
       </ContentEntry>
 
       <HR />
