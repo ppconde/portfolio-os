@@ -95,7 +95,7 @@ export default function ShutdownScreen() {
 
         {showSixthSection && <BlinkCaret />}
 
-        <div className={`flex-grow`}></div>
+        <div className={`grow`}></div>
       </div>
     </div>
   );

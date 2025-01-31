@@ -84,7 +84,7 @@ export default function BiosScreen() {
 
         {showFourthSection && <BlinkCaret />}
 
-        <div className={`flex-grow ${showFourthSection ? 'hidden' : ''}`}></div>
+        <div className={`grow ${showFourthSection ? 'hidden' : ''}`}></div>
 
         <div
           className={`mb-4 text-center text-windows-super-blue md:mb-0 md:pl-2 md:text-left ${showFourthSection ? 'hidden' : ''}`}

@@ -19,7 +19,7 @@ export default function Navbar() {
           <NavBarButton key={window.id + index} window={window} />
         ))}
       </div>
-      <div className="w-full flex-grow" />
+      <div className="w-full grow" />
       <VerticalSeparator />
       <Clock />
     </nav>

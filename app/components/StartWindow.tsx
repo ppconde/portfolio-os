@@ -16,7 +16,7 @@ export default function StartWindow({ setIsOpen }: StartWindowProps) {
       ref={ref}
       className="border-windows absolute bottom-8 left-0 flex min-h-72 flex-row bg-windows-gray-primary"
     >
-      <div className="relative flex bg-gradient-to-tr from-windows-super-blue to-windows-blue text-white">
+      <div className="relative flex bg-linear-to-tr from-windows-super-blue to-windows-blue text-white">
         <p className="writing-v-lr rotate-180 p-1 text-left font-mono">
           <span className="font-bold">Ppconde</span>OS
         </p>

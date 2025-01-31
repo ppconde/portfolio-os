@@ -114,7 +114,7 @@ export default function Contact() {
               name="email"
               placeholder="name@domain.com"
               required
-              className="mt-1 block w-full border-gray-300 p-1 shadow-sm outline-dashed"
+              className="mt-1 block w-full border-gray-300 p-1 shadow-xs outline-dashed"
             />
             {errors?.email && (
               <p className="mt-1 text-sm text-red-600">{errors.email}</p>
@@ -133,7 +133,7 @@ export default function Contact() {
               name="subject"
               placeholder="The subject of your message"
               required
-              className="mt-1 block w-full border-gray-300 p-1 shadow-sm outline-dashed"
+              className="mt-1 block w-full border-gray-300 p-1 shadow-xs outline-dashed"
             />
             {errors?.subject && (
               <p className="mt-1 text-sm text-red-600">{errors.subject}</p>
@@ -152,7 +152,7 @@ export default function Contact() {
               placeholder="Type your message here."
               required
               rows={5}
-              className="mt-1 block w-full border-gray-300 p-1 shadow-sm outline-dashed"
+              className="mt-1 block w-full border-gray-300 p-1 shadow-xs outline-dashed"
             />
             {errors?.text && (
               <p className="mt-1 text-sm text-red-600">{errors.text}</p>

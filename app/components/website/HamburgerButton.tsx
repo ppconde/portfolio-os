@@ -10,7 +10,7 @@ export default function HamburgerButton({
   return (
     <button
       onClick={onClick}
-      className={`h-12 w-12 focus:outline-none ${className}`}
+      className={`h-12 w-12 focus:outline-hidden ${className}`}
       aria-label={isOpen ? 'Close menu' : 'Open menu'}
     >
       <div className="absolute inset-0 flex flex-col items-center justify-center">

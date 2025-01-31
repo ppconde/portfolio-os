@@ -66,7 +66,7 @@ export default function OSWindow({ window, children }: OSWindowProps) {
         {/* Title bar */}
         <div className="bg-windows-gray-primary p-1">
           <div
-            className={`handle flex h-6 items-center justify-between bg-windows-blue px-1 text-windows-white ${window.isMaximized ? '' : '[&:active]:cursor-move'} `}
+            className={`handle flex h-6 items-center justify-between bg-windows-blue px-1 text-windows-white ${window.isMaximized ? '' : 'active:cursor-move'} `}
           >
             <div className="flex items-center">
               <img
@@ -99,7 +99,7 @@ export default function OSWindow({ window, children }: OSWindowProps) {
         </div>
 
         {/* Content area */}
-        <div className="no-scrollbar no-scrollbar flex-grow overflow-y-scroll bg-windows-gray-primary p-1">
+        <div className="no-scrollbar no-scrollbar grow overflow-y-scroll bg-windows-gray-primary p-1">
           {/* White Area */}
           <div className="h-full border-2 border-b-windows-white border-l-windows-gray-secondary border-r-windows-white border-t-windows-gray-secondary bg-windows-white p-4 shadow-windows-inset">
             {children}
