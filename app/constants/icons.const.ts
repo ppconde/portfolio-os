@@ -7,10 +7,4 @@ export const icons = [
     path: '/assets/html2-2.png',
     to: '/website',
   },
-  {
-    id: AppsNames.MSN,
-    name: AppsNames.MSN,
-    path: '/assets/msn3-4.png',
-    to: '/msn',
-  },
 ];
