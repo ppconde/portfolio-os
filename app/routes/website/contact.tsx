@@ -166,9 +166,9 @@ export default function Contact() {
           </button>
         </fetcher.Form>
         {notification && (
-          <div className="border-windows absolute right-2 top-24 w-full max-w-xs md:max-w-sm lg:max-w-md">
-            <div className="h-3 items-center justify-between bg-windows-blue px-1"></div>
-            <div className="flex flex-row items-center justify-evenly bg-windows-gray-primary p-3 font-ms-reference shadow-md">
+          <div className="border-windows absolute top-24 right-2 w-full max-w-xs md:max-w-sm lg:max-w-md">
+            <div className="bg-windows-blue h-3 items-center justify-between px-1"></div>
+            <div className="bg-windows-gray-primary font-ms-reference flex flex-row items-center justify-evenly p-3 shadow-md">
               {notification.type === 'success' ? (
                 <img
                   src="/assets/check-0.png"

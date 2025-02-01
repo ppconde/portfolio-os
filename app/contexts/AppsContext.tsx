@@ -1,18 +1,27 @@
 import React, { createContext, useState } from 'react';
-import { WindowsNames } from '~/constants/windows-names.const';
+import type { AppsNames } from '~/constants/apps-names.const';
+import { initialWindows } from '~/constants/initial-windows.const';
 
-export interface DesktopWindow {
-  id: string;
+export type DesktopIcon = {
+  id: AppsNames;
+  name: AppsNames;
+  icon: string;
+  to: string;
+};
+
+export type DesktopWindow = {
+  id: AppsNames;
+  name: AppsNames;
   isMinimized: boolean;
   isMaximized: boolean;
   isFocused: boolean;
   position: { x: number; y: number };
   zIndex: number;
-}
+};
 
-type WindowsContextType = {
+type AppsContextType = {
   windows: DesktopWindow[];
-  addWindow: (id: string) => void;
+  addWindow: (id: AppsNames, name: AppsNames) => void;
   closeWindow: (id: string) => void;
   minimizeWindow: (id: string) => void;
   restoreWindow: (id: string) => void;
@@ -21,19 +30,8 @@ type WindowsContextType = {
   setWindowPosition: (id: string, position: { x: number; y: number }) => void;
 };
 
-const initialWindows = [
-  {
-    id: WindowsNames.PORTFOLIO,
-    isMinimized: false,
-    isMaximized: false,
-    isFocused: true,
-    position: { x: 100, y: 40 },
-    zIndex: 0,
-  },
-];
-
-export const WindowsContext = createContext<WindowsContextType>({
-  windows: [...initialWindows],
+export const AppsContext = createContext<AppsContextType>({
+  windows: initialWindows,
   addWindow: () => {},
   closeWindow: () => {},
   minimizeWindow: () => {},
@@ -43,10 +41,10 @@ export const WindowsContext = createContext<WindowsContextType>({
   setWindowPosition: () => {},
 });
 
-export function WindowProvider({ children }: { children: React.ReactNode }) {
-  const [windows, setWindows] = useState<DesktopWindow[]>([...initialWindows]);
+export function AppsProvider({ children }: { children: React.ReactNode }) {
+  const [windows, setWindows] = useState<DesktopWindow[]>(initialWindows);
 
-  const addWindow = (id: string) => {
+  const addWindow = (id: AppsNames, name: AppsNames) => {
     if (windows.find((window) => window.id === id)) {
       return;
     }
@@ -64,6 +62,7 @@ export function WindowProvider({ children }: { children: React.ReactNode }) {
       ...prev,
       {
         id,
+        name,
         isMinimized: false,
         isMaximized: false,
         isFocused: true,
@@ -125,15 +124,15 @@ export function WindowProvider({ children }: { children: React.ReactNode }) {
     id: string,
     position: { x: number; y: number }
   ) => {
-    setWindows((prev) =>
-      prev.map((window) =>
+    setWindows((prevWindows) =>
+      prevWindows.map((window) =>
         window.id === id ? { ...window, position } : window
       )
     );
   };
 
   return (
-    <WindowsContext.Provider
+    <AppsContext.Provider
       value={{
         windows,
         addWindow,
@@ -146,6 +145,6 @@ export function WindowProvider({ children }: { children: React.ReactNode }) {
       }}
     >
       {children}
-    </WindowsContext.Provider>
+    </AppsContext.Provider>
   );
 }

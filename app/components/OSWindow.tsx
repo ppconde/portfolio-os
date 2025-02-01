@@ -4,12 +4,14 @@ import Draggable, {
   type DraggableEvent,
 } from 'react-draggable';
 import WindowButton from '~/components/WindowButton';
-import { WindowsContext, type DesktopWindow } from '~/contexts/WindowsContext';
+import { AppsNames } from '~/constants/apps-names.const';
+import { icons } from '~/constants/icons.const';
+import { AppsContext, type DesktopWindow } from '~/contexts/AppsContext';
 
-interface OSWindowProps {
+type OSWindowProps = {
   window: DesktopWindow;
   children: React.ReactNode;
-}
+};
 
 export default function OSWindow({ window, children }: OSWindowProps) {
   const {
@@ -18,7 +20,9 @@ export default function OSWindow({ window, children }: OSWindowProps) {
     restoreWindow,
     maximizeWindow,
     setWindowPosition,
-  } = useContext(WindowsContext);
+  } = useContext(AppsContext);
+
+  const nodeRef = useRef<HTMLDivElement>(null!);
 
   const handleDrag = (_event: DraggableEvent, data: DraggableData) => {
     if (!window.isMaximized) {
@@ -45,8 +49,6 @@ export default function OSWindow({ window, children }: OSWindowProps) {
     closeWindow(window.id);
   };
 
-  const nodeRef = useRef<HTMLDivElement>(null!);
-
   return window.isMinimized ? null : (
     <Draggable
       nodeRef={nodeRef}
@@ -58,24 +60,24 @@ export default function OSWindow({ window, children }: OSWindowProps) {
     >
       <div
         ref={nodeRef}
-        className={`border-windows absolute flex flex-col bg-windows-gray-primary shadow-md ${
-          window.isMaximized ? 'bottom-8 left-0 right-0 top-0' : 'h-4/5 w-4/5'
+        className={`border-windows bg-windows-gray-primary absolute flex flex-col shadow-md ${
+          window.isMaximized ? 'top-0 right-0 bottom-8 left-0' : 'h-4/5 w-4/5'
         } ${window.isMinimized || window.isMaximized ? '' : 'resize overflow-auto'}`}
         onDoubleClick={toggleMaximize}
       >
         {/* Title bar */}
         <div className="bg-windows-gray-primary p-1">
           <div
-            className={`handle flex h-6 items-center justify-between bg-windows-blue px-1 text-windows-white ${window.isMaximized ? '' : 'active:cursor-move'} `}
+            className={`handle bg-windows-blue text-windows-white flex h-6 items-center justify-between px-1 ${window.isMaximized ? '' : 'active:cursor-move'} `}
           >
             <div className="flex items-center">
               <img
-                src="/assets/html-0.png"
+                src={icons.find((icon) => icon.id === window.name)?.path}
                 alt="Browser icon"
                 className="mr-1 h-4 w-4"
               />
-              <span className="overflow-hidden whitespace-nowrap font-micro text-xl">
-                My Portfolio
+              <span className="font-micro overflow-hidden text-xl whitespace-nowrap">
+                {window.name}
               </span>
             </div>
             <div className="flex items-center">
@@ -99,34 +101,36 @@ export default function OSWindow({ window, children }: OSWindowProps) {
         </div>
 
         {/* Content area */}
-        <div className="no-scrollbar no-scrollbar grow overflow-y-scroll bg-windows-gray-primary p-1">
+        <div className="no-scrollbar bg-windows-gray-primary grow overflow-y-scroll p-1">
           {/* White Area */}
-          <div className="h-full border-2 border-b-windows-white border-l-windows-gray-secondary border-r-windows-white border-t-windows-gray-secondary bg-windows-white p-4 shadow-windows-inset">
+          <div className="border-b-windows-white border-l-windows-gray-secondary border-r-windows-white border-t-windows-gray-secondary bg-windows-white shadow-windows-inset h-full border-2 p-4">
             {children}
           </div>
         </div>
 
         {/* Status bar */}
-        <div className="bg-windows-gray-primary p-1 text-xs">
-          <div className="flex h-5 items-center justify-between border border-b-windows-white border-l-windows-gray-secondary border-r-windows-white border-t-windows-gray-secondary p-1">
-            <span className="flex w-5/6 items-center overflow-hidden text-ellipsis whitespace-nowrap">
-              <img
-                src="/assets/html-0.png"
-                alt="Internet icon"
-                className="mr-1 h-4 w-4"
-              />
-              © {new Date().getFullYear()} Portfolio. All rights reserved.
-            </span>
-            <span className="flex items-center">
-              <img
-                src="/assets/world-1.png"
-                alt="Internet icon"
-                className="mr-1 h-4 w-4"
-              />
-              Internet
-            </span>
+        {window.name === AppsNames.PORTFOLIO && (
+          <div className="bg-windows-gray-primary p-1 text-xs">
+            <div className="border-b-windows-white border-l-windows-gray-secondary border-r-windows-white border-t-windows-gray-secondary flex h-5 items-center justify-between border p-1">
+              <span className="flex w-5/6 items-center overflow-hidden text-ellipsis whitespace-nowrap">
+                <img
+                  src="/assets/html-0.png"
+                  alt="Internet icon"
+                  className="mr-1 h-4 w-4"
+                />
+                © {new Date().getFullYear()} Portfolio. All rights reserved.
+              </span>
+              <span className="flex items-center">
+                <img
+                  src="/assets/world-1.png"
+                  alt="Internet icon"
+                  className="mr-1 h-4 w-4"
+                />
+                Internet
+              </span>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </Draggable>
   );

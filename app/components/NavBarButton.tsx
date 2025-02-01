@@ -1,8 +1,8 @@
 import { useContext } from 'react';
-import { WindowsContext, type DesktopWindow } from '~/contexts/WindowsContext';
+import { AppsContext, type DesktopWindow } from '~/contexts/AppsContext';
 
 export default function NavBarButton({ window }: { window: DesktopWindow }) {
-  const { toggleWindow } = useContext(WindowsContext);
+  const { toggleWindow } = useContext(AppsContext);
 
   return (
     <button
@@ -15,7 +15,7 @@ export default function NavBarButton({ window }: { window: DesktopWindow }) {
       onClick={() => toggleWindow(window.id)}
     >
       <div
-        className={`pointer-events-none absolute inset-0 border-windows-gray-secondary ${window.isMinimized ? 'border-b border-r' : 'border-l border-t'}`}
+        className={`border-windows-gray-secondary pointer-events-none absolute inset-0 ${window.isMinimized ? 'border-r border-b' : 'border-t border-l'}`}
       ></div>
       <div className="flex items-center">
         <img
