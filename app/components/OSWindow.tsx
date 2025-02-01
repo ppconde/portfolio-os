@@ -11,9 +11,14 @@ import { AppsContext, type DesktopWindow } from '~/contexts/AppsContext';
 type OSWindowProps = {
   window: DesktopWindow;
   children: React.ReactNode;
+  hideStatusBar?: boolean;
 };
 
-export default function OSWindow({ window, children }: OSWindowProps) {
+export default function OSWindow({
+  window,
+  children,
+  hideStatusBar = false,
+}: OSWindowProps) {
   const {
     closeWindow,
     minimizeWindow,
@@ -109,7 +114,7 @@ export default function OSWindow({ window, children }: OSWindowProps) {
         </div>
 
         {/* Status bar */}
-        {window.name === AppsNames.PORTFOLIO && (
+        {hideStatusBar && (
           <div className="bg-windows-gray-primary p-1 text-xs">
             <div className="border-b-windows-white border-l-windows-gray-secondary border-r-windows-white border-t-windows-gray-secondary flex h-5 items-center justify-between border p-1">
               <span className="flex w-5/6 items-center overflow-hidden text-ellipsis whitespace-nowrap">
