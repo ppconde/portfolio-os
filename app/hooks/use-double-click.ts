@@ -17,6 +17,7 @@ export function useDoubleClick(callback: () => void, delay: number = 300) {
     setTapCount((prevCount) => prevCount + 1);
 
     if (tapCount === 1) {
+      setTapCount(0); // Reset the tap count
       callback(); // Call the passed callback when double-tapped
     }
   };
