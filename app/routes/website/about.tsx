@@ -7,23 +7,7 @@ import HR from '~/components/website/HR';
 export default function About() {
   return (
     <Section>
-      <H2>About Me</H2>
-      <ContentEntry title="Welcome to my portfolio!">
-        I&apos;m <strong>Pedro Conde</strong>, a Software Engineer based in
-        Portugal, currently working at{' '}
-        <A
-          href="https://www.blip.pt/"
-          ariaLabel="Visit Blip.pt website"
-          title="This is a cool company!"
-        >
-          Blip.pt
-        </A>
-        .
-      </ContentEntry>
-
-      <HR />
-
-      <H2>Education</H2>
+      <H2>About</H2>
       <ContentEntry
         title="University of Aveiro"
         subtitle="[2011-2017] - Aveiro"
@@ -37,13 +21,14 @@ export default function About() {
         >
           University of Aveiro
         </A>{' '}
-        in 2017. During my studies, I had the opportunity to explore diverse
-        areas such as electronics, signal processing, computer vision and more.
+        During my studies, I had the opportunity to explore diverse areas such
+        as electronics, telecommunications, computer vision, and more.
+        <br />
         And as a result, I worked on my thesis project called{' '}
         <strong>Neuromuscular Tracking by Ultrasound Imaging</strong> in the
-        field of computer vision where I developed an application using C++ and
-        OpenCV to track and quantify human nerve-structure displacement in
-        real-time.
+        field of computer vision where I developed an application using{' '}
+        <strong>C++</strong> and <strong>OpenCV</strong> to track and quantify
+        human nerve-structure displacement in real-time.
       </ContentEntry>
 
       <ContentEntry
@@ -60,9 +45,9 @@ export default function About() {
           TalTech
         </A>{' '}
         in Estonia. This international experience enriched my academic journey,
-        allowing me to study Electronics and Telecommunications Engineering in a
-        different cultural context while gaining valuable global perspectives.
-        It also influenced personally to join ESN Aveiro.
+        allowing me to study in a different cultural context while gaining
+        valuable global perspectives. It also influenced personally to join ESN
+        Aveiro.
       </ContentEntry>
 
       <ContentEntry
@@ -78,9 +63,11 @@ export default function About() {
         >
           EDIT
         </A>
-        . The program covered essential web technologies including UX/UI
-        fundamentals, HTML5, CSS3, responsive design, jQuery, and React
-        foundations.
+        . The program covered essential web technologies including{' '}
+        <strong>UX/UI fundamentals</strong>, <strong>HTML5</strong>,{' '}
+        <strong>CSS3</strong>, <strong>Responsive Design</strong>,{' '}
+        <strong>JavaScript</strong>, <strong>jQuery</strong> and{' '}
+        <strong>React</strong>.
       </ContentEntry>
 
       <HR />
