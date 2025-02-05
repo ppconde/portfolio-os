@@ -26,7 +26,7 @@ export default function BiosScreen() {
   }, [setBootState]);
 
   return (
-    <div className="h-screen w-screen bg-black font-perfect-dos-vga-win text-windows-teal">
+    <div className="font-perfect-dos-vga-win text-windows-teal h-screen w-screen bg-black">
       <div className="flex h-full w-full flex-col p-4 sm:p-6 md:p-8">
         <div
           className={`space-y-1 text-center md:mt-6 md:space-y-2 md:pl-2 md:text-left ${showFourthSection ? 'hidden' : ''}`}
@@ -40,7 +40,7 @@ export default function BiosScreen() {
         <div
           className={`mt-6 space-y-1 text-center md:space-y-2 md:pl-2 md:text-left ${showFourthSection ? 'hidden' : ''}`}
         >
-          <p className="text-lg font-bold text-windows-super-blue md:text-xl">
+          <p className="text-windows-super-blue text-lg font-bold md:text-xl">
             Overclocked Potato X3000
           </p>
           <p>BIOS Version 1.23.456</p>
@@ -50,7 +50,7 @@ export default function BiosScreen() {
         <div
           className={`mt-6 flex flex-col items-center text-center md:items-start md:pl-2 md:text-left ${showFourthSection ? 'hidden' : ''}`}
         >
-          <div className="font-micro text-5xl font-bold text-windows-super-blue md:text-3xl">
+          <div className="font-micro text-windows-super-blue text-5xl font-bold md:text-3xl">
             PotatoChip™
           </div>
         </div>
@@ -87,7 +87,7 @@ export default function BiosScreen() {
         <div className={`grow ${showFourthSection ? 'hidden' : ''}`}></div>
 
         <div
-          className={`mb-4 text-center text-windows-super-blue md:mb-0 md:pl-2 md:text-left ${showFourthSection ? 'hidden' : ''}`}
+          className={`text-windows-super-blue mb-4 text-center md:mb-0 md:pl-2 md:text-left ${showFourthSection ? 'hidden' : ''}`}
         >
           <p>
             Press &lt;Del&gt; to enter SETUP or &lt;F1&gt; to question your life
