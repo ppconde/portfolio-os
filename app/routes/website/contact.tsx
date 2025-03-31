@@ -65,7 +65,7 @@ export default function Contact() {
     if (fetcher.state === 'idle') {
       if (fetcher.data && !errors) {
         setNotification({
-          message: 'Form submitted successfully!',
+          message: 'Email sent successfully!',
           type: 'success',
         });
       } else if (errors) {
