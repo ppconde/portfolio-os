@@ -21,7 +21,7 @@
     "@react-router/cloudflare": "^7.2.0",
     "@react-router/fs-routes": "^7.1.5",
     "esbuild": "^0.25.1",
-    "isbot": "^5.1.19",
+    "isbot": "^5.1.25",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-draggable": "^4.4.6",
