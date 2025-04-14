@@ -28,7 +28,7 @@
     "react-google-recaptcha-enterprise": "^1.0.3",
     "react-router": "^7.1.5",
     "react-simple-typewriter": "^5.0.1",
-    "resend": "^4.1.2",
+    "resend": "^4.2.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
