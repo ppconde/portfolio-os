@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@react-router/cloudflare": "^7.2.0",
-    "@react-router/fs-routes": "^7.1.5",
+    "@react-router/fs-routes": "^7.5.2",
     "esbuild": "^0.25.2",
     "isbot": "^5.1.25",
     "react": "^19.1.0",
