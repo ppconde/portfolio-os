@@ -1,11 +1,22 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 type OnEvent = 'click';
 
 export const usePlaySound = (sound: string, on?: OnEvent) => {
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
   useEffect(() => {
-    const audio = new Audio(sound);
-    const playAudio = () => audio.play();
+    audioRef.current = new Audio(sound);
+
+    const playAudio = () => {
+      if (audioRef.current) {
+        // Reset playback to start
+        audioRef.current.currentTime = 0;
+        audioRef.current
+          .play()
+          .catch((error) => console.error('Error playing audio:', error));
+      }
+    };
 
     if (on === 'click') {
       document.addEventListener('click', playAudio);
@@ -13,6 +24,9 @@ export const usePlaySound = (sound: string, on?: OnEvent) => {
       playAudio();
     }
 
-    return () => document.removeEventListener('click', playAudio);
+    return () => {
+      document.removeEventListener('click', playAudio);
+      audioRef.current = null;
+    };
   }, [on, sound]);
 };
