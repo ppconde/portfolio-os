@@ -19,7 +19,6 @@
       "@react-router/cloudflare",
       "vite/client",
       "@cloudflare/workers-types/2023-07-01",
-      "@react-router/node"
     ],
     "rootDirs": [
       ".",
