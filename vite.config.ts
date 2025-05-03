@@ -1,19 +1,14 @@
-import { reactRouter } from '@react-router/dev/vite';
-import { cloudflareDevProxy } from '@react-router/dev/vite/cloudflare';
-import { defineConfig } from 'vite';
-import tsconfigPaths from 'vite-tsconfig-paths';
-import { getLoadContext } from './load-context';
-import path from 'path';
+import { reactRouter } from "@react-router/dev/vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
+import tailwindcss from "@tailwindcss/vite";
+import { defineConfig } from "vite";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
   plugins: [
-    cloudflareDevProxy({ getLoadContext }),
+    cloudflare({ viteEnvironment: { name: "ssr" } }),
+    tailwindcss(),
     reactRouter(),
     tsconfigPaths(),
   ],
-  resolve: {
-    alias: {
-      '~': path.resolve(__dirname, 'app'),
-    },
-  },
 });
