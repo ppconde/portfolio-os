@@ -4,18 +4,15 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "react-router build",
-    "deploy": "npm run build && wrangler pages deploy",
     "dev": "react-router dev --host",
     "debug": "NODE_OPTIONS='--inspect-brk' npm run dev",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
-    "start": "wrangler pages dev ./build/client --d1 DB=5c98e7f0-f7f6-47b9-af4c-e7ea32bd52b8 --live-reload --persist-to=./wrangler",
     "typecheck": "react-router typegen && tsc --watch",
     "typegen": "wrangler types",
-    "preview": "npm run build && wrangler pages dev",
     "cf-typegen": "wrangler types",
-    "d1-migrate:local": "wrangler d1 execute portfolio-d1 --local --file=./schema.sql",
-    "d1-migrate": "wrangler d1 execute portfolio-d1 --remote --file=./schema.sql"
+    "build": "react-router build",
+    "deploy": "pnpm run build && wrangler deploy",
+    "preview": "pnpm run build && vite preview"
   },
   "dependencies": {
     "@cloudflare/vite-plugin": "^1.1.0",
