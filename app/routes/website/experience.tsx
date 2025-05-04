@@ -18,37 +18,45 @@ export default function Experience() {
           title="This is a cool company!"
         >
           Blip.pt
-        </A>{' '}
-        I worked with technologies like{' '}
-        <strong>
-          <em>React, TypeScript, Redux, GraphQL, Node.js</em>
-        </strong>{' '}
-        and{' '}
-        <strong>
-          <em>PostgreSQL</em>
-        </strong>{' '}
-        to build and maintain software for{' '}
+        </A>
+        , I helped design, build, and maintain software for{' '}
         <A
           href="https://www.paddypower.com/bet"
-          ariaLabel="Visit Paddy PowerPaddy's website"
+          ariaLabel="Visit Paddy Power's website"
           title="Visit Paddy Power – Innovative and entertaining sports betting platform"
         >
-          PaddyPower
-        </A>
-        &apos;s retail betting shops across <strong>700+</strong> locations. I
-        contributed to both legacy and greenfield projects, focusing on
-        reliability through unit, visual and regression testing. I also helped
-        build internal tools such as the fullstack{' '}
-        <strong>Device Management App</strong> and developed a{' '}
-        <strong>multithreaded Node.js ping monitor</strong> — originally a
-        hackathon project — used by our team to track device availability.
+          Paddy Power
+        </A>{' '}
+        retail shops, supporting <strong>700+ locations</strong> across the UK
+        and Ireland. I worked on both legacy and greenfield projects, with a
+        strong focus on reliability through unit, visual, and regression
+        testing.
+        <ul className="mt-4 list-disc space-y-4 pl-6">
+          <li>
+            Maintained the <strong>Customer Interface Terminal</strong>, a web
+            app on Android tablets used by customers to check live race and
+            sports results.
+          </li>
+          <li>
+            Helped build the <strong>Device Management App</strong>, a fullstack
+            internal tool for configuring and managing shop screens remotely.
+          </li>
+          <li>
+            Created a <strong>multithreaded Node.js ping monitor</strong> during
+            a hackathon—now used by our team to track device availability across
+            all locations.
+          </li>
+        </ul>
+        <br />
+        <strong>Skills:</strong> React, TypeScript, Redux, GraphQL, Node.js,
+        PostgreSQL
       </ContentEntry>
 
       <ContentEntry
         title="Altice Labs - Informatics Consultant"
         subtitle="[2018-2020] - Aveiro"
       >
-        I began my professional journey at{' '}
+        At{' '}
         <A
           href="https://www.alticelabs.com/"
           ariaLabel="Visit Altice Labs website"
@@ -56,15 +64,12 @@ export default function Experience() {
         >
           Altice Labs
         </A>
-        , a company dedicated to creating innovative solutions for the
-        telecommunications and IT sectors. During my time there, I was part of
-        the <strong>Operations Support System</strong> (OSS) team, where I
-        developed workflows using{' '}
-        <strong>
-          <em>XML/XSLT</em>
-        </strong>{' '}
-        for <em>APIs</em> used in network management, debugged systems and wrote
-        technical specifications.
+        , I joined the <strong>Operations Support System</strong> team, where I
+        developed API workflows and debugged systems for telecom network
+        management. I also contributed to technical documentation and service
+        integration.
+        <br />
+        <strong>Skills:</strong> XML, XSLT, XPath, Java, SoapUI, WireMock
       </ContentEntry>
     </Section>
   );
