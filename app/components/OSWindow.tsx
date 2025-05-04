@@ -4,7 +4,6 @@ import Draggable, {
   type DraggableEvent,
 } from 'react-draggable';
 import WindowButton from '~/components/WindowButton';
-import { AppsNames } from '~/constants/apps-names.const';
 import { icons } from '~/constants/icons.const';
 import { AppsContext, type DesktopWindow } from '~/contexts/AppsContext';
 

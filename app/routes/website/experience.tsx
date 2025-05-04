@@ -7,28 +7,41 @@ export default function Experience() {
   return (
     <Section>
       <H2>Experience</H2>
-
       <ContentEntry
-        title="Blip.pt - Frontend Engineer"
+        title="Blip.pt - Software Engineer"
         subtitle="[2020-Present] - Porto"
       >
-        I joined{' '}
+        At{' '}
         <A
           href="https://www.blip.pt/"
           ariaLabel="Visit Blip.pt website"
           title="This is a cool company!"
         >
           Blip.pt
+        </A>{' '}
+        I worked with technologies like{' '}
+        <strong>
+          <em>React, TypeScript, Redux, GraphQL, Node.js</em>
+        </strong>{' '}
+        and{' '}
+        <strong>
+          <em>PostgreSQL</em>
+        </strong>{' '}
+        to build and maintain software for{' '}
+        <A
+          href="https://www.paddypower.com/bet"
+          ariaLabel="Visit Paddy PowerPaddy's website"
+          title="Visit Paddy Power – Innovative and entertaining sports betting platform"
+        >
+          PaddyPower
         </A>
-        , where I deepened my technical expertise and worked with a broad range
-        of technologies, including{' '}
-        <em>
-          GraphQL, Node.js, TypeScript, PostgreSQL, React, Webpack, Jest, Redux
-        </em>
-        , and <em>Docker</em>. I contributed to unit and functional testing, and
-        I planned and developed features for multiple apps catering to betting
-        brands. This role not only expanded my technical skill set but also gave
-        me the chance to work on complex systems and deliver value to end-users.
+        &apos;s retail betting shops across <strong>700+</strong> locations. I
+        contributed to both legacy and greenfield projects, focusing on
+        reliability through unit, visual and regression testing. I also helped
+        build internal tools such as the fullstack{' '}
+        <strong>Device Management App</strong> and developed a{' '}
+        <strong>multithreaded Node.js ping monitor</strong> — originally a
+        hackathon project — used by our team to track device availability.
       </ContentEntry>
 
       <ContentEntry
@@ -45,11 +58,13 @@ export default function Experience() {
         </A>
         , a company dedicated to creating innovative solutions for the
         telecommunications and IT sectors. During my time there, I was part of
-        the Operations Support System team, where I gained valuable experience
-        in organizing and planning XML workflows, developing product features,
-        debugging systems, and writing technical specifications. It was a great
-        opportunity to sharpen my problem-solving skills and collaborate on
-        impactful projects.
+        the <strong>Operations Support System</strong> (OSS) team, where I
+        developed workflows using{' '}
+        <strong>
+          <em>XML/XSLT</em>
+        </strong>{' '}
+        for <em>APIs</em> used in network management, debugged systems and wrote
+        technical specifications.
       </ContentEntry>
     </Section>
   );

@@ -14,14 +14,13 @@ export const NavItem = ({
   <NavLink
     to={to}
     className={({ isActive }) =>
-      `px-4 py-2 font-perfect-dos-vga-win underline transition-colors duration-200 ${
+      `font-perfect-dos-vga-win px-4 py-2 underline transition-colors duration-200 ${
         isActive && !disableIsActive
           ? 'text-windows-purple'
           : 'text-windows-super-blue hover:no-underline'
       }`
     }
     onClick={toggleMenu}
-    viewTransition
     prefetch="intent"
   >
     {children}

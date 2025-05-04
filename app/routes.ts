@@ -17,5 +17,4 @@ export default [
       route('contact', 'routes/website/contact.tsx'),
     ]),
   ]),
-  route('/msn', 'routes/msn.tsx'),
 ] satisfies RouteConfig;

@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import { createContext, useState } from 'react';
 import type { AppsNames } from '~/constants/apps-names.const';
 import { initialWindows } from '~/constants/initial-windows.const';
 
