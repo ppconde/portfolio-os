@@ -1,8 +1,8 @@
 export default function VerticalSeparator() {
   return (
     <>
-      <div className="h-[90%] w-[2px] bg-windows-gray-secondary" />
-      <div className="h-[90%] w-[2px] bg-windows-white" />
+      <div className="bg-windows-gray-secondary h-[90%] w-[2px]" />
+      <div className="bg-windows-white h-[90%] w-[2px]" />
     </>
   );
 }
