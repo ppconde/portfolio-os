@@ -39,8 +39,32 @@ export const links: LinksFunction = () => [
 
 export const meta: MetaFunction = () => {
   return [
+    // HTML Meta Tags
     { title: 'Ppconde OS' },
     { name: 'description', content: 'Welcome to Ppconde OS' },
+
+    // Facebook Meta Tags (Open Graph)
+    { property: 'og:url', content: 'https://os.ppconde.com' },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:title', content: 'Ppconde OS' },
+    { property: 'og:description', content: 'Welcome to Ppconde OS' },
+    {
+      property: 'og:image',
+      content:
+        'https://opengraph.b-cdn.net/production/images/bc9e9f06-566a-40dc-9f5c-c89f66a248d5.png?token=YralvLNChoeHjsV1Hd53yqCD6FvXWQhnGOgP9GQ1yKQ&height=540&width=1200&expires=33282368367',
+    },
+
+    // Twitter Meta Tags
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { property: 'twitter:domain', content: 'os.ppconde.com' },
+    { property: 'twitter:url', content: 'https://os.ppconde.com' },
+    { name: 'twitter:title', content: 'Ppconde OS' },
+    { name: 'twitter:description', content: 'Welcome to Ppconde OS' },
+    {
+      name: 'twitter:image',
+      content:
+        'https://opengraph.b-cdn.net/production/images/bc9e9f06-566a-40dc-9f5c-c89f66a248d5.png?token=YralvLNChoeHjsV1Hd53yqCD6FvXWQhnGOgP9GQ1yKQ&height=540&width=1200&expires=33282368367',
+    },
   ];
 };
 
