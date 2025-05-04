@@ -69,6 +69,7 @@ export default function Experience() {
         management. I also contributed to technical documentation and service
         integration.
         <br />
+        <br />
         <strong>Skills:</strong> XML, XSLT, XPath, Java, SoapUI, WireMock
       </ContentEntry>
     </Section>
