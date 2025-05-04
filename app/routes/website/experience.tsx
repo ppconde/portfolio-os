@@ -9,7 +9,27 @@ export default function Experience() {
       <H2>Experience</H2>
       <ContentEntry
         title="Blip.pt - Software Engineer"
-        subtitle="[2020-Present] - Porto"
+        subtitle="[2024-Present] - Porto"
+      >
+        Joined a new team supporting the web platforms of{' '}
+        <strong>PaddyPower</strong>, <strong>Betfair</strong>, and{' '}
+        <strong>Sky Betting & Gaming</strong>. Took on a more active role in
+        technical decisions and team coordination. Contributed to{' '}
+        <strong>TBD</strong>, a <strong>multi-brand</strong> and{' '}
+        <strong>cross-platform</strong> (web and native) feature powered by{' '}
+        <strong>Prismic</strong>, enabling content teams to customize content
+        across Betfair and SkyBet&apos;s websites and apps. Built in
+        collaboration with multiple teams, it was both technically and
+        communication-wise demanding.
+        <br />
+        <br />
+        <strong>Skills:</strong> React, React Native, TypeScript, Redux Saga,
+        GraphQL, Jest
+      </ContentEntry>
+
+      <ContentEntry
+        title="Blip.pt - Software Engineer"
+        subtitle="[2020-2024] - Porto"
       >
         At{' '}
         <A
@@ -23,7 +43,7 @@ export default function Experience() {
         <A
           href="https://www.paddypower.com/bet"
           ariaLabel="Visit Paddy Power's website"
-          title="Visit Paddy Power – Innovative and entertaining sports betting platform"
+          title="Visit Paddy Power - Innovative and entertaining sports betting platform"
         >
           Paddy Power
         </A>{' '}
@@ -48,15 +68,14 @@ export default function Experience() {
           </li>
         </ul>
         <br />
-        <strong>Skills:</strong> React, TypeScript, Redux, GraphQL, Node.js,
-        PostgreSQL
+        <strong>Skills:</strong> React, TypeScript, GraphQL, Node.js, PostgreSQL
       </ContentEntry>
 
       <ContentEntry
         title="Altice Labs - Informatics Consultant"
         subtitle="[2018-2020] - Aveiro"
       >
-        At{' '}
+        Joined the <strong>Operations Support System</strong> team at{' '}
         <A
           href="https://www.alticelabs.com/"
           ariaLabel="Visit Altice Labs website"
@@ -64,9 +83,8 @@ export default function Experience() {
         >
           Altice Labs
         </A>
-        , I joined the <strong>Operations Support System</strong> team, where I
-        developed API workflows and debugged systems for telecom network
-        management. I also contributed to technical documentation and service
+        , where I developed and debugged API workflows used for telecom network
+        management. Also wrote technical specs and supported service
         integration.
         <br />
         <br />
