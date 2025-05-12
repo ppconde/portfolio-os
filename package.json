@@ -24,7 +24,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-draggable": "^4.4.6",
-    "react-router": "^7.5.3",
+    "react-router": "^7.6.0",
     "react-simple-typewriter": "^5.0.1",
     "resend": "^4.5.0",
     "zod": "^3.24.3"
