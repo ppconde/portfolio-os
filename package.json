@@ -32,7 +32,7 @@
   "devDependencies": {
     "@eslint/compat": "^1.2.9",
     "@eslint/eslintrc": "^3.3.1",
-    "@eslint/js": "^9.26.0",
+    "@eslint/js": "^9.27.0",
     "@react-router/dev": "^7.5.3",
     "@tailwindcss/container-queries": "^0.1.1",
     "@types/eslint__js": "^8.42.3",
