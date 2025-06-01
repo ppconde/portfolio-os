@@ -10,6 +10,13 @@
 	"observability": {
 		"enabled": true
 	},
+	"secrets_store_secrets": [
+		{
+			"store_id": "0b4a28417fcf4ab9946e2b14d442ef81",
+			"secret_name": "VITE_GITHUB_KEY",
+			"binding": "VITE_GITHUB_KEY"
+		}
+	],
 	/**
 	 * Smart Placement
 	 * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
