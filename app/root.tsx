@@ -53,7 +53,7 @@ export const meta: MetaFunction = () => {
     {
       property: 'og:image',
       content:
-        'https://opengraph.b-cdn.net/production/images/bc9e9f06-566a-40dc-9f5c-c89f66a248d5.png?token=YralvLNChoeHjsV1Hd53yqCD6FvXWQhnGOgP9GQ1yKQ&height=540&width=1200&expires=33282368367',
+        'https://repository-images.githubusercontent.com/870859488/48c376c0-ef9e-4197-8912-f5c4cbeafc51',
     },
 
     // Twitter Meta Tags
@@ -65,7 +65,7 @@ export const meta: MetaFunction = () => {
     {
       name: 'twitter:image',
       content:
-        'https://opengraph.b-cdn.net/production/images/bc9e9f06-566a-40dc-9f5c-c89f66a248d5.png?token=YralvLNChoeHjsV1Hd53yqCD6FvXWQhnGOgP9GQ1yKQ&height=540&width=1200&expires=33282368367',
+        'https://repository-images.githubusercontent.com/870859488/48c376c0-ef9e-4197-8912-f5c4cbeafc51',
     },
   ];
 };
