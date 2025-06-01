@@ -3,6 +3,9 @@ import { ServerRouter } from 'react-router';
 import { isbot } from 'isbot';
 import { renderToReadableStream } from 'react-dom/server';
 
+import { ApolloProvider } from '@apollo/client/index.js';
+import { makeClient } from './graphql';
+
 export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
@@ -13,9 +16,12 @@ export default async function handleRequest(
 ) {
   let shellRendered = false;
   const userAgent = request.headers.get('user-agent');
+  const client = makeClient(request);
 
   const body = await renderToReadableStream(
-    <ServerRouter context={routerContext} url={request.url} />,
+    <ApolloProvider client={client}>
+      <ServerRouter context={routerContext} url={request.url} />
+    </ApolloProvider>,
     {
       onError(error: unknown) {
         responseStatusCode = 500;

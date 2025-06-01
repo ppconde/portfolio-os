@@ -4,6 +4,8 @@ import { Links, Meta, Scripts, ScrollRestoration } from 'react-router';
 import './tailwind.css';
 import { Screen } from './components/Screen';
 import BootProvider from './contexts/BootContext';
+import { ApolloProvider } from '@apollo/client/index.js';
+import { makeClient } from './graphql';
 
 export const links: LinksFunction = () => [
   {
@@ -87,9 +89,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const client = makeClient();
+
   return (
-    <BootProvider>
-      <Screen />
-    </BootProvider>
+    <ApolloProvider client={client}>
+      <BootProvider>
+        <Screen />
+      </BootProvider>
+    </ApolloProvider>
   );
 }
