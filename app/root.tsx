@@ -20,6 +20,11 @@ export const links: LinksFunction = () => [
     crossOrigin: 'anonymous',
   },
   {
+    rel: 'preconnect',
+    href: 'https://fonts.cdnfonts.com',
+    crossOrigin: 'anonymous',
+  },
+  {
     rel: 'stylesheet',
     href: 'https://fonts.googleapis.com/css2?family=Micro+5&display=swap',
     crossOrigin: 'anonymous',
