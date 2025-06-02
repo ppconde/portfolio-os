@@ -10,6 +10,12 @@
 	"observability": {
 		"enabled": true
 	},
+	"kv_namespaces": [
+		{
+			"binding": "PORTFOLIO_OS",
+			"id": "4024c012098c4498922e7af3e1fab339"
+		}
+	],
 	/**
 	 * Smart Placement
 	 * Docs: https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement

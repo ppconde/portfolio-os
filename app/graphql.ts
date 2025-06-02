@@ -12,6 +12,16 @@ export const makeClient = () => {
         'User-Agent': 'portfolio-os (https://os.ppconde.com/)',
       },
     }),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+      typePolicies: {
+        Query: {
+          fields: {
+            user: {
+              merge: true,
+            },
+          },
+        },
+      },
+    }),
   });
 };
