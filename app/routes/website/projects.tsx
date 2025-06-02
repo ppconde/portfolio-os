@@ -5,22 +5,34 @@ import { GET_REPOS } from '~/queries/getPinnedRepos';
 import ProjectCard from '~/components/website/ProjectCard';
 import type { Route } from './+types/projects';
 import H2 from '~/components/website/H2';
-import { data, type LoaderFunctionArgs } from 'react-router';
+import { data } from 'react-router';
+
+type Repo = {
+  id: string;
+  name: string;
+  description?: string | null;
+  url: string;
+  homepageUrl: string;
+  openGraphImageUrl: string;
+  languages: {
+    id: string;
+    name: string;
+    color: string | null;
+  }[];
+};
 
 const CACHE_KEY = 'pinned_repos';
 const CACHE_TTL_SECONDS = 60 * 10; // 10 minutes
 
-export async function loader({ context }: LoaderFunctionArgs) {
-  const kv = context.cloudflare.env.PORTFOLIO_OS as KVNamespace;
+export async function loader({ context }: Route.LoaderArgs) {
+  const kv = context.cloudflare.env.PORTFOLIO_OS;
 
   // Try getting cached data
-  const cached = await kv.get(CACHE_KEY, {
+  const cached = await kv.get<Repo[]>(CACHE_KEY, {
     type: 'json',
   });
 
-  if (cached) {
-    return cached;
-  }
+  if (cached) return cached;
 
   const client = makeClient();
   const {
@@ -66,7 +78,7 @@ export async function loader({ context }: LoaderFunctionArgs) {
     });
 
   // Cache it in KV
-  kv.put(CACHE_KEY, JSON.stringify(repos), {
+  await kv.put(CACHE_KEY, JSON.stringify(repos), {
     expirationTtl: CACHE_TTL_SECONDS,
   });
 

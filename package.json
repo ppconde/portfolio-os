@@ -9,7 +9,6 @@
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "typecheck": "react-router typegen && tsc --watch",
     "typegen": "wrangler types",
-    "cf-typegen": "wrangler types",
     "compile": "dotenv -e .env.local graphql-codegen",
     "watch": "dotenv -e .env.local graphql-codegen -w",
     "build": "react-router build",
