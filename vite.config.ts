@@ -8,6 +8,17 @@ export default defineConfig({
   build: {
     ssr: true,
     minify: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react')) return 'react';
+            if (id.includes('tailwindcss')) return 'tailwind';
+            return 'vendor';
+          }
+        },
+      },
+    },
   },
   plugins: [
     cloudflare({ viteEnvironment: { name: 'ssr' } }),
