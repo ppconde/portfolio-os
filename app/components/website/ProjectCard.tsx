@@ -26,12 +26,18 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   return (
     <div className="card-shadow flex w-full max-w-md flex-col justify-between gap-2 border border-gray-800 bg-white p-2 text-sm">
-      {openGraphImageUrl && (
-        <img
-          src={openGraphImageUrl}
-          alt="OpenGraph preview"
-          className="max-h-full w-auto rounded object-contain"
-        />
+      {openGraphImageUrl && homepageUrl && (
+        <A
+          href={homepageUrl}
+          ariaLabel={`View ${name} site`}
+          title={`View ${name} site`}
+        >
+          <img
+            src={openGraphImageUrl}
+            alt="OpenGraph preview"
+            className="max-h-full w-auto rounded object-contain"
+          />
+        </A>
       )}
 
       <div className="flex items-center justify-between">
@@ -80,15 +86,6 @@ export default function ProjectCard({
             ))}
           </div>
         ) : null}
-        {homepageUrl && (
-          <A
-            href={homepageUrl}
-            ariaLabel={`View ${name} site`}
-            title={`View ${name} site`}
-          >
-            View site
-          </A>
-        )}
       </div>
     </div>
   );
