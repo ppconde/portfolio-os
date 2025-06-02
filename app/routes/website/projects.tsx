@@ -22,7 +22,7 @@ type Repo = {
 };
 
 const CACHE_KEY = 'pinned_repos';
-const CACHE_TTL_SECONDS = 60 * 10; // 10 minutes
+const CACHE_TTL_SECONDS = 60 * 60; // 1 hour
 
 export async function loader({ context }: Route.LoaderArgs) {
   const kv = context.cloudflare.env.PORTFOLIO_OS;
