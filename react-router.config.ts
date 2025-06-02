@@ -12,7 +12,6 @@ export default {
       '/website/about',
       '/website/contact',
       '/website/experience',
-      '/website/home',
     ];
   },
 } satisfies Config;
