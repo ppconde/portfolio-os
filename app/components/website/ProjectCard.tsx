@@ -1,10 +1,10 @@
+import type { Maybe } from 'graphql/jsutils/Maybe';
 import A from './A';
 
 type ProjectCardProps = {
   name?: string;
-  description?: string;
+  description?: Maybe<string>;
   url?: string;
-  stargazerCount?: number;
   homepageUrl?: string;
   openGraphImageUrl?: string;
   languages?: LanguageType[];
@@ -13,59 +13,55 @@ type ProjectCardProps = {
 type LanguageType = {
   id: string;
   name: string;
-  color: string;
+  color: Maybe<string>;
 };
 
 export default function ProjectCard({
   name,
   description,
   url,
-  stargazerCount,
   homepageUrl,
   openGraphImageUrl,
   languages,
 }: ProjectCardProps) {
   return (
-    <div className="card-shadow flex w-full max-w-md flex-col justify-between border border-gray-800 bg-white p-2 text-sm">
-      <div className="mb-2 flex items-center justify-between">
-        {url ? (
-          <A
-            href={url}
-            ariaLabel={`View ${name} on GitHub`}
-            title={`View ${name} on GitHub`}
-          >
-            {name}
-          </A>
-        ) : (
-          <span>{name}</span>
-        )}
-        <div className="text-xs text-yellow-400">
-          ★ <span className="text-gray-900">{stargazerCount}</span>
-        </div>
-      </div>
-
+    <div className="card-shadow flex w-full max-w-md flex-col justify-between gap-2 border border-gray-800 bg-white p-2 text-sm">
       {openGraphImageUrl && (
         <img
           src={openGraphImageUrl}
           alt="OpenGraph preview"
-          className="mb-2 max-h-full w-auto rounded object-contain"
+          className="max-h-full w-auto rounded object-contain"
         />
       )}
 
+      <div className="flex items-center justify-between">
+        {url ? (
+          <A
+            href={url}
+            ariaLabel={`View ${name ?? 'project'} on GitHub`}
+            title={`View ${name ?? 'project'} on GitHub`}
+          >
+            <strong>{name}</strong>
+          </A>
+        ) : (
+          <span>{name}</span>
+        )}
+      </div>
+
       {description && (
-        <p className="mb-2 font-mono text-xs text-gray-900">{description}</p>
+        <p className="grow font-mono text-xs text-gray-900">{description}</p>
       )}
 
-      <div className="vertical-align-middle flex items-center justify-between text-xs">
+      <div className="flex items-center justify-between text-xs">
         {languages?.length ? (
-          <div className="flex flex-wrap gap-1">
+          <div className="flex items-center gap-1">
             {languages.map(({ id, name, color }) => (
               <div
                 key={id}
                 className="flex flex-row items-center justify-center gap-1"
               >
                 <svg
-                  style={{ color }}
+                  style={{ color: color ?? 'currentColor' }}
                   width="10"
                   height="10"
                   viewBox="0 0 20 20"
