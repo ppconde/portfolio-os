@@ -11,7 +11,7 @@ export default function WindowButton({
 }: ButtonProps) {
   return (
     <button
-      className={`border-windows flex items-center bg-windows-gray-primary p-1`}
+      className={`border-windows bg-windows-gray-primary flex items-center p-1`}
       onClick={onClick}
       // Needed for mobile touch events
       onTouchEnd={(e) => {
@@ -24,7 +24,7 @@ export default function WindowButton({
         <img
           src={imageName}
           alt={imageAlt}
-          className="image-rendering-pixelated object-center"
+          className="image-rendering-pixelated h-2.5 w-auto object-center"
         />
       )}
     </button>

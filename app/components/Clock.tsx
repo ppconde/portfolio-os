@@ -13,18 +13,18 @@ export default function Clock() {
   };
   return (
     <>
-      <div className="border-windows-inverted my-1 ml-2 mr-0 flex h-[70%] min-w-20 items-center justify-center border p-0.5">
+      <div className="border-windows-inverted my-1 mr-0 ml-2 flex h-[70%] min-w-20 items-center justify-center border p-0.5">
         <button
           onClick={toggleImage}
           className="mr-1 h-full border-0 bg-transparent p-0"
         >
           <img
-            className="h-full object-contain"
+            className="h-full w-auto object-contain"
             src={imgPath}
             alt="Speaker icon"
           />
         </button>
-        <p className="text-ms-reference text-center text-xs font-thin uppercase tracking-tighter">
+        <p className="text-ms-reference text-center text-xs font-thin tracking-tighter uppercase">
           {time}
         </p>
       </div>

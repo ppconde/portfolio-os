@@ -26,17 +26,17 @@ export const links: LinksFunction = () => [
   },
   {
     rel: 'stylesheet',
-    href: 'https://fonts.cdnfonts.com/css/px-sans-nouveaux',
+    href: 'https://fonts.cdnfonts.com/css/px-sans-nouveaux?display=optional',
     crossOrigin: 'anonymous',
   },
   {
     rel: 'stylesheet',
-    href: 'https://fonts.cdnfonts.com/css/perfect-dos-vga-437',
+    href: 'https://fonts.cdnfonts.com/css/perfect-dos-vga-437?display=optional',
     crossOrigin: 'anonymous',
   },
   {
     rel: 'stylesheet',
-    href: 'https://fonts.cdnfonts.com/css/ms-reference-sans-serif',
+    href: 'https://fonts.cdnfonts.com/css/ms-reference-sans-serif?display=optional',
     crossOrigin: 'anonymous',
   },
 ];
