@@ -6,6 +6,8 @@ import { Screen } from './components/Screen';
 import BootProvider from './contexts/BootContext';
 import { ApolloProvider } from '@apollo/client/index.js';
 import { makeClient } from './graphql';
+import type { Route } from './+types/root';
+import BlueScreen from './components/BlueScreen';
 
 export const links: LinksFunction = () => [
   {
@@ -98,4 +100,8 @@ export default function App() {
       </BootProvider>
     </ApolloProvider>
   );
+}
+
+export function ErrorBoundary({ error }: { error: Route.ErrorBoundaryProps }) {
+  return <BlueScreen error={error} />;
 }
