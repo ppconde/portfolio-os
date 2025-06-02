@@ -26,7 +26,7 @@ export const links: LinksFunction = () => [
   },
   {
     rel: 'stylesheet',
-    href: 'https://fonts.googleapis.com/css2?family=Micro+5&display=swap',
+    href: 'https://fonts.googleapis.com/css2?family=Micro+5&display=swap&text=PotatoChip™',
     crossOrigin: 'anonymous',
   },
   {
