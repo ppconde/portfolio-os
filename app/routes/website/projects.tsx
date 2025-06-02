@@ -1,5 +1,5 @@
 import type { GetPinnedItemsQuery } from '~/__generated__/graphql';
-import { makeClient } from '~/graphql';
+import { graphqlClient } from '~/graphql';
 import { GET_REPOS } from '~/queries/getPinnedRepos';
 
 import ProjectCard from '~/components/website/ProjectCard';
@@ -34,12 +34,11 @@ export async function loader({ context }: Route.LoaderArgs) {
 
   if (cached) return cached;
 
-  const client = makeClient();
   const {
     data: items,
     error,
     errors,
-  } = await client.query<GetPinnedItemsQuery>({
+  } = await graphqlClient.query<GetPinnedItemsQuery>({
     query: GET_REPOS,
   });
 

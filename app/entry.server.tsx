@@ -4,7 +4,7 @@ import { isbot } from 'isbot';
 import { renderToReadableStream } from 'react-dom/server';
 
 import { ApolloProvider } from '@apollo/client/index.js';
-import { makeClient } from './graphql';
+import { graphqlClient } from './graphql';
 
 export default async function handleRequest(
   request: Request,
@@ -16,10 +16,9 @@ export default async function handleRequest(
 ) {
   let shellRendered = false;
   const userAgent = request.headers.get('user-agent');
-  const client = makeClient(request);
 
   const body = await renderToReadableStream(
-    <ApolloProvider client={client}>
+    <ApolloProvider client={graphqlClient}>
       <ServerRouter context={routerContext} url={request.url} />
     </ApolloProvider>,
     {
