@@ -36,7 +36,7 @@ export const links: LinksFunction = () => [
   },
   {
     rel: 'stylesheet',
-    href: 'https://fonts.cdnfonts.com/css/perfect-dos-vga-437?display=optional',
+    href: 'https://fonts.cdnfonts.com/css/perfect-dos-vga-437?display=swap',
     crossOrigin: 'anonymous',
   },
   {
