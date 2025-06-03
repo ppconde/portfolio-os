@@ -1,5 +1,4 @@
-import { HttpLink, InMemoryCache } from '@apollo/client/index.js';
-import { ApolloClient } from '@apollo/client-integration-react-router';
+import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client/index.js';
 
 export const graphqlClient = new ApolloClient({
   ssrMode: true,
