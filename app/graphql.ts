@@ -3,7 +3,6 @@ import { ApolloClient } from '@apollo/client-integration-react-router';
 
 export const graphqlClient = new ApolloClient({
   ssrMode: true,
-
   link: new HttpLink({
     uri: 'https://api.github.com/graphql',
     headers: {

@@ -6,33 +6,18 @@ import ProjectCard from '~/components/website/ProjectCard';
 import type { Route } from './+types/projects';
 import H2 from '~/components/website/H2';
 import { data } from 'react-router';
-
-type Repo = {
-  id: string;
-  name: string;
-  description?: string | null;
-  url: string;
-  homepageUrl: string;
-  openGraphImageUrl: string;
-  languages: {
-    id: string;
-    name: string;
-    color: string | null;
-  }[];
-};
-
-const CACHE_KEY = 'pinned_repos';
-const CACHE_TTL_SECONDS = 60 * 60; // 1 hour
+import { CACHE } from '~/constants/cache.const';
+import normalizePinnedRepos, {
+  type Project,
+} from '~/normalizers/pinned-repos.normalizer';
 
 export async function loader({ context }: Route.LoaderArgs) {
   const kv = context.cloudflare.env.PORTFOLIO_OS;
 
   // Try getting cached data
-  const cached = await kv.get<Repo[]>(CACHE_KEY, {
-    type: 'json',
-  });
+  const cached = await kv.get(CACHE.PINNED_REPOS.KEY);
 
-  if (cached) return cached;
+  if (cached) return JSON.parse(cached) as Project[];
 
   const {
     data: items,
@@ -58,27 +43,11 @@ export async function loader({ context }: Route.LoaderArgs) {
       (repo): repo is Extract<typeof repo, { __typename?: 'Repository' }> =>
         !!repo && repo.__typename === 'Repository'
     )
-    .map((repo) => {
-      return {
-        id: repo.id,
-        name: repo.name,
-        description: repo.description,
-        url: repo.url,
-        homepageUrl: repo.homepageUrl,
-        openGraphImageUrl: repo.openGraphImageUrl,
-        languages: (repo.languages?.nodes || [])
-          ?.filter((language) => !!language)
-          .map((language) => ({
-            id: language.id,
-            name: language.name,
-            color: language.color,
-          })),
-      };
-    });
+    .map(normalizePinnedRepos);
 
   // Cache it in KV
-  await kv.put(CACHE_KEY, JSON.stringify(repos), {
-    expirationTtl: CACHE_TTL_SECONDS,
+  await kv.put(CACHE.PINNED_REPOS.KEY, JSON.stringify(repos), {
+    expirationTtl: CACHE.PINNED_REPOS.TTL,
   });
 
   return repos;

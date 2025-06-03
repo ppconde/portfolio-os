@@ -5,7 +5,7 @@ type ProjectCardProps = {
   name?: string;
   description?: Maybe<string>;
   url?: string;
-  homepageUrl?: string;
+  homepageUrl?: Maybe<string>;
   openGraphImageUrl?: string;
   languages?: LanguageType[];
 };
