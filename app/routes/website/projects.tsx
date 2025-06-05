@@ -16,7 +16,14 @@ export async function loader({ context }: Route.LoaderArgs) {
   // Try getting cached data
   const cached = await kv.get(CACHE.PINNED_REPOS.KEY);
 
-  if (cached) return JSON.parse(cached) as Project[];
+  if (cached) {
+    try {
+      return JSON.parse(cached) as Project[];
+    } catch (error) {
+      console.error('Error parsing cached pinned repos:', error);
+      // If parsing fails, we will fetch fresh data
+    }
+  }
 
   const response = (await GET_REPOS_QUERY.send()) as GetPinnedItemsQuery;
 
