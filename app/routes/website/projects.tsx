@@ -27,13 +27,13 @@ export async function loader({ context }: Route.LoaderArgs) {
 
   const response = (await GET_REPOS_QUERY.send()) as GetPinnedItemsQuery;
 
-  if ((response?.user?.pinnedItems.nodes || []).length <= 0) {
-    console.error('Projects not found lol: ', response);
-    throw data('Projects not found', {
-      status: 404,
-      statusText: `Projects not found ${response}!`,
-    });
-  }
+  // if ((response?.user?.pinnedItems.nodes || []).length <= 0) {
+  //   console.error('Projects not found lol: ', response);
+  //   throw data('Projects not found', {
+  //     status: 404,
+  //     statusText: `Projects not found ${response}!`,
+  //   });
+  // }
 
   const repos = (response.user?.pinnedItems.nodes ?? [])
     .filter(
