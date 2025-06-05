@@ -14,16 +14,16 @@ export async function loader({ context }: Route.LoaderArgs) {
   const kv = context.cloudflare.env.PORTFOLIO_OS;
 
   // Try getting cached data
-  const cached = await kv.get(CACHE.PINNED_REPOS.KEY);
+  // const cached = await kv.get(CACHE.PINNED_REPOS.KEY);
 
-  if (cached) {
-    try {
-      return JSON.parse(cached) as Project[];
-    } catch (error) {
-      console.error('Error parsing cached pinned repos:', error);
-      // If parsing fails, we will fetch fresh data
-    }
-  }
+  // if (cached) {
+  //   try {
+  //     return JSON.parse(cached) as Project[];
+  //   } catch (error) {
+  //     console.error('Error parsing cached pinned repos:', error);
+  //     // If parsing fails, we will fetch fresh data
+  //   }
+  // }
 
   const response = (await GET_REPOS_QUERY.send()) as GetPinnedItemsQuery;
 
@@ -42,12 +42,12 @@ export async function loader({ context }: Route.LoaderArgs) {
     )
     .map(normalizePinnedRepos);
 
-  if (repos.length > 0) {
-    // Cache it in KV
-    await kv.put(CACHE.PINNED_REPOS.KEY, JSON.stringify(repos), {
-      expirationTtl: CACHE.PINNED_REPOS.TTL,
-    });
-  }
+  // if (repos.length > 0) {
+  //   // Cache it in KV
+  //   await kv.put(CACHE.PINNED_REPOS.KEY, JSON.stringify(repos), {
+  //     expirationTtl: CACHE.PINNED_REPOS.TTL,
+  //   });
+  // }
 
   return repos;
 }
