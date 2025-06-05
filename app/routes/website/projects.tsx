@@ -20,7 +20,7 @@ export async function loader({ context }: Route.LoaderArgs) {
 
   const response = (await GET_REPOS_QUERY.send()) as GetPinnedItemsQuery;
 
-  if ((response.user?.pinnedItems.nodes || []).length <= 0) {
+  if ((response?.user?.pinnedItems.nodes || []).length <= 0) {
     throw data('Projects not found', {
       status: 404,
       statusText: 'Projects not found',
@@ -34,10 +34,12 @@ export async function loader({ context }: Route.LoaderArgs) {
     )
     .map(normalizePinnedRepos);
 
-  // Cache it in KV
-  await kv.put(CACHE.PINNED_REPOS.KEY, JSON.stringify(repos), {
-    expirationTtl: CACHE.PINNED_REPOS.TTL,
-  });
+  if (repos.length > 0) {
+    // Cache it in KV
+    await kv.put(CACHE.PINNED_REPOS.KEY, JSON.stringify(repos), {
+      expirationTtl: CACHE.PINNED_REPOS.TTL,
+    });
+  }
 
   return repos;
 }
