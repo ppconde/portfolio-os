@@ -4,8 +4,6 @@ import { Links, Meta, Scripts, ScrollRestoration } from 'react-router';
 import './tailwind.css';
 import { Screen } from './components/Screen';
 import BootProvider from './contexts/BootContext';
-import { ApolloProvider } from '@apollo/client/index.js';
-import { graphqlClient } from './graphql';
 import type { Route } from './+types/root';
 import BlueScreen from './components/BlueScreen';
 
@@ -97,11 +95,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <ApolloProvider client={graphqlClient}>
-      <BootProvider>
-        <Screen />
-      </BootProvider>
-    </ApolloProvider>
+    <BootProvider>
+      <Screen />
+    </BootProvider>
   );
 }
 

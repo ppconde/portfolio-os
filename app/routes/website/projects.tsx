@@ -1,6 +1,4 @@
-import type { GetPinnedItemsQuery } from '~/__generated__/graphql';
-import { graphqlClient } from '~/graphql';
-import { GET_REPOS } from '~/queries/getPinnedRepos';
+import { GET_REPOS_QUERY } from '~/queries/getPinnedRepos';
 
 import ProjectCard from '~/components/website/ProjectCard';
 import type { Route } from './+types/projects';
@@ -10,6 +8,7 @@ import { CACHE } from '~/constants/cache.const';
 import normalizePinnedRepos, {
   type Project,
 } from '~/normalizers/pinned-repos.normalizer';
+import type { GetPinnedItemsQuery } from '~/__generated__/graphql';
 
 export async function loader({ context }: Route.LoaderArgs) {
   const kv = context.cloudflare.env.PORTFOLIO_OS;
@@ -19,26 +18,16 @@ export async function loader({ context }: Route.LoaderArgs) {
 
   if (cached) return JSON.parse(cached) as Project[];
 
-  const {
-    data: items,
-    error,
-    errors,
-  } = await graphqlClient.query<GetPinnedItemsQuery>({
-    query: GET_REPOS,
-  });
+  const response = (await GET_REPOS_QUERY.send()) as GetPinnedItemsQuery;
 
-  if (
-    (items.user?.pinnedItems.nodes || []).length <= 0 ||
-    error ||
-    errors?.length
-  ) {
+  if ((response.user?.pinnedItems.nodes || []).length <= 0) {
     throw data('Projects not found', {
       status: 404,
       statusText: 'Projects not found',
     });
   }
 
-  const repos = (items.user?.pinnedItems.nodes ?? [])
+  const repos = (response.user?.pinnedItems.nodes ?? [])
     .filter(
       (repo): repo is Extract<typeof repo, { __typename?: 'Repository' }> =>
         !!repo && repo.__typename === 'Repository'

@@ -9,19 +9,19 @@
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "typecheck": "react-router typegen && tsc --watch",
     "typegen": "wrangler types",
-    "compile": "dotenv -e .env.local graphql-codegen",
-    "watch": "dotenv -e .env.local graphql-codegen -w",
     "build": "react-router build",
     "deploy": "pnpm run build && wrangler deploy",
-    "preview": "pnpm run build && vite preview"
+    "preview": "pnpm run build && vite preview",
+    "compile": "dotenv -e .env.local graphql-codegen",
+    "watch": "dotenv -e .env.local graphql-codegen -w"
   },
   "dependencies": {
-    "@apollo/client": "^3.13.8",
     "@cloudflare/vite-plugin": "^1.4.0",
     "@react-router/cloudflare": "^7.6.1",
     "@react-router/fs-routes": "^7.6.1",
     "@tailwindcss/vite": "^4.1.8",
     "esbuild": "^0.25.5",
+    "graffle": "8.0.0-next.164",
     "isbot": "^5.1.28",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
