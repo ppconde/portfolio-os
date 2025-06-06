@@ -4,6 +4,7 @@ node_modules
 /build
 .env
 .env.local
+.env.production
 .dev.vars
 .react-router/
 

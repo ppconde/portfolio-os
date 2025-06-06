@@ -7,19 +7,27 @@ import normalizePinnedRepos from '~/normalizers/pinned-repos.normalizer';
 import type { GetPinnedItemsQuery } from '~/__generated__/graphql';
 
 export async function loader() {
-  const response = (await GET_REPOS_QUERY.send()) as GetPinnedItemsQuery;
-  console.log('Response from GET_REPOS_QUERY:', response);
-  console.log('GitHub Token:', process.env?.GITHUB_TOKEN);
-  console.log('VITE_GITHUB_KEY:', import.meta.env.VITE_GITHUB_KEY);
+  try {
+    const response = (await GET_REPOS_QUERY.send()) as GetPinnedItemsQuery;
+    console.log('Response from GitHub:', response);
+    console.log('GitHub Token:', process.env?.GITHUB_TOKEN);
+    console.log('VITE_GITHUB_KEY:', import.meta.env.VITE_GITHUB_KEY);
+    if (!response?.user?.pinnedItems?.nodes) {
+      throw new Response('No repositories found', { status: 404 });
+    }
 
-  const repos = (response?.user?.pinnedItems.nodes ?? [])
-    .filter(
-      (repo): repo is Extract<typeof repo, { __typename?: 'Repository' }> =>
-        !!repo && repo.__typename === 'Repository'
-    )
-    .map(normalizePinnedRepos);
-  console.log('Normalized Repositories:', repos);
-  return repos;
+    const repos = response.user.pinnedItems.nodes
+      .filter(
+        (repo): repo is Extract<typeof repo, { __typename?: 'Repository' }> =>
+          !!repo && repo.__typename === 'Repository'
+      )
+      .map(normalizePinnedRepos);
+
+    return repos;
+  } catch (err) {
+    console.error('Failed to load repos:', err);
+    throw new Response('Failed to fetch repositories', { status: 500 });
+  }
 }
 
 export default function Projects({ loaderData: repos }: Route.ComponentProps) {
