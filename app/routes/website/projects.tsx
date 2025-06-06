@@ -8,14 +8,14 @@ import type { GetPinnedItemsQuery } from '~/__generated__/graphql';
 
 export async function loader() {
   const response = (await GET_REPOS_QUERY.send()) as GetPinnedItemsQuery;
-
+  console.log('Response from GET_REPOS_QUERY:', response);
   const repos = (response?.user?.pinnedItems.nodes ?? [])
     .filter(
       (repo): repo is Extract<typeof repo, { __typename?: 'Repository' }> =>
         !!repo && repo.__typename === 'Repository'
     )
     .map(normalizePinnedRepos);
-
+  console.log('Normalized Repositories:', repos);
   return repos;
 }
 
