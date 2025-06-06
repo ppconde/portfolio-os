@@ -9,12 +9,8 @@ import type { GetPinnedItemsQuery } from '~/__generated__/graphql';
 export async function loader() {
   const response = (await GET_REPOS_QUERY.send()) as GetPinnedItemsQuery;
   console.log('Response from GET_REPOS_QUERY:', response);
-  console.log(
-    'GitHub Token:',
-    typeof process !== 'undefined' && process.env?.GITHUB_TOKEN
-      ? process.env.GITHUB_TOKEN
-      : import.meta.env.VITE_GITHUB_KEY
-  );
+  console.log('GitHub Token:', process.env?.GITHUB_TOKEN);
+  console.log('VITE_GITHUB_KEY:', import.meta.env.VITE_GITHUB_KEY);
 
   const repos = (response?.user?.pinnedItems.nodes ?? [])
     .filter(
