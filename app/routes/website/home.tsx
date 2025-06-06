@@ -10,7 +10,7 @@ export default function WebsiteHome() {
           </h1>
         </div>
 
-        <p className="mt-4 bg-white font-mono text-xl">Software Engineer</p>
+        <p className="mt-2 bg-white p-1 font-mono text-xl">Software Engineer</p>
       </header>
       <NavList className="flex w-full flex-col items-center justify-center text-xl @lg:flex-row" />
     </section>
