@@ -1,6 +1,4 @@
-import { graffle } from '~/graphql';
-
-export const GET_REPOS_QUERY = graffle.gql`
+export const GET_REPOS_QUERY = `
   query GetPinnedItems {
     user(login: "ppconde") {
       pinnedItems(first: 6, types: REPOSITORY) {

@@ -10,6 +10,13 @@
 	"observability": {
 		"enabled": true
 	},
+	"secrets_store_secrets": [
+		{
+			"binding": "PORTFOLIO_OS_SECRETS",
+			"store_id": "0b4a28417fcf4ab9946e2b14d442ef81",
+			"secret_name": "VITE_GITHUB_KEY"
+		}
+	],
 	"kv_namespaces": [
 		{
 			"binding": "PORTFOLIO_OS",

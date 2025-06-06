@@ -4,14 +4,20 @@ import ProjectCard from '~/components/website/ProjectCard';
 import type { Route } from './+types/projects';
 import H2 from '~/components/website/H2';
 import normalizePinnedRepos from '~/normalizers/pinned-repos.normalizer';
+
+import type { AppLoadContext } from 'react-router';
+import { parse } from 'graphql';
+
 import type { GetPinnedItemsQuery } from '~/__generated__/graphql';
 
-export async function loader() {
+export async function loader({ context }: AppLoadContext) {
   try {
-    const response = (await GET_REPOS_QUERY.send()) as GetPinnedItemsQuery;
-    console.log('Response from GitHub:', response);
-    console.log('GitHub Token:', process.env?.GITHUB_TOKEN);
-    console.log('VITE_GITHUB_KEY:', import.meta.env.VITE_GITHUB_KEY);
+    const { github } = (context as AppLoadContext).clients;
+    console.log('Fetching pinned repositories...', github);
+    const response = (await github
+      .gql(parse(GET_REPOS_QUERY))
+      .send()) as GetPinnedItemsQuery;
+    console.log('Response received:', response);
     if (!response?.user?.pinnedItems?.nodes) {
       throw new Response('No repositories found', { status: 404 });
     }
@@ -25,7 +31,8 @@ export async function loader() {
 
     return repos;
   } catch (err) {
-    console.error('Failed to load repos:', err);
+    const error = err as Error;
+    console.error('Failed to load repos:', error.message);
     throw new Response('Failed to fetch repositories', { status: 500 });
   }
 }

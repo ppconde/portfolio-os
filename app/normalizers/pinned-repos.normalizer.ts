@@ -1,4 +1,4 @@
-type PinnedRepo = {
+export type PinnedRepo = {
   __typename?: 'Repository';
   id: string;
   name: string;
