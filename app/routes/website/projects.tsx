@@ -9,6 +9,8 @@ import type { GetPinnedItemsQuery } from '~/__generated__/graphql';
 export async function loader() {
   const response = (await GET_REPOS_QUERY.send()) as GetPinnedItemsQuery;
   console.log('Response from GET_REPOS_QUERY:', response);
+  console.log('GitHub Token:', import.meta.env.VITE_GITHUB_KEY);
+
   const repos = (response?.user?.pinnedItems.nodes ?? [])
     .filter(
       (repo): repo is Extract<typeof repo, { __typename?: 'Repository' }> =>
