@@ -9,15 +9,24 @@ import type { AppLoadContext } from 'react-router';
 import { parse } from 'graphql';
 
 import type { GetPinnedItemsQuery } from '~/__generated__/graphql';
+import { CACHE } from '~/constants/cache.const';
 
-export async function loader({ context }: AppLoadContext) {
+export async function loader(request: Route.LoaderArgs) {
   try {
-    const { github } = (context as AppLoadContext).clients;
-    console.log('Fetching pinned repositories...', github);
+    const context = request.context as AppLoadContext;
+    const { PORTFOLIO_OS_KV } = context.cloudflare.env;
+
+    console.log('Fetching pinned repositories...', PORTFOLIO_OS_KV);
+    const cachedData = await PORTFOLIO_OS_KV.get(CACHE.PINNED_REPOS.KEY);
+    if (cachedData) {
+      return JSON.parse(cachedData);
+    }
+
+    const { github } = context.clients;
     const response = (await github
       .gql(parse(GET_REPOS_QUERY))
       .send()) as GetPinnedItemsQuery;
-    console.log('Response received:', response);
+
     if (!response?.user?.pinnedItems?.nodes) {
       throw new Response('No repositories found', { status: 404 });
     }
@@ -29,6 +38,11 @@ export async function loader({ context }: AppLoadContext) {
       )
       .map(normalizePinnedRepos);
 
+    if (repos.length > 0) {
+      await PORTFOLIO_OS_KV.put(CACHE.PINNED_REPOS.KEY, JSON.stringify(repos), {
+        expirationTtl: CACHE.PINNED_REPOS.TTL,
+      });
+    }
     return repos;
   } catch (err) {
     const error = err as Error;

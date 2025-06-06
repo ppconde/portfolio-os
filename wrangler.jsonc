@@ -19,7 +19,7 @@
 	],
 	"kv_namespaces": [
 		{
-			"binding": "PORTFOLIO_OS",
+			"binding": "PORTFOLIO_OS_KV",
 			"id": "4024c012098c4498922e7af3e1fab339"
 		}
 	],

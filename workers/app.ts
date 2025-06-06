@@ -21,13 +21,10 @@ const requestHandler = createRequestHandler(
 
 export default {
   async fetch(request, env, ctx) {
-    const token = env.VITE_GITHUB_KEY;
-    const githubClient = createGithubClient(token);
-    console.log('Creating GitHub client with token:', token);
     return requestHandler(request, {
       cloudflare: { env, ctx },
       clients: {
-        github: githubClient,
+        github: createGithubClient(env.VITE_GITHUB_KEY),
       },
     });
   },
