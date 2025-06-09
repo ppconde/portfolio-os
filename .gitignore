@@ -9,4 +9,4 @@ node_modules
 .react-router/
 
 .wrangler
-wrangler
+.DS_Store

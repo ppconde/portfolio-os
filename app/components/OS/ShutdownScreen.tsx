@@ -36,7 +36,7 @@ export default function ShutdownScreen() {
   }, [setBootState]);
 
   return (
-    <div className="h-screen w-screen bg-black font-perfect-dos-vga-win text-windows-teal">
+    <div className="font-perfect-dos-vga-win text-windows-teal h-screen w-screen bg-black">
       <div className="flex h-full w-full flex-col p-4 sm:p-6 md:p-8">
         {showFirstSection && <BlinkCaret hide={!showFirstSection} />}
         {showSecondSection && (
@@ -88,14 +88,17 @@ export default function ShutdownScreen() {
           >
             <p>
               Attempting Recovery{' '}
-              <Typewriter words={['... Recovery Failed.']} typeSpeed={20} />{' '}
+              <Typewriter
+                words={['... Recovery Failed.']}
+                typeSpeed={20}
+              />{' '}
             </p>
           </div>
         )}
 
         {showSixthSection && <BlinkCaret />}
 
-        <div className={`grow`}></div>
+        <div className="grow"></div>
       </div>
     </div>
   );

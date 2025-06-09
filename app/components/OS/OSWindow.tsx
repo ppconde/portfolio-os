@@ -1,11 +1,12 @@
-import { useContext, useRef } from 'react';
+import { useRef } from 'react';
 import Draggable, {
   type DraggableData,
   type DraggableEvent,
 } from 'react-draggable';
-import WindowButton from '~/components/WindowButton';
+
 import { icons } from '~/constants/icons.const';
-import { AppsContext, type DesktopWindow } from '~/contexts/AppsContext';
+import { useWindowsStore, type DesktopWindow } from '~/stores/WindowsStore';
+import WindowButton from './WindowButton';
 
 type OSWindowProps = {
   window: DesktopWindow;
@@ -24,7 +25,8 @@ export default function OSWindow({
     restoreWindow,
     maximizeWindow,
     setWindowPosition,
-  } = useContext(AppsContext);
+    onMouseDown,
+  } = useWindowsStore();
 
   const nodeRef = useRef<HTMLDivElement>(null!);
 
@@ -53,6 +55,10 @@ export default function OSWindow({
     closeWindow(window.id);
   };
 
+  const handleOnMouseDown = () => {
+    onMouseDown(window.id);
+  };
+
   return window.isMinimized ? null : (
     <Draggable
       nodeRef={nodeRef}
@@ -61,9 +67,11 @@ export default function OSWindow({
       onDrag={handleDrag}
       disabled={window.isMaximized}
       bounds="parent"
+      onMouseDown={handleOnMouseDown}
     >
       <div
         ref={nodeRef}
+        style={{ zIndex: window.zIndex }}
         className={`border-windows bg-windows-gray-primary absolute flex flex-col shadow-md ${
           window.isMaximized ? 'top-0 right-0 bottom-8 left-0' : 'h-4/5 w-4/5'
         } ${window.isMinimized || window.isMaximized ? '' : 'resize overflow-auto'}`}
@@ -76,7 +84,7 @@ export default function OSWindow({
           >
             <div className="flex items-center">
               <img
-                src={icons.find((icon) => icon.id === window.name)?.path}
+                src={icons.find((icon) => icon.id === window.name)?.icon}
                 alt="Browser icon"
                 className="mr-1 h-4 w-4"
               />

@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router';
 import { useState } from 'react';
-import NavList from '~/components/NavList';
+import NavList from '~/components/OS/NavList';
 import HamburgerButton from '~/components/website/HamburgerButton';
 
 export default function WebsiteLayout() {

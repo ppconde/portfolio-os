@@ -1,4 +1,4 @@
-import NavList from '~/components/NavList';
+import NavList from '~/components/OS/NavList';
 
 export default function WebsiteHome() {
   return (

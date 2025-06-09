@@ -1,5 +1,5 @@
 import { isRouteErrorResponse } from 'react-router';
-import type { Route } from '../routes/+types';
+import type { Route } from '../+types/root';
 
 export type BlueScreenProps = {
   error: Route.ErrorBoundaryProps;

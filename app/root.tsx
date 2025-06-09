@@ -2,10 +2,10 @@ import type { LinksFunction, MetaFunction } from 'react-router';
 import { Links, Meta, Scripts, ScrollRestoration } from 'react-router';
 
 import './tailwind.css';
-import { Screen } from './components/Screen';
+import { Screen } from './components/OS/Screen';
 import BootProvider from './contexts/BootContext';
 import type { Route } from './+types/root';
-import BlueScreen from './components/BlueScreen';
+import BlueScreen from './components/OS/BlueScreen';
 
 export const links: LinksFunction = () => [
   {

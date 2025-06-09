@@ -12,21 +12,21 @@ export default function NavList({
 
   return (
     <nav className={className}>
-      {pathname !== '/website' && pathname !== '/website/' && (
-        <NavItem to="/website" disableIsActive toggleMenu={toggleMenu}>
+      {pathname !== '/home' && pathname !== '/home/' && (
+        <NavItem to="/home" disableItem toggleMenu={toggleMenu}>
           [Home]
         </NavItem>
       )}
-      <NavItem to="/website/about" toggleMenu={toggleMenu}>
+      <NavItem to="/about" toggleMenu={toggleMenu}>
         [About]
       </NavItem>
-      <NavItem to="/website/experience" toggleMenu={toggleMenu}>
+      <NavItem to="/experience" toggleMenu={toggleMenu}>
         [Experience]
       </NavItem>
-      <NavItem to="/website/projects" toggleMenu={toggleMenu}>
+      <NavItem to="/projects" toggleMenu={toggleMenu}>
         [Projects]
       </NavItem>
-      <NavItem to="/website/contact" toggleMenu={toggleMenu}>
+      <NavItem to="/contact" toggleMenu={toggleMenu}>
         [Contact]
       </NavItem>
     </nav>

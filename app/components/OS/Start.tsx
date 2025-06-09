@@ -5,7 +5,7 @@ export default function Start() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <>
+    <div className="h-[80%] min-w-20 pr-1">
       <button
         className={`${isOpen ? 'border-windows-inverted' : 'btn-windows'} relative flex h-full items-center p-1`}
         onClick={() => setIsOpen(!isOpen)}
@@ -21,6 +21,6 @@ export default function Start() {
         <p className="font-micro text-2xl">Start</p>
       </button>
       {isOpen && <StartWindow setIsOpen={setIsOpen} />}
-    </>
+    </div>
   );
 }
