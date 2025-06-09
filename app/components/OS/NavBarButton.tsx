@@ -1,4 +1,5 @@
 import { useWindowsStore, type DesktopWindow } from '~/stores/WindowsStore';
+import classNames from 'classnames';
 
 export default function NavBarButton({ window }: { window: DesktopWindow }) {
   const { toggleWindow } = useWindowsStore();
@@ -6,15 +7,24 @@ export default function NavBarButton({ window }: { window: DesktopWindow }) {
   return (
     <button
       key={window.id}
-      className={`relative mx-1 flex h-full w-full items-center p-2 text-sm ${
-        window.isMinimized || !window.isFocused
-          ? 'btn-windows'
-          : 'btn-windows-inverted flex items-center p-2'
-      }`}
+      className={classNames(
+        'relative mx-1 flex h-full w-full min-w-[6rem] shrink basis-0 items-center p-2 text-sm',
+        {
+          'btn-windows': window.isMinimized || !window.isFocused,
+          'btn-windows-inverted flex items-center p-2':
+            !window.isMinimized && window.isFocused,
+        }
+      )}
       onClick={() => toggleWindow(window.id)}
     >
       <div
-        className={`border-windows-gray-secondary pointer-events-none absolute inset-0 ${window.isMinimized || !window.isFocused ? 'border-r border-b' : 'border-t border-l'}`}
+        className={classNames(
+          'border-windows-gray-secondary pointer-events-none absolute inset-0',
+          {
+            'border-r border-b': window.isMinimized || !window.isFocused,
+            'border-t border-l': !window.isMinimized && window.isFocused,
+          }
+        )}
       ></div>
       <div className="flex items-center">
         <img
@@ -22,7 +32,6 @@ export default function NavBarButton({ window }: { window: DesktopWindow }) {
           alt="Browser icon"
           className="mr-1 h-3 w-3"
         />
-        {/** @TODO Fix this so it stretch the button */}
         <span className="overflow-hidden text-ellipsis whitespace-nowrap">
           {window.id}
         </span>

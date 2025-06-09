@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useBootContext } from '~/contexts/BootContext';
 import BlinkCaret from './BlinkCaret';
 import { Typewriter } from 'react-simple-typewriter';
+import classNames from 'classnames';
 
 export default function ShutdownScreen() {
   const [showFirstSection, setShowFirstSection] = useState(false);
@@ -41,7 +42,10 @@ export default function ShutdownScreen() {
         {showFirstSection && <BlinkCaret hide={!showFirstSection} />}
         {showSecondSection && (
           <div
-            className={`space-y-1 text-left text-sm md:space-y-2 md:pl-2 ${showFourthSection ? 'hidden' : ''}`}
+            className={classNames(
+              'space-y-1 text-left text-sm md:space-y-2 md:pl-2',
+              { hidden: showFourthSection }
+            )}
           >
             <p>System Shutdown Sequence Initiated...</p>
             <p>Saving settings to CMOS... Done.</p>
@@ -51,7 +55,10 @@ export default function ShutdownScreen() {
 
         {showThirdSection && (
           <div
-            className={`mt-4 space-y-1 text-left text-sm md:space-y-2 md:pl-2 ${showFourthSection ? 'hidden' : ''}`}
+            className={classNames(
+              'mt-4 space-y-1 text-left text-sm md:space-y-2 md:pl-2',
+              { hidden: showFourthSection }
+            )}
           >
             <p>Shutting down services...</p>
             <p>
@@ -74,7 +81,10 @@ export default function ShutdownScreen() {
 
         {showFourthSection && (
           <div
-            className={`mt-6 space-y-1 text-left text-sm md:space-y-2 md:pl-2 ${showSixthSection ? 'hidden' : ''}`}
+            className={classNames(
+              'mt-6 space-y-1 text-left text-sm md:space-y-2 md:pl-2',
+              { hidden: showSixthSection }
+            )}
           >
             <p>ERROR: Unexpected Shutdown Event Detected</p>
             <p>ERROR CODE: 0xDEAD-C0DE</p>
@@ -84,7 +94,10 @@ export default function ShutdownScreen() {
 
         {showFifthSection && (
           <div
-            className={`text-md mt-6 space-y-1 text-left md:space-y-2 md:pl-2 ${showSixthSection ? 'hidden' : ''}`}
+            className={classNames(
+              'text-md mt-6 space-y-1 text-left md:space-y-2 md:pl-2',
+              { hidden: showSixthSection }
+            )}
           >
             <p>
               Attempting Recovery{' '}

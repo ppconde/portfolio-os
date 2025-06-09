@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import StartWindow from './StartWindow';
+import classNames from 'classnames';
 
 export default function Start() {
   const [isOpen, setIsOpen] = useState(false);
@@ -7,7 +8,10 @@ export default function Start() {
   return (
     <div className="h-[80%] min-w-20 pr-1">
       <button
-        className={`${isOpen ? 'border-windows-inverted' : 'btn-windows'} relative flex h-full items-center p-1`}
+        className={classNames(
+          'btn-windows relative flex h-full items-center p-1',
+          { isOpen: 'border-windows-inverted' }
+        )}
         onClick={() => setIsOpen(!isOpen)}
       >
         {!isOpen && (

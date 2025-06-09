@@ -3,7 +3,7 @@ import Draggable, {
   type DraggableData,
   type DraggableEvent,
 } from 'react-draggable';
-
+import classNames from 'classnames';
 import { icons } from '~/constants/icons.const';
 import { useWindowsStore, type DesktopWindow } from '~/stores/WindowsStore';
 import WindowButton from './WindowButton';
@@ -72,15 +72,23 @@ export default function OSWindow({
       <div
         ref={nodeRef}
         style={{ zIndex: window.zIndex }}
-        className={`border-windows bg-windows-gray-primary absolute flex flex-col shadow-md ${
+        className={classNames(
+          'border-windows bg-windows-gray-primary absolute flex flex-col shadow-md',
+          {
+            'resize overflow-auto': !window.isMinimized && !window.isMaximized,
+          },
           window.isMaximized ? 'top-0 right-0 bottom-8 left-0' : 'h-4/5 w-4/5'
-        } ${window.isMinimized || window.isMaximized ? '' : 'resize overflow-auto'}`}
+        )}
         onDoubleClick={toggleMaximize}
       >
         {/* Title bar */}
         <div className="bg-windows-gray-primary p-1">
           <div
-            className={`handle bg-windows-blue text-windows-white flex h-6 items-center justify-between px-1 ${window.isMaximized ? '' : 'active:cursor-move'} `}
+            className={classNames(
+              'handle text-windows-white flex h-6 items-center justify-between px-1',
+              { 'active:cursor-move': !window.isMaximized },
+              window.isFocused ? 'bg-windows-blue' : 'bg-windows-gray-secondary'
+            )}
           >
             <div className="flex items-center">
               <img
