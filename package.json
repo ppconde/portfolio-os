@@ -62,7 +62,7 @@
     "typescript-eslint": "^8.33.1",
     "vite": "^6.3.5",
     "vite-tsconfig-paths": "^5.1.4",
-    "wrangler": "^4.19.1"
+    "wrangler": "^4.20.5"
   },
   "engines": {
     "node": ">=20.0.0"
