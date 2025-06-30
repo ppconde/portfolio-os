@@ -28,7 +28,7 @@ importers:
         version: 0.25.5
       graffle:
         specifier: 8.0.0-next.164
-        version: 8.0.0-next.164(graphql@16.11.0)(prettier@3.6.0)
+        version: 8.0.0-next.164(graphql@16.11.0)(prettier@3.6.2)
       isbot:
         specifier: ^5.1.28
         version: 5.1.28
@@ -121,11 +121,11 @@ importers:
         specifier: ^16.11.0
         version: 16.11.0
       prettier:
-        specifier: ^3.6.0
-        version: 3.6.0
+        specifier: ^3.6.2
+        version: 3.6.2
       prettier-plugin-tailwindcss:
         specifier: ^0.6.13
-        version: 0.6.13(prettier@3.6.0)
+        version: 0.6.13(prettier@3.6.2)
       tailwindcss:
         specifier: ^4.1.8
         version: 4.1.10
@@ -3602,8 +3602,8 @@ packages:
     engines: {node: '>=10.13.0'}
     hasBin: true
 
-  prettier@3.6.0:
-    resolution: {integrity: sha512-ujSB9uXHJKzM/2GBuE0hBOUgC77CN3Bnpqa+g80bkv3T3A93wL/xlzDATHhnhkzifz/UE2SNOvmbTz5hSkDlHw==}
+  prettier@3.6.2:
+    resolution: {integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -7286,7 +7286,7 @@ snapshots:
 
   graceful-fs@4.2.11: {}
 
-  graffle@8.0.0-next.164(graphql@16.11.0)(prettier@3.6.0):
+  graffle@8.0.0-next.164(graphql@16.11.0)(prettier@3.6.2):
     dependencies:
       '@0no-co/graphql.web': 1.1.2(graphql@16.11.0)
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.11.0)
@@ -7296,7 +7296,7 @@ snapshots:
       is-plain-obj: 4.1.0
       type-fest: 4.41.0
     optionalDependencies:
-      prettier: 3.6.0
+      prettier: 3.6.2
 
   graphemer@1.4.0: {}
 
@@ -8095,13 +8095,13 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-tailwindcss@0.6.13(prettier@3.6.0):
+  prettier-plugin-tailwindcss@0.6.13(prettier@3.6.2):
     dependencies:
-      prettier: 3.6.0
+      prettier: 3.6.2
 
   prettier@2.8.8: {}
 
-  prettier@3.6.0: {}
+  prettier@3.6.2: {}
 
   printable-characters@1.0.42: {}
 
