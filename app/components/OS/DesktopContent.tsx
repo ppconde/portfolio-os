@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router';
-import { useWindowsStore } from '~/stores/WindowsStore';
+import { useWindowsStore } from '~/store/WindowsStore';
 import Icon from './Icon';
 import Navbar from './Navbar';
 import { AppsNames } from '~/constants/apps-names.const';

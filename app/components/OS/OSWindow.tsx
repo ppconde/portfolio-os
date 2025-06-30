@@ -5,7 +5,7 @@ import Draggable, {
 } from 'react-draggable';
 import classNames from 'classnames';
 import { icons } from '~/constants/icons.const';
-import { useWindowsStore, type DesktopWindow } from '~/stores/WindowsStore';
+import { useWindowsStore, type DesktopWindow } from '~/store/WindowsStore';
 import WindowButton from './WindowButton';
 
 type OSWindowProps = {

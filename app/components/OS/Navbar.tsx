@@ -1,4 +1,4 @@
-import { useWindowsStore } from '~/stores/WindowsStore';
+import { useWindowsStore } from '~/store/WindowsStore';
 import NavBarButton from './NavBarButton';
 import Start from './Start';
 import VerticalSeparator from './VerticalSeparator';

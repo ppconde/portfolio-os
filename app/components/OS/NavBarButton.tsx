@@ -1,4 +1,4 @@
-import { useWindowsStore, type DesktopWindow } from '~/stores/WindowsStore';
+import { useWindowsStore, type DesktopWindow } from '~/store/WindowsStore';
 import classNames from 'classnames';
 
 export default function NavBarButton({ window }: { window: DesktopWindow }) {

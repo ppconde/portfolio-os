@@ -1,4 +1,4 @@
-import { useWindowsStore } from '~/stores/WindowsStore';
+import { useWindowsStore } from '~/store/WindowsStore';
 import { useDoubleClick } from '~/hooks/use-double-click';
 import { Link } from 'react-router';
 import type { Icon } from '~/constants/icons.const';

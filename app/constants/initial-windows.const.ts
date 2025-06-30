@@ -1,4 +1,4 @@
-import type { DesktopWindow } from '~/stores/WindowsStore';
+import type { DesktopWindow } from '~/store/WindowsStore';
 import { AppsNames } from './apps-names.const';
 
 export const initialWindows: DesktopWindow[] = [
