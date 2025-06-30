@@ -16,7 +16,7 @@
     "watch": "dotenv -e .env.local graphql-codegen -w"
   },
   "dependencies": {
-    "@cloudflare/vite-plugin": "^1.7.4",
+    "@cloudflare/vite-plugin": "^1.7.5",
     "@react-router/cloudflare": "^7.6.2",
     "@react-router/fs-routes": "^7.6.2",
     "@tailwindcss/vite": "^4.1.8",
