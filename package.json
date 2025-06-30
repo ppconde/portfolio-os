@@ -19,7 +19,7 @@
     "@cloudflare/vite-plugin": "^1.7.5",
     "@react-router/cloudflare": "^7.6.2",
     "@react-router/fs-routes": "^7.6.2",
-    "@tailwindcss/vite": "^4.1.8",
+    "@tailwindcss/vite": "^4.1.11",
     "classnames": "^2.5.1",
     "esbuild": "^0.25.5",
     "graffle": "8.0.0-next.164",
