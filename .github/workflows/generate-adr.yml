@@ -31,7 +31,7 @@ jobs:
               .slice(0, 60);
             const filename = `docs/adr/${issueNumber}-${slug}.md`;
 
-            const header = `# [ADR]: ${rawTitle}
+            const header = `# [ADR]: ${rawTitle}`;
 
             const content = header + '\n' + issue.body + '\n';
 
