@@ -1,0 +1,10 @@
+{
+  "action": "closed",
+  "issue": {
+    "number": 7,
+    "state": "closed",
+    "title": "[ADR]: Use esbuild for bundling",
+    "body": "## Context\n\nWe are currently using a copy script...\n\n## Decision Drivers\n\n- Speed\n- Simplicity\n\n## Options Considered\n\n1. Current script\n2. esbuild\n\n## Decision Outcome\n\nWe picked esbuild.\n\n## Consequences\n\n- 🟢 Fast\n- 🔴 New tooling",
+    "labels": [{ "name": "adr" }, { "name": "accepted" }]
+  }
+}

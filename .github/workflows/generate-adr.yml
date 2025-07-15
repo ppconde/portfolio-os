@@ -1,0 +1,57 @@
+name: Generate or Update ADR
+
+on:
+  issues:
+    types: [closed, edited]
+
+jobs:
+  process-adr:
+    if: |
+      github.event.issue.state == 'closed' &&
+      contains(github.event.issue.labels.*.name, 'adr') &&
+      contains(github.event.issue.labels.*.name, 'accepted')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Generate or update ADR file
+        id: adr
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+
+            const issue = context.payload.issue;
+            const issueNumber = issue.number.toString().padStart(4, '0');
+            const rawTitle = issue.title.replace(/^\[ADR\]:?\s*/i, '');
+            const slug = rawTitle.toLowerCase()
+              .replace(/[^a-z0-9]+/g, '-')
+              .replace(/^-|-$/g, '')
+              .slice(0, 60);
+            const filename = `docs/adr/${issueNumber}-${slug}.md`;
+
+            const header = `# [ADR]: ${rawTitle}
+
+            <!---
+            Generated automatically from GitHub issue #${issue.number}
+            -->
+            `;
+
+            const content = header + '\n' + issue.body + '\n';
+
+            fs.mkdirSync(path.dirname(filename), { recursive: true });
+            fs.writeFileSync(filename, content);
+
+            core.setOutput('filename', filename);
+            core.setOutput('branch', `adr/${issueNumber}-${slug}`);
+
+      - name: Create or update pull request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: ${{ steps.adr.outputs.branch }}
+          commit-message: 'docs(adr): update ${{ steps.adr.outputs.filename }}'
+          title: 'docs(adr): update ${{ steps.adr.outputs.filename }}'
+          body: 'ADR generated or updated from issue #${{ github.event.issue.number }}.'
+          labels: adr
