@@ -68,7 +68,7 @@ jobs:
         run: git push origin ${{ steps.adr.outputs.branch }}
 
       - name: Create or update pull request
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           base: main # Make sure this is your default branch
           branch: ${{ steps.adr.outputs.branch }}
