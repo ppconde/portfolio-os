@@ -48,10 +48,6 @@ jobs:
             core.setOutput('branch', branch);
             core.setOutput('filename', filename);
 
-      - name: Push branch
-        run: |
-          git push --set-upstream origin ${{ steps.create_adr.outputs.branch }}
-
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
         with:
