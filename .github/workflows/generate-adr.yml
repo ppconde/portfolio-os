@@ -17,7 +17,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-
+        with:
+          fetch-depth: 0 # necessary for PR creation
       - name: Set up Git user
         run: |
           git config user.name "github-actions[bot]"
@@ -64,13 +65,22 @@ jobs:
             core.setOutput('branch', branch);
             core.setOutput('filename', filename);
 
+      - name: Make changes and commit
+        run: |
+          # your commands to edit files
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b ${{ steps.adr.outputs.branch }}
+          git add .
+          git commit -m "docs(adr): update ${{ steps.adr.outputs.filename }}"
+
       - name: Push branch
-        run: git push origin ${{ steps.adr.outputs.branch }}
+        run: git push -u origin ${{ steps.adr.outputs.branch }}
 
       - name: Create or update pull request
         uses: peter-evans/create-pull-request@v7
         with:
-          base: main # Make sure this is your default branch
+          base: main
           branch: ${{ steps.adr.outputs.branch }}
           commit-message: 'docs(adr): update ${{ steps.adr.outputs.filename }}'
           title: 'docs(adr): update ${{ steps.adr.outputs.filename }}'
