@@ -25,54 +25,32 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Create ADR markdown file and commit
+      - name: Create ADR file
         id: create_adr
         uses: actions/github-script@v7
         with:
           script: |
-            const { execSync } = require('child_process');
             const fs = require('fs');
             const path = require('path');
+            const { execSync } = require('child_process');
 
-            const issue = context.payload.issue;
-            const issueNumber = issue.number.toString().padStart(4, '0');
+            const branch = 'adr/test';
+            const filename = 'docs/adr/test.md';
+            const content = 'Hello ADR 👋';
 
-            // Generate slug from issue title (remove ADR prefix, lower case, replace spaces)
-            const rawTitle = issue.title.replace(/^\[ADR\]:?\s*/i, '');
-            const slug = rawTitle.toLowerCase()
-              .replace(/[^a-z0-9]+/g, '-')
-              .replace(/^-|-$/g, '')
-              .slice(0, 60);
-
-            // Branch and filename
-            const branch = `adr/${issueNumber}-${slug}`;
-            const filename = `docs/adr/${issueNumber}-${slug}.md`;
-            const content = `# [ADR]: ${rawTitle}\n\n${issue.body}`;
-
-            // Checkout new branch
             execSync(`git checkout -B ${branch}`, { stdio: 'inherit' });
 
-            // Write file only if content changed or file does not exist
-            let existingContent = '';
-            if (fs.existsSync(filename)) {
-              existingContent = fs.readFileSync(filename, 'utf-8');
-            }
-
-            if (existingContent !== content) {
-              fs.mkdirSync(path.dirname(filename), { recursive: true });
-              fs.writeFileSync(filename, content);
-
-              execSync(`git add "${filename}"`, { stdio: 'inherit' });
-              execSync(`git commit -m "docs(adr): add ${filename}"`, { stdio: 'inherit' });
-            } else {
-              console.log('No changes to ADR file; skipping commit.');
-            }
+            fs.mkdirSync(path.dirname(filename), { recursive: true });
+            fs.writeFileSync(filename, content);
+            execSync(`git add "${filename}"`, { stdio: 'inherit' });
+            execSync(`git commit -m "docs(adr): add ${filename}"`, { stdio: 'inherit' });
 
             core.setOutput('branch', branch);
             core.setOutput('filename', filename);
 
       - name: Push branch
-        run: git push --set-upstream origin ${{ steps.create_adr.outputs.branch }}
+        run: |
+          git push --set-upstream origin ${{ steps.create_adr.outputs.branch }}
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v7
@@ -81,5 +59,5 @@ jobs:
           base: main
           branch: ${{ steps.create_adr.outputs.branch }}
           title: 'docs(adr): add ${{ steps.create_adr.outputs.filename }}'
-          body: 'ADR generated from issue #${{ github.event.issue.number }}.'
+          body: 'Automated ADR creation.'
           labels: adr
