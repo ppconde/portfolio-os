@@ -4,6 +4,10 @@ on:
   issues:
     types: [closed, edited]
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   process-adr:
     if: |
@@ -14,11 +18,17 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - name: Set up Git user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: Generate or update ADR file
         id: adr
         uses: actions/github-script@v7
         with:
           script: |
+            const { execSync } = require('child_process');
             const fs = require('fs');
             const path = require('path');
 
@@ -29,17 +39,36 @@ jobs:
               .replace(/[^a-z0-9]+/g, '-')
               .replace(/^-|-$/g, '')
               .slice(0, 60);
+
+            const branch = `adr/${issueNumber}-${slug}`;
             const filename = `docs/adr/${issueNumber}-${slug}.md`;
+            const newContent = `# [ADR]: ${rawTitle}\n\n${issue.body}`;
 
-            const header = `# [ADR]: ${rawTitle}`;
+            // Create and switch to branch
+            execSync(`git checkout -B ${branch}`, { stdio: 'inherit' });
 
-            const content = header + '\n' + issue.body + '\n';
+            // Read current content if file exists
+            let currentContent = '';
+            if (fs.existsSync(filename)) {
+              currentContent = fs.readFileSync(filename, 'utf-8');
+            }
 
-            fs.mkdirSync(path.dirname(filename), { recursive: true });
-            fs.writeFileSync(filename, content);
+            // Only write and commit if the content changed
+            if (currentContent !== newContent) {
+              fs.mkdirSync(path.dirname(filename), { recursive: true });
+              fs.writeFileSync(filename, newContent);
 
+              execSync(`git add "${filename}"`, { stdio: 'inherit' });
+              execSync(`git commit -m "docs(adr): update ${filename}"`, { stdio: 'inherit' });
+            } else {
+              console.log('No changes to ADR file; skipping commit.');
+            }
+
+            core.setOutput('branch', branch);
             core.setOutput('filename', filename);
-            core.setOutput('branch', `adr/${issueNumber}-${slug}`);
+
+      - name: Push branch
+        run: git push origin ${{ steps.adr.outputs.branch }}
 
       - name: Create or update pull request
         uses: peter-evans/create-pull-request@v6
