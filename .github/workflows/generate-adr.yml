@@ -42,21 +42,18 @@ jobs:
 
             const branch = `adr/${issueNumber}-${slug}`;
             const filename = `docs/adr/${issueNumber}-${slug}.md`;
-            const newContent = `# [ADR]: ${rawTitle}\n\n${issue.body}`;
+            const content = `# [ADR]: ${rawTitle}\n\n${issue.body}`;
 
-            // Create and switch to branch
             execSync(`git checkout -B ${branch}`, { stdio: 'inherit' });
 
-            // Read current content if file exists
             let currentContent = '';
             if (fs.existsSync(filename)) {
               currentContent = fs.readFileSync(filename, 'utf-8');
             }
 
-            // Only write and commit if the content changed
-            if (currentContent !== newContent) {
+            if (currentContent !== content) {
               fs.mkdirSync(path.dirname(filename), { recursive: true });
-              fs.writeFileSync(filename, newContent);
+              fs.writeFileSync(filename, content);
 
               execSync(`git add "${filename}"`, { stdio: 'inherit' });
               execSync(`git commit -m "docs(adr): update ${filename}"`, { stdio: 'inherit' });
@@ -73,7 +70,7 @@ jobs:
       - name: Create or update pull request
         uses: peter-evans/create-pull-request@v6
         with:
-          base: main
+          base: main # Make sure this is your default branch
           branch: ${{ steps.adr.outputs.branch }}
           commit-message: 'docs(adr): update ${{ steps.adr.outputs.filename }}'
           title: 'docs(adr): update ${{ steps.adr.outputs.filename }}'
