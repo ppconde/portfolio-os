@@ -73,6 +73,7 @@ jobs:
       - name: Create or update pull request
         uses: peter-evans/create-pull-request@v6
         with:
+          base: main
           branch: ${{ steps.adr.outputs.branch }}
           commit-message: 'docs(adr): update ${{ steps.adr.outputs.filename }}'
           title: 'docs(adr): update ${{ steps.adr.outputs.filename }}'
