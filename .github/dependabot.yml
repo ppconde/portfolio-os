@@ -1,7 +1,7 @@
 version: 2
 updates:
-  - package-ecosystem: 'npm' # See documentation for possible values
-    directory: '/' # Location of package manifests
+  - package-ecosystem: 'npm'
+    directory: '/'
     schedule:
       interval: 'weekly'
     assignees:
@@ -9,3 +9,10 @@ updates:
     target-branch: 'main'
     commit-message:
       prefix: 'deps'
+    groups:
+      minor-and-patch:
+        update-types:
+          - 'minor'
+          - 'patch'
+        patterns:
+          - '*' # include all dependencies for grouping
