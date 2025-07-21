@@ -1,16 +1,17 @@
 name: Dependabot Build Check
 
 on:
-  push:
-    branches:
-      - 'dependabot/**'  # Only runs on Dependabot branches
   pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - 'main'
     paths:
       - 'package.json'
       - 'package-lock.json'
 
 jobs:
   build:
+    if: github.actor == 'dependabot[bot]' || github.actor == 'dependabot-preview[bot]'
     runs-on: ubuntu-latest
 
     steps:
