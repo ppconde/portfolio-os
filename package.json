@@ -21,7 +21,7 @@
     "@react-router/fs-routes": "^7.6.2",
     "@tailwindcss/vite": "^4.1.11",
     "classnames": "^2.5.1",
-    "esbuild": "^0.25.6",
+    "esbuild": "^0.25.8",
     "graffle": "8.0.0-next.164",
     "isbot": "^5.1.28",
     "react": "^19.1.0",
