@@ -21,10 +21,13 @@ const requestHandler = createRequestHandler(
 
 export default {
   async fetch(request, env, ctx) {
+    console.log('Fetching request:', request.url);
+    const GITHUB_KEY = await env.PORTFOLIO_OS_SECRETS.get();
+
     return requestHandler(request, {
       cloudflare: { env, ctx },
       clients: {
-        github: createGithubClient(env.VITE_GITHUB_KEY),
+        github: createGithubClient(GITHUB_KEY),
       },
     });
   },

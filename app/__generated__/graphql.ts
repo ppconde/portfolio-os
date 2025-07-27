@@ -1,5 +1,4 @@
 /* eslint-disable */
-import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -1320,9 +1319,6 @@ export type Bot = Actor & Node & UniformResourceLocatable & {
 export type BotAvatarUrlArgs = {
   size?: InputMaybe<Scalars['Int']['input']>;
 };
-
-/** Used when either Bot or User are accepted. */
-export type BotOrUser = Bot | User;
 
 /** Types which can be actors for `BranchActorAllowance` objects. */
 export type BranchActorAllowanceActor = App | Team | User;
@@ -3282,7 +3278,11 @@ export type ContributionOrder = {
   direction: OrderDirection;
 };
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/**
+ * A collection of contributions made by a user, including opened issues, commits, and pull requests.
+ * Contributions in private and internal repositories are only included with the optional read:user scope.
+ *
+ */
 export type ContributionsCollection = {
   __typename?: 'ContributionsCollection';
   /** Commit contributions made by the user, grouped by repository. */
@@ -3387,13 +3387,21 @@ export type ContributionsCollection = {
 };
 
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/**
+ * A collection of contributions made by a user, including opened issues, commits, and pull requests.
+ * Contributions in private and internal repositories are only included with the optional read:user scope.
+ *
+ */
 export type ContributionsCollectionCommitContributionsByRepositoryArgs = {
   maxRepositories?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/**
+ * A collection of contributions made by a user, including opened issues, commits, and pull requests.
+ * Contributions in private and internal repositories are only included with the optional read:user scope.
+ *
+ */
 export type ContributionsCollectionIssueContributionsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3405,7 +3413,11 @@ export type ContributionsCollectionIssueContributionsArgs = {
 };
 
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/**
+ * A collection of contributions made by a user, including opened issues, commits, and pull requests.
+ * Contributions in private and internal repositories are only included with the optional read:user scope.
+ *
+ */
 export type ContributionsCollectionIssueContributionsByRepositoryArgs = {
   excludeFirst?: InputMaybe<Scalars['Boolean']['input']>;
   excludePopular?: InputMaybe<Scalars['Boolean']['input']>;
@@ -3413,7 +3425,11 @@ export type ContributionsCollectionIssueContributionsByRepositoryArgs = {
 };
 
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/**
+ * A collection of contributions made by a user, including opened issues, commits, and pull requests.
+ * Contributions in private and internal repositories are only included with the optional read:user scope.
+ *
+ */
 export type ContributionsCollectionPullRequestContributionsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3425,7 +3441,11 @@ export type ContributionsCollectionPullRequestContributionsArgs = {
 };
 
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/**
+ * A collection of contributions made by a user, including opened issues, commits, and pull requests.
+ * Contributions in private and internal repositories are only included with the optional read:user scope.
+ *
+ */
 export type ContributionsCollectionPullRequestContributionsByRepositoryArgs = {
   excludeFirst?: InputMaybe<Scalars['Boolean']['input']>;
   excludePopular?: InputMaybe<Scalars['Boolean']['input']>;
@@ -3433,7 +3453,11 @@ export type ContributionsCollectionPullRequestContributionsByRepositoryArgs = {
 };
 
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/**
+ * A collection of contributions made by a user, including opened issues, commits, and pull requests.
+ * Contributions in private and internal repositories are only included with the optional read:user scope.
+ *
+ */
 export type ContributionsCollectionPullRequestReviewContributionsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3443,13 +3467,21 @@ export type ContributionsCollectionPullRequestReviewContributionsArgs = {
 };
 
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/**
+ * A collection of contributions made by a user, including opened issues, commits, and pull requests.
+ * Contributions in private and internal repositories are only included with the optional read:user scope.
+ *
+ */
 export type ContributionsCollectionPullRequestReviewContributionsByRepositoryArgs = {
   maxRepositories?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/**
+ * A collection of contributions made by a user, including opened issues, commits, and pull requests.
+ * Contributions in private and internal repositories are only included with the optional read:user scope.
+ *
+ */
 export type ContributionsCollectionRepositoryContributionsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -3460,35 +3492,55 @@ export type ContributionsCollectionRepositoryContributionsArgs = {
 };
 
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/**
+ * A collection of contributions made by a user, including opened issues, commits, and pull requests.
+ * Contributions in private and internal repositories are only included with the optional read:user scope.
+ *
+ */
 export type ContributionsCollectionTotalIssueContributionsArgs = {
   excludeFirst?: InputMaybe<Scalars['Boolean']['input']>;
   excludePopular?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/**
+ * A collection of contributions made by a user, including opened issues, commits, and pull requests.
+ * Contributions in private and internal repositories are only included with the optional read:user scope.
+ *
+ */
 export type ContributionsCollectionTotalPullRequestContributionsArgs = {
   excludeFirst?: InputMaybe<Scalars['Boolean']['input']>;
   excludePopular?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/**
+ * A collection of contributions made by a user, including opened issues, commits, and pull requests.
+ * Contributions in private and internal repositories are only included with the optional read:user scope.
+ *
+ */
 export type ContributionsCollectionTotalRepositoriesWithContributedIssuesArgs = {
   excludeFirst?: InputMaybe<Scalars['Boolean']['input']>;
   excludePopular?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/**
+ * A collection of contributions made by a user, including opened issues, commits, and pull requests.
+ * Contributions in private and internal repositories are only included with the optional read:user scope.
+ *
+ */
 export type ContributionsCollectionTotalRepositoriesWithContributedPullRequestsArgs = {
   excludeFirst?: InputMaybe<Scalars['Boolean']['input']>;
   excludePopular?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/**
+ * A collection of contributions made by a user, including opened issues, commits, and pull requests.
+ * Contributions in private and internal repositories are only included with the optional read:user scope.
+ *
+ */
 export type ContributionsCollectionTotalRepositoryContributionsArgs = {
   excludeFirst?: InputMaybe<Scalars['Boolean']['input']>;
 };
@@ -9821,7 +9873,7 @@ export enum IssueState {
 export enum IssueStateReason {
   /** An issue that has been closed as completed */
   Completed = 'COMPLETED',
-  /** An issue that has been closed as a duplicate. To retrieve this value, set `(enableDuplicate: true)` when querying the stateReason field. */
+  /** An issue that has been closed as a duplicate. */
   Duplicate = 'DUPLICATE',
   /** An issue that has been closed as not planned */
   NotPlanned = 'NOT_PLANNED',
@@ -10550,6 +10602,8 @@ export type Mannequin = Actor & Node & UniformResourceLocatable & {
   id: Scalars['ID']['output'];
   /** The username of the actor. */
   login: Scalars['String']['output'];
+  /** The display name of the imported mannequin. */
+  name?: Maybe<Scalars['String']['output']>;
   /** The HTML path to this resource. */
   resourcePath: Scalars['URI']['output'];
   /** Identifies the date and time when the object was last updated. */
@@ -21697,7 +21751,7 @@ export type PullRequestParameters = {
   __typename?: 'PullRequestParameters';
   /** Array of allowed merge methods. Allowed values include `merge`, `squash`, and `rebase`. At least one option must be enabled. */
   allowedMergeMethods?: Maybe<Array<PullRequestAllowedMergeMethods>>;
-  /** Automatically request review from Copilot for new pull requests, if the author has access to Copilot code review. */
+  /** Request Copilot code review for new pull requests automatically if the author has access to Copilot code review. */
   automaticCopilotCodeReviewEnabled: Scalars['Boolean']['output'];
   /** New, reviewable commits pushed will dismiss previous pull request review approvals. */
   dismissStaleReviewsOnPush: Scalars['Boolean']['output'];
@@ -21715,7 +21769,7 @@ export type PullRequestParameters = {
 export type PullRequestParametersInput = {
   /** Array of allowed merge methods. Allowed values include `merge`, `squash`, and `rebase`. At least one option must be enabled. */
   allowedMergeMethods?: InputMaybe<Array<PullRequestAllowedMergeMethods>>;
-  /** Automatically request review from Copilot for new pull requests, if the author has access to Copilot code review. */
+  /** Request Copilot code review for new pull requests automatically if the author has access to Copilot code review. */
   automaticCopilotCodeReviewEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   /** New, reviewable commits pushed will dismiss previous pull request review approvals. */
   dismissStaleReviewsOnPush: Scalars['Boolean']['input'];
@@ -23231,6 +23285,8 @@ export type Release = Node & Reactable & UniformResourceLocatable & {
   descriptionHTML?: Maybe<Scalars['HTML']['output']>;
   /** The Node ID of the Release object */
   id: Scalars['ID']['output'];
+  /** Whether or not the release is immutable */
+  immutable: Scalars['Boolean']['output'];
   /** Whether or not the release is a draft */
   isDraft: Scalars['Boolean']['output'];
   /** Whether or not the release is the latest releast */
@@ -27884,6 +27940,8 @@ export type ReprioritizeSubIssuePayload = {
 
 /** Autogenerated input type of RequestReviews */
 export type RequestReviewsInput = {
+  /** The Node IDs of the bot to request. */
+  botIds?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** A unique identifier for the client performing the mutation. */
   clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The Node ID of the pull request to modify. */
@@ -35569,11 +35627,3 @@ export type WorkflowsParametersInput = {
   /** Workflows that must pass for this rule to pass. */
   workflows: Array<WorkflowFileReferenceInput>;
 };
-
-export type GetPinnedItemsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type GetPinnedItemsQuery = { __typename?: 'Query', user?: { __typename?: 'User', pinnedItems: { __typename?: 'PinnableItemConnection', nodes?: Array<{ __typename?: 'Gist' } | { __typename?: 'Repository', id: string, name: string, description?: string | null, url: any, homepageUrl?: any | null, openGraphImageUrl: any, languages?: { __typename?: 'LanguageConnection', nodes?: Array<{ __typename?: 'Language', id: string, name: string, color?: string | null } | null> | null } | null } | null> | null } } | null };
-
-
-export const GetPinnedItemsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPinnedItems"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"login"},"value":{"kind":"StringValue","value":"ppconde","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pinnedItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"6"}},{"kind":"Argument","name":{"kind":"Name","value":"types"},"value":{"kind":"EnumValue","value":"REPOSITORY"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Repository"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"homepageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"openGraphImageUrl"}},{"kind":"Field","name":{"kind":"Name","value":"languages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"orderBy"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"field"},"value":{"kind":"EnumValue","value":"SIZE"}},{"kind":"ObjectField","name":{"kind":"Name","value":"direction"},"value":{"kind":"EnumValue","value":"DESC"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"color"}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetPinnedItemsQuery, GetPinnedItemsQueryVariables>;

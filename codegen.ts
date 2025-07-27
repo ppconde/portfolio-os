@@ -4,7 +4,7 @@ const config: CodegenConfig = {
   schema: {
     'https://api.github.com/graphql': {
       headers: {
-        authorization: `Bearer ${process.env.VITE_GITHUB_KEY}`,
+        authorization: `Bearer ${import.meta.env.GITHUB_KEY}`,
         'User-Agent': 'portfolio-os',
       },
     },
