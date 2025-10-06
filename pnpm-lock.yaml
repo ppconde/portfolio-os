@@ -30,8 +30,8 @@ importers:
         specifier: ^0.25.10
         version: 0.25.10
       graffle:
-        specifier: 8.0.0-next.173
-        version: 8.0.0-next.173(graphql@16.11.0)(prettier@3.6.2)
+        specifier: 8.0.0-next.174
+        version: 8.0.0-next.174(graphql@16.11.0)(prettier@3.6.2)
       isbot:
         specifier: ^5.1.31
         version: 5.1.31
@@ -2609,8 +2609,8 @@ packages:
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
 
-  graffle@8.0.0-next.173:
-    resolution: {integrity: sha512-H02EGMhLg0XWMXmlMCRS+hdzTNXpHKN5W2mMk0CVP5aMHP72Re32wjEWChPmYpd1gnTpc7ox7vPic+DY0Omt7Q==}
+  graffle@8.0.0-next.174:
+    resolution: {integrity: sha512-6WjQj9y4YqIMh8CdBGxcHuc2IA840x8V/FWblsn/QpgDMoVPzx5ZcBqtDhsBhCn5UTE/HJoECL3elxyj26J/Tg==}
     hasBin: true
     peerDependencies:
       '@dprint/formatter': ^0.4.0
@@ -6938,7 +6938,7 @@ snapshots:
 
   graceful-fs@4.2.11: {}
 
-  graffle@8.0.0-next.173(graphql@16.11.0)(prettier@3.6.2):
+  graffle@8.0.0-next.174(graphql@16.11.0)(prettier@3.6.2):
     dependencies:
       '@0no-co/graphql.web': 1.2.0(graphql@16.11.0)
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.11.0)
