@@ -1,5 +1,5 @@
 import { createRequestHandler } from 'react-router';
-import { createGithubClient } from '../app/graphql';
+import { Graffle } from 'graffle';
 
 declare module 'react-router' {
   export interface AppLoadContext {
@@ -18,6 +18,17 @@ const requestHandler = createRequestHandler(
   () => import('virtual:react-router/server-build'),
   import.meta.env.MODE
 );
+
+const createGithubClient = (token: string) => {
+  return Graffle.create().transport({
+    url: 'https://api.github.com/graphql',
+    headers: {
+      authorization: `Bearer ${token}`,
+      'User-Agent': 'portfolio-os (https://os.ppconde.com/)',
+    },
+  });
+};
+
 
 export default {
   async fetch(request, env, ctx) {

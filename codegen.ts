@@ -9,9 +9,9 @@ const config: CodegenConfig = {
       },
     },
   },
-  documents: ['app/**/*.{ts,tsx}'],
+  documents: ['src/**/*.{ts,tsx}'],
   generates: {
-    './app/__generated__/': {
+    './src/__generated__/': {
       preset: 'client',
       plugins: [],
       presetConfig: {
