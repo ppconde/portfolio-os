@@ -16,9 +16,7 @@ export async function loader(request: Route.LoaderArgs) {
     const context = request.context as AppLoadContext;
     const { PORTFOLIO_OS_KV } = context.cloudflare.env;
 
-    console.log('Fetching pinned repositories...', PORTFOLIO_OS_KV);
     const cachedData = await PORTFOLIO_OS_KV.get(CACHE.PINNED_REPOS.KEY);
-    console.log('Cached data:', cachedData);
     if (cachedData) {
       return JSON.parse(cachedData);
     }
@@ -28,7 +26,6 @@ export async function loader(request: Route.LoaderArgs) {
       .gql(parse(GET_REPOS_QUERY))
       .send()) as GetPinnedItemsQuery;
 
-    console.log('Response from GitHub:', response);
     if (!response?.user?.pinnedItems?.nodes) {
       throw new Response('No repositories found', { status: 404 });
     }
