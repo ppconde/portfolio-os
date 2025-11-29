@@ -1,6 +1,5 @@
 import { createRequestHandler } from 'react-router';
 import { createGithubClient } from '../app/graphql';
-import { getSecret } from './utils/utils';
 
 declare module 'react-router' {
   export interface AppLoadContext {
@@ -22,7 +21,7 @@ const requestHandler = createRequestHandler(
 
 export default {
   async fetch(request, env, ctx) {
-    const GITHUB_KEY = await getSecret('GITHUB_KEY');
+    const GITHUB_KEY = await env.PORTFOLIO_OS_SECRETS.get();
 
     return requestHandler(request, {
       cloudflare: { env, ctx },
