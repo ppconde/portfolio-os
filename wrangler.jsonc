@@ -6,7 +6,6 @@
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "portfolio-os",
 	"compatibility_date": "2025-11-25",
-	"compatibility_flags": ["nodejs_compat"],
 	"main": "./workers/app.ts",
 	"observability": {
 		"enabled": true
