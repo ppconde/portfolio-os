@@ -10,7 +10,7 @@ export default function Start() {
       <button
         className={classNames(
           'btn-windows relative flex h-full items-center p-1',
-          { isOpen: 'border-windows-inverted' }
+          { 'btn-windows-inverted': isOpen }
         )}
         onClick={() => setIsOpen(!isOpen)}
       >
