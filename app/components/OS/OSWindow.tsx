@@ -73,7 +73,7 @@ export default function OSWindow({
         ref={nodeRef}
         style={{ zIndex: window.zIndex }}
         className={classNames(
-          'border-windows bg-windows-gray-primary absolute flex flex-col shadow-md',
+          'border-windows bg-secondary absolute flex flex-col shadow-md',
           {
             'resize overflow-auto': !window.isMinimized && !window.isMaximized,
           },
@@ -82,12 +82,12 @@ export default function OSWindow({
         onDoubleClick={toggleMaximize}
       >
         {/* Title bar */}
-        <div className="bg-windows-gray-primary p-1">
+        <div className="bg-secondary p-1">
           <div
             className={classNames(
-              'handle text-windows-white flex h-6 items-center justify-between px-1',
+              'handle text-tertiary flex h-6 items-center justify-between px-1',
               { 'active:cursor-move': !window.isMaximized },
-              window.isFocused ? 'bg-windows-blue' : 'bg-windows-gray-secondary'
+              window.isFocused ? 'bg-accent' : 'bg-quaternary'
             )}
           >
             <div className="flex items-center">
@@ -121,17 +121,17 @@ export default function OSWindow({
         </div>
 
         {/* Content area */}
-        <div className="no-scrollbar bg-windows-gray-primary grow overflow-y-scroll p-1">
+        <div className="no-scrollbar bg-secondary grow overflow-y-scroll p-1">
           {/* White Area */}
-          <div className="border-b-windows-white border-l-windows-gray-secondary border-r-windows-white border-t-windows-gray-secondary bg-windows-white shadow-windows-inset h-full border-2 p-4">
+          <div className="border-b-tertiary border-l-quaternary border-r-tertiary border-t-quaternary bg-tertiary shadow-windows-inset h-full border-2 p-4">
             {children}
           </div>
         </div>
 
         {/* Status bar */}
         {hideStatusBar && (
-          <div className="bg-windows-gray-primary p-1 text-xs">
-            <div className="border-b-windows-white border-l-windows-gray-secondary border-r-windows-white border-t-windows-gray-secondary flex h-5 items-center justify-between border p-1">
+          <div className="bg-secondary p-1 text-xs">
+            <div className="border-b-tertiary border-l-quaternary border-r-tertiary border-t-quaternary flex h-5 items-center justify-between border p-1">
               <span className="flex w-5/6 items-center overflow-hidden text-ellipsis whitespace-nowrap">
                 <img
                   src="/assets/html-0.png"

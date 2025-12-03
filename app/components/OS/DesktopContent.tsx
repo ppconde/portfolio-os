@@ -11,7 +11,7 @@ export default function DesktopContent() {
   const windows = useWindowsStore((s) => s.windows);
 
   return (
-    <div className="bg-windows-teal relative flex h-screen w-screen flex-col overflow-hidden select-none">
+    <div className="bg-primary relative flex h-screen w-screen flex-col overflow-hidden select-none">
       <div className="relative flex flex-col gap-6 p-4">
         {icons.map((icon) => (
           <Icon key={icon.id} {...icon} />

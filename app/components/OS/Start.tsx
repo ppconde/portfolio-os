@@ -15,7 +15,7 @@ export default function Start() {
         onClick={() => setIsOpen(!isOpen)}
       >
         {!isOpen && (
-          <div className="border-windows-gray-secondary pointer-events-none absolute inset-0 border-r border-b"></div>
+          <div className="border-quaternary pointer-events-none absolute inset-0 border-r border-b"></div>
         )}
         <img
           className="image-rendering-pixelated h-6 w-auto pr-1"

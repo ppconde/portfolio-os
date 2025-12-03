@@ -27,7 +27,7 @@ export default function BiosScreen() {
   }, [setBootState]);
 
   return (
-    <div className="font-perfect-dos-vga-win text-windows-teal h-screen w-screen bg-black select-none">
+    <div className="font-perfect-dos-vga-win text-primary h-screen w-screen bg-black select-none">
       <div className="flex h-full w-full flex-col p-4 sm:p-6 md:p-8">
         <div
           className={classNames(
@@ -47,7 +47,7 @@ export default function BiosScreen() {
             { hidden: showFourthSection }
           )}
         >
-          <p className="text-windows-super-blue text-lg font-bold md:text-xl">
+          <p className="text-accent-light text-lg font-bold md:text-xl">
             Overclocked Potato X3000
           </p>
           <p>BIOS Version 1.23.456</p>
@@ -60,7 +60,7 @@ export default function BiosScreen() {
             { hidden: showFourthSection }
           )}
         >
-          <div className="font-micro text-windows-super-blue text-5xl font-bold md:text-3xl">
+          <div className="font-micro text-accent-light text-5xl font-bold md:text-3xl">
             PotatoChip™
           </div>
         </div>
@@ -109,7 +109,7 @@ export default function BiosScreen() {
 
         <div
           className={classNames(
-            'text-windows-super-blue mb-4 text-center md:mb-0 md:pl-2 md:text-left',
+            'text-accent-light mb-4 text-center md:mb-0 md:pl-2 md:text-left',
             { hidden: showFourthSection }
           )}
         >

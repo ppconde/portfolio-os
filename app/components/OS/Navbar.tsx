@@ -8,7 +8,7 @@ export default function Navbar() {
   const windows = useWindowsStore((s) => s.windows);
 
   return (
-    <nav className="border-windows-white bg-windows-gray-primary fixed bottom-0 left-0 z-9999 flex h-8 w-full items-center justify-center border-t-2 px-1">
+    <nav className="border-tertiary bg-secondary fixed bottom-0 left-0 z-9999 flex h-8 w-full items-center justify-center border-t-2 px-1">
       <Start />
       <VerticalSeparator />
       <div className="flex h-[80%] basis-1/6 items-center">

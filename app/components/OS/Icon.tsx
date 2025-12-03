@@ -11,7 +11,7 @@ export default function Icon({ id, name, icon, to }: Icon) {
   const content = (
     <div className="flex w-16 cursor-pointer flex-col items-center">
       <img src={icon} alt={name} className="mb-1 h-12 w-12" />
-      <span className="text-windows-white text-center text-xs">{name}</span>
+      <span className="text-tertiary text-center text-xs">{name}</span>
     </div>
   );
 

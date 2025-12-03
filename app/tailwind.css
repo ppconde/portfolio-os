@@ -12,13 +12,13 @@
   --font-ms-reference: 'MS Reference Sans Serif', sans-serif;
   --font-micro: 'Micro 5', sans-serif;
 
-  --color-windows-teal: #008080;
-  --color-windows-gray-primary: #c3c3c3;
-  --color-windows-white: #fdffff;
-  --color-windows-gray-secondary: #818181;
-  --color-windows-blue: #010081;
-  --color-windows-super-blue: #0000ff;
-  --color-windows-purple: #800080;
+  --color-primary: #008080;
+  --color-secondary: #c3c3c3;
+  --color-tertiary: #fdffff;
+  --color-quaternary: #818181;
+  --color-accent: #010081;
+  --color-accent-light: #0000ff;
+  --color-accent-dark: #800080;
 
   --shadow-windows-inset: inset 1px 1px 3px #818181;
 
@@ -62,15 +62,15 @@
 }
 
 @utility border-windows {
-  @apply border-2 border-b-black border-l-windows-white border-r-black border-t-windows-white;
+  @apply border-2 border-b-black border-l-tertiary border-r-black border-t-tertiary;
 }
 
 @utility border-windows-inverted {
-  @apply border-2 border-b-windows-white border-l-black border-r-windows-white border-t-black;
+  @apply border-2 border-b-tertiary border-l-black border-r-tertiary border-t-black;
 }
 
 @utility btn-windows {
-  @apply border-windows bg-windows-gray-primary;
+  @apply border-windows bg-secondary;
 }
 
 @utility btn-windows-inverted {

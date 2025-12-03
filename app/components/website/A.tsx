@@ -15,7 +15,7 @@ export default function A({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={ariaLabel}
-      className="text-windows-super-blue underline hover:no-underline"
+      className="text-accent-light underline hover:no-underline"
       title={title}
     >
       {children}

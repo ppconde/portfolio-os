@@ -37,7 +37,7 @@ export default function ShutdownScreen() {
   }, [setBootState]);
 
   return (
-    <div className="font-perfect-dos-vga-win text-windows-teal h-screen w-screen bg-black">
+    <div className="font-perfect-dos-vga-win text-primary h-screen w-screen bg-black">
       <div className="flex h-full w-full flex-col p-4 sm:p-6 md:p-8">
         {showFirstSection && <BlinkCaret hide={!showFirstSection} />}
         {showSecondSection && (

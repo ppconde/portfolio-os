@@ -16,8 +16,8 @@ export const NavItem = ({
     className={({ isActive }) =>
       `font-perfect-dos-vga-win px-4 py-2 underline transition-colors duration-200 ${
         isActive && !disableItem
-          ? 'text-windows-purple'
-          : 'text-windows-super-blue hover:no-underline'
+          ? 'text-accent-dark'
+          : 'text-accent-light hover:no-underline'
       }`
     }
     onClick={toggleMenu}
