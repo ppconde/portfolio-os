@@ -16,8 +16,6 @@ jobs:
       - uses: pnpm/action-setup@v4
       - name: Install dependencies
         run: pnpm install
-        env:
-          GITHUB_KEY: ${{ secrets.GITHUB_KEY }}
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
       - name: Run Playwright tests
