@@ -24,7 +24,7 @@ jobs:
           node-version: lts/*
       - uses: pnpm/action-setup@v4
       - name: Install dependencies
-        run: pnpm ci
+        run: pnpm install
         env:
           GITHUB_KEY: ${{ secrets.GITHUB_KEY }}
 
