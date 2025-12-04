@@ -14,10 +14,10 @@ jobs:
         with:
           node-version: lts/*
       - uses: pnpm/action-setup@v4
-        env:
-          GITHUB_KEY: ${{ secrets.GITHUB_KEY }}
       - name: Install dependencies
         run: pnpm install
+        env:
+          GITHUB_KEY: ${{ secrets.GITHUB_KEY }}
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
       - name: Run Playwright tests
