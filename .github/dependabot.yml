@@ -10,6 +10,12 @@ updates:
     commit-message:
       prefix: 'deps'
     groups:
+      security-updates:
+        update-types:
+          - 'security'
+        patterns:
+          - '*' # Group all security updates together
+
       minor-and-patch:
         update-types:
           - 'minor'
