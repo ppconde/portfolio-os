@@ -1,6 +1,24 @@
 version: 2
 updates:
-  - package-ecosystem: 'npm'
+  # Security updates: check daily to catch vulnerabilities ASAP
+  - package-ecosystem: 'pnpm'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+    assignees:
+      - 'ppconde'
+    target-branch: 'main'
+    commit-message:
+      prefix: 'security'
+    groups:
+      security-updates:
+        update-types:
+          - 'security'
+        patterns:
+          - '*' # Group all security updates together
+
+  # Regular updates: check weekly
+  - package-ecosystem: 'pnpm'
     directory: '/'
     schedule:
       interval: 'weekly'
@@ -10,12 +28,6 @@ updates:
     commit-message:
       prefix: 'deps'
     groups:
-      security-updates:
-        update-types:
-          - 'security'
-        patterns:
-          - '*' # Group all security updates together
-
       minor-and-patch:
         update-types:
           - 'minor'
