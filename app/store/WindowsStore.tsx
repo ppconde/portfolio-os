@@ -51,7 +51,7 @@ export const useWindowsStore = create<WindowsStore>((set, get) => ({
           isMinimized: false,
           isMaximized: false,
           isFocused: true,
-          position: { x: positions.x + 40, y: positions.y + 40 },
+          position: { x: positions.x - 20, y: positions.y + 20 },
           zIndex: ++state.currentZIndex,
         },
       ],

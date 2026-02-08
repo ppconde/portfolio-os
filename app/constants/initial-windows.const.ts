@@ -8,7 +8,7 @@ export const initialWindows: DesktopWindow[] = [
     isMinimized: false,
     isMaximized: false,
     isFocused: true,
-    position: { x: 100, y: 40 },
+    position: { x: 65, y: 40 },
     zIndex: 0,
   },
 ];
