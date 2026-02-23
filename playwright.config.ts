@@ -89,7 +89,7 @@ export default defineConfig({
       command: 'pnpm run preview',
       url: 'http://localhost:8788',
       reuseExistingServer: false,
-      timeout: 120000,
+      timeout: 300000,
     }
     : {
       command: 'pnpm run dev',
