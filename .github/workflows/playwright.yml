@@ -25,6 +25,8 @@ jobs:
         run: pnpm install
       - name: Create .env file
         run: echo "GITHUB_KEY=${{ secrets.GH_API_TOKEN }}" > .env.local
+      - name: Build project
+        run: pnpm run build
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Playwright tests (Shard ${{ matrix.shardIndex }} of ${{ matrix.shardTotal }})
