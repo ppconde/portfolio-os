@@ -86,9 +86,9 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: process.env.CI
     ? {
-      command: 'pnpm run preview',
+      command: 'vite preview',
       url: 'http://localhost:5173',
-      timeout: 600000,
+      timeout: 30000,
     }
     : {
       command: 'pnpm run dev',
