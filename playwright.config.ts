@@ -86,9 +86,8 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: process.env.CI
     ? {
-      command: 'pnpm run preview',
+      command: 'pnpm run build && npx wrangler pages dev ./build/client --port 8788',
       url: 'http://localhost:8788',
-      reuseExistingServer: false,
       timeout: 300000,
     }
     : {
