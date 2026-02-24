@@ -105,16 +105,19 @@ export default function OSWindow({
                 onClick={handleMinimize}
                 imageName="/assets/minimize.png"
                 imageAlt="Minimize"
+                test-id={`minimize-button-${window.id.toLowerCase()}`}
               />
               <WindowButton
                 onClick={toggleMaximize}
                 imageName="/assets/maximize.png"
                 imageAlt="Maximize"
+                test-id={`maximize-button-${window.id.toLowerCase()}`}
               />
               <WindowButton
                 onClick={handleClose}
                 imageName="/assets/close.png"
                 imageAlt="Close"
+                test-id={`close-button-${window.id.toLowerCase()}`}
               />
             </div>
           </div>
@@ -132,7 +135,7 @@ export default function OSWindow({
         {hideStatusBar && (
           <div className="bg-secondary p-1 text-xs">
             <div className="border-b-tertiary border-l-quaternary border-r-tertiary border-t-quaternary flex h-5 items-center justify-between border p-1">
-              <span className="flex w-5/6 items-center overflow-hidden text-ellipsis whitespace-nowrap">
+              <span className="flex grow overflow-hidden text-ellipsis whitespace-nowrap">
                 <img
                   src="/assets/html-0.png"
                   alt="Internet icon"
@@ -140,7 +143,7 @@ export default function OSWindow({
                 />
                 © {new Date().getFullYear()} Portfolio. All rights reserved.
               </span>
-              <span className="flex items-center">
+              <span className="flex shrink-0 items-center whitespace-nowrap">
                 <img
                   src="/assets/world-1.png"
                   alt="Internet icon"

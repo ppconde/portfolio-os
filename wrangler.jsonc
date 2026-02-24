@@ -10,6 +10,12 @@
   "observability": {
     "enabled": true,
   },
+  "kv_namespaces": [
+    {
+      "binding": "PORTFOLIO_OS_KV",
+      "id": "4024c012098c4498922e7af3e1fab339",
+    },
+  ],
   "secrets_store_secrets": [
     {
       "binding": "PORTFOLIO_OS_SECRETS",
@@ -17,10 +23,16 @@
       "secret_name": "GITHUB_KEY",
     },
   ],
-  "kv_namespaces": [
-    {
-      "binding": "PORTFOLIO_OS_KV",
-      "id": "4024c012098c4498922e7af3e1fab339",
+  "env": {
+    "development": {
+      "name": "portfolio-os-dev",
+      "kv_namespaces": [
+        {
+          "binding": "PORTFOLIO_OS_KV",
+          "id": "4024c012098c4498922e7af3e1fab339",
+          "preview_id": "4024c012098c4498922e7af3e1fab339",
+        },
+      ],
     },
-  ],
+  },
 }
