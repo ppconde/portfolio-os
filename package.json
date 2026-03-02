@@ -13,7 +13,8 @@
     "deploy": "pnpm run build && wrangler deploy",
     "preview": "pnpm run build && vite preview",
     "compile": "dotenv -e .env.local graphql-codegen",
-    "watch": "dotenv -e .env.local graphql-codegen -w"
+    "watch": "dotenv -e .env.local graphql-codegen -w",
+    "test": "pnpm playwright test"
   },
   "dependencies": {
     "@react-router/cloudflare": "^7.13.1",
