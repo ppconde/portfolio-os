@@ -42,21 +42,21 @@ export default defineConfig({
       },
     },
 
-    {
-      name: 'firefox-desktop',
-      use: {
-        ...devices['Desktop Firefox'],
-        viewport: { width: 800, height: 600 },
-      },
-    },
+    // {
+    //   name: 'firefox-desktop',
+    //   use: {
+    //     ...devices['Desktop Firefox'],
+    //     viewport: { width: 800, height: 600 },
+    //   },
+    // },
 
-    {
-      name: 'webkit-desktop',
-      use: {
-        ...devices['Desktop Safari'],
-        viewport: { width: 800, height: 600 },
-      },
-    },
+    // {
+    //   name: 'webkit-desktop',
+    //   use: {
+    //     ...devices['Desktop Safari'],
+    //     viewport: { width: 800, height: 600 },
+    //   },
+    // },
 
     /* Test against mobile viewports. */
     {
@@ -65,12 +65,12 @@ export default defineConfig({
         ...devices['iPhone 12'],
       },
     },
-    {
-      name: 'webkit-mobile',
-      use: {
-        ...devices['iPhone 12'],
-      },
-    },
+    // {
+    //   name: 'webkit-mobile',
+    //   use: {
+    //     ...devices['iPhone 12'],
+    //   },
+    // },
 
     /* Test against branded browsers. */
     // {
