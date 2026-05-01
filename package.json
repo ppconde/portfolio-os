@@ -28,12 +28,12 @@
     "react-draggable": "^4.5.0",
     "react-router": "^7.14.2",
     "react-simple-typewriter": "^5.0.1",
-    "zod": "^4.3.6",
+    "zod": "^4.4.1",
     "zustand": "^5.0.12"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.33.2",
-    "@cloudflare/workers-types": "^4.20260426.1",
+    "@cloudflare/vite-plugin": "^1.35.0",
+    "@cloudflare/workers-types": "^4.20260501.1",
     "@eslint/compat": "^2.0.5",
     "@eslint/eslintrc": "^3.3.5",
     "@eslint/js": "^9.39.4",
@@ -46,10 +46,10 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@typescript-eslint/eslint-plugin": "8.59.0",
-    "@typescript-eslint/parser": "^8.59.0",
+    "@typescript-eslint/parser": "^8.59.1",
     "dotenv-cli": "^11.0.0",
     "esbuild": "^0.28.0",
-    "eslint": "^9.39.3",
+    "eslint": "^9.39.4",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
@@ -58,13 +58,13 @@
     "globals": "^17.5.0",
     "graphql": "^16.13.2",
     "prettier": "^3.8.3",
-    "prettier-plugin-tailwindcss": "^0.7.3",
+    "prettier-plugin-tailwindcss": "^0.7.4",
     "tailwindcss": "^4.2.4",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.59.0",
+    "typescript-eslint": "^8.59.1",
     "vite": "^8.0.10",
     "vite-tsconfig-paths": "^6.1.1",
-    "wrangler": "^4.85.0"
+    "wrangler": "^4.87.0"
   },
   "engines": {
     "node": ">=22.0.0"
