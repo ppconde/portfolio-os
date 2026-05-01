@@ -36,11 +36,21 @@ export default async function handleRequest(
     await body.allReady;
   }
 
-  responseHeaders.set('Content-Type', 'text/html');
-  responseHeaders.set('X-Content-Type-Options', 'nosniff');
-  responseHeaders.set('X-Frame-Options', 'SAMEORIGIN');
+  const headers = new Headers(responseHeaders);
+
+  headers.set('Content-Type', 'text/html');
+  headers.set('X-Content-Type-Options', 'nosniff');
+  headers.set('X-Frame-Options', 'SAMEORIGIN');
+  headers.set(
+    'Content-Security-Policy',
+    "default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline';"
+  );
+  headers.set(
+    'Strict-Transport-Security',
+    'max-age=31536000; includeSubDomains'
+  );
   return new Response(body, {
-    headers: responseHeaders,
+    headers: headers,
     status: responseStatusCode,
   });
 }
