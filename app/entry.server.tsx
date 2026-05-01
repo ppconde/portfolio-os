@@ -2,6 +2,7 @@ import type { AppLoadContext, EntryContext } from 'react-router';
 import { ServerRouter } from 'react-router';
 import { isbot } from 'isbot';
 import { renderToReadableStream } from 'react-dom/server';
+import { isDev } from './utils/env-handler';
 
 export default async function handleRequest(
   request: Request,
@@ -42,13 +43,16 @@ export default async function handleRequest(
   headers.set('X-Content-Type-Options', 'nosniff');
   headers.set('X-Frame-Options', 'SAMEORIGIN');
   headers.set(
-    'Content-Security-Policy',
-    "default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline';"
-  );
-  headers.set(
     'Strict-Transport-Security',
     'max-age=31536000; includeSubDomains'
   );
+  if (!isDev) {
+    headers.set(
+      'Content-Security-Policy',
+      "default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline';"
+    );
+  }
+
   return new Response(body, {
     headers: headers,
     status: responseStatusCode,
