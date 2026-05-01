@@ -27,7 +27,7 @@ export default function HamburgerButton({
         <div
           className={classNames(
             'h-0.5 w-6 transform-gpu bg-gray-900 transition-all duration-300 ease-in-out',
-            isOpen ? '-translate-y-0 -rotate-45' : 'translate-y-1'
+            isOpen ? 'translate-y-0 -rotate-45' : 'translate-y-1'
           )}
         />
       </div>
