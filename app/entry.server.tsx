@@ -49,7 +49,7 @@ export default async function handleRequest(
   if (!isDev) {
     headers.set(
       'Content-Security-Policy',
-      "default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self' 'unsafe-inline';"
+      "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; media-src 'self';"
     );
   }
 
