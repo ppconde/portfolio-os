@@ -1,4 +1,5 @@
 import { GET_REPOS_QUERY } from '~/queries/getPinnedRepos';
+import { parse } from 'graphql';
 
 import ProjectCard from '~/components/website/ProjectCard';
 import type { Route } from './+types/projects';
@@ -21,9 +22,10 @@ export async function loader(request: Route.LoaderArgs) {
     }
 
     const { github } = context.clients;
+    const document = parse(GET_REPOS_QUERY);
     const response = (await github
-      .gql(GET_REPOS_QUERY)
-      .send()) as GetPinnedItemsQuery;
+      .gql(document)
+      .$send()) as GetPinnedItemsQuery;
 
     if (!response?.user?.pinnedItems?.nodes) {
       throw new Response('No repositories found', { status: 404 });
