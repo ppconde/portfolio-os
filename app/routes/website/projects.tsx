@@ -6,7 +6,6 @@ import H2 from '~/components/website/H2';
 import normalizePinnedRepos from '~/normalizers/pinned-repos.normalizer';
 
 import type { AppLoadContext } from 'react-router';
-import { parse } from 'graphql';
 
 import type { GetPinnedItemsQuery } from '~/__generated__/graphql';
 import { CACHE } from '~/constants/cache.const';
@@ -23,7 +22,7 @@ export async function loader(request: Route.LoaderArgs) {
 
     const { github } = context.clients;
     const response = (await github
-      .gql(parse(GET_REPOS_QUERY))
+      .gql(GET_REPOS_QUERY)
       .send()) as GetPinnedItemsQuery;
 
     if (!response?.user?.pinnedItems?.nodes) {
