@@ -32,8 +32,8 @@
     "zustand": "^5.0.13"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.37.1",
-    "@cloudflare/workers-types": "^4.20260518.1",
+    "@cloudflare/vite-plugin": "^1.38.0",
+    "@cloudflare/workers-types": "^4.20260525.1",
     "@eslint/compat": "^2.1.0",
     "@eslint/eslintrc": "^3.3.5",
     "@eslint/js": "^10.0.1",
@@ -42,11 +42,11 @@
     "@graphql-typed-document-node/core": "^3.2.0",
     "@playwright/test": "^1.60.0",
     "@react-router/dev": "^7.15.1",
-    "@types/node": "^25.8.0",
-    "@types/react": "^19.2.14",
+    "@types/node": "^25.9.1",
+    "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
-    "@typescript-eslint/eslint-plugin": "8.59.3",
-    "@typescript-eslint/parser": "^8.59.3",
+    "@typescript-eslint/eslint-plugin": "8.59.4",
+    "@typescript-eslint/parser": "^8.59.4",
     "dotenv-cli": "^11.0.0",
     "esbuild": "^0.28.0",
     "eslint": "^10.4.0",
@@ -61,9 +61,9 @@
     "prettier-plugin-tailwindcss": "^0.8.0",
     "tailwindcss": "^4.3.0",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.59.3",
-    "vite": "^8.0.13",
-    "wrangler": "^4.92.0"
+    "typescript-eslint": "^8.59.4",
+    "vite": "^8.0.14",
+    "wrangler": "^4.94.0"
   },
   "engines": {
     "node": ">=22.0.0"
