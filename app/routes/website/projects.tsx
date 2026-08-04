@@ -20,7 +20,7 @@ export async function loader({ context }: Route.LoaderArgs) {
     }
 
     const { github } = clients;
-    const response = await github.gql(GET_REPOS_QUERY).$send();
+    const response = await (await github.getGithub()).gql(GET_REPOS_QUERY).$send();
 
     if (!response?.user?.pinnedItems?.nodes) {
       throw new Response('No repositories found', { status: 404 });

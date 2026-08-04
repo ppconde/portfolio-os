@@ -10,26 +10,40 @@ const requestHandler = createRequestHandler(
 
 export default {
   async fetch(request, env, ctx) {
-    let GITHUB_KEY = '';
+    let cachedKey: string | undefined;
+    const resolveGithubKey = async () => {
+      if (cachedKey) return cachedKey;
 
-    // In development, try to get from environment variable first
-    // In production, get from Cloudflare Secrets Storage
-    if (env.GITHUB_KEY) {
-      GITHUB_KEY = env.GITHUB_KEY;
-    } else if (env.PORTFOLIO_OS_SECRETS) {
-      GITHUB_KEY = await env.PORTFOLIO_OS_SECRETS.get();
-    }
+      // In development, prefer the plain env var; in production, read the
+      // secret from Cloudflare Secrets Storage. Resolved lazily so routes that
+      // don't need GitHub (e.g. prerendered pages) don't require the secret.
+      if (env.GITHUB_KEY) {
+        cachedKey = env.GITHUB_KEY;
+      } else if (env.PORTFOLIO_OS_SECRETS) {
+        cachedKey = await env.PORTFOLIO_OS_SECRETS.get();
+      }
 
-    if (!GITHUB_KEY) {
-      console.error('GITHUB_KEY is not configured. Please set it in your .env.local file or Cloudflare Secrets Storage.');
-      throw new Error('GITHUB_KEY secret is not configured');
-    }
+      if (!cachedKey) {
+        console.error('GITHUB_KEY is not configured. Please set it in your .env.local file or Cloudflare Secrets Storage.');
+        throw new Error('GITHUB_KEY secret is not configured');
+      }
+
+      return cachedKey;
+    };
+
+    let cachedClient: ReturnType<typeof createGithubClient> | undefined;
+    const getGithub = async () => {
+      if (!cachedClient) {
+        cachedClient = createGithubClient(await resolveGithubKey());
+      }
+      return cachedClient;
+    };
 
     const context = new RouterContextProvider();
     context.set(appContext, {
       cloudflare: { env, ctx },
       clients: {
-        github: createGithubClient(GITHUB_KEY),
+        getGithub,
       },
     });
 

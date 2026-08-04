@@ -7,7 +7,9 @@ export type AppContext = {
         ctx: ExecutionContext;
     };
     clients: {
-        github: ReturnType<typeof createGithubClient>;
+        // Lazy so the GITHUB_KEY secret is only resolved when a route needs it
+        // (avoids failing prerender for routes that never call GitHub).
+        getGithub: () => Promise<ReturnType<typeof createGithubClient>>;
     };
 };
 
