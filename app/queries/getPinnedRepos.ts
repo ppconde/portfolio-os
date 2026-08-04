@@ -1,4 +1,6 @@
-export const GET_REPOS_QUERY = `
+import { gql } from '~/__generated__';
+
+export const GET_REPOS_QUERY = gql(`
   query GetPinnedItems {
     user(login: "ppconde") {
       pinnedItems(first: 6, types: REPOSITORY) {
@@ -23,4 +25,4 @@ export const GET_REPOS_QUERY = `
       }
     }
   }
-`;
+`);
