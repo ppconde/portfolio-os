@@ -17,8 +17,7 @@ export async function loader({ context }: Route.LoaderArgs) {
       return JSON.parse(cachedData);
     }
 
-    const { github } = clients;
-    const response = await (await github.getGithub())
+    const response = await (await clients.getGithub())
       .gql(GET_REPOS_QUERY)
       .$send();
 
