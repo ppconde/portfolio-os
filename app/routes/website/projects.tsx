@@ -6,22 +6,22 @@ import type { Route } from './+types/projects';
 import H2 from '~/components/website/H2';
 import normalizePinnedRepos from '~/normalizers/pinned-repos.normalizer';
 
-import type { AppLoadContext } from 'react-router';
+import { appContext } from '~/context';
 
 import type { GetPinnedItemsQuery } from '~/__generated__/graphql';
 import { CACHE } from '~/constants/cache.const';
 
-export async function loader(request: Route.LoaderArgs) {
+export async function loader({ context }: Route.LoaderArgs) {
   try {
-    const context = request.context as AppLoadContext;
-    const { PORTFOLIO_OS_KV } = context.cloudflare.env;
+    const { cloudflare, clients } = context.get(appContext);
+    const { PORTFOLIO_OS_KV } = cloudflare.env;
 
     const cachedData = await PORTFOLIO_OS_KV.get(CACHE.PINNED_REPOS.KEY);
     if (cachedData) {
       return JSON.parse(cachedData);
     }
 
-    const { github } = context.clients;
+    const { github } = clients;
     const document = parse(GET_REPOS_QUERY);
     const response = (await github
       .gql(document)

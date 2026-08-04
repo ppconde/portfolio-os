@@ -1,17 +1,6 @@
-import { createRequestHandler } from 'react-router';
+import { createRequestHandler, RouterContextProvider } from 'react-router';
 import { createGithubClient } from '../app/graphql';
-
-declare module 'react-router' {
-  export interface AppLoadContext {
-    cloudflare: {
-      env: Env;
-      ctx: ExecutionContext;
-    };
-    clients: {
-      github: ReturnType<typeof createGithubClient>;
-    };
-  }
-}
+import { appContext } from '../app/context';
 
 const requestHandler = createRequestHandler(
   // eslint-disable-next-line import/no-unresolved
@@ -36,11 +25,14 @@ export default {
       throw new Error('GITHUB_KEY secret is not configured');
     }
 
-    return requestHandler(request, {
+    const context = new RouterContextProvider();
+    context.set(appContext, {
       cloudflare: { env, ctx },
       clients: {
         github: createGithubClient(GITHUB_KEY),
       },
     });
+
+    return requestHandler(request, context);
   },
 } satisfies ExportedHandler<Env>;
