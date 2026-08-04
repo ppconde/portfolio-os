@@ -1,22 +1,22 @@
-import H2 from '~/components/website/H2';
-import Section from '~/components/website/Section';
 import A from '~/components/website/A';
 import ContentEntry from '~/components/website/ContentEntry';
+import H2 from '~/components/website/H2';
 import HR from '~/components/website/HR';
+import Section from '~/components/website/Section';
 
 export default function About() {
   return (
     <Section>
       <H2>About</H2>
       <ContentEntry
-        title="University of Aveiro"
         subtitle="[2011-2017] - Aveiro"
+        title="University of Aveiro"
       >
         I graduated with a masters degree in{' '}
         <strong>Electronics and Telecommunications Engineering</strong> from the{' '}
         <A
-          href="https://www.ua.pt/"
           ariaLabel="Visit University of Aveiro website"
+          href="https://www.ua.pt/"
           title="This is a cool university!"
         >
           University of Aveiro
@@ -32,14 +32,14 @@ export default function About() {
       </ContentEntry>
 
       <ContentEntry
-        title="Erasmus Programme TalTech"
         subtitle="[2015-2015] - Tallinn"
+        title="Erasmus Programme TalTech"
       >
         During my studies, I had the opportunity to participate in the Erasmus
         programme at{' '}
         <A
-          href="https://taltech.ee/"
           ariaLabel="Visit TalTech website"
+          href="https://taltech.ee/"
           title="Tallinn University of Technology"
         >
           TalTech
@@ -51,14 +51,14 @@ export default function About() {
       </ContentEntry>
 
       <ContentEntry
-        title="EDIT - Disruptive Digital Education"
         subtitle="[2019-2019]"
+        title="EDIT - Disruptive Digital Education"
       >
         Seeking to combine my technical background with creative work, I
         completed an intensive Frontend Development course at{' '}
         <A
-          href="https://weareedit.io/"
           ariaLabel="Visit EDIT website"
+          href="https://weareedit.io/"
           title="EDIT - Disruptive Digital Education"
         >
           EDIT
@@ -73,15 +73,15 @@ export default function About() {
       <HR />
 
       <ContentEntry
-        title="Volunteering"
-        subtitle="[2016-2018] - Aveiro"
-        img="/assets/esnaveiro.jpg"
         caption="Figure 1: Raising awareness of the importance of terrain management in wildfire prevention, an initiative by ESN Aveiro."
+        img="/assets/esnaveiro.jpg"
+        subtitle="[2016-2018] - Aveiro"
+        title="Volunteering"
       >
         During my university years, I was actively involved with{' '}
         <A
-          href="https://www.esn.org/"
           ariaLabel="Visit ESN website"
+          href="https://www.esn.org/"
           title="Erasmus Student Network - International Student Organization"
         >
           Erasmus Student Network

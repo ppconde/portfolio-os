@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { isTouchDevice } from '~/utils/media-matcher';
 
 export function useDoubleClick(callback: () => void, delay: number = 300) {
@@ -11,7 +11,7 @@ export function useDoubleClick(callback: () => void, delay: number = 300) {
     const timeoutId = setTimeout(() => setTapCount(0), delay);
 
     return () => clearTimeout(timeoutId);
-  }, [tapCount, delay]);
+  }, [delay]);
 
   const onTap = () => {
     setTapCount((prevCount) => prevCount + 1);

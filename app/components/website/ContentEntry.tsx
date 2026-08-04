@@ -27,9 +27,9 @@ export default function ContentEntry({
         {img && (
           <figure className="flex flex-1 flex-col items-center justify-center">
             <img
-              src={img}
               alt={title}
               className="max-h-96 w-auto max-w-full object-contain"
+              src={img}
             />
             {caption && (
               <figcaption className="mt-2 text-center text-xs">

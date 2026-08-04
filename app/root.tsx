@@ -2,10 +2,10 @@ import type { LinksFunction, MetaFunction } from 'react-router';
 import { Links, Meta, Scripts, ScrollRestoration } from 'react-router';
 
 import './tailwind.css';
-import { Screen } from './components/OS/Screen';
-import BootProvider from './contexts/BootContext';
 import type { Route } from './+types/root';
 import BlueScreen from './components/OS/BlueScreen';
+import { Screen } from './components/OS/Screen';
+import BootProvider from './contexts/BootContext';
 
 export const links: LinksFunction = () => [
   {
@@ -80,7 +80,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
         <Meta />
         <Links />
       </head>

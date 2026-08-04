@@ -1,6 +1,6 @@
 import { createRequestHandler, RouterContextProvider } from 'react-router';
-import { createGithubClient } from '../app/graphql';
 import { appContext } from '../app/context';
+import { createGithubClient } from '../app/graphql';
 
 const requestHandler = createRequestHandler(
   // eslint-disable-next-line import/no-unresolved
@@ -24,7 +24,9 @@ export default {
       }
 
       if (!cachedKey) {
-        console.error('GITHUB_KEY is not configured. Please set it in your .env.local file or Cloudflare Secrets Storage.');
+        console.error(
+          'GITHUB_KEY is not configured. Please set it in your .env.local file or Cloudflare Secrets Storage.'
+        );
         throw new Error('GITHUB_KEY secret is not configured');
       }
 

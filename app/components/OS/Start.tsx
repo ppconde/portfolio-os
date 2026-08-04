@@ -1,6 +1,6 @@
+import classNames from 'classnames';
 import { useState } from 'react';
 import StartWindow from './StartWindow';
-import classNames from 'classnames';
 
 export default function Start() {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,14 +13,15 @@ export default function Start() {
           { 'btn-windows-inverted': isOpen }
         )}
         onClick={() => setIsOpen(!isOpen)}
+        type="button"
       >
         {!isOpen && (
-          <div className="border-quaternary pointer-events-none absolute inset-0 border-r border-b"></div>
+          <div className="pointer-events-none absolute inset-0 border-quaternary border-r border-b"></div>
         )}
         <img
+          alt="Windows logo"
           className="image-rendering-pixelated h-6 w-auto pr-1"
           src="/assets/windows-0.png"
-          alt="Windows logo"
         />
         <p className="font-micro text-2xl">Start</p>
       </button>

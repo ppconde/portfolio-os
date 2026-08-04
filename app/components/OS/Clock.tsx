@@ -12,22 +12,21 @@ export default function Clock() {
     );
   };
   return (
-    <>
-      <div className="border-windows-inverted my-1 mr-0 ml-2 flex h-[70%] min-w-20 items-center justify-center border p-0.5">
-        <button
-          onClick={toggleImage}
-          className="mr-1 h-full border-0 bg-transparent p-0"
-        >
-          <img
-            className="h-full w-auto object-contain"
-            src={imgPath}
-            alt="Speaker icon"
-          />
-        </button>
-        <p className="text-ms-reference text-center text-xs font-thin tracking-tighter uppercase">
-          {time}
-        </p>
-      </div>
-    </>
+    <div className="my-1 mr-0 ml-2 flex h-[70%] min-w-20 items-center justify-center border border-windows-inverted p-0.5">
+      <button
+        className="mr-1 h-full border-0 bg-transparent p-0"
+        onClick={toggleImage}
+        type="button"
+      >
+        <img
+          alt="Speaker icon"
+          className="h-full w-auto object-contain"
+          src={imgPath}
+        />
+      </button>
+      <p className="text-center font-thin text-ms-reference text-xs uppercase tracking-tighter">
+        {time}
+      </p>
+    </div>
   );
 }

@@ -1,10 +1,10 @@
-import { useFetcher, data } from 'react-router';
-import type { Route } from './+types/contact';
-import H2 from '~/components/website/H2';
-import Section from '~/components/website/Section';
+import { useEffect, useRef, useState } from 'react';
+import { data, useFetcher } from 'react-router';
 import { z } from 'zod';
 import A from '~/components/website/A';
-import { useEffect, useRef, useState } from 'react';
+import H2 from '~/components/website/H2';
+import Section from '~/components/website/Section';
+import type { Route } from './+types/contact';
 
 export async function action({ request }: Route.ActionArgs) {
   const formSchema = z
@@ -94,92 +94,89 @@ export default function Contact() {
       <Section>
         Feel free to reach out to me via email at{' '}
         <A
-          href="mailto:contact@ppconde.com"
           ariaLabel="My professional contact email"
+          href="mailto:contact@ppconde.com"
           title="Send me an email!"
         >
           contact@ppconde.com
         </A>
-        <fetcher.Form ref={formRef} method="post" className="space-y-6">
+        <fetcher.Form className="space-y-6" method="post" ref={formRef}>
           <div>
             <label
+              className="block font-medium text-gray-900 text-sm"
               htmlFor="email"
-              className="block text-sm font-medium text-gray-900"
             >
               <b>Your email</b>
             </label>
             <input
-              id="email"
-              type="email"
+              className="mt-1 block w-full border-gray-300 p-1 shadow-xs outline-dashed"
               name="email"
               placeholder="name@domain.com"
               required
-              className="mt-1 block w-full border-gray-300 p-1 shadow-xs outline-dashed"
+              type="email"
             />
             {errors?.email && (
-              <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+              <p className="mt-1 text-red-600 text-sm">{errors.email}</p>
             )}
           </div>
           <div>
             <label
+              className="block font-medium text-gray-900 text-sm"
               htmlFor="subject"
-              className="block text-sm font-medium text-gray-900"
             >
               <b>Subject</b>
             </label>
             <input
-              id="subject"
-              type="text"
+              className="mt-1 block w-full border-gray-300 p-1 shadow-xs outline-dashed"
               name="subject"
               placeholder="The subject of your message"
               required
-              className="mt-1 block w-full border-gray-300 p-1 shadow-xs outline-dashed"
+              type="text"
             />
             {errors?.subject && (
-              <p className="mt-1 text-sm text-red-600">{errors.subject}</p>
+              <p className="mt-1 text-red-600 text-sm">{errors.subject}</p>
             )}
           </div>
           <div>
             <label
+              className="block font-medium text-gray-900 text-sm"
               htmlFor="text"
-              className="block text-sm font-medium text-gray-900"
             >
               <b>Your message</b>
             </label>
             <textarea
-              id="text"
+              className="mt-1 block w-full border-gray-300 p-1 shadow-xs outline-dashed"
               name="text"
               placeholder="Type your message here."
               required
               rows={5}
-              className="mt-1 block w-full border-gray-300 p-1 shadow-xs outline-dashed"
             />
             {errors?.text && (
-              <p className="mt-1 text-sm text-red-600">{errors.text}</p>
+              <p className="mt-1 text-red-600 text-sm">{errors.text}</p>
             )}
           </div>
           <button
+            className="btn-windows focus:btn-windows-inverted h-full px-4 py-1 text-mono text-sm"
             type="submit"
-            className="btn-windows text-mono focus:btn-windows-inverted h-full px-4 py-1 text-sm"
           >
             Send
           </button>
         </fetcher.Form>
         {notification && (
-          <div className="border-windows absolute top-24 right-2 w-full max-w-xs md:max-w-sm lg:max-w-md">
-            <div className="bg-accent h-3 items-center justify-between px-1"></div>
-            <div className="bg-secondary font-ms-reference flex flex-row items-center justify-evenly p-3 shadow-md">
+          <div className="absolute top-24 right-2 w-full max-w-xs border-windows md:max-w-sm lg:max-w-md">
+            <div className="h-3 items-center justify-between bg-accent px-1"></div>
+            <div className="flex flex-row items-center justify-evenly bg-secondary p-3 font-ms-reference shadow-md">
               {notification.type === 'success' ? (
                 <img
-                  src="/assets/check-0.png"
                   alt=""
                   className="w-5 object-cover md:w-6"
+                  src="/assets/check-0.png"
                 />
               ) : (
                 <img
-                  src="/assets/msg_error-0.png"
                   alt=""
                   className="w-5 object-cover md:w-6"
+                  src="/assets/msg_error-0.png"
                 />
               )}
               <p className="text-center text-sm md:mt-0 md:text-left md:text-base">

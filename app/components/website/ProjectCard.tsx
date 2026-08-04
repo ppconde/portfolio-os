@@ -28,14 +28,14 @@ export default function ProjectCard({
     <div className="card-shadow flex w-full max-w-md flex-col justify-between gap-2 border border-gray-800 bg-white p-2 text-sm">
       {openGraphImageUrl && homepageUrl && (
         <A
-          href={homepageUrl}
           ariaLabel={`View ${name} site`}
+          href={homepageUrl}
           title={`View ${name} site`}
         >
           <img
-            src={openGraphImageUrl}
             alt="OpenGraph preview"
             className="max-h-full w-auto rounded object-contain"
+            src={openGraphImageUrl}
           />
         </A>
       )}
@@ -43,8 +43,8 @@ export default function ProjectCard({
       <div className="flex items-center justify-between">
         {url ? (
           <A
-            href={url}
             ariaLabel={`View ${name ?? 'project'} on GitHub`}
+            href={url}
             title={`View ${name ?? 'project'} on GitHub`}
           >
             <strong>{name}</strong>
@@ -55,7 +55,7 @@ export default function ProjectCard({
       </div>
 
       {description && (
-        <p className="grow font-mono text-xs text-gray-900">{description}</p>
+        <p className="grow font-mono text-gray-900 text-xs">{description}</p>
       )}
 
       <div className="flex items-center justify-between text-xs">
@@ -63,15 +63,16 @@ export default function ProjectCard({
           <div className="flex items-center gap-1">
             {languages.map(({ id, name, color }) => (
               <div
-                key={id}
                 className="flex flex-row items-center justify-center gap-1"
+                key={id}
               >
                 <svg
-                  style={{ color: color ?? 'currentColor' }}
-                  width="10"
-                  height="10"
-                  viewBox="0 0 20 20"
+                  aria-hidden="true"
                   fill="none"
+                  height="10"
+                  style={{ color: color ?? 'currentColor' }}
+                  viewBox="0 0 20 20"
+                  width="10"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <g>

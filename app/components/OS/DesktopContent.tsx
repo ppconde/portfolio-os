@@ -1,17 +1,17 @@
 import { Outlet } from 'react-router';
+import { AppsNames } from '~/constants/apps-names.const';
+import { icons } from '~/constants/icons.const';
 import { useWindowsStore } from '~/store/WindowsStore';
+import Credits from '../Credits';
 import Icon from './Icon';
 import Navbar from './Navbar';
-import { AppsNames } from '~/constants/apps-names.const';
 import OSWindow from './OSWindow';
-import { icons } from '~/constants/icons.const';
-import Credits from '../Credits';
 
 export default function DesktopContent() {
   const windows = useWindowsStore((s) => s.windows);
 
   return (
-    <div className="bg-primary relative flex h-screen w-screen flex-col overflow-hidden select-none">
+    <div className="relative flex h-screen w-screen select-none flex-col overflow-hidden bg-primary">
       <div className="relative flex flex-col gap-6 p-4">
         {icons.map((icon) => (
           <Icon key={icon.id} {...icon} />
@@ -19,9 +19,9 @@ export default function DesktopContent() {
       </div>
       {windows.map((window) => (
         <OSWindow
+          hideStatusBar={window.id === AppsNames.PORTFOLIO}
           key={window.id}
           window={window}
-          hideStatusBar={window.id === AppsNames.PORTFOLIO}
         >
           {(() => {
             switch (window.id) {

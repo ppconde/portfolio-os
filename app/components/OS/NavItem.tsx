@@ -12,9 +12,8 @@ export const NavItem = ({
   toggleMenu?: () => void;
 }) => (
   <NavLink
-    to={to}
     className={({ isActive }) =>
-      `font-perfect-dos-vga-win px-4 py-2 underline transition-colors duration-200 ${
+      `px-4 py-2 font-perfect-dos-vga-win underline transition-colors duration-200 ${
         isActive && !disableItem
           ? 'text-accent-dark'
           : 'text-accent-light hover:no-underline'
@@ -22,6 +21,7 @@ export const NavItem = ({
     }
     onClick={toggleMenu}
     prefetch="intent"
+    to={to}
   >
     {children}
   </NavLink>

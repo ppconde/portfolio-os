@@ -13,21 +13,22 @@ export default function WindowButton({
 }: ButtonProps) {
   return (
     <button
-      className="border-windows bg-secondary flex items-center p-1"
-      onClick={onClick}
+      className="flex items-center border-windows bg-secondary p-1"
       data-testid={testId}
-      // Needed for mobile touch events
+      onClick={onClick}
       onTouchEnd={(e) => {
         // Prevents the default behavior to mess up with react draggable
         e.preventDefault();
         onClick?.();
       }}
+      // Needed for mobile touch events
+      type="button"
     >
       {imageName && (
         <img
-          src={imageName}
           alt={imageAlt}
           className="image-rendering-pixelated h-2.5 w-auto object-center"
+          src={imageName}
         />
       )}
     </button>

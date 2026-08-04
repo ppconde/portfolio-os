@@ -1,15 +1,15 @@
-import H2 from '~/components/website/H2';
-import ContentEntry from '~/components/website/ContentEntry';
-import Section from '~/components/website/Section';
 import A from '~/components/website/A';
+import ContentEntry from '~/components/website/ContentEntry';
+import H2 from '~/components/website/H2';
+import Section from '~/components/website/Section';
 
 export default function Experience() {
   return (
     <Section>
       <H2>Experience</H2>
       <ContentEntry
-        title="Blip.pt - Software Engineer"
         subtitle="[2024-Present] - Porto"
+        title="Blip.pt - Software Engineer"
       >
         Joined a new team supporting the web platforms of{' '}
         <strong>PaddyPower</strong>, <strong>Betfair</strong>, and{' '}
@@ -28,21 +28,21 @@ export default function Experience() {
       </ContentEntry>
 
       <ContentEntry
-        title="Blip.pt - Software Engineer"
         subtitle="[2020-2024] - Porto"
+        title="Blip.pt - Software Engineer"
       >
         At{' '}
         <A
-          href="https://www.blip.pt/"
           ariaLabel="Visit Blip.pt website"
+          href="https://www.blip.pt/"
           title="This is a cool company!"
         >
           Blip.pt
         </A>
         , I helped design, build, and maintain software for{' '}
         <A
-          href="https://www.paddypower.com/bet"
           ariaLabel="Visit Paddy Power's website"
+          href="https://www.paddypower.com/bet"
           title="Visit Paddy Power - Innovative and entertaining sports betting platform"
         >
           Paddy Power
@@ -72,13 +72,13 @@ export default function Experience() {
       </ContentEntry>
 
       <ContentEntry
-        title="Altice Labs - Informatics Consultant"
         subtitle="[2018-2020] - Aveiro"
+        title="Altice Labs - Informatics Consultant"
       >
         Joined the <strong>Operations Support System</strong> team at{' '}
         <A
-          href="https://www.alticelabs.com/"
           ariaLabel="Visit Altice Labs website"
+          href="https://www.alticelabs.com/"
           title="This is another cool company!"
         >
           Altice Labs

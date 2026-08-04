@@ -1,13 +1,11 @@
-import { GET_REPOS_QUERY } from '~/queries/getPinnedRepos';
+import H2 from '~/components/website/H2';
 
 import ProjectCard from '~/components/website/ProjectCard';
-import type { Route } from './+types/projects';
-import H2 from '~/components/website/H2';
-import normalizePinnedRepos from '~/normalizers/pinned-repos.normalizer';
-
-import { appContext } from '~/context';
-
 import { CACHE } from '~/constants/cache.const';
+import { appContext } from '~/context';
+import normalizePinnedRepos from '~/normalizers/pinned-repos.normalizer';
+import { GET_REPOS_QUERY } from '~/queries/getPinnedRepos';
+import type { Route } from './+types/projects';
 
 export async function loader({ context }: Route.LoaderArgs) {
   try {
@@ -20,7 +18,9 @@ export async function loader({ context }: Route.LoaderArgs) {
     }
 
     const { github } = clients;
-    const response = await (await github.getGithub()).gql(GET_REPOS_QUERY).$send();
+    const response = await (await github.getGithub())
+      .gql(GET_REPOS_QUERY)
+      .$send();
 
     if (!response?.user?.pinnedItems?.nodes) {
       throw new Response('No repositories found', { status: 404 });
@@ -50,16 +50,16 @@ export default function Projects({ loaderData: repos }: Route.ComponentProps) {
   return (
     <div className="@container space-y-6">
       <H2>Projects</H2>
-      <div className="grid grid-cols-1 gap-6 @md:grid-cols-2 @xl:grid-cols-3">
+      <div className="grid @md:grid-cols-2 @xl:grid-cols-3 grid-cols-1 gap-6">
         {repos?.map((repo) => (
           <ProjectCard
-            key={repo.id}
-            name={repo.name}
             description={repo.description}
-            url={repo.url}
             homepageUrl={repo.homepageUrl}
-            openGraphImageUrl={repo.openGraphImageUrl}
+            key={repo.id}
             languages={repo.languages}
+            name={repo.name}
+            openGraphImageUrl={repo.openGraphImageUrl}
+            url={repo.url}
           />
         ))}
       </div>

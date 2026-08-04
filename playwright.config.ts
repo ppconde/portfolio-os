@@ -86,14 +86,14 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: process.env.CI
     ? {
-      command: 'pnpm run preview',
-      url: 'http://localhost:4173',
-      timeout: 120000,
-    }
+        command: 'pnpm run preview',
+        url: 'http://localhost:4173',
+        timeout: 120000,
+      }
     : {
-      command: 'pnpm run dev',
-      url: 'http://localhost:5173',
-      reuseExistingServer: true,
-      timeout: 120000,
-    },
+        command: 'pnpm run dev',
+        url: 'http://localhost:5173',
+        reuseExistingServer: true,
+        timeout: 120000,
+      },
 });

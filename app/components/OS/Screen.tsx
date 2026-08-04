@@ -1,7 +1,7 @@
 import { useBootContext } from '~/contexts/BootContext';
 import BiosScreen from './BiosScreen';
-import ShutdownScreen from './ShutdownScreen';
 import Desktop from './Desktop';
+import ShutdownScreen from './ShutdownScreen';
 
 export function Screen() {
   const { bootState } = useBootContext();

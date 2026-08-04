@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import classNames from 'classnames';
+import { useEffect, useState } from 'react';
+import { Typewriter } from 'react-simple-typewriter';
 import { useBootContext } from '~/contexts/BootContext';
 import BlinkCaret from './BlinkCaret';
-import { Typewriter } from 'react-simple-typewriter';
-import classNames from 'classnames';
 
 export default function ShutdownScreen() {
   const [showFirstSection, setShowFirstSection] = useState(false);
@@ -37,7 +37,7 @@ export default function ShutdownScreen() {
   }, [setBootState]);
 
   return (
-    <div className="font-perfect-dos-vga-win text-primary h-screen w-screen bg-black">
+    <div className="h-screen w-screen bg-black font-perfect-dos-vga-win text-primary">
       <div className="flex h-full w-full flex-col p-4 sm:p-6 md:p-8">
         {showFirstSection && <BlinkCaret hide={!showFirstSection} />}
         {showSecondSection && (
@@ -64,16 +64,16 @@ export default function ShutdownScreen() {
             <p>
               SpudOS Kernel{' '}
               <Typewriter
-                words={['.............. Terminated']}
                 typeSpeed={10}
+                words={['.............. Terminated']}
               />{' '}
             </p>
             <p>PotatoChip™ Cooling System . Offline</p>
             <p>
               RGB Lighting{' '}
               <Typewriter
-                words={['............... Off (Mood ruined)']}
                 typeSpeed={10}
+                words={['............... Off (Mood ruined)']}
               />
             </p>
           </div>
@@ -95,15 +95,15 @@ export default function ShutdownScreen() {
         {showFifthSection && (
           <div
             className={classNames(
-              'text-md mt-6 space-y-1 text-left md:space-y-2 md:pl-2',
+              'mt-6 space-y-1 text-left text-md md:space-y-2 md:pl-2',
               { hidden: showSixthSection }
             )}
           >
             <p>
               Attempting Recovery{' '}
               <Typewriter
-                words={['... Recovery Failed.']}
                 typeSpeed={20}
+                words={['... Recovery Failed.']}
               />{' '}
             </p>
           </div>

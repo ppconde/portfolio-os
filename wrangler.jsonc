@@ -6,25 +6,23 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "portfolio-os",
   "compatibility_date": "2026-05-20",
-  "compatibility_flags": [
-    "nodejs_compat"
-  ],
+  "compatibility_flags": ["nodejs_compat"],
   "main": "./workers/app.ts",
   "observability": {
-    "enabled": true,
+    "enabled": true
   },
   "kv_namespaces": [
     {
       "binding": "PORTFOLIO_OS_KV",
-      "id": "4024c012098c4498922e7af3e1fab339",
-    },
+      "id": "4024c012098c4498922e7af3e1fab339"
+    }
   ],
   "secrets_store_secrets": [
     {
       "binding": "PORTFOLIO_OS_SECRETS",
       "store_id": "0b4a28417fcf4ab9946e2b14d442ef81",
-      "secret_name": "GITHUB_KEY",
-    },
+      "secret_name": "GITHUB_KEY"
+    }
   ],
   "env": {
     "development": {
@@ -33,9 +31,9 @@
         {
           "binding": "PORTFOLIO_OS_KV",
           "id": "4024c012098c4498922e7af3e1fab339",
-          "preview_id": "4024c012098c4498922e7af3e1fab339",
-        },
-      ],
-    },
-  },
+          "preview_id": "4024c012098c4498922e7af3e1fab339"
+        }
+      ]
+    }
+  }
 }

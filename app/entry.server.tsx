@@ -1,7 +1,7 @@
-import type { EntryContext } from 'react-router';
-import { ServerRouter, RouterContextProvider } from 'react-router';
 import { isbot } from 'isbot';
 import { renderToReadableStream } from 'react-dom/server';
+import type { EntryContext } from 'react-router';
+import { type RouterContextProvider, ServerRouter } from 'react-router';
 import { isDev } from './utils/env-handler';
 
 export default async function handleRequest(

@@ -11,9 +11,10 @@ export default function HamburgerButton({
 }) {
   return (
     <button
-      onClick={onClick}
-      className={classNames('h-12 w-12 focus:outline-hidden', className)}
       aria-label={isOpen ? 'Close menu' : 'Open menu'}
+      className={classNames('h-12 w-12 focus:outline-hidden', className)}
+      onClick={onClick}
+      type="button"
     >
       <div className="absolute inset-0 flex flex-col items-center justify-center">
         {/* Top line */}
@@ -27,7 +28,7 @@ export default function HamburgerButton({
         <div
           className={classNames(
             'h-0.5 w-6 transform-gpu bg-gray-900 transition-all duration-300 ease-in-out',
-            isOpen ? 'translate-y-0 -rotate-45' : 'translate-y-1'
+            isOpen ? '-rotate-45 translate-y-0' : 'translate-y-1'
           )}
         />
       </div>

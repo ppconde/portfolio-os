@@ -11,11 +11,11 @@ export default function A({
 }) {
   return (
     <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
       aria-label={ariaLabel}
       className="text-accent-light underline hover:no-underline"
+      href={href}
+      rel="noopener noreferrer"
+      target="_blank"
       title={title}
     >
       {children}
