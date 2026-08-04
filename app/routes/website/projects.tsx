@@ -40,8 +40,18 @@ export async function loader({ context }: Route.LoaderArgs) {
     }
     return repos;
   } catch (err) {
-    const error = err as Error;
-    console.error('Failed to load repos:', error);
+    // Surface as much detail as possible: Graffle often throws errors with an
+    // empty `message` when GitHub replies with a non-GraphQL body (e.g. 401
+    // "Bad credentials" from an expired PAT), which leaves logs showing only a
+    // stack trace with no cause.
+    const error = err as Error & { cause?: unknown; errors?: unknown };
+    console.error('Failed to load repos', {
+      name: error?.name,
+      message: error?.message,
+      cause: error?.cause,
+      errors: error?.errors,
+      stack: error?.stack,
+    });
     throw new Response('Failed to fetch repositories', { status: 500 });
   }
 }
