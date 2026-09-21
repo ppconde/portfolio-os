@@ -1,21 +1,13 @@
-export type PinnedRepo = {
-  __typename?: 'Repository';
-  id: string;
-  name: string;
-  description?: string | null;
-  url: string;
-  homepageUrl?: string | null;
-  openGraphImageUrl: string;
-  languages?: {
-    __typename?: 'LanguageConnection';
-    nodes?: Array<{
-      __typename?: 'Language';
-      id: string;
-      name: string;
-      color?: string | null;
-    } | null> | null;
-  } | null;
-};
+import type { GetPinnedItemsQuery } from '~/__generated__/graphql';
+
+export type PinnedRepo = Extract<
+  NonNullable<
+    NonNullable<
+      NonNullable<GetPinnedItemsQuery['user']>['pinnedItems']
+    >['nodes']
+  >[number],
+  { __typename: 'Repository' }
+>;
 
 export type Project = {
   id: string;
@@ -33,20 +25,35 @@ type LanguageNormalized = {
   color: string;
 };
 
+function requireString(value: unknown, field: string): string {
+  if (typeof value !== 'string') {
+    throw new TypeError(`Expected ${field} to be a string`);
+  }
+
+  return value;
+}
+
+function optionalString(value: unknown): string | null {
+  return typeof value === 'string' ? value : null;
+}
+
 export default function normalizePinnedRepos(repo: PinnedRepo): Project {
   return {
     id: repo.id,
     name: repo.name,
     description: repo.description,
-    url: repo.url,
-    homepageUrl: repo.homepageUrl,
-    openGraphImageUrl: repo.openGraphImageUrl,
+    url: requireString(repo.url, 'repo.url'),
+    homepageUrl: optionalString(repo.homepageUrl),
+    openGraphImageUrl: requireString(
+      repo.openGraphImageUrl,
+      'repo.openGraphImageUrl'
+    ),
     languages: (repo.languages?.nodes || [])
       ?.filter((language) => !!language)
       .map((language) => ({
         id: language.id,
         name: language.name,
-        color: language.color || '#000000', // Default black color if not provided
+        color: language.color || '#000000',
       })),
   };
 }
