@@ -1,5 +1,5 @@
 import { createContext } from 'react-router';
-import type { createGithubClient } from './graphql';
+import type { GithubClient } from './graphql';
 
 export type AppContext = {
   cloudflare: {
@@ -9,7 +9,7 @@ export type AppContext = {
   clients: {
     // Lazy so the GITHUB_KEY secret is only resolved when a route needs it
     // (avoids failing prerender for routes that never call GitHub).
-    getGithub: () => Promise<ReturnType<typeof createGithubClient>>;
+    getGithub: () => Promise<GithubClient>;
   };
 };
 

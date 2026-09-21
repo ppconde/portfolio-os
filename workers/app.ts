@@ -1,6 +1,6 @@
 import { createRequestHandler, RouterContextProvider } from 'react-router';
 import { appContext } from '../app/context';
-import { createGithubClient } from '../app/graphql';
+import { createGithubClient, type GithubClient } from '../app/graphql';
 
 const requestHandler = createRequestHandler(
   // eslint-disable-next-line import/no-unresolved
@@ -33,7 +33,7 @@ export default {
       return cachedKey;
     };
 
-    let cachedClient: ReturnType<typeof createGithubClient> | undefined;
+    let cachedClient: GithubClient | undefined;
     const getGithub = async () => {
       if (!cachedClient) {
         cachedClient = createGithubClient(await resolveGithubKey());
