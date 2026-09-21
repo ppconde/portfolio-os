@@ -7,6 +7,7 @@ node_modules
 .env.production
 .dev.vars
 .react-router/
+*.tsbuildinfo
 
 .wrangler
 .DS_Store

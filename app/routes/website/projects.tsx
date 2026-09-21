@@ -3,7 +3,10 @@ import H2 from '~/components/website/H2';
 import ProjectCard from '~/components/website/ProjectCard';
 import { CACHE } from '~/constants/cache.const';
 import { appContext } from '~/context';
-import normalizePinnedRepos from '~/normalizers/pinned-repos.normalizer';
+import normalizePinnedRepos, {
+  type PinnedRepo,
+  type Project,
+} from '~/normalizers/pinned-repos.normalizer';
 import { GET_REPOS_QUERY } from '~/queries/getPinnedRepos';
 import type { Route } from './+types/projects';
 
@@ -14,7 +17,8 @@ export async function loader({ context }: Route.LoaderArgs) {
 
     const cachedData = await PORTFOLIO_OS_KV.get(CACHE.PINNED_REPOS.KEY);
     if (cachedData) {
-      return JSON.parse(cachedData);
+      const repos = JSON.parse(cachedData) as Project[];
+      return repos;
     }
 
     const response = await (await clients.getGithub())
@@ -27,8 +31,7 @@ export async function loader({ context }: Route.LoaderArgs) {
 
     const repos = response.user.pinnedItems.nodes
       .filter(
-        (repo): repo is Extract<typeof repo, { __typename?: 'Repository' }> =>
-          !!repo && repo.__typename === 'Repository'
+        (repo): repo is PinnedRepo => !!repo && repo.__typename === 'Repository'
       )
       .map(normalizePinnedRepos);
 

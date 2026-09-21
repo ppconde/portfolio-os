@@ -9,7 +9,8 @@
     "lint": "biome lint .",
     "format": "biome format --write .",
     "check": "biome check --write --unsafe .",
-    "typecheck": "react-router typegen && tsc --watch",
+    "typecheck": "react-router typegen && tsc -b --pretty false",
+    "typecheck:watch": "react-router typegen && tsc -b --watch",
     "typegen": "wrangler types",
     "build": "react-router build",
     "deploy": "pnpm run build && wrangler deploy",
@@ -49,7 +50,7 @@
     "esbuild": "^0.28.1",
     "graphql": "^17.0.2",
     "tailwindcss": "^4.3.3",
-    "typescript": "^6.0.3",
+    "typescript": "^7.0.2",
     "vite": "^8.2.1",
     "wrangler": "^4.119.0"
   },
