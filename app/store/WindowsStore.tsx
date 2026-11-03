@@ -29,6 +29,16 @@ export const useWindowsStore = create<WindowsStore>((set, get) => {
     patch: (w: DesktopWindow) => Partial<DesktopWindow>
   ) =>
     set((state) => {
+      const target = state.windows.find((w) => w.id === id);
+      const p = target && patch(target);
+      // Already focused on top with nothing to change: keep state so nobody re-renders.
+      if (
+        target?.isFocused &&
+        target.zIndex === state.currentZIndex &&
+        p &&
+        Object.keys(p).length === 0
+      )
+        return state;
       const zIndex = state.currentZIndex + 1;
       return {
         currentZIndex: zIndex,
@@ -48,7 +58,7 @@ export const useWindowsStore = create<WindowsStore>((set, get) => {
         isMaximized: false,
         isFocused: true,
         position: { x: 65, y: 40 },
-        zIndex: 0,
+        zIndex: 1,
       },
     ],
     currentZIndex: 1,
