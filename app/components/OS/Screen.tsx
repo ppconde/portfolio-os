@@ -1,16 +1,16 @@
-import { useBootContext } from '~/contexts/BootContext';
+import { useBootStore } from '~/store/BootStore';
 import BiosScreen from './BiosScreen';
-import Desktop from './Desktop';
+import DesktopContent from './DesktopContent';
 import ShutdownScreen from './ShutdownScreen';
 
 export function Screen() {
-  const { bootState } = useBootContext();
+  const bootState = useBootStore((s) => s.bootState);
 
   switch (bootState) {
     case 'booting':
       return <BiosScreen />;
     case 'loaded':
-      return <Desktop />;
+      return <DesktopContent />;
     case 'shutting_down':
       return <ShutdownScreen />;
   }

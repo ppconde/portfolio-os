@@ -1,10 +1,13 @@
+import { existsSync } from 'node:fs';
 import type { CodegenConfig } from '@graphql-codegen/cli';
+
+if (existsSync('.env.local')) process.loadEnvFile('.env.local');
 
 const config: CodegenConfig = {
   schema: {
     'https://api.github.com/graphql': {
       headers: {
-        authorization: `Bearer ${import.meta.env.GITHUB_KEY}`,
+        authorization: `Bearer ${process.env.GITHUB_KEY}`,
         'User-Agent': 'portfolio-os',
       },
     },
@@ -16,9 +19,11 @@ const config: CodegenConfig = {
       plugins: [],
       presetConfig: {
         gqlTagName: 'gql',
+        fragmentMasking: false,
       },
       config: {
         useTypeImports: true,
+        documentMode: 'string',
       },
     },
   },

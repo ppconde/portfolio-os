@@ -1,12 +1,6 @@
-import classNames from 'classnames';
-
-type BlinkCaretProps = {
-  hide?: boolean;
-};
-
-export default function BlinkCaret({ hide = false }: BlinkCaretProps) {
+export default function BlinkCaret() {
   return (
-    <div className={classNames('absolute top-0 left-0 p-4', { hidden: hide })}>
+    <div className="absolute top-0 left-0 p-4">
       <p className="animate-blink text-primary text-lg font-bold">_</p>
     </div>
   );

@@ -1,6 +1,6 @@
 import { createRef } from 'react';
-import { useBootContext } from '~/contexts/BootContext';
 import { useClickOutside } from '~/hooks/use-click-outside';
+import { useBootStore } from '~/store/BootStore';
 
 type StartWindowProps = {
   setIsOpen: (value: boolean) => void;
@@ -9,7 +9,7 @@ type StartWindowProps = {
 export default function StartWindow({ setIsOpen }: StartWindowProps) {
   const ref = createRef<HTMLDivElement>();
   useClickOutside(ref, () => setIsOpen(false));
-  const { setBootState } = useBootContext();
+  const setBootState = useBootStore((s) => s.setBootState);
 
   return (
     <div

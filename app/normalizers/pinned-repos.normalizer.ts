@@ -48,8 +48,8 @@ export default function normalizePinnedRepos(repo: PinnedRepo): Project {
       repo.openGraphImageUrl,
       'repo.openGraphImageUrl'
     ),
-    languages: (repo.languages?.nodes || [])
-      ?.filter((language) => !!language)
+    languages: (repo.languages?.nodes ?? [])
+      .filter((language) => !!language)
       .map((language) => ({
         id: language.id,
         name: language.name,

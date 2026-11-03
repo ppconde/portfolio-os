@@ -2,7 +2,6 @@ import { isbot } from 'isbot';
 import { renderToReadableStream } from 'react-dom/server';
 import type { EntryContext } from 'react-router';
 import { type RouterContextProvider, ServerRouter } from 'react-router';
-import { isDev } from './utils/env-handler';
 
 export default async function handleRequest(
   request: Request,
@@ -46,7 +45,7 @@ export default async function handleRequest(
     'Strict-Transport-Security',
     'max-age=31536000; includeSubDomains'
   );
-  if (!isDev) {
+  if (!import.meta.env.DEV) {
     headers.set(
       'Content-Security-Policy',
       "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; media-src 'self';"

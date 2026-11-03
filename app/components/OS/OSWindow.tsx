@@ -25,7 +25,6 @@ export default function OSWindow({
     restoreWindow,
     maximizeWindow,
     setWindowPosition,
-    onMouseDown,
   } = useWindowsStore();
 
   // biome-ignore lint/style/noNonNullAssertion: <It needs to be non-null because it is used in the Draggable component>
@@ -56,10 +55,6 @@ export default function OSWindow({
     closeWindow(window.id);
   };
 
-  const handleOnMouseDown = () => {
-    onMouseDown(window.id);
-  };
-
   return window.isMinimized ? null : (
     <Draggable
       bounds="parent"
@@ -67,7 +62,7 @@ export default function OSWindow({
       handle=".handle"
       nodeRef={nodeRef}
       onDrag={handleDrag}
-      onMouseDown={handleOnMouseDown}
+      onMouseDown={() => setWindowPosition(window.id)}
       position={window.isMinimized ? { x: 0, y: 0 } : window.position}
     >
       {/** biome-ignore lint/a11y/noStaticElementInteractions: <This is an unusual behavior because we are mimicking a windowing system> */}
@@ -96,30 +91,30 @@ export default function OSWindow({
               <img
                 alt="Browser icon"
                 className="mr-1 h-4 w-4"
-                src={icons.find((icon) => icon.id === window.name)?.icon}
+                src={icons.find((icon) => icon.id === window.id)?.icon}
               />
               <span className="font-micro overflow-hidden text-xl whitespace-nowrap">
-                {window.name}
+                {window.id}
               </span>
             </div>
             <div className="flex items-center">
               <WindowButton
+                data-testid={`minimize-button-${window.id.toLowerCase()}`}
                 imageAlt="Minimize"
                 imageName="/assets/minimize.png"
                 onClick={handleMinimize}
-                test-id={`minimize-button-${window.id.toLowerCase()}`}
               />
               <WindowButton
+                data-testid={`maximize-button-${window.id.toLowerCase()}`}
                 imageAlt="Maximize"
                 imageName="/assets/maximize.png"
                 onClick={toggleMaximize}
-                test-id={`maximize-button-${window.id.toLowerCase()}`}
               />
               <WindowButton
+                data-testid={`close-button-${window.id.toLowerCase()}`}
                 imageAlt="Close"
                 imageName="/assets/close.png"
                 onClick={handleClose}
-                test-id={`close-button-${window.id.toLowerCase()}`}
               />
             </div>
           </div>

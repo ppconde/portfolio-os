@@ -5,7 +5,6 @@ import './tailwind.css';
 import type { Route } from './+types/root';
 import BlueScreen from './components/OS/BlueScreen';
 import { Screen } from './components/OS/Screen';
-import BootProvider from './contexts/BootContext';
 
 export const links: LinksFunction = () => [
   {
@@ -94,13 +93,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return (
-    <BootProvider>
-      <Screen />
-    </BootProvider>
-  );
+  return <Screen />;
 }
 
-export function ErrorBoundary({ error }: { error: Route.ErrorBoundaryProps }) {
+export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   return <BlueScreen error={error} />;
 }

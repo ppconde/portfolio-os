@@ -1,8 +1,7 @@
 import H2 from '~/components/website/H2';
-
 import ProjectCard from '~/components/website/ProjectCard';
-import { CACHE } from '~/constants/cache.const';
 import { appContext } from '~/context';
+import { githubQuery } from '~/graphql';
 import normalizePinnedRepos, {
   type PinnedRepo,
   type Project,
@@ -10,50 +9,37 @@ import normalizePinnedRepos, {
 import { GET_REPOS_QUERY } from '~/queries/getPinnedRepos';
 import type { Route } from './+types/projects';
 
+const CACHE_KEY = 'pinned_repos';
+const CACHE_TTL = 60 * 10; // 10 minutes
+
 export async function loader({ context }: Route.LoaderArgs) {
   try {
-    const { cloudflare, clients } = context.get(appContext);
+    const { cloudflare, getGithubKey } = context.get(appContext);
     const { PORTFOLIO_OS_KV } = cloudflare.env;
 
-    const cachedData = await PORTFOLIO_OS_KV.get(CACHE.PINNED_REPOS.KEY);
-    if (cachedData) {
-      const repos = JSON.parse(cachedData) as Project[];
-      return repos;
-    }
+    const cached = await PORTFOLIO_OS_KV.get<Project[]>(CACHE_KEY, 'json');
+    if (cached) return cached;
 
-    const response = await (await clients.getGithub())
-      .gql(GET_REPOS_QUERY)
-      .$send();
-
-    if (!response?.user?.pinnedItems?.nodes) {
+    const data = await githubQuery(await getGithubKey(), GET_REPOS_QUERY);
+    const nodes = data.user?.pinnedItems?.nodes;
+    if (!nodes) {
       throw new Response('No repositories found', { status: 404 });
     }
 
-    const repos = response.user.pinnedItems.nodes
+    const repos = nodes
       .filter(
         (repo): repo is PinnedRepo => !!repo && repo.__typename === 'Repository'
       )
       .map(normalizePinnedRepos);
 
     if (repos.length > 0) {
-      await PORTFOLIO_OS_KV.put(CACHE.PINNED_REPOS.KEY, JSON.stringify(repos), {
-        expirationTtl: CACHE.PINNED_REPOS.TTL,
+      await PORTFOLIO_OS_KV.put(CACHE_KEY, JSON.stringify(repos), {
+        expirationTtl: CACHE_TTL,
       });
     }
     return repos;
   } catch (err) {
-    // Surface as much detail as possible: Graffle often throws errors with an
-    // empty `message` when GitHub replies with a non-GraphQL body (e.g. 401
-    // "Bad credentials" from an expired PAT), which leaves logs showing only a
-    // stack trace with no cause.
-    const error = err as Error & { cause?: unknown; errors?: unknown };
-    console.error('Failed to load repos', {
-      name: error?.name,
-      message: error?.message,
-      cause: error?.cause,
-      errors: error?.errors,
-      stack: error?.stack,
-    });
+    console.error('Failed to load repos', err);
     throw new Response('Failed to fetch repositories', { status: 500 });
   }
 }
@@ -63,16 +49,8 @@ export default function Projects({ loaderData: repos }: Route.ComponentProps) {
     <div className="@container space-y-6">
       <H2>Projects</H2>
       <div className="grid grid-cols-1 gap-6 @md:grid-cols-2 @xl:grid-cols-3">
-        {repos?.map((repo) => (
-          <ProjectCard
-            description={repo.description}
-            homepageUrl={repo.homepageUrl}
-            key={repo.id}
-            languages={repo.languages}
-            name={repo.name}
-            openGraphImageUrl={repo.openGraphImageUrl}
-            url={repo.url}
-          />
+        {repos.map((repo) => (
+          <ProjectCard key={repo.id} {...repo} />
         ))}
       </div>
     </div>

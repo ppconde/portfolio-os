@@ -1,32 +1,16 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
-type OnEvent = 'click';
-
-export const usePlaySound = (sound: string, on?: OnEvent) => {
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
+// Plays `sound` on every document click.
+export const usePlaySound = (sound: string) => {
   useEffect(() => {
-    audioRef.current = new Audio(sound);
-
-    const playAudio = () => {
-      if (audioRef.current) {
-        // Reset playback to start
-        audioRef.current.currentTime = 0;
-        audioRef.current
-          .play()
-          .catch((error) => console.error('Error playing audio:', error));
-      }
+    const audio = new Audio(sound);
+    const play = () => {
+      audio.currentTime = 0;
+      audio
+        .play()
+        .catch((error) => console.error('Error playing audio:', error));
     };
-
-    if (on === 'click') {
-      document.addEventListener('click', playAudio);
-    } else {
-      playAudio();
-    }
-
-    return () => {
-      document.removeEventListener('click', playAudio);
-      audioRef.current = null;
-    };
-  }, [on, sound]);
+    document.addEventListener('click', play);
+    return () => document.removeEventListener('click', play);
+  }, [sound]);
 };
