@@ -24,6 +24,23 @@
       "secret_name": "GITHUB_KEY"
     }
   ],
+  // Worker Previews don't inherit production bindings. Sharing these is fine:
+  // the KV only caches pinned GitHub repos, and the secret is read-only.
+  "previews": {
+    "kv_namespaces": [
+      {
+        "binding": "PORTFOLIO_OS_KV",
+        "id": "4024c012098c4498922e7af3e1fab339"
+      }
+    ],
+    "secrets_store_secrets": [
+      {
+        "binding": "PORTFOLIO_OS_SECRETS",
+        "store_id": "0b4a28417fcf4ab9946e2b14d442ef81",
+        "secret_name": "GITHUB_KEY"
+      }
+    ]
+  },
   "env": {
     "development": {
       "name": "portfolio-os-dev",
