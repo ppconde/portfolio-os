@@ -25,12 +25,12 @@ export default function OSWindow({
     restoreWindow,
     maximizeWindow,
     setWindowPosition,
-  } = useWindowsStore();
+  } = useWindowsStore.getState(); // actions are stable; no need to subscribe
 
   // biome-ignore lint/style/noNonNullAssertion: <It needs to be non-null because it is used in the Draggable component>
   const nodeRef = useRef<HTMLDivElement>(null!);
 
-  const handleDrag = (_event: DraggableEvent, data: DraggableData) => {
+  const handleDragStop = (_event: DraggableEvent, data: DraggableData) => {
     if (!window.isMaximized) {
       setWindowPosition(window.id, { x: data.x, y: data.y });
     }
@@ -61,8 +61,8 @@ export default function OSWindow({
       disabled={window.isMaximized}
       handle=".handle"
       nodeRef={nodeRef}
-      onDrag={handleDrag}
       onMouseDown={() => setWindowPosition(window.id)}
+      onStop={handleDragStop}
       position={window.isMinimized ? { x: 0, y: 0 } : window.position}
     >
       {/** biome-ignore lint/a11y/noStaticElementInteractions: <This is an unusual behavior because we are mimicking a windowing system> */}
