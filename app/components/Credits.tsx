@@ -4,17 +4,17 @@ import H2 from './website/H2';
 const inspirations = [
   {
     name: 'Henry Heffernan',
-    href: 'https://os.henryheffernan.com/',
+    href: 'https://henryheffernan.com/',
     note: 'for the portfolio OS that inspired this one',
   },
   {
     name: 'Bruno Simon',
-    href: 'https://threejs-journey.com/',
+    href: 'https://bruno-simon.com/',
     note: 'for the Three.js Journey course',
   },
   {
     name: 'Mr.doob',
-    href: 'https://threejs.org/',
+    href: 'https://mrdoob.com/',
     note: 'for being such an inspirational human being',
   },
 ];

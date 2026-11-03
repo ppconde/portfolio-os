@@ -8,6 +8,6 @@ Under construction...
 
 ## Credits
 
-- [Henry Heffernan](https://os.henryheffernan.com/), whose portfolio OS inspired this project
-- [Bruno Simon](https://threejs-journey.com/), for the Three.js Journey course
-- [Mr.doob](https://threejs.org/), for being such an inspirational human being
+- [Henry Heffernan](https://henryheffernan.com/), whose portfolio OS inspired this project
+- [Bruno Simon](https://bruno-simon.com/), for the Three.js Journey course
+- [Mr.doob](https://mrdoob.com/), for being such an inspirational human being
