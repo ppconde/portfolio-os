@@ -1,0 +1,35 @@
+# Cloudflare Workers Builds only comments on a PR if it was already open when
+# the branch was pushed. This posts the preview URLs from its check run instead.
+name: Preview comment
+permissions:
+  pull-requests: write
+on:
+  check_run:
+    types: [completed]
+jobs:
+  comment:
+    if: startsWith(github.event.check_run.name, 'Workers Builds') && github.event.check_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      SUMMARY: ${{ github.event.check_run.output.summary }}
+      PRS: ${{ join(github.event.check_run.pull_requests.*.number, ' ') }}
+    steps:
+      - name: Post preview URLs
+        run: |
+          marker='<!-- preview-comment -->'
+          body=$(printf '%s\n### Cloudflare preview\n%s\n' "$marker" "$(grep -E '^Preview' <<<"$SUMMARY")")
+          for pr in $PRS; do
+            comments=$(gh api "repos/$GH_REPO/issues/$pr/comments?per_page=100")
+            # Cloudflare's own comment already shows the URLs.
+            if jq -e 'any(.[]; .user.login | startswith("cloudflare-workers-and-pages"))' <<<"$comments" >/dev/null; then
+              continue
+            fi
+            id=$(jq -r --arg m "$marker" '[.[] | select(.body | startswith($m))][0].id // empty' <<<"$comments")
+            if [ -n "$id" ]; then
+              gh api -X PATCH "repos/$GH_REPO/issues/comments/$id" -f body="$body" >/dev/null
+            else
+              gh pr comment "$pr" --body "$body"
+            fi
+          done
