@@ -37,7 +37,7 @@ export default function ShutdownScreen() {
   }, [setBootState]);
 
   return (
-    <div className="h-screen w-screen bg-black font-perfect-dos-vga-win text-primary">
+    <div className="font-perfect-dos-vga-win text-primary h-screen w-screen bg-black">
       <div className="flex h-full w-full flex-col p-4 sm:p-6 md:p-8">
         {showFirstSection && <BlinkCaret hide={!showFirstSection} />}
         {showSecondSection && (
@@ -95,7 +95,7 @@ export default function ShutdownScreen() {
         {showFifthSection && (
           <div
             className={classNames(
-              'mt-6 space-y-1 text-left text-md md:space-y-2 md:pl-2',
+              'text-md mt-6 space-y-1 text-left md:space-y-2 md:pl-2',
               { hidden: showSixthSection }
             )}
           >

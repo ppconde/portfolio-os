@@ -20,7 +20,7 @@ export default function NavBarButton({ window }: { window: DesktopWindow }) {
     >
       <div
         className={classNames(
-          'pointer-events-none absolute inset-0 border-quaternary',
+          'border-quaternary pointer-events-none absolute inset-0',
           {
             'border-r border-b': window.isMinimized || !window.isFocused,
             'border-t border-l': !window.isMinimized && window.isFocused,

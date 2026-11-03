@@ -16,7 +16,7 @@ export default function Start() {
         type="button"
       >
         {!isOpen && (
-          <div className="pointer-events-none absolute inset-0 border-quaternary border-r border-b"></div>
+          <div className="border-quaternary pointer-events-none absolute inset-0 border-r border-b"></div>
         )}
         <img
           alt="Windows logo"
