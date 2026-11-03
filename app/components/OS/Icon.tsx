@@ -8,13 +8,15 @@ export default function Icon({ id, icon, to }: IconType) {
   const content = (
     <div className="flex w-16 cursor-pointer flex-col items-center">
       <img alt={id} className="mb-1 h-12 w-12" src={icon} />
-      <span className="text-tertiary text-center text-xs">{id}</span>
+      <span className="text-tertiary group-focus:bg-accent px-0.5 text-center text-xs">
+        {id}
+      </span>
     </div>
   );
 
   return to ? (
     <Link
-      className="w-fit"
+      className="group w-fit"
       onDoubleClick={onDoubleClick}
       prefetch="intent"
       to={to}
@@ -22,7 +24,7 @@ export default function Icon({ id, icon, to }: IconType) {
       {content}
     </Link>
   ) : (
-    <button className="w-fit" onDoubleClick={onDoubleClick} type="button">
+    <button className="group w-fit" onDoubleClick={onDoubleClick} type="button">
       {content}
     </button>
   );

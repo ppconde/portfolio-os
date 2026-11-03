@@ -12,7 +12,7 @@ export default function HamburgerButton({
   return (
     <button
       aria-label={isOpen ? 'Close menu' : 'Open menu'}
-      className={classNames('h-12 w-12 focus:outline-hidden', className)}
+      className={classNames('h-12 w-12', className)}
       onClick={onClick}
       type="button"
     >

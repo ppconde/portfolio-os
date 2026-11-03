@@ -34,7 +34,7 @@ export default function WebsiteLayout() {
 
         {/* Main Content Area */}
         <main
-          className={classNames('no-scrollbar overflow-y-scroll p-6', {
+          className={classNames('scrollbar-windows overflow-y-auto p-6', {
             hidden: isMenuOpen,
             'flex-1': !isMenuOpen,
           })}

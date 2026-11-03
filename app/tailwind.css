@@ -21,6 +21,8 @@
   --color-accent: #010081;
   --color-accent-light: #0000ff;
   --color-accent-dark: #800080;
+  /* VGA bright blue: readable on the black BIOS screen (#0000ff is ~2.4:1) */
+  --color-vga-blue: #5555ff;
 
   --shadow-windows-inset: inset 1px 1px 3px #818181;
 
@@ -66,6 +68,17 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-tertiary);
+  }
+
+  /* Win98 focus rectangle */
+  :focus-visible {
+    outline: 1px dotted #000;
+    outline-offset: 2px;
+  }
 }
 
 @utility border-windows {
@@ -74,6 +87,10 @@
 
 @utility border-windows-inverted {
   @apply border-2 border-b-tertiary border-l-black border-r-tertiary border-t-black;
+}
+
+@utility border-windows-sunken {
+  @apply border-t-quaternary border-r-tertiary border-b-tertiary border-l-quaternary;
 }
 
 @utility btn-windows {
@@ -95,6 +112,37 @@
   /* IE and Edge */
   scrollbar-width: none;
   /* Firefox */
+}
+
+@utility image-rendering-pixelated {
+  image-rendering: pixelated;
+}
+
+/* Win98 scrollbar: dithered track, bevelled thumb */
+@utility scrollbar-windows {
+  &::-webkit-scrollbar {
+    width: 16px;
+  }
+  &::-webkit-scrollbar-track {
+    background-image: conic-gradient(
+      var(--color-secondary) 25%,
+      var(--color-tertiary) 0 50%,
+      var(--color-secondary) 0 75%,
+      var(--color-tertiary) 0
+    );
+    background-size: 2px 2px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-secondary);
+    box-shadow:
+      inset -1px -1px #000,
+      inset 1px 1px var(--color-tertiary),
+      inset -2px -2px var(--color-quaternary),
+      inset 2px 2px #dfdfdf;
+  }
+  @supports not selector(::-webkit-scrollbar) {
+    scrollbar-color: var(--color-secondary) #dfdfdf;
+  }
 }
 
 @utility writing-v-lr {

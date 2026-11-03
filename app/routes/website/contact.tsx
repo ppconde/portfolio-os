@@ -43,6 +43,9 @@ export async function action({ request }: Route.ActionArgs) {
   }
 }
 
+const field =
+  'border-t-quaternary border-l-quaternary border-r-secondary border-b-secondary mt-1 block w-full border-2 bg-white px-2 py-1 shadow-[inset_1px_1px_#000] placeholder:text-gray-500 focus-visible:outline-offset-0';
+
 export default function Contact() {
   const fetcher = useFetcher();
   const errors = fetcher.data?.errors;
@@ -85,14 +88,16 @@ export default function Contact() {
     <Section>
       <H2>Contact</H2>
       <Section>
-        Feel free to reach out to me via email at{' '}
-        <A
-          ariaLabel="My professional contact email"
-          href="mailto:contact@ppconde.com"
-          title="Send me an email!"
-        >
-          contact@ppconde.com
-        </A>
+        <p>
+          Feel free to reach out to me via email at{' '}
+          <A
+            ariaLabel="My professional contact email"
+            href="mailto:contact@ppconde.com"
+            title="Send me an email!"
+          >
+            contact@ppconde.com
+          </A>
+        </p>
         <fetcher.Form className="space-y-6" method="post" ref={formRef}>
           <div>
             <label
@@ -102,7 +107,8 @@ export default function Contact() {
               <b>Your email</b>
             </label>
             <input
-              className="mt-1 block w-full border-gray-300 p-1 shadow-xs outline-dashed"
+              className={field}
+              id="email"
               name="email"
               placeholder="name@domain.com"
               required
@@ -120,7 +126,8 @@ export default function Contact() {
               <b>Subject</b>
             </label>
             <input
-              className="mt-1 block w-full border-gray-300 p-1 shadow-xs outline-dashed"
+              className={field}
+              id="subject"
               name="subject"
               placeholder="The subject of your message"
               required
@@ -138,7 +145,8 @@ export default function Contact() {
               <b>Your message</b>
             </label>
             <textarea
-              className="mt-1 block w-full border-gray-300 p-1 shadow-xs outline-dashed"
+              className={field}
+              id="text"
               name="text"
               placeholder="Type your message here."
               required
@@ -149,10 +157,11 @@ export default function Contact() {
             )}
           </div>
           <button
-            className="btn-windows focus:btn-windows-inverted text-mono h-full px-4 py-1 text-sm"
+            className="btn-windows active:btn-windows-inverted px-6 py-1 text-sm text-gray-900 disabled:text-gray-500"
+            disabled={fetcher.state !== 'idle'}
             type="submit"
           >
-            Send
+            {fetcher.state === 'idle' ? 'Send' : 'Sending...'}
           </button>
         </fetcher.Form>
         {notification && (

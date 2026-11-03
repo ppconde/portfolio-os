@@ -21,8 +21,8 @@ export default function DesktopContent() {
       </div>
       {windows.map((window) => (
         <OSWindow
-          hideStatusBar={window.id === AppsNames.PORTFOLIO}
           key={window.id}
+          showStatusBar={window.id === AppsNames.PORTFOLIO}
           window={window}
         >
           {(() => {

@@ -30,7 +30,7 @@ export default function BiosScreen() {
           </div>
 
           <div className="mt-6 space-y-1 text-center md:space-y-2 md:pl-2 md:text-left">
-            <p className="text-accent-light text-lg font-bold md:text-xl">
+            <p className="text-vga-blue text-lg font-bold md:text-xl">
               Overclocked Potato X3000
             </p>
             <p>BIOS Version 1.23.456</p>
@@ -38,8 +38,11 @@ export default function BiosScreen() {
           </div>
 
           <div className="mt-6 flex flex-col items-center text-center md:items-start md:pl-2 md:text-left">
-            <div className="font-micro text-accent-light text-5xl font-bold md:text-3xl">
-              PotatoChip™
+            <div className="font-micro text-vga-blue text-5xl font-bold md:text-3xl">
+              PotatoChip
+              <span className="font-perfect-dos-vga-win align-super text-base font-normal">
+                ™
+              </span>
             </div>
           </div>
 
@@ -66,7 +69,7 @@ export default function BiosScreen() {
 
           <div className="grow" />
 
-          <div className="text-accent-light mb-4 text-center md:mb-0 md:pl-2 md:text-left">
+          <div className="text-vga-blue mb-4 text-center md:mb-0 md:pl-2 md:text-left">
             <p>
               Press &lt;Del&gt; to enter SETUP or &lt;F1&gt; to question your
               life choices
