@@ -36,6 +36,13 @@ test.describe('Navigation Bar and Route Switching', () => {
         maxDiffPixelRatio: 0.05,
       });
 
+    // Helper: on narrow windows the site menu is collapsed behind the hamburger.
+    const clickNav = async (name: string) => {
+      const openMenu = page.getByRole('button', { name: 'Open menu' });
+      if (await openMenu.isVisible()) await openMenu.click();
+      await page.getByRole('link', { name }).click();
+    };
+
     // Helper: verify content area visible
     const contentArea = page.locator('.bg-tertiary.border-2');
 
@@ -65,29 +72,25 @@ test.describe('Navigation Bar and Route Switching', () => {
     await screenshot('navigation-home.png');
 
     // 2(b). Click [About]
-    const aboutLink = page.getByRole('link', { name: '[About]' });
-    await aboutLink.click();
+    await clickNav('[About]');
     await expect(page).toHaveURL(/\/about\/?$/);
     await expect(contentArea).toBeVisible();
     await screenshot('navigation-about.png');
 
     // 2(c). Click [Experience]
-    const experienceLink = page.getByRole('link', { name: '[Experience]' });
-    await experienceLink.click();
+    await clickNav('[Experience]');
     await expect(page).toHaveURL(/\/experience\/?$/);
     await expect(contentArea).toBeVisible();
     await screenshot('navigation-experience.png');
 
     // 2(d). Click [Projects]
-    const projectsLink = page.getByRole('link', { name: '[Projects]' });
-    await projectsLink.click();
+    await clickNav('[Projects]');
     await expect(page).toHaveURL(/\/projects\/?$/);
     await expect(contentArea).toBeVisible();
     await screenshot('navigation-projects.png');
 
     // 2(e). Click [Contact]
-    const contactLink = page.getByRole('link', { name: '[Contact]' });
-    await contactLink.click();
+    await clickNav('[Contact]');
     await expect(page).toHaveURL(/\/contact\/?$/);
     await expect(contentArea).toBeVisible();
     await screenshot('navigation-contact.png');
