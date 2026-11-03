@@ -13,10 +13,10 @@ export default function StartWindow({ setIsOpen }: StartWindowProps) {
 
   return (
     <div
-      className="absolute bottom-8 left-0 z-9999 flex min-h-72 flex-row border-windows bg-secondary"
+      className="border-windows bg-secondary absolute bottom-8 left-0 z-9999 flex min-h-72 flex-row"
       ref={ref}
     >
-      <div className="relative flex bg-linear-to-tr from-accent-light to-accent text-white">
+      <div className="from-accent-light to-accent relative flex bg-linear-to-tr text-white">
         <p className="writing-v-lr rotate-180 p-1 text-left font-mono">
           <span className="font-bold">Ppconde</span>OS
         </p>
@@ -27,7 +27,7 @@ export default function StartWindow({ setIsOpen }: StartWindowProps) {
         <div className="border-tertiary border-t" />
         {/** Start buttons */}
         <button
-          className="flex items-center p-1 pr-4 hover:bg-accent hover:text-white"
+          className="hover:bg-accent flex items-center p-1 pr-4 hover:text-white"
           onClick={() => setBootState('shutting_down')}
           type="button"
         >

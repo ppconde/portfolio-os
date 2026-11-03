@@ -13,7 +13,7 @@ export default function WindowButton({
 }: ButtonProps) {
   return (
     <button
-      className="flex items-center border-windows bg-secondary p-1"
+      className="border-windows bg-secondary flex items-center p-1"
       data-testid={testId}
       onClick={onClick}
       onTouchEnd={(e) => {

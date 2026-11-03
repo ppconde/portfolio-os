@@ -1,43 +1,57 @@
 version: 2
 updates:
   # Security updates: check daily to catch vulnerabilities ASAP
-  - package-ecosystem: 'pnpm'
-    directory: '/'
+  - package-ecosystem: "pnpm"
+    directory: "/"
     schedule:
-      interval: 'daily'
+      interval: "daily"
     assignees:
-      - 'ppconde'
-    target-branch: 'main'
+      - "ppconde"
+    target-branch: "main"
     commit-message:
-      prefix: 'security'
+      prefix: "security"
     groups:
       security-updates:
         update-types:
-          - 'security'
+          - "security"
         patterns:
-          - '*' # Group all security updates together
+          - "*" # Group all security updates together
 
   # Regular updates: check weekly
-  - package-ecosystem: 'pnpm'
-    directory: '/'
+  - package-ecosystem: "pnpm"
+    directory: "/"
     schedule:
-      interval: 'weekly'
+      interval: "weekly"
     assignees:
-      - 'ppconde'
-    target-branch: 'main'
+      - "ppconde"
+    target-branch: "main"
     commit-message:
-      prefix: 'deps'
+      prefix: "deps"
     groups:
       minor-and-patch:
         update-types:
-          - 'minor'
-          - 'patch'
+          - "minor"
+          - "patch"
         patterns:
-          - '*' # Group all minor and patch updates
+          - "*" # Group all minor and patch updates
 
       # Optional: don't group majors, let them through individually
       major-updates:
         update-types:
-          - 'major'
+          - "major"
         patterns:
-          - '*' # Group of 1 = individual PR per major bump
+          - "*" # Group of 1 = individual PR per major bump
+
+  # GitHub Actions versions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    assignees:
+      - "ppconde"
+    commit-message:
+      prefix: "ci"
+    groups:
+      actions:
+        patterns:
+          - "*"

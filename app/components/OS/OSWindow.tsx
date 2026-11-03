@@ -73,7 +73,7 @@ export default function OSWindow({
       {/** biome-ignore lint/a11y/noStaticElementInteractions: <This is an unusual behavior because we are mimicking a windowing system> */}
       <div
         className={classNames(
-          'absolute flex flex-col border-windows bg-secondary shadow-md',
+          'border-windows bg-secondary absolute flex flex-col shadow-md',
           {
             'resize overflow-auto': !window.isMinimized && !window.isMaximized,
           },
@@ -87,7 +87,7 @@ export default function OSWindow({
         <div className="bg-secondary p-1">
           <div
             className={classNames(
-              'handle flex h-6 items-center justify-between px-1 text-tertiary',
+              'handle text-tertiary flex h-6 items-center justify-between px-1',
               { 'active:cursor-move': !window.isMaximized },
               window.isFocused ? 'bg-accent' : 'bg-quaternary'
             )}
@@ -98,7 +98,7 @@ export default function OSWindow({
                 className="mr-1 h-4 w-4"
                 src={icons.find((icon) => icon.id === window.name)?.icon}
               />
-              <span className="overflow-hidden whitespace-nowrap font-micro text-xl">
+              <span className="font-micro overflow-hidden text-xl whitespace-nowrap">
                 {window.name}
               </span>
             </div>
@@ -126,9 +126,9 @@ export default function OSWindow({
         </div>
 
         {/* Content area */}
-        <div className="no-scrollbar grow overflow-y-scroll bg-secondary p-1">
+        <div className="no-scrollbar bg-secondary grow overflow-y-scroll p-1">
           {/* White Area */}
-          <div className="h-full border-2 border-t-quaternary border-r-tertiary border-b-tertiary border-l-quaternary bg-tertiary p-4 shadow-windows-inset">
+          <div className="border-t-quaternary border-r-tertiary border-b-tertiary border-l-quaternary bg-tertiary shadow-windows-inset h-full border-2 p-4">
             {children}
           </div>
         </div>
@@ -136,7 +136,7 @@ export default function OSWindow({
         {/* Status bar */}
         {hideStatusBar && (
           <div className="bg-secondary p-1 text-xs">
-            <div className="flex h-5 items-center justify-between border border-t-quaternary border-r-tertiary border-b-tertiary border-l-quaternary p-1">
+            <div className="border-t-quaternary border-r-tertiary border-b-tertiary border-l-quaternary flex h-5 items-center justify-between border p-1">
               <span className="flex grow overflow-hidden text-ellipsis whitespace-nowrap">
                 <img
                   alt="Internet icon"

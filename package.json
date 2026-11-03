@@ -36,8 +36,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.4",
-    "@cloudflare/vite-plugin": "^1.66.0",
-    "@cloudflare/workers-types": "^5.20261030.1",
+    "@cloudflare/vite-plugin": "^1.67.0",
+    "@cloudflare/workers-types": "^5.20261102.1",
     "@graphql-codegen/cli": "^7.4.6",
     "@graphql-codegen/client-preset": "^6.2.3",
     "@graphql-typed-document-node/core": "^3.2.0",
@@ -52,7 +52,7 @@
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2",
     "vite": "^8.3.5",
-    "wrangler": "^4.156.0"
+    "wrangler": "^4.156.2"
   },
-  "packageManager": "pnpm@12.4.2+sha512.08adc6613180275c7c9edada39dcf08c9c61ad4e7eaf330a4f3461f102b0f907423454d117f98e72d47fef0616070644d7bffc973a6a57f5090a6d7c368b07c9"
+  "packageManager": "pnpm@12.16.1+sha512.091d1dee7927575661b25dab3c2ae31cafc1c54d6b71ed6a6600cf0c1cb10434a447eae14015f1b23e2e6bedeed79df94a932e2164d2832280dce3fb32f656d1"
 }

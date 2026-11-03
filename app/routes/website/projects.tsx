@@ -62,7 +62,7 @@ export default function Projects({ loaderData: repos }: Route.ComponentProps) {
   return (
     <div className="@container space-y-6">
       <H2>Projects</H2>
-      <div className="grid @md:grid-cols-2 @xl:grid-cols-3 grid-cols-1 gap-6">
+      <div className="grid grid-cols-1 gap-6 @md:grid-cols-2 @xl:grid-cols-3">
         {repos?.map((repo) => (
           <ProjectCard
             description={repo.description}

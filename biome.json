@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.6.4/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -18,7 +18,10 @@
       "!**/test-results",
       "!**/blob-report",
       "!app/__generated__",
-      "!worker-configuration.d.ts"
+      "!worker-configuration.d.ts",
+      "!.agents",
+      "!.claude",
+      "!skills-lock.json"
     ]
   },
   "formatter": {
@@ -50,14 +53,14 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
       "correctness": {
         "useExhaustiveDependencies": "warn",
         "useHookAtTopLevel": "error",
         "noUnusedImports": "warn"
       },
       "a11y": {
-        "recommended": true
+        "preset": "recommended"
       },
       "style": {
         "useImportType": "warn",
@@ -67,12 +70,8 @@
         "noExplicitAny": "warn"
       },
       "nursery": {
-        "useSortedClasses": {
-          "level": "warn",
-          "options": {
-            "attributes": ["className"],
-            "functions": ["classNames"]
-          }
+        "useTailwindSortedClasses": {
+          "level": "warn"
         }
       }
     }
@@ -89,6 +88,9 @@
   "css": {
     "formatter": {
       "enabled": true
+    },
+    "parser": {
+      "tailwindDirectives": true
     }
   },
   "overrides": [
@@ -112,5 +114,9 @@
         }
       }
     }
-  ]
+  ],
+  "tailwind": {
+    "attributes": ["class", "className"],
+    "mergeFunctions": ["classNames"]
+  }
 }

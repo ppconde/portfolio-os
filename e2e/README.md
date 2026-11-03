@@ -1,6 +1,7 @@
 # Test Plan: Basic Operations for Portfolio OS App
 
 ## Assumptions
+
 - The app starts from a clean state.
 - All routes and main UI elements are accessible.
 - Tests are independent and can be run in any order.

@@ -4,10 +4,10 @@ export default function BlueScreen({ error }: BlueScreenProps) {
   const { message, stack } = getErrorDetails(error);
 
   return (
-    <div className="flex min-h-screen w-full flex-col bg-accent-light p-6 font-mono text-tertiary">
+    <div className="bg-accent-light text-tertiary flex min-h-screen w-full flex-col p-6 font-mono">
       <div className="flex w-full max-w-screen-md flex-col justify-between gap-2">
-        <h1 className="mb-4 font-perfect-dos-vga text-xl uppercase tracking-wide">
-          <span className="bg-secondary p-2 text-accent-light">Ppconde OS</span>
+        <h1 className="font-perfect-dos-vga mb-4 text-xl tracking-wide uppercase">
+          <span className="bg-secondary text-accent-light p-2">Ppconde OS</span>
         </h1>
         <p>
           A problem has been detected and the application has been shut down to
@@ -18,8 +18,8 @@ export default function BlueScreen({ error }: BlueScreenProps) {
           <strong>Error:</strong> {message}
         </p>
         {stack && (
-          <div className="mt-2 border-white border-t pt-4 text-sm opacity-80">
-            <pre className="whitespace-pre-wrap break-all">{stack}</pre>
+          <div className="mt-2 border-t border-white pt-4 text-sm opacity-80">
+            <pre className="break-all whitespace-pre-wrap">{stack}</pre>
           </div>
         )}
       </div>

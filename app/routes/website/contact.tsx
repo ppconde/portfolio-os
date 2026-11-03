@@ -103,7 +103,7 @@ export default function Contact() {
         <fetcher.Form className="space-y-6" method="post" ref={formRef}>
           <div>
             <label
-              className="block font-medium text-gray-900 text-sm"
+              className="block text-sm font-medium text-gray-900"
               htmlFor="email"
             >
               <b>Your email</b>
@@ -116,12 +116,12 @@ export default function Contact() {
               type="email"
             />
             {errors?.email && (
-              <p className="mt-1 text-red-600 text-sm">{errors.email}</p>
+              <p className="mt-1 text-sm text-red-600">{errors.email}</p>
             )}
           </div>
           <div>
             <label
-              className="block font-medium text-gray-900 text-sm"
+              className="block text-sm font-medium text-gray-900"
               htmlFor="subject"
             >
               <b>Subject</b>
@@ -134,12 +134,12 @@ export default function Contact() {
               type="text"
             />
             {errors?.subject && (
-              <p className="mt-1 text-red-600 text-sm">{errors.subject}</p>
+              <p className="mt-1 text-sm text-red-600">{errors.subject}</p>
             )}
           </div>
           <div>
             <label
-              className="block font-medium text-gray-900 text-sm"
+              className="block text-sm font-medium text-gray-900"
               htmlFor="text"
             >
               <b>Your message</b>
@@ -152,20 +152,20 @@ export default function Contact() {
               rows={5}
             />
             {errors?.text && (
-              <p className="mt-1 text-red-600 text-sm">{errors.text}</p>
+              <p className="mt-1 text-sm text-red-600">{errors.text}</p>
             )}
           </div>
           <button
-            className="btn-windows focus:btn-windows-inverted h-full px-4 py-1 text-mono text-sm"
+            className="btn-windows focus:btn-windows-inverted text-mono h-full px-4 py-1 text-sm"
             type="submit"
           >
             Send
           </button>
         </fetcher.Form>
         {notification && (
-          <div className="absolute top-24 right-2 w-full max-w-xs border-windows md:max-w-sm lg:max-w-md">
-            <div className="h-3 items-center justify-between bg-accent px-1"></div>
-            <div className="flex flex-row items-center justify-evenly bg-secondary p-3 font-ms-reference shadow-md">
+          <div className="border-windows absolute top-24 right-2 w-full max-w-xs md:max-w-sm lg:max-w-md">
+            <div className="bg-accent h-3 items-center justify-between px-1"></div>
+            <div className="bg-secondary font-ms-reference flex flex-row items-center justify-evenly p-3 shadow-md">
               {notification.type === 'success' ? (
                 <img
                   alt=""

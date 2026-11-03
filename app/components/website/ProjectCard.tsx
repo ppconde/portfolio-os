@@ -55,7 +55,7 @@ export default function ProjectCard({
       </div>
 
       {description && (
-        <p className="grow font-mono text-gray-900 text-xs">{description}</p>
+        <p className="grow font-mono text-xs text-gray-900">{description}</p>
       )}
 
       <div className="flex items-center justify-between text-xs">
