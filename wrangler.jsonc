@@ -8,6 +8,9 @@
   "compatibility_date": "2026-11-01",
   "compatibility_flags": ["nodejs_compat"],
   "main": "./workers/app.ts",
+  // Preview URLs (one per PR build) only exist on workers.dev, so keep it enabled alongside os.ppconde.com.
+  "workers_dev": true,
+  "preview_urls": true,
   "observability": {
     "enabled": true
   },

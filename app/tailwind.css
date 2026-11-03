@@ -22,7 +22,6 @@
   --color-accent-light: #0000ff;
   --color-accent-dark: #800080;
   /* VGA bright blue: readable on the black BIOS screen (#0000ff is ~2.4:1) */
-  --color-vga-blue: #5555ff;
 
   --shadow-windows-inset: inset 1px 1px 3px #818181;
 

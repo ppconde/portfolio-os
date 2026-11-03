@@ -21,11 +21,12 @@ export default function WebsiteLayout() {
         />
         <NavList
           className={classNames(
-            'flex-col space-y-1 overflow-hidden border-gray-200 bg-white p-2 @xl:flex @xl:border-r-2',
+            'flex-col space-y-1 overflow-hidden border-gray-200 bg-white @xl:flex @xl:border-r-2',
             {
               'transition-max-height flex max-h-full p-6 duration-500 ease-in-out':
                 isMenuOpen,
-              'transition-max-height max-h-0 max-w-0 duration-500 ease-in-out @xl:max-h-full @xl:max-w-full':
+              // Collapsed: no padding (it leaked a sliver of link text) and invisible (out of tab order).
+              'transition-max-height invisible max-h-0 max-w-0 p-0 duration-500 ease-in-out @xl:visible @xl:max-h-full @xl:max-w-full @xl:p-2':
                 !isMenuOpen,
             }
           )}

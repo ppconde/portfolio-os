@@ -48,7 +48,16 @@ export default async function handleRequest(
   if (!import.meta.env.DEV) {
     headers.set(
       'Content-Security-Policy',
-      "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; connect-src 'self'; img-src 'self' data:; media-src 'self';"
+      [
+        "default-src 'self'",
+        "script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com",
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.cdnfonts.com",
+        "font-src 'self' https://fonts.gstatic.com https://fonts.cdnfonts.com",
+        "connect-src 'self' https://cloudflareinsights.com",
+        // Project cards show GitHub OpenGraph images.
+        "img-src 'self' data: https://opengraph.githubassets.com https://repository-images.githubusercontent.com",
+        "media-src 'self'",
+      ].join('; ')
     );
   }
 
