@@ -43,6 +43,9 @@ export async function action({ request }: Route.ActionArgs) {
   }
 }
 
+const field =
+  'border-t-quaternary border-l-quaternary border-r-secondary border-b-secondary mt-1 block w-full border-2 bg-white px-2 py-1 shadow-[inset_1px_1px_#000] placeholder:text-gray-500 focus-visible:outline-offset-0';
+
 export default function Contact() {
   const fetcher = useFetcher();
   const errors = fetcher.data?.errors;
@@ -104,7 +107,7 @@ export default function Contact() {
               <b>Your email</b>
             </label>
             <input
-              className="border-t-quaternary border-l-quaternary border-r-secondary border-b-secondary mt-1 block w-full border-2 bg-white px-2 py-1 shadow-[inset_1px_1px_#000] placeholder:text-gray-500 focus-visible:outline-offset-0"
+              className={field}
               id="email"
               name="email"
               placeholder="name@domain.com"
@@ -123,7 +126,7 @@ export default function Contact() {
               <b>Subject</b>
             </label>
             <input
-              className="border-t-quaternary border-l-quaternary border-r-secondary border-b-secondary mt-1 block w-full border-2 bg-white px-2 py-1 shadow-[inset_1px_1px_#000] placeholder:text-gray-500 focus-visible:outline-offset-0"
+              className={field}
               id="subject"
               name="subject"
               placeholder="The subject of your message"
@@ -142,7 +145,7 @@ export default function Contact() {
               <b>Your message</b>
             </label>
             <textarea
-              className="border-t-quaternary border-l-quaternary border-r-secondary border-b-secondary mt-1 block w-full border-2 bg-white px-2 py-1 shadow-[inset_1px_1px_#000] placeholder:text-gray-500 focus-visible:outline-offset-0"
+              className={field}
               id="text"
               name="text"
               placeholder="Type your message here."

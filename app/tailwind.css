@@ -89,6 +89,10 @@
   @apply border-2 border-b-tertiary border-l-black border-r-tertiary border-t-black;
 }
 
+@utility border-windows-sunken {
+  @apply border-t-quaternary border-r-tertiary border-b-tertiary border-l-quaternary;
+}
+
 @utility btn-windows {
   @apply border-windows bg-secondary;
 }

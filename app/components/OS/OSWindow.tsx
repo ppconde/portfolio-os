@@ -123,7 +123,7 @@ export default function OSWindow({
         {/* Content area */}
         <div className="no-scrollbar bg-secondary grow overflow-y-scroll p-1">
           {/* White Area */}
-          <div className="border-t-quaternary border-r-tertiary border-b-tertiary border-l-quaternary bg-tertiary shadow-windows-inset h-full border-2 p-4">
+          <div className="border-windows-sunken bg-tertiary shadow-windows-inset h-full border-2 p-4">
             {children}
           </div>
         </div>
@@ -131,7 +131,7 @@ export default function OSWindow({
         {/* Status bar */}
         {showStatusBar && (
           <div className="bg-secondary flex gap-0.5 p-1 text-xs">
-            <span className="border-t-quaternary border-r-tertiary border-b-tertiary border-l-quaternary flex h-5 min-w-0 grow items-center gap-1 border px-1">
+            <span className="border-windows-sunken flex h-5 min-w-0 grow items-center gap-1 border px-1">
               <img
                 alt=""
                 className="h-4 w-4 shrink-0"
@@ -141,7 +141,7 @@ export default function OSWindow({
                 © {new Date().getFullYear()} Portfolio. All rights reserved.
               </span>
             </span>
-            <span className="border-t-quaternary border-r-tertiary border-b-tertiary border-l-quaternary flex h-5 shrink-0 items-center gap-1 border px-1 whitespace-nowrap">
+            <span className="border-windows-sunken flex h-5 shrink-0 items-center gap-1 border px-1 whitespace-nowrap">
               <img alt="" className="h-4 w-4" src="/assets/world-1.png" />
               Internet
             </span>
