@@ -41,3 +41,17 @@ updates:
           - 'major'
         patterns:
           - '*' # Group of 1 = individual PR per major bump
+
+  # GitHub Actions versions
+  - package-ecosystem: 'github-actions'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+    assignees:
+      - 'ppconde'
+    commit-message:
+      prefix: 'ci'
+    groups:
+      actions:
+        patterns:
+          - '*'
