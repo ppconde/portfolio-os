@@ -22,13 +22,6 @@ export async function action({ request }: Route.ActionArgs) {
     .strict();
 
   const formData = await request.formData();
-  const urlEncodedData = new URLSearchParams(
-    Array.from(formData.entries()).map(([key, value]) => [
-      key,
-      value.toString(),
-    ])
-  ).toString();
-
   const entries = Object.fromEntries(formData.entries());
   const parseResult = formSchema.safeParse(entries);
 
@@ -41,7 +34,7 @@ export async function action({ request }: Route.ActionArgs) {
     await fetch('https://email-with-resend.pepconde-1993.workers.dev/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: urlEncodedData,
+      body: new URLSearchParams(parseResult.data),
     });
     return data({ success: true }, { status: 200 });
   } catch (error) {

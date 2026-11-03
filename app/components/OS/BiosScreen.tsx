@@ -1,124 +1,79 @@
-import classNames from 'classnames';
 import { useEffect, useState } from 'react';
-import { useBootContext } from '~/contexts/BootContext';
+import { useBootStore } from '~/store/BootStore';
 import BlinkCaret from './BlinkCaret';
 
+const STEP_DELAYS = [1500, 1700, 2000, 2500];
+
 export default function BiosScreen() {
-  const [showFirstSection, setShowFirstSection] = useState(false);
-  const [showSecondSection, setShowSecondSection] = useState(false);
-  const [showThirdSection, setShowThirdSection] = useState(false);
-  const [showFourthSection, setShowFourthSection] = useState(false);
-  const { setBootState } = useBootContext();
+  const [step, setStep] = useState(0);
+  const setBootState = useBootStore((s) => s.setBootState);
 
   useEffect(() => {
-    const firstTimer = setTimeout(() => setShowFirstSection(true), 1500);
-    const secondTimer = setTimeout(() => setShowSecondSection(true), 1700);
-    const thirdTimer = setTimeout(() => setShowThirdSection(true), 2000);
-    const fourthTimer = setTimeout(() => setShowFourthSection(true), 2500);
-    const finalTimer = setTimeout(() => setBootState('loaded'), 3500);
-
-    return () => {
-      clearTimeout(firstTimer);
-      clearTimeout(secondTimer);
-      clearTimeout(thirdTimer);
-      clearTimeout(fourthTimer);
-      clearTimeout(finalTimer);
-    };
+    const ids = STEP_DELAYS.map((delay, i) =>
+      setTimeout(() => setStep(i + 1), delay)
+    );
+    ids.push(setTimeout(() => setBootState('loaded'), 3500));
+    return () => ids.forEach(clearTimeout);
   }, [setBootState]);
 
   return (
     <div className="font-perfect-dos-vga-win text-primary h-screen w-screen bg-black select-none">
-      <div className="flex h-full w-full flex-col p-4 sm:p-6 md:p-8">
-        <div
-          className={classNames(
-            'space-y-1 text-center md:mt-6 md:space-y-2 md:pl-2 md:text-left',
-            { hidden: showFourthSection }
-          )}
-        >
-          <p>PhoenixBIOS 1.0 Beta</p>
-          <p>Copyright 1985-2025 Totally Legit Technologies Inc.</p>
-          <p>All Rights Preserved (in a jar)</p>
-          <p>3R7H3R1UM.42A.1337.P07</p>
-        </div>
+      {step >= 4 ? (
+        <BlinkCaret />
+      ) : (
+        <div className="flex h-full w-full flex-col p-4 sm:p-6 md:p-8">
+          <div className="space-y-1 text-center md:mt-6 md:space-y-2 md:pl-2 md:text-left">
+            <p>PhoenixBIOS 1.0 Beta</p>
+            <p>Copyright 1985-2025 Totally Legit Technologies Inc.</p>
+            <p>All Rights Preserved (in a jar)</p>
+            <p>3R7H3R1UM.42A.1337.P07</p>
+          </div>
 
-        <div
-          className={classNames(
-            'mt-6 space-y-1 text-center md:space-y-2 md:pl-2 md:text-left',
-            { hidden: showFourthSection }
-          )}
-        >
-          <p className="text-accent-light text-lg font-bold md:text-xl">
-            Overclocked Potato X3000
-          </p>
-          <p>BIOS Version 1.23.456</p>
-          <p>SpudChip™ 9001 MHz (Caution: May Overheat)</p>
-        </div>
+          <div className="mt-6 space-y-1 text-center md:space-y-2 md:pl-2 md:text-left">
+            <p className="text-accent-light text-lg font-bold md:text-xl">
+              Overclocked Potato X3000
+            </p>
+            <p>BIOS Version 1.23.456</p>
+            <p>SpudChip™ 9001 MHz (Caution: May Overheat)</p>
+          </div>
 
-        <div
-          className={classNames(
-            'mt-6 flex flex-col items-center text-center md:items-start md:pl-2 md:text-left',
-            { hidden: showFourthSection }
+          <div className="mt-6 flex flex-col items-center text-center md:items-start md:pl-2 md:text-left">
+            <div className="font-micro text-accent-light text-5xl font-bold md:text-3xl">
+              PotatoChip™
+            </div>
+          </div>
+
+          {step >= 1 && (
+            <div className="space-y-1 text-center text-sm md:space-y-2 md:pl-2 md:text-left">
+              <p>256MB System RAM Passed</p>
+            </div>
           )}
-        >
-          <div className="font-micro text-accent-light text-5xl font-bold md:text-3xl">
-            PotatoChip™
+
+          {step >= 2 && (
+            <div className="space-y-1 text-center text-sm md:space-y-2 md:pl-2 md:text-left">
+              <p>Keyboard ................ Detected</p>
+              <p>Mouse ................... Detected</p>
+            </div>
+          )}
+
+          {step >= 3 && (
+            <div className="mt-6 space-y-1 text-center text-sm md:space-y-2 md:pl-2 md:text-left">
+              <p>Fixed Disk 0: WDC: WD200EB-00CPF0-(PM)</p>
+              <p>ATAPI CD-ROM: CRD-8400B-(SM)</p>
+              <p>ATAPI CD-ROM: CD-RW CRX100E-(SS)</p>
+            </div>
+          )}
+
+          <div className="grow" />
+
+          <div className="text-accent-light mb-4 text-center md:mb-0 md:pl-2 md:text-left">
+            <p>
+              Press &lt;Del&gt; to enter SETUP or &lt;F1&gt; to question your
+              life choices
+            </p>
           </div>
         </div>
-
-        {showFirstSection && (
-          <div
-            className={classNames(
-              'space-y-1 text-center text-sm md:space-y-2 md:pl-2 md:text-left',
-              { hidden: showFourthSection }
-            )}
-          >
-            <p>256MB System RAM Passed</p>
-          </div>
-        )}
-
-        {showSecondSection && (
-          <div
-            className={classNames(
-              'space-y-1 text-center text-sm md:space-y-2 md:pl-2 md:text-left',
-              { hidden: showFourthSection }
-            )}
-          >
-            <p>Keyboard ................ Detected</p>
-            <p>Mouse ................... Detected</p>
-          </div>
-        )}
-
-        {showThirdSection && (
-          <div
-            className={classNames(
-              'mt-6 space-y-1 text-center text-sm md:space-y-2 md:pl-2 md:text-left',
-              { hidden: showFourthSection }
-            )}
-          >
-            <p>Fixed Disk 0: WDC: WD200EB-00CPF0-(PM)</p>
-            <p>ATAPI CD-ROM: CRD-8400B-(SM)</p>
-            <p>ATAPI CD-ROM: CD-RW CRX100E-(SS)</p>
-          </div>
-        )}
-
-        {showFourthSection && <BlinkCaret />}
-
-        <div
-          className={classNames('grow', { hidden: showFourthSection })}
-        ></div>
-
-        <div
-          className={classNames(
-            'text-accent-light mb-4 text-center md:mb-0 md:pl-2 md:text-left',
-            { hidden: showFourthSection }
-          )}
-        >
-          <p>
-            Press &lt;Del&gt; to enter SETUP or &lt;F1&gt; to question your life
-            choices
-          </p>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

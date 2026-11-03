@@ -13,7 +13,7 @@ export default function NavList({
   return (
     <nav className={className}>
       {pathname !== '/home' && pathname !== '/home/' && (
-        <NavItem disableItem to="/home" toggleMenu={toggleMenu}>
+        <NavItem to="/home" toggleMenu={toggleMenu}>
           [Home]
         </NavItem>
       )}

@@ -1,7 +1,12 @@
-import { type BlueScreenProps, getErrorDetails } from '~/utils/error-handler';
+import { isRouteErrorResponse } from 'react-router';
 
-export default function BlueScreen({ error }: BlueScreenProps) {
-  const { message, stack } = getErrorDetails(error);
+export default function BlueScreen({ error }: { error: unknown }) {
+  const message = isRouteErrorResponse(error)
+    ? `${error.status} ${error.statusText}`
+    : error instanceof Error
+      ? error.message
+      : 'An unknown error occurred.';
+  const stack = error instanceof Error ? error.stack : undefined;
 
   return (
     <div className="bg-accent-light text-tertiary flex min-h-screen w-full flex-col p-6 font-mono">

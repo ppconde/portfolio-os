@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router';
 import { AppsNames } from '~/constants/apps-names.const';
 import { icons } from '~/constants/icons.const';
+import { usePlaySound } from '~/hooks/use-play-sounds';
 import { useWindowsStore } from '~/store/WindowsStore';
 import Credits from '../Credits';
 import Icon from './Icon';
@@ -9,6 +10,7 @@ import OSWindow from './OSWindow';
 
 export default function DesktopContent() {
   const windows = useWindowsStore((s) => s.windows);
+  usePlaySound('/audio/windows98-click.mp3');
 
   return (
     <div className="bg-primary relative flex h-screen w-screen flex-col overflow-hidden select-none">

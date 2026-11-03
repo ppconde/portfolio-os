@@ -2,14 +2,14 @@ type ButtonProps = {
   onClick?: () => void;
   imageName?: string;
   imageAlt?: string;
-  'test-id'?: string;
+  'data-testid'?: string;
 };
 
 export default function WindowButton({
   onClick,
   imageName,
   imageAlt = '',
-  'test-id': testId,
+  'data-testid': testId,
 }: ButtonProps) {
   return (
     <button
