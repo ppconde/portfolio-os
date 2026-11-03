@@ -6,3 +6,6 @@ allowBuilds:
   sharp: true
   unrs-resolver: true
   workerd: true
+overrides:
+  minimatch: ^11.0.4
+  alge>zod: ^4.6.7
