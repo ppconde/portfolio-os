@@ -38,6 +38,57 @@ test.describe('Icon Interactions', () => {
     await expect(taskbarButton).toBeVisible();
   });
 
+  test('should open Paint and draw on the canvas', async ({ page }) => {
+    // Enter opens on desktop and touch alike; a double-click on touch opens on
+    // the first tap and lands the second on the new window's toolbar.
+    await page
+      .getByRole('button')
+      .filter({ has: page.getByAltText('Paint') })
+      .press('Enter');
+
+    const canvas = page.getByTestId('paint-canvas');
+    await expect(canvas).toBeVisible();
+
+    const box = await canvas.boundingBox();
+    if (!box) throw new Error('canvas not laid out');
+    await page.mouse.move(box.x + 20, box.y + 20);
+    await page.mouse.down();
+    await page.mouse.move(box.x + 120, box.y + 80, { steps: 5 });
+    await page.mouse.up();
+
+    // Some pixel is no longer white.
+    const isDrawn = (c: HTMLCanvasElement) => {
+      const d = c.getContext('2d')?.getImageData(0, 0, c.width, c.height).data;
+      return !!d?.some((v, i) => i % 4 !== 3 && v !== 255);
+    };
+    const drawn = await canvas.evaluate(isDrawn);
+    expect(drawn).toBe(true);
+
+    // Minimize and restore from the taskbar: the drawing survives.
+    await page.getByTestId('minimize-button-paint').click();
+    await expect(canvas).toBeHidden();
+    await page
+      .locator('nav.fixed.bottom-0')
+      .getByRole('button')
+      .filter({ hasText: 'Paint' })
+      .click();
+    await expect(canvas).toBeVisible();
+    expect(await canvas.evaluate(isDrawn)).toBe(true);
+
+    // Maximizing grows the canvas to cover the view and keeps the drawing.
+    const covers = (c: HTMLCanvasElement) => {
+      const v = c.parentElement as HTMLElement;
+      return c.width >= v.clientWidth && c.height >= v.clientHeight;
+    };
+    await page.getByTestId('maximize-button-paint').click();
+    await expect.poll(() => canvas.evaluate(covers)).toBe(true);
+    expect(await canvas.evaluate(isDrawn)).toBe(true);
+
+    // Undo takes the stroke back off.
+    await page.getByRole('button', { name: 'Undo', exact: true }).click();
+    expect(await canvas.evaluate(isDrawn)).toBe(false);
+  });
+
   test('should open Credits window on double-click', async ({ page }) => {
     // 1. Double-click Credits icon
     const creditsIcon = page

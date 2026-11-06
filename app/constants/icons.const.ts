@@ -16,6 +16,11 @@ export const icons: Icon[] = [
     to: '/home',
   },
   {
+    label: AppsNames.PAINT,
+    app: AppsNames.PAINT,
+    icon: '/assets/paint_old-0.png',
+  },
+  {
     label: AppsNames.CREDITS,
     app: AppsNames.CREDITS,
     icon: '/assets/help_book_cool-4.png',

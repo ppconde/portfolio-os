@@ -17,7 +17,11 @@ export default function Icon(icon: IconType) {
       type="button"
     >
       <div className="flex w-16 cursor-pointer flex-col items-center">
-        <img alt={icon.label} className="mb-1 h-12 w-12" src={icon.icon} />
+        <img
+          alt={icon.label}
+          className="image-rendering-pixelated mb-1 h-12 w-12"
+          src={icon.icon}
+        />
         <span className="text-tertiary group-focus:bg-accent px-0.5 text-center text-xs">
           {icon.label}
         </span>
