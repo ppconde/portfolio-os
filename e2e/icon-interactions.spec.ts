@@ -39,10 +39,12 @@ test.describe('Icon Interactions', () => {
   });
 
   test('should open Paint and draw on the canvas', async ({ page }) => {
+    // Enter opens on desktop and touch alike; a double-click on touch opens on
+    // the first tap and lands the second on the new window's toolbar.
     await page
       .getByRole('button')
       .filter({ has: page.getByAltText('Paint') })
-      .dblclick();
+      .press('Enter');
 
     const canvas = page.getByTestId('paint-canvas');
     await expect(canvas).toBeVisible();
