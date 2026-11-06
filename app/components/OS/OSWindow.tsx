@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import Draggable, {
   type DraggableData,
   type DraggableEvent,
@@ -7,6 +7,7 @@ import Draggable, {
 import { icons } from '~/constants/icons.const';
 import { type DesktopWindow, useWindowsStore } from '~/store/WindowsStore';
 import WindowButton from './WindowButton';
+import { zoomRect } from './zoom-rect';
 
 type OSWindowProps = {
   window: DesktopWindow;
@@ -29,6 +30,30 @@ export default function OSWindow({
 
   // biome-ignore lint/style/noNonNullAssertion: <It needs to be non-null because it is used in the Draggable component>
   const nodeRef = useRef<HTMLDivElement>(null!);
+
+  // Zoom outline on open, minimize, restore and maximize, from the last
+  // on-screen rect (or the taskbar button) to the new one.
+  const last = useRef<{ rect?: DOMRect; min?: boolean; max?: boolean }>({});
+  useLayoutEffect(() => {
+    const rect = nodeRef.current?.getBoundingClientRect();
+    const prev = last.current;
+    const taskbar = document
+      .querySelector(`[data-taskbar-button="${window.id}"]`)
+      ?.getBoundingClientRect();
+    const from = window.isMinimized || !prev.rect ? taskbar : prev.rect;
+    const to = window.isMinimized ? taskbar : rect;
+    if (
+      from &&
+      to &&
+      (prev.min !== window.isMinimized || prev.max !== window.isMaximized)
+    )
+      zoomRect(from, to);
+    last.current = {
+      rect: rect ?? prev.rect,
+      min: window.isMinimized,
+      max: window.isMaximized,
+    };
+  });
 
   const handleDragStop = (_event: DraggableEvent, data: DraggableData) => {
     if (!window.isMaximized) {
@@ -89,9 +114,9 @@ export default function OSWindow({
           >
             <div className="flex items-center">
               <img
-                alt="Browser icon"
+                alt=""
                 className="mr-1 h-4 w-4"
-                src={icons.find((icon) => icon.id === window.id)?.icon}
+                src={icons.find((icon) => icon.app === window.id)?.icon}
               />
               <span className="font-micro overflow-hidden text-xl whitespace-nowrap">
                 {window.id}
@@ -138,7 +163,7 @@ export default function OSWindow({
                 src="/assets/html-0.png"
               />
               <span className="truncate">
-                © {new Date().getFullYear()} Portfolio. All rights reserved.
+                © {new Date().getFullYear()} Pedro Conde
               </span>
             </span>
             <span className="border-windows-sunken flex h-5 shrink-0 items-center gap-1 border px-1 whitespace-nowrap">

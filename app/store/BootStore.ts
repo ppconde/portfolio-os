@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-type BootState = 'booting' | 'loaded' | 'shutting_down';
+type BootState = 'booting' | 'starting' | 'loaded' | 'shutting_down';
 
 export const useBootStore = create<{
   bootState: BootState;

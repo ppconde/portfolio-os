@@ -1,23 +1,64 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
+import { useAnyKey } from '~/hooks/use-any-key';
 import { useBootStore } from '~/store/BootStore';
 import BlinkCaret from './BlinkCaret';
 
 const STEP_DELAYS = [1500, 1700, 2000, 2500];
+const BOOTED_KEY = 'booted';
+
+// Only the first BIOS of a page load may be skipped; the reboot after Shut Down always plays.
+let isPageLoad = true;
+
+const session = {
+  booted: () => {
+    try {
+      return sessionStorage.getItem(BOOTED_KEY) === '1';
+    } catch {
+      return false;
+    }
+  },
+  markBooted: () => {
+    try {
+      sessionStorage.setItem(BOOTED_KEY, '1');
+    } catch {}
+  },
+};
+
+const skipToDesktop = () => {
+  session.markBooted();
+  useBootStore.getState().setBootState('loaded');
+};
 
 export default function BiosScreen() {
   const [step, setStep] = useState(0);
   const setBootState = useBootStore((s) => s.setBootState);
 
+  // Already booted this session: straight to the desktop, before first paint.
+  useLayoutEffect(() => {
+    if (isPageLoad && session.booted()) setBootState('loaded');
+    isPageLoad = false;
+  }, [setBootState]);
+
   useEffect(() => {
     const ids = STEP_DELAYS.map((delay, i) =>
       setTimeout(() => setStep(i + 1), delay)
     );
-    ids.push(setTimeout(() => setBootState('loaded'), 3500));
+    ids.push(
+      setTimeout(() => {
+        session.markBooted();
+        setBootState('starting');
+      }, 3500)
+    );
     return () => ids.forEach(clearTimeout);
   }, [setBootState]);
 
+  useAnyKey(skipToDesktop);
+
   return (
-    <div className="font-perfect-dos-vga-win text-primary h-screen w-screen bg-black select-none">
+    <div
+      className="font-perfect-dos-vga-win text-primary h-screen w-screen bg-black select-none"
+      onPointerDown={skipToDesktop}
+    >
       {step >= 4 ? (
         <BlinkCaret />
       ) : (

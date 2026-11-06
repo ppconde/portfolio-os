@@ -8,6 +8,13 @@ export default function About() {
   return (
     <Section>
       <H2>About</H2>
+      <ContentEntry subtitle="[Now] - Porto" title="Today">
+        I'm a software engineer with most of my experience in{' '}
+        <strong>fullstack development</strong>. Right now I'm exploring how{' '}
+        <strong>AI</strong> fits into my day-to-day work, and I'm looking for
+        opportunities in <strong>product development</strong>.
+      </ContentEntry>
+
       <ContentEntry
         subtitle="[2011-2017] - Aveiro"
         title="University of Aveiro"
@@ -20,8 +27,8 @@ export default function About() {
           title="This is a cool university!"
         >
           University of Aveiro
-        </A>{' '}
-        During my studies, I had the opportunity to explore diverse areas such
+        </A>
+        . During my studies, I had the opportunity to explore diverse areas such
         as electronics, telecommunications, computer vision, and more.
         <br />
         And as a result, I worked on my thesis project called{' '}
@@ -46,8 +53,7 @@ export default function About() {
         </A>{' '}
         in Estonia. This international experience enriched my academic journey,
         allowing me to study in a different cultural context while gaining
-        valuable global perspectives. It also influenced personally to join ESN
-        Aveiro.
+        valuable global perspectives. It also inspired me to join ESN Aveiro.
       </ContentEntry>
 
       <ContentEntry

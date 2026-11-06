@@ -8,28 +8,8 @@ export default function Experience() {
     <Section>
       <H2>Experience</H2>
       <ContentEntry
-        subtitle="[2024-Present] - Porto"
-        title="Blip.pt - Software Engineer"
-      >
-        Joined a new team supporting the web platforms of{' '}
-        <strong>PaddyPower</strong>, <strong>Betfair</strong>, and{' '}
-        <strong>Sky Betting & Gaming</strong>. Took on a more active role in
-        technical decisions and team coordination. Contributed to{' '}
-        <strong>TBD</strong>, a <strong>multi-brand</strong> and{' '}
-        <strong>cross-platform</strong> (web and native) feature powered by{' '}
-        <strong>Prismic</strong>, enabling content teams to customize content
-        across Betfair and SkyBet&apos;s websites and apps. Built in
-        collaboration with multiple teams, it was both technically and
-        communication-wise demanding.
-        <br />
-        <br />
-        <strong>Skills:</strong> React, React Native, TypeScript, Redux Saga,
-        GraphQL, Jest
-      </ContentEntry>
-
-      <ContentEntry
-        subtitle="[2020-2024] - Porto"
-        title="Blip.pt - Software Engineer"
+        subtitle="[2020-2024, 2025-Present] - Porto"
+        title="Blip.pt - Software Engineer, Retail"
       >
         At{' '}
         <A
@@ -39,7 +19,7 @@ export default function Experience() {
         >
           Blip.pt
         </A>
-        , I helped design, build, and maintain software for{' '}
+        , I help design, build, and maintain software for{' '}
         <A
           ariaLabel="Visit Paddy Power's website"
           href="https://www.paddypower.com/bet"
@@ -48,14 +28,20 @@ export default function Experience() {
           Paddy Power
         </A>{' '}
         retail shops, supporting <strong>700+ locations</strong> across the UK
-        and Ireland. I worked on both legacy and greenfield projects, with a
+        and Ireland. I work on both legacy and greenfield projects, with a
         strong focus on reliability through unit, visual, and regression
         testing.
+        <br />
+        <br />
+        Since early 2026, I&apos;ve taken on a <strong>mentoring</strong> and{' '}
+        <strong>technical leadership</strong> role in the team: onboarding new
+        engineers, giving technical guidance, working with stakeholders, and
+        driving <strong>product engineering</strong>.
         <ul className="mt-4 list-disc space-y-4 pl-6">
           <li>
-            Maintained the <strong>Customer Interface Terminal</strong>, a web
-            app on Android tablets used by customers to check live race and
-            sports results.
+            Maintain the <strong>Customer Interface Terminal</strong>, a web app
+            on Android tablets used by customers to check live race and sports
+            results.
           </li>
           <li>
             Helped build the <strong>Device Management App</strong>, a fullstack
@@ -69,6 +55,25 @@ export default function Experience() {
         </ul>
         <br />
         <strong>Skills:</strong> React, TypeScript, GraphQL, Node.js, PostgreSQL
+      </ContentEntry>
+
+      <ContentEntry
+        subtitle="[2024-2025] - Porto"
+        title="Blip.pt - Software Engineer, Web & Mobile Apps"
+      >
+        Joined a new team supporting the web platforms of{' '}
+        <strong>PaddyPower</strong>, <strong>Betfair</strong>, and{' '}
+        <strong>Sky Betting & Gaming</strong>. Took on a more active role in
+        technical decisions and team coordination. Contributed to a{' '}
+        <strong>multi-brand</strong> and <strong>cross-platform</strong> (web
+        and native) project powered by <strong>Prismic</strong>, enabling
+        content teams to customize content across Betfair and SkyBet&apos;s
+        websites and apps. Built in collaboration with multiple teams, it was
+        both technically and communication-wise demanding.
+        <br />
+        <br />
+        <strong>Skills:</strong> React, React Native, TypeScript, Redux Saga,
+        GraphQL, Jest
       </ContentEntry>
 
       <ContentEntry

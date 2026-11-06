@@ -57,7 +57,7 @@ export const useWindowsStore = create<WindowsStore>((set, get) => {
         isMinimized: false,
         isMaximized: false,
         isFocused: true,
-        position: { x: 65, y: 40 },
+        position: { x: 96, y: 40 },
         zIndex: 1,
       },
     ],
@@ -65,7 +65,11 @@ export const useWindowsStore = create<WindowsStore>((set, get) => {
 
     addWindow: (id) => {
       const { windows } = get();
-      if (windows.some((w) => w.id === id)) return;
+      // Already open: bring it back instead of opening a second copy.
+      if (windows.some((w) => w.id === id)) {
+        focus(id, () => ({ isMinimized: false }));
+        return;
+      }
 
       const x = Math.max(0, ...windows.map((w) => w.position.x));
       const y = Math.max(0, ...windows.map((w) => w.position.y));
@@ -79,7 +83,7 @@ export const useWindowsStore = create<WindowsStore>((set, get) => {
             isMinimized: false,
             isMaximized: false,
             isFocused: true,
-            position: { x: x - 20, y: y + 20 },
+            position: { x: x + 20, y: y + 20 },
             zIndex: state.currentZIndex + 1,
           },
         ],

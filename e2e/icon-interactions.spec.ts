@@ -17,7 +17,7 @@ test.describe('Icon Interactions', () => {
   test('should open My Portfolio window on double-click', async ({ page }) => {
     // 1. Double-click My Portfolio icon
     const portfolioIcon = page
-      .getByRole('link')
+      .getByRole('button')
       .filter({ has: page.getByAltText('My Portfolio') });
     await portfolioIcon.dblclick();
 
@@ -72,7 +72,7 @@ test.describe('Icon Interactions', () => {
 
     // 1. Hover over My Portfolio icon
     const portfolioIcon = page
-      .getByRole('link')
+      .getByRole('button')
       .filter({ has: page.getByAltText('My Portfolio') });
     await portfolioIcon.hover();
 
