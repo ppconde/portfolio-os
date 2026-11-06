@@ -23,6 +23,6 @@ export const icons: Icon[] = [
   {
     label: AppsNames.PAINT,
     app: AppsNames.PAINT,
-    icon: '/assets/paint.svg',
+    icon: '/assets/paint_old-0.png',
   },
 ];
