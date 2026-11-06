@@ -46,7 +46,7 @@ export default function BiosScreen() {
     ids.push(
       setTimeout(() => {
         session.markBooted();
-        setBootState('starting');
+        setBootState('loaded');
       }, 3500)
     );
     return () => ids.forEach(clearTimeout);
