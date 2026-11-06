@@ -1,6 +1,7 @@
 // spec: specs/README.md
 
 import { expect, test } from '@playwright/test';
+import { showDesktop } from './helpers';
 
 test.describe('Icon Interactions', () => {
   test.beforeEach(async ({ page }) => {
@@ -12,6 +13,7 @@ test.describe('Icon Interactions', () => {
 
     const navbar = page.locator('nav.fixed.bottom-0');
     await navbar.waitFor({ state: 'visible', timeout: 15000 });
+    await showDesktop(page);
   });
 
   test('should open My Portfolio window on double-click', async ({ page }) => {

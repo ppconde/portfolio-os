@@ -159,8 +159,18 @@
   text-orientation: sideways;
 }
 
+@utility card-shadow {
+  @apply transition-shadow delay-75 duration-300 ease-in-out;
+  @apply transition-transform delay-75 duration-300 ease-in-out hover:-translate-x-1 hover:-translate-y-1;
+  box-shadow: 4px 4px 0 #000;
+
+  &:hover {
+    box-shadow: 6px 6px 0 #000;
+  }
+}
+
 /* Reduced motion: no blinking, unrolling or typing; state changes snap.
-   The window zoom checks the same query in zoom-rect.ts.
+   The window zoom checks the same query in ZoomOutline.tsx.
    Unlayered on purpose, so it beats Tailwind's utility layer. */
 @media (prefers-reduced-motion: reduce) {
   .animate-blink,

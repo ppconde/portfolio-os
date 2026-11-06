@@ -1,6 +1,7 @@
 // spec: specs/README.md
 
 import { devices, expect, test } from '@playwright/test';
+import { showDesktop } from './helpers';
 
 test.describe('Responsiveness', () => {
   test('should adapt UI for mobile viewport', async ({
@@ -26,6 +27,7 @@ test.describe('Responsiveness', () => {
 
     const navbar = page.locator('nav.fixed.bottom-0');
     await navbar.waitFor({ state: 'visible', timeout: 15000 });
+    await showDesktop(page);
 
     // 2. Open a window
     const creditsIcon = page
@@ -49,6 +51,9 @@ test.describe('Responsiveness', () => {
     const closeButton = page.getByTestId('close-button-credits');
     await closeButton.click({ force: true });
     await page.waitForTimeout(500);
+
+    // Bring the portfolio back from the taskbar
+    await page.locator('[data-taskbar-button="My Portfolio"]').click();
 
     // 5. Navigate to different routes
     const aboutLink = page.getByRole('link', { name: '[About]' });
@@ -78,6 +83,7 @@ test.describe('Responsiveness', () => {
 
     const navbar = page.locator('nav.fixed.bottom-0');
     await navbar.waitFor({ state: 'visible', timeout: 15000 });
+    await showDesktop(page);
 
     // 2. Verify desktop elements are visible
     await expect(page.getByAltText('My Portfolio')).toBeVisible();
@@ -114,6 +120,7 @@ test.describe('Responsiveness', () => {
 
     const navbar = page.locator('nav.fixed.bottom-0');
     await navbar.waitFor({ state: 'visible', timeout: 15000 });
+    await showDesktop(page);
 
     // 1. Start at desktop size
     await page.setViewportSize({ width: 1280, height: 720 });

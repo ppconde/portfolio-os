@@ -19,6 +19,7 @@ export default function StartWindow({ setIsOpen }: StartWindowProps) {
   return (
     <div
       className="animate-start-open border-windows bg-secondary absolute bottom-8 left-0 z-9999 flex min-h-72 flex-row"
+      data-testid="start-menu"
       ref={ref}
     >
       <div className="from-accent-light to-accent relative flex bg-linear-to-tr text-white">
