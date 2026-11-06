@@ -10,6 +10,13 @@ const SIZES = [1, 3, 6, 10];
 const TOOLS = ['Pencil', 'Eraser', 'Fill'] as const;
 type Tool = (typeof TOOLS)[number];
 
+const getCtx = (canvas: HTMLCanvasElement | null) =>
+  canvas?.getContext('2d', { willReadFrequently: true });
+const whiten = (c: CanvasRenderingContext2D) => {
+  c.fillStyle = '#ffffff';
+  c.fillRect(0, 0, c.canvas.width, c.canvas.height);
+};
+
 // Flood fill from (x, y) with an RGBA colour. Exact-match, 4-way, scanline stack.
 function floodFill(
   ctx: CanvasRenderingContext2D,
@@ -50,8 +57,7 @@ export default function Paint() {
   const [color, setColor] = useState('#000000');
   const [size, setSize] = useState(3);
 
-  const ctx = () =>
-    canvasRef.current?.getContext('2d', { willReadFrequently: true });
+  const ctx = () => getCtx(canvasRef.current);
   // Every edit happens inside the visible area, so that's all undo needs to keep.
   const visible = () => {
     const c = canvasRef.current;
@@ -76,15 +82,14 @@ export default function Paint() {
     const c = ctx();
     if (!c) return;
     snapshot();
-    c.fillStyle = '#ffffff';
-    c.fillRect(0, 0, c.canvas.width, c.canvas.height);
+    whiten(c);
   };
 
   // The canvas grows with the window but never shrinks: shrinking only clips the
   // view, so maximize → restore doesn't throw away what was drawn.
   useEffect(() => {
     const view = viewRef.current;
-    const c = canvasRef.current?.getContext('2d', { willReadFrequently: true });
+    const c = getCtx(canvasRef.current);
     if (!view || !c) return;
     const fit = () => {
       const { width, height } = c.canvas;
@@ -94,13 +99,10 @@ export default function Paint() {
       const old = c.getImageData(0, 0, width, height);
       c.canvas.width = w;
       c.canvas.height = h;
-      c.fillStyle = '#ffffff';
-      c.fillRect(0, 0, w, h);
+      whiten(c);
       c.putImageData(old, 0, 0);
     };
-    // Start white (a fresh canvas is transparent).
-    c.fillStyle = '#ffffff';
-    c.fillRect(0, 0, c.canvas.width, c.canvas.height);
+    whiten(c); // a fresh canvas is transparent
     const ro = new ResizeObserver(fit);
     ro.observe(view);
     return () => ro.disconnect();
@@ -180,17 +182,7 @@ export default function Paint() {
     );
 
   return (
-    // biome-ignore lint/a11y/noStaticElementInteractions: Ctrl+Z inside the Paint window; the Undo button is the accessible equivalent
-    <div
-      className="bg-secondary -m-4 flex h-[calc(100%+2rem)] flex-col text-xs outline-none"
-      onKeyDown={(e) => {
-        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') {
-          e.preventDefault();
-          undo();
-        }
-      }}
-      tabIndex={-1}
-    >
+    <div className="bg-secondary -m-4 flex h-[calc(100%+2rem)] flex-col text-xs">
       <div className="flex gap-1 p-1">
         <button className={btn(false)} onClick={clear} type="button">
           New
@@ -235,18 +227,19 @@ export default function Paint() {
             ))}
           </div>
         </div>
-        <div className="border-windows-sunken grow border-2">
-          <div className="relative h-full overflow-hidden" ref={viewRef}>
-            <canvas
-              className="absolute top-0 left-0 cursor-crosshair touch-none"
-              data-testid="paint-canvas"
-              onPointerCancel={onUp}
-              onPointerDown={onDown}
-              onPointerMove={onMove}
-              onPointerUp={onUp}
-              ref={canvasRef}
-            />
-          </div>
+        <div
+          className="border-windows-sunken relative grow overflow-hidden border-2"
+          ref={viewRef}
+        >
+          <canvas
+            className="absolute top-0 left-0 cursor-crosshair touch-none"
+            data-testid="paint-canvas"
+            onPointerCancel={onUp}
+            onPointerDown={onDown}
+            onPointerMove={onMove}
+            onPointerUp={onUp}
+            ref={canvasRef}
+          />
         </div>
       </div>
       <div className="flex items-center gap-2 p-1">
