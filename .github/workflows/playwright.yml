@@ -22,7 +22,6 @@ jobs:
         run: pnpm run typecheck
 
   test:
-    if: false
     needs: typecheck
     timeout-minutes: 60
     runs-on: ubuntu-latest
