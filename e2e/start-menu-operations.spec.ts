@@ -20,7 +20,7 @@ test.describe('Start Menu Operations', () => {
     await startButton.click();
 
     // 2. Verify the Start menu opens
-    const startMenu = page.locator('.absolute.bottom-8.left-0');
+    const startMenu = page.getByTestId('start-menu');
     await expect(startMenu).toBeVisible();
     await expect(page.getByText('PpcondeOS')).toBeVisible();
 

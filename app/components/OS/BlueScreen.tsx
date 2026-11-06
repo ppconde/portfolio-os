@@ -1,4 +1,8 @@
 import { isRouteErrorResponse } from 'react-router';
+import { useAnyKey } from '~/hooks/use-any-key';
+
+// Hard navigation: the root error boundary may hold broken state, so reboot cleanly.
+const restart = () => window.location.assign('/home');
 
 export default function BlueScreen({ error }: { error: unknown }) {
   const message = isRouteErrorResponse(error)
@@ -6,7 +10,11 @@ export default function BlueScreen({ error }: { error: unknown }) {
     : error instanceof Error
       ? error.message
       : 'An unknown error occurred.';
-  const stack = error instanceof Error ? error.stack : undefined;
+  // Stack traces are for development only.
+  const stack =
+    import.meta.env.DEV && error instanceof Error ? error.stack : undefined;
+
+  useAnyKey(restart);
 
   return (
     <div className="bg-accent-light text-tertiary flex min-h-screen w-full flex-col p-6 font-mono">
@@ -22,6 +30,13 @@ export default function BlueScreen({ error }: { error: unknown }) {
         <p>
           <strong>Error:</strong> {message}
         </p>
+        <button
+          className="mt-6 self-start text-left focus-visible:outline-2 focus-visible:outline-white"
+          onClick={restart}
+          type="button"
+        >
+          Press any key to continue <span className="animate-blink">_</span>
+        </button>
         {stack && (
           <div className="mt-2 border-t border-white pt-4 text-sm opacity-80">
             <pre className="break-all whitespace-pre-wrap">{stack}</pre>

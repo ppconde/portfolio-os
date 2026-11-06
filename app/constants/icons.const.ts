@@ -1,19 +1,23 @@
 import { AppsNames } from './apps-names.const';
 
 export type Icon = {
-  id: AppsNames;
+  label: string;
+  app: AppsNames;
   icon: string;
   to?: string;
 };
 
+// Each icon is also its window's title-bar and taskbar icon.
 export const icons: Icon[] = [
   {
-    id: AppsNames.PORTFOLIO,
+    label: AppsNames.PORTFOLIO,
+    app: AppsNames.PORTFOLIO,
     icon: '/assets/html2-2.png',
     to: '/home',
   },
   {
-    id: AppsNames.CREDITS,
+    label: AppsNames.CREDITS,
+    app: AppsNames.CREDITS,
     icon: '/assets/help_book_cool-4.png',
   },
 ];

@@ -10,7 +10,7 @@ export default function ProjectCard({
   languages,
 }: Project) {
   return (
-    <div className="card-shadow flex w-full max-w-md flex-col justify-between gap-2 border border-gray-800 bg-white p-2 text-sm">
+    <article className="card-shadow flex w-full max-w-md flex-col justify-between gap-2 border border-gray-800 bg-white p-2 text-sm">
       {homepageUrl && (
         <A
           ariaLabel={`View ${name} site`}
@@ -18,14 +18,26 @@ export default function ProjectCard({
           title={`View ${name} site`}
         >
           <img
-            alt="OpenGraph preview"
-            className="max-h-full w-auto rounded object-contain"
-            src={openGraphImageUrl}
+            alt={`${name} preview`}
+            className="h-auto w-full rounded object-contain"
+            height={600}
+            loading="lazy"
+            src={
+              // GitHub's auto-generated card (no custom social preview) fails to load,
+              // so use our own app screenshot instead.
+              // ponytail: needs public/assets/projects/<name>.png for each such repo.
+              openGraphImageUrl.startsWith(
+                'https://opengraph.githubassets.com/'
+              )
+                ? `/assets/projects/${name}.png`
+                : openGraphImageUrl
+            }
+            width={1200}
           />
         </A>
       )}
 
-      <div className="flex items-center justify-between">
+      <h3>
         <A
           ariaLabel={`View ${name} on GitHub`}
           href={url}
@@ -33,7 +45,7 @@ export default function ProjectCard({
         >
           <strong>{name}</strong>
         </A>
-      </div>
+      </h3>
 
       {description && (
         <p className="grow font-mono text-xs text-gray-900">{description}</p>
@@ -51,7 +63,6 @@ export default function ProjectCard({
               height="10"
               viewBox="0 0 20 20"
               width="10"
-              xmlns="http://www.w3.org/2000/svg"
             >
               <circle cx="10" cy="10" r="9.5" />
             </svg>
@@ -59,6 +70,6 @@ export default function ProjectCard({
           </div>
         ))}
       </div>
-    </div>
+    </article>
   );
 }

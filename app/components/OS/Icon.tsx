@@ -1,31 +1,27 @@
-import { Link } from 'react-router';
 import type { Icon as IconType } from '~/constants/icons.const';
-import { useWindowsStore } from '~/store/WindowsStore';
+import { useOpenApp } from '~/hooks/use-open-app';
 
-export default function Icon({ id, icon, to }: IconType) {
-  const addWindow = useWindowsStore((s) => s.addWindow);
-  const onDoubleClick = () => addWindow(id);
-  const content = (
-    <div className="flex w-16 cursor-pointer flex-col items-center">
-      <img alt={id} className="mb-1 h-12 w-12" src={icon} />
-      <span className="text-tertiary group-focus:bg-accent px-0.5 text-center text-xs">
-        {id}
-      </span>
-    </div>
-  );
+export default function Icon(icon: IconType) {
+  const openApp = useOpenApp();
+  const open = () => openApp(icon);
 
-  return to ? (
-    <Link
+  return (
+    <button
       className="group w-fit"
-      onDoubleClick={onDoubleClick}
-      prefetch="intent"
-      to={to}
+      // A mouse needs a double-click, like a real desktop. Keyboard (Enter/Space
+      // fire a click with detail 0) and touch open with a single press.
+      onClick={(e) => {
+        if (e.detail === 0 || matchMedia('(pointer: coarse)').matches) open();
+      }}
+      onDoubleClick={open}
+      type="button"
     >
-      {content}
-    </Link>
-  ) : (
-    <button className="group w-fit" onDoubleClick={onDoubleClick} type="button">
-      {content}
+      <div className="flex w-16 cursor-pointer flex-col items-center">
+        <img alt={icon.label} className="mb-1 h-12 w-12" src={icon.icon} />
+        <span className="text-tertiary group-focus:bg-accent px-0.5 text-center text-xs">
+          {icon.label}
+        </span>
+      </div>
     </button>
   );
 }

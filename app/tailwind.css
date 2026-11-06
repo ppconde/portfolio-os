@@ -32,6 +32,16 @@
   --transition-property-max-height: max-height;
 
   --animate-blink: blink 0.333s infinite;
+  --animate-start-open: start-open 120ms steps(6, end);
+  /* Duration and steps are set per element by <Typed> */
+  --animate-typing: typing 1s;
+
+  /* Start menu unrolls upward from the taskbar */
+  @keyframes start-open {
+    from {
+      clip-path: inset(100% 0 0 0);
+    }
+  }
 
   @keyframes typing {
     from {
@@ -156,5 +166,22 @@
 
   &:hover {
     box-shadow: 6px 6px 0 #000;
+  }
+}
+
+/* Reduced motion: no blinking, unrolling or typing; state changes snap.
+   The window zoom checks the same query in ZoomOutline.tsx.
+   Unlayered on purpose, so it beats Tailwind's utility layer. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-blink,
+  .animate-start-open,
+  .animate-typing {
+    animation: none;
+  }
+
+  *,
+  ::before,
+  ::after {
+    transition-duration: 0s;
   }
 }

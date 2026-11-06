@@ -5,9 +5,12 @@ export default function WebsiteHome() {
     <section className="bg-dots @container flex h-full w-full flex-col items-center justify-center overflow-hidden bg-[0_0_10px_10px] bg-[length:20px_20px] bg-repeat">
       <header className="flex flex-col p-4 text-center text-gray-900">
         <div className="flex items-center justify-center">
-          <h1 className="card-shadow font-perfect-dos-vga-win box-border min-h-3.5 rounded-xl border-2 border-l-2 border-gray-800 bg-white px-8 py-4 text-center text-7xl">
-            Pedro Conde
-          </h1>
+          {/* Win98 frame: raised grey bevel around a sunken white panel */}
+          <div className="border-windows bg-secondary p-1">
+            <h1 className="border-windows-sunken font-perfect-dos-vga-win border-2 bg-white px-4 py-4 text-center text-5xl @md:px-8 @md:text-7xl">
+              Pedro Conde
+            </h1>
+          </div>
         </div>
 
         <p className="mt-2 bg-white p-1 font-mono text-xl">Software Engineer</p>

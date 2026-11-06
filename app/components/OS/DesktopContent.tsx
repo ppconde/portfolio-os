@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Outlet } from 'react-router';
 import { AppsNames } from '~/constants/apps-names.const';
 import { icons } from '~/constants/icons.const';
@@ -12,11 +13,19 @@ export default function DesktopContent() {
   const windows = useWindowsStore((s) => s.windows);
   usePlaySound('/audio/windows98-click.mp3');
 
+  // Phones: start the portfolio maximized so it isn't squeezed beside the icons.
+  useEffect(() => {
+    if (!matchMedia('(max-width: 639px)').matches) return;
+    const { maximizeWindow, setWindowPosition } = useWindowsStore.getState();
+    maximizeWindow(AppsNames.PORTFOLIO);
+    setWindowPosition(AppsNames.PORTFOLIO, { x: 0, y: 0 });
+  }, []);
+
   return (
     <div className="bg-primary relative flex h-screen w-screen flex-col overflow-hidden select-none">
       <div className="relative flex flex-col gap-6 p-4">
         {icons.map((icon) => (
-          <Icon key={icon.id} {...icon} />
+          <Icon key={icon.label} {...icon} />
         ))}
       </div>
       {windows.map((window) => (

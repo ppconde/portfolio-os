@@ -1,23 +1,29 @@
 import { useEffect, useState } from 'react';
+import { useAnyKey } from '~/hooks/use-any-key';
 import { useBootStore } from '~/store/BootStore';
 import BlinkCaret from './BlinkCaret';
 
-const STEP_DELAYS = [1000, 2100, 3000, 5000, 7000, 9000];
+const STEP_DELAYS = [600, 1200, 2000, 3400, 4800, 5600];
+const REBOOT_DELAY = 6000;
 
-// CSS typewriter: reveals `text` one character per `msPerChar` (monospace font).
-function Typed({ text, msPerChar }: { text: string; msPerChar: number }) {
+// CSS typewriter: reveals `text` one character per 35ms (monospace font).
+function Typed({ text }: { text: string }) {
   return (
     <span
-      className="inline-block overflow-hidden align-bottom whitespace-nowrap"
+      className="animate-typing inline-block overflow-hidden align-bottom whitespace-nowrap"
       style={{
         width: `${text.length}ch`,
-        animation: `typing ${text.length * msPerChar}ms steps(${text.length})`,
+        animationDuration: `${text.length * 35}ms`,
+        animationTimingFunction: `steps(${text.length})`,
       }}
     >
       {text}
     </span>
   );
 }
+
+// Skipping the shutdown still reboots: it only fast-forwards to the BIOS.
+const reboot = () => useBootStore.getState().setBootState('booting');
 
 export default function ShutdownScreen() {
   const [step, setStep] = useState(0);
@@ -27,12 +33,16 @@ export default function ShutdownScreen() {
     const ids = STEP_DELAYS.map((delay, i) =>
       setTimeout(() => setStep(i + 1), delay)
     );
-    ids.push(setTimeout(() => setBootState('booting'), 10000));
+    ids.push(setTimeout(() => setBootState('booting'), REBOOT_DELAY));
     return () => ids.forEach(clearTimeout);
   }, [setBootState]);
+  useAnyKey(reboot);
 
   return (
-    <div className="font-perfect-dos-vga-win text-primary h-screen w-screen bg-black">
+    <div
+      className="font-perfect-dos-vga-win text-primary h-screen w-screen bg-black select-none"
+      onPointerDown={reboot}
+    >
       <div className="flex h-full w-full flex-col p-4 sm:p-6 md:p-8">
         {(step === 1 || step >= 6) && <BlinkCaret />}
 
@@ -48,13 +58,11 @@ export default function ShutdownScreen() {
           <div className="mt-4 space-y-1 text-left text-sm md:space-y-2 md:pl-2">
             <p>Shutting down services...</p>
             <p>
-              SpudOS Kernel{' '}
-              <Typed msPerChar={10} text=".............. Terminated" />
+              SpudOS Kernel <Typed text=".............. Terminated" />
             </p>
             <p>PotatoChip™ Cooling System . Offline</p>
             <p>
-              RGB Lighting{' '}
-              <Typed msPerChar={10} text="............... Off (Mood ruined)" />
+              RGB Lighting <Typed text="............... Off (Mood ruined)" />
             </p>
           </div>
         )}
@@ -70,8 +78,7 @@ export default function ShutdownScreen() {
         {step === 5 && (
           <div className="text-md mt-6 space-y-1 text-left md:space-y-2 md:pl-2">
             <p>
-              Attempting Recovery{' '}
-              <Typed msPerChar={20} text="... Recovery Failed." />
+              Attempting Recovery <Typed text="... Recovery Failed." />
             </p>
           </div>
         )}

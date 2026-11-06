@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { icons } from '~/constants/icons.const';
 import { type DesktopWindow, useWindowsStore } from '~/store/WindowsStore';
 
 export default function NavBarButton({ window }: { window: DesktopWindow }) {
@@ -14,6 +15,7 @@ export default function NavBarButton({ window }: { window: DesktopWindow }) {
             !window.isMinimized && window.isFocused,
         }
       )}
+      data-taskbar-button={window.id}
       key={window.id}
       onClick={() => toggleWindow(window.id)}
       type="button"
@@ -29,9 +31,9 @@ export default function NavBarButton({ window }: { window: DesktopWindow }) {
       ></div>
       <div className="flex items-center">
         <img
-          alt="Browser icon"
-          className="mr-1 h-3 w-3"
-          src="/assets/html-0.png"
+          alt=""
+          className="mr-1 h-4 w-4"
+          src={icons.find((icon) => icon.app === window.id)?.icon}
         />
         <span className="overflow-hidden text-ellipsis whitespace-nowrap">
           {window.id}

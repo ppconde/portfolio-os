@@ -31,15 +31,20 @@ export async function action({ request }: Route.ActionArgs) {
   }
 
   try {
-    await fetch('https://email-with-resend.pepconde-1993.workers.dev/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(parseResult.data),
-    });
+    const res = await fetch(
+      'https://email-with-resend.pepconde-1993.workers.dev/',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(parseResult.data),
+        signal: AbortSignal.timeout(10_000),
+      }
+    );
+    if (!res.ok) throw new Error(`Email service responded ${res.status}`);
     return data({ success: true }, { status: 200 });
   } catch (error) {
     console.error('Error sending email: ', error);
-    return data({ success: false, error }, { status: 500 });
+    return data({ success: false }, { status: 502 });
   }
 }
 
@@ -58,30 +63,32 @@ export default function Contact() {
   } | null>(null);
 
   useEffect(() => {
-    if (fetcher.state === 'idle') {
-      if (fetcher.data && !errors) {
-        setNotification({
-          message: 'Email sent successfully!',
-          type: 'success',
-        });
-      } else if (errors) {
-        setNotification({
-          message: 'There was an error with your submission.',
-          type: 'error',
-        });
-      }
+    if (fetcher.state !== 'idle' || !fetcher.data) return;
+    if (fetcher.data.success) {
+      setNotification({
+        message: "Message sent. I'll reply to your email soon.",
+        type: 'success',
+      });
+    } else if (errors) {
+      setNotification({
+        message: 'Some fields need fixing. See the notes below each one.',
+        type: 'error',
+      });
+    } else {
+      setNotification({
+        message:
+          "Your message couldn't be sent. Try again, or email me at contact@ppconde.com.",
+        type: 'error',
+      });
     }
   }, [fetcher.state, fetcher.data, errors]);
 
-  // Auto-hide the notification after 3 seconds
+  // Success clears the form and hides itself; errors stay until the next send.
   useEffect(() => {
-    if (notification) {
-      const timer = setTimeout(() => setNotification(null), 3000);
-      if (notification.type === 'success') {
-        formRef.current?.reset(); // Resets all form fields to their initial state
-      }
-      return () => clearTimeout(timer);
-    }
+    if (notification?.type !== 'success') return;
+    formRef.current?.reset();
+    const timer = setTimeout(() => setNotification(null), 6000);
+    return () => clearTimeout(timer);
   }, [notification]);
 
   return (
@@ -165,7 +172,10 @@ export default function Contact() {
           </button>
         </fetcher.Form>
         {notification && (
-          <div className="border-windows absolute top-24 right-2 w-full max-w-xs md:max-w-sm lg:max-w-md">
+          <div
+            className="border-windows absolute top-24 right-2 w-full max-w-xs md:max-w-sm lg:max-w-md"
+            role={notification.type === 'success' ? 'status' : 'alert'}
+          >
             <div className="bg-accent h-3 items-center justify-between px-1"></div>
             <div className="bg-secondary font-ms-reference flex flex-row items-center justify-evenly p-3 shadow-md">
               {notification.type === 'success' ? (
