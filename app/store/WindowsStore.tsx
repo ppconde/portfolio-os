@@ -24,13 +24,13 @@ type WindowsStore = {
 
 // Like Win98: when the active window goes away, the next one up takes focus.
 const focusTopmost = (windows: DesktopWindow[]) => {
-  const top = windows
-    .filter((w) => !w.isMinimized)
-    .reduce<DesktopWindow | undefined>(
-      (a, w) => (!a || w.zIndex > a.zIndex ? w : a),
-      undefined
-    );
-  return windows.map((w) => ({ ...w, isFocused: w === top }));
+  const top = Math.max(
+    ...windows.filter((w) => !w.isMinimized).map((w) => w.zIndex)
+  );
+  return windows.map((w) => ({
+    ...w,
+    isFocused: !w.isMinimized && w.zIndex === top,
+  }));
 };
 
 export const useWindowsStore = create<WindowsStore>((set, get) => {
