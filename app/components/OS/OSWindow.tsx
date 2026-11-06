@@ -39,7 +39,10 @@ export default function OSWindow({
   const clearZoom = useCallback(() => setZoom(null), []);
   const last = useRef<{ rect?: DOMRect; min?: boolean; max?: boolean }>({});
   useLayoutEffect(() => {
-    const rect = nodeRef.current?.getBoundingClientRect();
+    // Hidden while minimized: a display:none rect is all zeros, so skip it.
+    const rect = window.isMinimized
+      ? undefined
+      : nodeRef.current?.getBoundingClientRect();
     const prev = last.current;
     const taskbar = document
       .querySelector(`[data-taskbar-button="${window.id}"]`)
@@ -88,109 +91,103 @@ export default function OSWindow({
   return (
     <>
       {zoom && <ZoomOutline onDone={clearZoom} zoom={zoom} />}
-      {!window.isMinimized && (
-        <Draggable
-          bounds="parent"
-          disabled={window.isMaximized}
-          handle=".handle"
-          nodeRef={nodeRef}
-          onStop={handleDragStop}
-          position={window.position}
+      {/* Minimized windows stay mounted (just hidden) so apps keep their state. */}
+      <Draggable
+        bounds="parent"
+        disabled={window.isMaximized}
+        handle=".handle"
+        nodeRef={nodeRef}
+        onStop={handleDragStop}
+        position={window.position}
+      >
+        <div
+          className={classNames(
+            'border-windows bg-secondary absolute flex-col shadow-md',
+            window.isMinimized ? 'hidden' : 'flex',
+            { 'resize overflow-auto': !window.isMaximized },
+            window.isMaximized ? 'top-0 right-0 bottom-8 left-0' : 'h-4/5 w-4/5'
+          )}
+          // Capture so clicks anywhere inside (even ones children stop) focus it.
+          onMouseDownCapture={() => setWindowPosition(window.id)}
+          ref={nodeRef}
+          style={{ zIndex: window.zIndex }}
         >
-          <div
-            className={classNames(
-              'border-windows bg-secondary absolute flex flex-col shadow-md',
-              {
-                'resize overflow-auto':
-                  !window.isMinimized && !window.isMaximized,
-              },
-              window.isMaximized
-                ? 'top-0 right-0 bottom-8 left-0'
-                : 'h-4/5 w-4/5'
-            )}
-            // Capture so clicks anywhere inside (even ones children stop) focus it.
-            onMouseDownCapture={() => setWindowPosition(window.id)}
-            ref={nodeRef}
-            style={{ zIndex: window.zIndex }}
-          >
-            {/* Title bar */}
-            <div className="bg-secondary p-1">
-              {/** biome-ignore lint/a11y/noStaticElementInteractions: Win98 title bar; the Maximize button is the accessible equivalent */}
-              <div
-                className={classNames(
-                  'handle text-tertiary flex h-6 items-center justify-between px-1',
-                  { 'active:cursor-move': !window.isMaximized },
-                  window.isFocused ? 'bg-accent' : 'bg-quaternary'
-                )}
-                // Like Win98: double-clicking the title bar (not its buttons) toggles maximize.
-                onDoubleClick={(e) => {
-                  if (!(e.target as Element).closest('button'))
-                    toggleMaximize();
-                }}
-              >
-                <div className="flex items-center">
-                  <img
-                    alt=""
-                    className="mr-1 h-4 w-4"
-                    src={icons.find((icon) => icon.app === window.id)?.icon}
-                  />
-                  <span className="font-micro overflow-hidden text-xl whitespace-nowrap">
-                    {window.id}
-                  </span>
-                </div>
-                <div className="flex items-center">
-                  <WindowButton
-                    data-testid={`minimize-button-${window.id.toLowerCase()}`}
-                    imageAlt="Minimize"
-                    imageName="/assets/minimize.png"
-                    onClick={handleMinimize}
-                  />
-                  <WindowButton
-                    data-testid={`maximize-button-${window.id.toLowerCase()}`}
-                    imageAlt="Maximize"
-                    imageName="/assets/maximize.png"
-                    onClick={toggleMaximize}
-                  />
-                  <WindowButton
-                    data-testid={`close-button-${window.id.toLowerCase()}`}
-                    imageAlt="Close"
-                    imageName="/assets/close.png"
-                    onClick={handleClose}
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Content area */}
-            <div className="no-scrollbar bg-secondary grow overflow-y-scroll p-1">
-              {/* White Area */}
-              <div className="border-windows-sunken bg-tertiary shadow-windows-inset h-full border-2 p-4">
-                {children}
-              </div>
-            </div>
-
-            {/* Status bar */}
-            {showStatusBar && (
-              <div className="bg-secondary flex gap-0.5 p-1 text-xs">
-                <span className="border-windows-sunken flex h-5 min-w-0 grow items-center gap-1 border px-1">
-                  <img
-                    alt=""
-                    className="h-4 w-4 shrink-0"
-                    src="/assets/html-0.png"
-                  />
-                  <span className="truncate">
-                    © {new Date().getFullYear()} Pedro Conde
-                  </span>
-                </span>
-                <span className="border-windows-sunken flex h-5 shrink-0 items-center gap-1 border px-1 whitespace-nowrap">
-                  <img alt="" className="h-4 w-4" src="/assets/world-1.png" />
-                  Internet
+          {/* Title bar */}
+          <div className="bg-secondary p-1">
+            {/** biome-ignore lint/a11y/noStaticElementInteractions: Win98 title bar; the Maximize button is the accessible equivalent */}
+            <div
+              className={classNames(
+                'handle text-tertiary flex h-6 items-center justify-between px-1',
+                { 'active:cursor-move': !window.isMaximized },
+                window.isFocused ? 'bg-accent' : 'bg-quaternary'
+              )}
+              // Like Win98: double-clicking the title bar (not its buttons) toggles maximize.
+              onDoubleClick={(e) => {
+                if (!(e.target as Element).closest('button')) toggleMaximize();
+              }}
+            >
+              <div className="flex items-center">
+                <img
+                  alt=""
+                  className="mr-1 h-4 w-4"
+                  src={icons.find((icon) => icon.app === window.id)?.icon}
+                />
+                <span className="font-micro overflow-hidden text-xl whitespace-nowrap">
+                  {window.id}
                 </span>
               </div>
-            )}
+              <div className="flex items-center">
+                <WindowButton
+                  data-testid={`minimize-button-${window.id.toLowerCase()}`}
+                  imageAlt="Minimize"
+                  imageName="/assets/minimize.png"
+                  onClick={handleMinimize}
+                />
+                <WindowButton
+                  data-testid={`maximize-button-${window.id.toLowerCase()}`}
+                  imageAlt="Maximize"
+                  imageName="/assets/maximize.png"
+                  onClick={toggleMaximize}
+                />
+                <WindowButton
+                  data-testid={`close-button-${window.id.toLowerCase()}`}
+                  imageAlt="Close"
+                  imageName="/assets/close.png"
+                  onClick={handleClose}
+                />
+              </div>
+            </div>
           </div>
-        </Draggable>
-      )}
+
+          {/* Content area */}
+          <div className="no-scrollbar bg-secondary grow overflow-y-scroll p-1">
+            {/* White Area */}
+            <div className="border-windows-sunken bg-tertiary shadow-windows-inset h-full border-2 p-4">
+              {children}
+            </div>
+          </div>
+
+          {/* Status bar */}
+          {showStatusBar && (
+            <div className="bg-secondary flex gap-0.5 p-1 text-xs">
+              <span className="border-windows-sunken flex h-5 min-w-0 grow items-center gap-1 border px-1">
+                <img
+                  alt=""
+                  className="h-4 w-4 shrink-0"
+                  src="/assets/html-0.png"
+                />
+                <span className="truncate">
+                  © {new Date().getFullYear()} Pedro Conde
+                </span>
+              </span>
+              <span className="border-windows-sunken flex h-5 shrink-0 items-center gap-1 border px-1 whitespace-nowrap">
+                <img alt="" className="h-4 w-4" src="/assets/world-1.png" />
+                Internet
+              </span>
+            </div>
+          )}
+        </div>
+      </Draggable>
     </>
   );
 }

@@ -20,4 +20,9 @@ export const icons: Icon[] = [
     app: AppsNames.CREDITS,
     icon: '/assets/help_book_cool-4.png',
   },
+  {
+    label: AppsNames.PAINT,
+    app: AppsNames.PAINT,
+    icon: '/assets/paint.svg',
+  },
 ];

@@ -5,6 +5,7 @@ import { icons } from '~/constants/icons.const';
 import { usePlaySound } from '~/hooks/use-play-sounds';
 import { useWindowsStore } from '~/store/WindowsStore';
 import Credits from '../Credits';
+import Paint from '../Paint';
 import Icon from './Icon';
 import Navbar from './Navbar';
 import OSWindow from './OSWindow';
@@ -40,6 +41,8 @@ export default function DesktopContent() {
                 return <Outlet />;
               case AppsNames.CREDITS:
                 return <Credits />;
+              case AppsNames.PAINT:
+                return <Paint />;
               default:
                 return null;
             }
