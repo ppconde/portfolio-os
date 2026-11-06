@@ -121,4 +121,35 @@ test.describe('Window Management', () => {
     expect(newBox?.x).not.toEqual(initialBox?.x);
     expect(newBox?.y).not.toEqual(initialBox?.y);
   });
+
+  test('taskbar and clicks switch the focused window', async ({ page }) => {
+    await page
+      .getByRole('button')
+      .filter({ has: page.getByAltText('Credits') })
+      .dblclick();
+
+    const taskbar = page.locator('nav.fixed.bottom-0');
+    const titleBar = (name: string) =>
+      page.locator('.handle').filter({ hasText: name });
+    const portfolio = titleBar('My Portfolio');
+    const credits = titleBar('Credits');
+    await expect(credits).toHaveClass(/bg-accent/);
+
+    // Taskbar click on an unfocused, visible window focuses it (not minimize).
+    await taskbar
+      .getByRole('button')
+      .filter({ hasText: 'My Portfolio' })
+      .click();
+    await expect(portfolio).toBeVisible();
+    await expect(portfolio).toHaveClass(/bg-accent/);
+    await expect(credits).toHaveClass(/bg-quaternary/);
+
+    // Clicking the active window's taskbar button minimizes it; the next takes focus.
+    await taskbar
+      .getByRole('button')
+      .filter({ hasText: 'My Portfolio' })
+      .click();
+    await expect(portfolio).toBeHidden();
+    await expect(credits).toHaveClass(/bg-accent/);
+  });
 });

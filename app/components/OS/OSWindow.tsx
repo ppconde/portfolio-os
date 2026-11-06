@@ -94,7 +94,6 @@ export default function OSWindow({
           disabled={window.isMaximized}
           handle=".handle"
           nodeRef={nodeRef}
-          onMouseDown={() => setWindowPosition(window.id)}
           onStop={handleDragStop}
           position={window.position}
         >
@@ -109,6 +108,8 @@ export default function OSWindow({
                 ? 'top-0 right-0 bottom-8 left-0'
                 : 'h-4/5 w-4/5'
             )}
+            // Capture so clicks anywhere inside (even ones children stop) focus it.
+            onMouseDownCapture={() => setWindowPosition(window.id)}
             ref={nodeRef}
             style={{ zIndex: window.zIndex }}
           >

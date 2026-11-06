@@ -22,6 +22,17 @@ type WindowsStore = {
   setWindowPosition: (id: string, position?: { x: number; y: number }) => void;
 };
 
+// Like Win98: when the active window goes away, the next one up takes focus.
+const focusTopmost = (windows: DesktopWindow[]) => {
+  const top = Math.max(
+    ...windows.filter((w) => !w.isMinimized).map((w) => w.zIndex)
+  );
+  return windows.map((w) => ({
+    ...w,
+    isFocused: !w.isMinimized && w.zIndex === top,
+  }));
+};
+
 export const useWindowsStore = create<WindowsStore>((set, get) => {
   // Bring `id` to front and focus it (applying `patch`), unfocus the rest.
   const focus = (
@@ -91,23 +102,28 @@ export const useWindowsStore = create<WindowsStore>((set, get) => {
     },
 
     closeWindow: (id) =>
-      set((state) => ({ windows: state.windows.filter((w) => w.id !== id) })),
+      set((state) => ({
+        windows: focusTopmost(state.windows.filter((w) => w.id !== id)),
+      })),
 
     minimizeWindow: (id) =>
       set((state) => ({
-        windows: state.windows.map((w) =>
-          w.id === id ? { ...w, isMinimized: true, isFocused: false } : w
+        windows: focusTopmost(
+          state.windows.map((w) =>
+            w.id === id ? { ...w, isMinimized: true } : w
+          )
         ),
       })),
 
     maximizeWindow: (id) => focus(id, () => ({ isMaximized: true })),
     restoreWindow: (id) =>
       focus(id, () => ({ isMinimized: false, isMaximized: false })),
-    toggleWindow: (id) =>
-      focus(id, (w) => ({
-        isMinimized: !w.isMinimized,
-        isFocused: !w.isFocused,
-      })),
+    // Win98 taskbar: the active window minimizes, any other comes to front.
+    toggleWindow: (id) => {
+      const w = get().windows.find((w) => w.id === id);
+      if (w && !w.isMinimized && w.isFocused) get().minimizeWindow(id);
+      else focus(id, () => ({ isMinimized: false }));
+    },
     setWindowPosition: (id, position) =>
       focus(id, () => (position ? { position } : {})),
   };
