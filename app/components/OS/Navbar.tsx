@@ -11,12 +11,11 @@ export default function Navbar() {
     <nav className="border-tertiary bg-secondary fixed bottom-0 left-0 z-9999 flex h-8 w-full items-center justify-center border-t-2 px-1">
       <Start />
       <VerticalSeparator />
-      <div className="flex h-[80%] basis-1/6 items-center">
+      <div className="flex h-[80%] min-w-0 grow items-center">
         {windows.map((window) => (
           <NavBarButton key={window.id} window={window} />
         ))}
       </div>
-      <div className="grow" />
       <VerticalSeparator />
       <Clock />
     </nav>

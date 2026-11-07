@@ -8,7 +8,7 @@ export default function NavBarButton({ window }: { window: DesktopWindow }) {
   return (
     <button
       className={classNames(
-        'relative mx-1 flex h-full w-full min-w-[6rem] shrink basis-0 items-center p-2 text-sm',
+        'relative mx-1 flex h-full w-28 min-w-0 items-center p-2 text-sm md:w-40',
         {
           'btn-windows': window.isMinimized || !window.isFocused,
           'btn-windows-inverted flex items-center p-2':
@@ -29,7 +29,7 @@ export default function NavBarButton({ window }: { window: DesktopWindow }) {
           }
         )}
       ></div>
-      <div className="flex items-center">
+      <div className="flex min-w-0 items-center">
         <img
           alt=""
           className="mr-1 h-4 w-4"
