@@ -59,6 +59,23 @@ export default function Paint() {
   const [tool, setTool] = useState<Tool>('Pencil');
   const [color, setColor] = useState('#000000');
   const [size, setSize] = useState(3);
+  const [menu, setMenu] = useState<string | null>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // An open menu closes on a click outside it or on Escape.
+  useEffect(() => {
+    if (!menu) return;
+    const onDown = (e: PointerEvent) => {
+      if (!menuRef.current?.contains(e.target as Node)) setMenu(null);
+    };
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setMenu(null);
+    document.addEventListener('pointerdown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('pointerdown', onDown);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [menu]);
 
   const ctx = () => getCtx(canvasRef.current);
   // Every edit happens inside the visible area, so that's all undo needs to keep.
@@ -178,6 +195,15 @@ export default function Paint() {
     a.click();
   };
 
+  // Win98 Paint keeps New/Save/Undo in its File and Edit menus.
+  const menus: Record<string, [string, () => void][]> = {
+    File: [
+      ['New', clear],
+      ['Save', save],
+    ],
+    Edit: [['Undo', undo]],
+  };
+
   const btn = (active: boolean) =>
     classNames(
       'flex h-7 items-center justify-center px-1 text-xs',
@@ -186,16 +212,42 @@ export default function Paint() {
 
   return (
     <div className="bg-secondary -m-4 flex h-[calc(100%+2rem)] flex-col text-xs">
-      <div className="flex gap-1 p-1">
-        <button className={btn(false)} onClick={clear} type="button">
-          New
-        </button>
-        <button className={btn(false)} onClick={save} type="button">
-          Save
-        </button>
-        <button className={btn(false)} onClick={undo} type="button">
-          Undo
-        </button>
+      <div className="flex px-1" ref={menuRef}>
+        {Object.entries(menus).map(([name, items]) => (
+          <div className="relative" key={name}>
+            <button
+              aria-expanded={menu === name}
+              aria-haspopup="true"
+              className={classNames(
+                'border px-2 py-0.5',
+                menu === name ? 'border-windows-sunken' : 'border-transparent'
+              )}
+              onClick={() => setMenu(menu === name ? null : name)}
+              onPointerEnter={() => menu && setMenu(name)}
+              type="button"
+            >
+              <u>{name[0]}</u>
+              {name.slice(1)}
+            </button>
+            {menu === name && (
+              <div className="border-windows bg-secondary absolute top-full left-0 z-10 flex min-w-28 flex-col p-0.5">
+                {items.map(([label, run]) => (
+                  <button
+                    className="hover:bg-accent hover:text-tertiary px-4 py-0.5 text-left"
+                    key={label}
+                    onClick={() => {
+                      setMenu(null);
+                      run();
+                    }}
+                    type="button"
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
       </div>
       <div className="flex min-h-0 grow gap-1 p-1">
         <div className="flex w-16 shrink-0 flex-col gap-1">
