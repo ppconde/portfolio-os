@@ -11,8 +11,7 @@ export default function NavBarButton({ window }: { window: DesktopWindow }) {
         'relative mx-1 flex h-full w-28 min-w-0 items-center p-2 text-sm md:w-40',
         {
           'btn-windows': window.isMinimized || !window.isFocused,
-          'btn-windows-inverted flex items-center p-2':
-            !window.isMinimized && window.isFocused,
+          'btn-windows-inverted': !window.isMinimized && window.isFocused,
         }
       )}
       data-taskbar-button={window.id}
@@ -29,16 +28,14 @@ export default function NavBarButton({ window }: { window: DesktopWindow }) {
           }
         )}
       ></div>
-      <div className="flex min-w-0 items-center">
-        <img
-          alt=""
-          className="mr-1 h-4 w-4"
-          src={icons.find((icon) => icon.app === window.id)?.icon}
-        />
-        <span className="overflow-hidden text-ellipsis whitespace-nowrap">
-          {window.id}
-        </span>
-      </div>
+      <img
+        alt=""
+        className="mr-1 h-4 w-4 shrink-0"
+        src={icons.find((icon) => icon.app === window.id)?.icon}
+      />
+      <span className="overflow-hidden text-ellipsis whitespace-nowrap">
+        {window.id}
+      </span>
     </button>
   );
 }
