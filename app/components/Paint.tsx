@@ -10,6 +10,9 @@ const SIZES = [1, 3, 6, 10];
 const TOOLS = ['Pencil', 'Eraser', 'Fill'] as const;
 type Tool = (typeof TOOLS)[number];
 
+// Tile index in the classic toolbox sprite (16px tiles), from jspaint.
+const TOOL_SPRITE: Record<Tool, number> = { Pencil: 6, Eraser: 2, Fill: 3 };
+
 const getCtx = (canvas: HTMLCanvasElement | null) =>
   canvas?.getContext('2d', { willReadFrequently: true });
 const whiten = (c: CanvasRenderingContext2D) => {
@@ -196,17 +199,27 @@ export default function Paint() {
       </div>
       <div className="flex min-h-0 grow gap-1 p-1">
         <div className="flex w-16 shrink-0 flex-col gap-1">
-          {TOOLS.map((t) => (
-            <button
-              aria-pressed={tool === t}
-              className={btn(tool === t)}
-              key={t}
-              onClick={() => setTool(t)}
-              type="button"
-            >
-              {t}
-            </button>
-          ))}
+          <div className="grid grid-cols-2 gap-1">
+            {TOOLS.map((t) => (
+              <button
+                aria-label={t}
+                aria-pressed={tool === t}
+                className={btn(tool === t)}
+                key={t}
+                onClick={() => setTool(t)}
+                title={t}
+                type="button"
+              >
+                <span
+                  aria-hidden="true"
+                  className="h-4 w-4 [image-rendering:pixelated]"
+                  style={{
+                    background: `url(/assets/paint-tools.png) -${TOOL_SPRITE[t] * 16}px 0`,
+                  }}
+                />
+              </button>
+            ))}
+          </div>
           <div className="border-windows-sunken mt-1 flex flex-col gap-1 border p-1">
             {SIZES.map((s) => (
               <button
