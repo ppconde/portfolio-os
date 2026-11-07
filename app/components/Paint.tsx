@@ -211,7 +211,19 @@ export default function Paint() {
     );
 
   return (
-    <div className="bg-secondary -m-4 flex h-[calc(100%+2rem)] flex-col text-xs">
+    // biome-ignore lint/a11y/noStaticElementInteractions: window-level Alt+letter menu shortcuts
+    <div
+      className="bg-secondary -m-4 flex h-[calc(100%+2rem)] flex-col text-xs outline-none"
+      onKeyDown={(e) => {
+        // e.code, not e.key: on macOS Alt+F types "ƒ".
+        const name = Object.keys(menus).find((n) => e.code === `Key${n[0]}`);
+        if (!e.altKey || !name) return;
+        e.preventDefault();
+        setMenu(name);
+      }}
+      // Focusable so a click anywhere in Paint routes its keys here.
+      tabIndex={-1}
+    >
       <div className="flex px-1" ref={menuRef}>
         {Object.entries(menus).map(([name, items]) => (
           <div className="relative" key={name}>

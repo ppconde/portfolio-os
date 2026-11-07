@@ -85,7 +85,8 @@ test.describe('Icon Interactions', () => {
     expect(await canvas.evaluate(isDrawn)).toBe(true);
 
     // Undo takes the stroke back off.
-    await page.getByRole('button', { name: 'Edit', exact: true }).click();
+    await page.getByRole('button', { name: 'Pencil' }).click();
+    await page.keyboard.press('Alt+E');
     await page.getByRole('button', { name: 'Undo', exact: true }).click();
     expect(await canvas.evaluate(isDrawn)).toBe(false);
   });
