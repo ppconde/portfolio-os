@@ -20,6 +20,11 @@
       "id": "4024c012098c4498922e7af3e1fab339"
     }
   ],
+  // The Book Room: one SQLite-backed Durable Object holds avatars and Mancala tables.
+  "durable_objects": {
+    "bindings": [{ "name": "ROOM", "class_name": "Room" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["Room"] }],
   "secrets_store_secrets": [
     {
       "binding": "PORTFOLIO_OS_SECRETS",
@@ -30,6 +35,9 @@
   // Worker Previews don't inherit production bindings. Sharing these is fine:
   // the KV only caches pinned GitHub repos, and the secret is read-only.
   "previews": {
+    "durable_objects": {
+      "bindings": [{ "name": "ROOM", "class_name": "Room" }]
+    },
     "kv_namespaces": [
       {
         "binding": "PORTFOLIO_OS_KV",
@@ -47,6 +55,9 @@
   "env": {
     "development": {
       "name": "portfolio-os-dev",
+      "durable_objects": {
+        "bindings": [{ "name": "ROOM", "class_name": "Room" }]
+      },
       "kv_namespaces": [
         {
           "binding": "PORTFOLIO_OS_KV",

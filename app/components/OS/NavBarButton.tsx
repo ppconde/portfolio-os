@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { icons } from '~/constants/icons.const';
+import { windowIcons } from '~/constants/icons.const';
 import { type DesktopWindow, useWindowsStore } from '~/store/WindowsStore';
 
 export default function NavBarButton({ window }: { window: DesktopWindow }) {
@@ -33,7 +33,7 @@ export default function NavBarButton({ window }: { window: DesktopWindow }) {
         <img
           alt=""
           className="mr-1 h-4 w-4"
-          src={icons.find((icon) => icon.app === window.id)?.icon}
+          src={windowIcons.find((icon) => icon.app === window.id)?.icon}
         />
         <span className="overflow-hidden text-ellipsis whitespace-nowrap">
           {window.id}

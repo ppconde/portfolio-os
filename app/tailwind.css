@@ -173,6 +173,7 @@
    The window zoom checks the same query in ZoomOutline.tsx.
    Unlayered on purpose, so it beats Tailwind's utility layer. */
 @media (prefers-reduced-motion: reduce) {
+  .blob-hop,
   .animate-blink,
   .animate-start-open,
   .animate-typing {
@@ -183,5 +184,23 @@
   ::before,
   ::after {
     transition-duration: 0s;
+  }
+}
+
+/* Book Room blobs: a hop per tile walked; squashed while seated. */
+.blob-hop,
+.blob-sit {
+  transform-box: fill-box;
+  transform-origin: bottom;
+}
+.blob-hop {
+  animation: blob-hop 150ms ease-out;
+}
+.blob-sit {
+  transform: translateY(2px) scaleY(0.8);
+}
+@keyframes blob-hop {
+  50% {
+    transform: translateY(-5px) scaleY(1.06);
   }
 }
