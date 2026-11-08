@@ -68,13 +68,7 @@ function Board({ board, w, h, flip, onPit }: BoardProps) {
 
   return (
     <g>
-      <rect
-        fill="#8b5a2b"
-        height={h}
-        rx={h / 5}
-        stroke="#4a2c12"
-        width={w}
-      />
+      <rect fill="#8b5a2b" height={h} rx={h / 5} stroke="#4a2c12" width={w} />
       {[
         { i: left, cx: sw / 2 },
         { i: right, cx: w - sw / 2 },
