@@ -4,6 +4,7 @@ import { AppsNames } from '~/constants/apps-names.const';
 import { icons } from '~/constants/icons.const';
 import { usePlaySound } from '~/hooks/use-play-sounds';
 import { useWindowsStore } from '~/store/WindowsStore';
+import BlobClub from '../BlobClub';
 import Credits from '../Credits';
 import Paint from '../Paint';
 import Icon from './Icon';
@@ -43,6 +44,8 @@ export default function DesktopContent() {
                 return <Credits />;
               case AppsNames.PAINT:
                 return <Paint />;
+              case AppsNames.BLOB_CLUB:
+                return <BlobClub />;
               default:
                 return null;
             }

@@ -1,6 +1,8 @@
 import { createRequestHandler, RouterContextProvider } from 'react-router';
 import { appContext } from '../app/context';
 
+export { Room } from './room';
+
 const requestHandler = createRequestHandler(
   () => import('virtual:react-router/server-build'),
   import.meta.env.MODE
@@ -8,6 +10,13 @@ const requestHandler = createRequestHandler(
 
 export default {
   async fetch(request, env, ctx) {
+    // The Blob Club's WebSocket goes to its one Durable Object.
+    if (new URL(request.url).pathname === '/api/room') {
+      if (request.headers.get('Upgrade') !== 'websocket')
+        return new Response('Expected a WebSocket', { status: 426 });
+      return env.ROOM.getByName('blob-club').fetch(request);
+    }
+
     // Dev: plain env var. Prod: Cloudflare Secrets Store.
     const getGithubKey = async () => {
       const key = env.GITHUB_KEY || (await env.PORTFOLIO_OS_SECRETS?.get());
