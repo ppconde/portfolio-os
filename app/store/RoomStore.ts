@@ -34,12 +34,13 @@ type RoomStore = {
 };
 
 export const seatName = (s: SeatInfo) =>
-  s ? `${s.name}${s.away ? ' (away)' : ''}` : '';
+  s ? `${s.name}${s.ai ? ' (AI)' : ''}${s.away ? ' (away)' : ''}` : '';
 
 export const tableLabel = (t: TableState) => {
   if (t.result) return t.result;
   const [a, b] = t.seats;
   if (a && b) return `${seatName(a)} vs ${seatName(b)}`;
+  if (a?.ai || b?.ai) return 'Play the computer – sit to play';
   return a || b ? 'Waiting for opponent…' : 'Free – sit to play';
 };
 

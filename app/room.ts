@@ -22,6 +22,10 @@ export const TABLES = [2, 9, 16].map((x, id) => ({
   ] as [Tile, Tile],
 }));
 
+// The Computer always sits at the back of the right-hand table, waiting for a game.
+export const PC_TABLE = 2;
+export const COMPUTER = { id: 'computer', name: 'Computer', ai: true };
+
 export const isBlocked = ({ x, y }: Tile) =>
   x < 0 ||
   y < SHELF_ROWS ||

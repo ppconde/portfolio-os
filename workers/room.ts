@@ -10,9 +10,12 @@ import {
 } from '../app/mancala';
 import {
   COLORS,
+  COMPUTER,
   isBlocked,
   isNear,
+  PC_TABLE,
   type Player,
+  type SeatInfo,
   type ServerMsg,
   SPAWN,
   TABLES,
@@ -81,6 +84,7 @@ export class Room extends DurableObject<Env> {
       this.save(t);
       return t;
     });
+    this.tables[PC_TABLE].seats[1] = { ...COMPUTER };
   }
 
   save(t: TableState) {
@@ -284,9 +288,12 @@ export class Room extends DurableObject<Env> {
     if (t.turn === seat) this.play(t, seat, pickMove(t.board, seat));
   }
 
-  // New board; the AI and anyone still away leave; two seated players rematch.
+  // New board; a stand-in AI and anyone still away leave (the resident
+  // Computer stays); two seated players rematch.
   reset(t: TableState) {
-    t.seats = t.seats.map((s) => (s && !s.away && !s.ai ? s : null)) as [
+    const stays = (s: SeatInfo) =>
+      s && !s.away && (!s.ai || s.id === COMPUTER.id);
+    t.seats = t.seats.map((s) => (stays(s) ? s : null)) as [
       TableState['seats'][0],
       TableState['seats'][1],
     ];

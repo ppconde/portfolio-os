@@ -4,13 +4,21 @@ import {
   COLORS,
   COLS,
   isBlocked,
+  PC_TABLE,
   ROWS,
   SHELF_ROWS,
   SPAWN,
   TABLES,
   TILE,
+  type Tile,
 } from '~/room';
-import { BUBBLE_MS, mySeat, tableLabel, useRoomStore } from '~/store/RoomStore';
+import {
+  BUBBLE_MS,
+  mySeat,
+  seatName,
+  tableLabel,
+  useRoomStore,
+} from '~/store/RoomStore';
 import { Board } from './Mancala';
 
 const W = COLS * TILE;
@@ -45,6 +53,35 @@ const wrap = (text: string, width = 26) =>
     else lines.push(word);
     return lines;
   }, []);
+
+// A speech bubble above a blob standing on `p`.
+function bubble(p: Tile & { id: string; name: string }, text: string) {
+  const lines = wrap(text);
+  const w = Math.max(...lines.map((l) => l.length)) * 5 + 10;
+  const h = lines.length * 10 + 6;
+  const x = Math.min(Math.max((p.x + 0.5) * TILE - w / 2, 2), W - w - 2);
+  // Back seats float a tile higher so the table's label stays readable.
+  const y = (p.y + (p.y === TABLES[0].y - 1 ? 0 : 1)) * TILE - 32 - h;
+  return (
+    <g data-testid={`bubble-${p.name}`} key={p.id}>
+      <rect
+        fill="#fdffff"
+        height={h}
+        rx="4"
+        stroke="#111"
+        width={w}
+        x={x}
+        y={y}
+      />
+      {lines.map((l, i) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: line order is fixed
+        <text fontSize="9" key={i} x={x + 5} y={y + 12 + i * 10}>
+          {l}
+        </text>
+      ))}
+    </g>
+  );
+}
 
 export default function BookRoom() {
   const status = useRoomStore((s) => s.status);
@@ -153,9 +190,26 @@ function Scene() {
   };
 
   // Tables and blobs drawn back to front by where they touch the floor.
+  // AI seats (the resident Computer, or a stand-in) are drawn as blobs too.
+  const computers = tables.flatMap((t) =>
+    t.seats.flatMap((s, seat) =>
+      s?.ai
+        ? [
+            {
+              ...TABLES[t.id].seats[seat],
+              id: s.id,
+              name: seatName(s),
+              color: '#9ca3af',
+            },
+          ]
+        : []
+    )
+  );
+  const pcSeat = tables[PC_TABLE]?.seats[0];
+  const myTable = tables.find((t) => mySeat(t, you) >= 0);
   const sorted = [
     ...TABLES.map((t) => ({ y: (t.y + 1) * TILE, key: `t${t.id}`, table: t })),
-    ...Object.values(players).map((p) => ({
+    ...[...Object.values(players), ...computers].map((p) => ({
       y: (p.y + 1) * TILE + 1,
       key: p.id,
       player: p,
@@ -335,15 +389,47 @@ function Scene() {
                 className={seat ? 'blob-sit' : 'blob-hop'}
                 key={seat ? 'sit' : `${p.x},${p.y}`}
               >
-                <ellipse
-                  cx="0"
-                  cy="-10"
-                  fill={p.color}
-                  rx="11"
-                  ry="10"
-                  stroke="#00000066"
-                />
-                {facing !== 'away' &&
+                {seat?.ai ? (
+                  <>
+                    <rect
+                      fill="#9ca3af"
+                      height="18"
+                      rx="3"
+                      stroke="#4b5563"
+                      width="24"
+                      x="-12"
+                      y="-20"
+                    />
+                    <rect
+                      fill="#0f172a"
+                      height="11"
+                      width="18"
+                      x="-9"
+                      y="-17"
+                    />
+                    {[-5, 3].map((ex) => (
+                      <rect
+                        fill="#4ade80"
+                        height="3"
+                        key={ex}
+                        width="2"
+                        x={ex}
+                        y="-13"
+                      />
+                    ))}
+                  </>
+                ) : (
+                  <ellipse
+                    cx="0"
+                    cy="-10"
+                    fill={p.color}
+                    rx="11"
+                    ry="10"
+                    stroke="#00000066"
+                  />
+                )}
+                {!seat?.ai &&
+                  facing !== 'away' &&
                   [-4, 4].map((ex) => (
                     <circle
                       cx={ex}
@@ -381,40 +467,16 @@ function Scene() {
         ))}
         {Object.values(players).map((p) => {
           const b = bubbles[p.id];
-          if (!b || now - b.at > BUBBLE_MS) return null;
-          const lines = wrap(b.text);
-          const w = Math.max(...lines.map((l) => l.length)) * 5 + 10;
-          const h = lines.length * 10 + 6;
-          const x = Math.min(
-            Math.max((p.x + 0.5) * TILE - w / 2, 2),
-            W - w - 2
-          );
-          const y = (p.y + 1) * TILE - 32 - h;
-          return (
-            <g data-testid={`bubble-${p.name}`} key={p.id}>
-              <rect
-                fill="#fdffff"
-                height={h}
-                rx="4"
-                stroke="#111"
-                width={w}
-                x={x}
-                y={y}
-              />
-              {lines.map((l, i) => (
-                <text
-                  fontSize="9"
-                  // biome-ignore lint/suspicious/noArrayIndexKey: line order is fixed
-                  key={i}
-                  x={x + 5}
-                  y={y + 12 + i * 10}
-                >
-                  {l}
-                </text>
-              ))}
-            </g>
-          );
+          return b && now - b.at < BUBBLE_MS && bubble(p, b.text);
         })}
+        {/* The Computer calls out every few seconds while its seat is free. */}
+        {tables[PC_TABLE] &&
+          !pcSeat &&
+          now % 12_000 < 5_000 &&
+          bubble(
+            { ...COMPUTER, ...TABLES[PC_TABLE].seats[1] },
+            "Anyone for Mancala? I'm the computer!"
+          )}
         {status !== 'open' && (
           <text
             fill="#111"
@@ -446,6 +508,28 @@ function Scene() {
         <button className="border-windows bg-secondary px-3" type="submit">
           Say
         </button>
+        {myTable && (
+          <button
+            className="border-windows bg-secondary px-3"
+            onClick={() => send({ t: 'stand' })}
+            type="button"
+          >
+            Stand up
+          </button>
+        )}
+        {/* Nobody came: swap to the Computer's table. */}
+        {myTable && myTable.id !== PC_TABLE && !full(myTable.id) && !pcSeat && (
+          <button
+            className="border-windows bg-secondary px-3"
+            onClick={() => {
+              send({ t: 'stand' });
+              walkTo(TABLES[PC_TABLE].seats[0], { tableId: PC_TABLE, seat: 0 });
+            }}
+            type="button"
+          >
+            Play the computer
+          </button>
+        )}
       </form>
       <p className="font-mono text-xs">
         Click the floor to walk, a cushion to sit. Esc or a floor click stands

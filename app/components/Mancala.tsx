@@ -180,6 +180,18 @@ export default function Mancala() {
         {seat < 0 && 'Spectating · '}
         {status}
       </p>
+      {seat >= 0 && (
+        <button
+          className="border-windows bg-secondary px-4 py-1"
+          onClick={() => send({ t: 'stand' })}
+          type="button"
+        >
+          {/* Walking out on a person mid-game hands them the win. */}
+          {playing && !t.seats[1 - seat]?.ai
+            ? 'Forfeit and leave'
+            : 'Leave game'}
+        </button>
+      )}
     </div>
   );
 }

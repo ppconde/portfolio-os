@@ -80,3 +80,32 @@ test('two players sit at a table and play in sync', async ({
   await pedro.context().close();
   await blu.context().close();
 });
+
+test('plays the resident Computer and leaves mid-game', async ({
+  browser,
+  isMobile,
+}) => {
+  // One Computer table shared by both projects running in parallel.
+  test.skip(isMobile, 'one shared Computer table');
+  const solo = await enterRoom(browser, 'Solo');
+  const label = solo.getByTestId('table-label-2');
+  await expect(label).toHaveText('Play the computer – sit to play');
+  await expect(solo.getByTestId('blob-Computer (AI)')).toBeVisible();
+
+  await solo.getByTestId('seat-2-0').click();
+  await expect(label).toHaveText('Solo vs Computer (AI)');
+  await expect(solo.getByTestId('mancala-status')).toHaveText('Your turn');
+
+  // Pit 0's last stone lands in pit 4, so the Computer moves, then it's us again
+  // (pit testids only exist on our turn).
+  await solo.getByTestId('pit-0').click();
+  await expect
+    .poll(async () => Number(await stones(solo, 1)), { timeout: 15000 })
+    .toBeGreaterThanOrEqual(5);
+  await expect(solo.getByTestId('mancala-status')).toHaveText('Your turn');
+
+  await solo.getByRole('button', { name: 'Leave game' }).click();
+  await expect(solo.getByTestId('mancala-board')).toBeHidden();
+  await expect(label).toHaveText('Play the computer – sit to play');
+  await solo.context().close();
+});
