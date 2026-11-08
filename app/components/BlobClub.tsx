@@ -231,7 +231,7 @@ function Scene() {
           viewBox={`0 0 ${W} ${H}`}
         >
           <title>Blob Club</title>
-          <image height={H} href="/assets/blob-club/lounge.jpg" width={W} />
+          <image height={H} href="/assets/blob-club/lounge.png" width={W} />
           {/* The poster on the back wall */}
           {/* biome-ignore lint/a11y/useSemanticElements: an SVG shape */}
           <rect
