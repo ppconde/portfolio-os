@@ -4,9 +4,8 @@ import { AppsNames } from '~/constants/apps-names.const';
 import { icons } from '~/constants/icons.const';
 import { usePlaySound } from '~/hooks/use-play-sounds';
 import { useWindowsStore } from '~/store/WindowsStore';
-import BookRoom from '../BookRoom';
+import BlobClub from '../BlobClub';
 import Credits from '../Credits';
-import Mancala from '../Mancala';
 import Paint from '../Paint';
 import Icon from './Icon';
 import Navbar from './Navbar';
@@ -45,10 +44,8 @@ export default function DesktopContent() {
                 return <Credits />;
               case AppsNames.PAINT:
                 return <Paint />;
-              case AppsNames.BOOK_ROOM:
-                return <BookRoom />;
-              case AppsNames.MANCALA:
-                return <Mancala />;
+              case AppsNames.BLOB_CLUB:
+                return <BlobClub />;
               default:
                 return null;
             }

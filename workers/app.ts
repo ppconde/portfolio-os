@@ -10,11 +10,11 @@ const requestHandler = createRequestHandler(
 
 export default {
   async fetch(request, env, ctx) {
-    // The Book Room's WebSocket goes to its one Durable Object.
+    // The Blob Club's WebSocket goes to its one Durable Object.
     if (new URL(request.url).pathname === '/api/room') {
       if (request.headers.get('Upgrade') !== 'websocket')
         return new Response('Expected a WebSocket', { status: 426 });
-      return env.ROOM.getByName('book-room').fetch(request);
+      return env.ROOM.getByName('blob-club').fetch(request);
     }
 
     // Dev: plain env var. Prod: Cloudflare Secrets Store.

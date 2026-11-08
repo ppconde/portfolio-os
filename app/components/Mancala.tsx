@@ -130,7 +130,7 @@ export function Board({ board, x = 0, y = 0, w, h, flip, onPit }: BoardProps) {
   );
 }
 
-// The full board window for the table you're at (or watching).
+// The board for the table you're at (or watching), over the room.
 export default function Mancala() {
   const t = useRoomStore((s) =>
     s.viewing === null ? undefined : s.tables[s.viewing]
@@ -138,7 +138,8 @@ export default function Mancala() {
   const board = useRoomStore((s) => (t ? s.display[t.id] : undefined));
   const you = useRoomStore((s) => s.you);
   const send = useRoomStore((s) => s.send);
-  if (!t || !board) return <p className="font-mono">Not at a table.</p>;
+  const view = useRoomStore((s) => s.view);
+  if (!t || !board) return null;
 
   const seat = mySeat(t, you);
   const playing = !!(t.seats[0] && t.seats[1] && !t.result);
@@ -155,43 +156,49 @@ export default function Mancala() {
         : `${seatName(t.seats[t.turn])}'s turn`);
 
   return (
-    <div
-      className="flex h-full flex-col items-center justify-center gap-2 font-mono"
-      data-testid="mancala-board"
-    >
-      <p>{seatName(top) || '—'}</p>
-      <svg className="w-full max-w-2xl" viewBox="0 0 400 110">
-        <title>Mancala board, table {t.id + 1}</title>
-        <Board
-          board={board}
-          flip={seat === 1}
-          h={110}
-          onPit={
-            myTurn
-              ? (pit) =>
-                  send({ t: 'move', tableId: t.id, pit, version: t.version })
-              : undefined
-          }
-          w={400}
-        />
-      </svg>
-      <p>{seatName(bottom) || '—'}</p>
-      <p aria-live="polite" className="font-bold" data-testid="mancala-status">
-        {seat < 0 && 'Spectating · '}
-        {status}
-      </p>
-      {seat >= 0 && (
+    <div className="absolute inset-0 flex items-center justify-center bg-black/40 p-2">
+      <div
+        className="border-windows flex w-full max-w-2xl flex-col items-center gap-2 bg-white p-3 font-mono"
+        data-testid="mancala-board"
+      >
+        <p>{seatName(top) || '—'}</p>
+        <svg className="w-full" viewBox="0 0 400 110">
+          <title>Mancala board, table {t.id + 1}</title>
+          <Board
+            board={board}
+            flip={seat === 1}
+            h={110}
+            onPit={
+              myTurn
+                ? (pit) =>
+                    send({ t: 'move', tableId: t.id, pit, version: t.version })
+                : undefined
+            }
+            w={400}
+          />
+        </svg>
+        <p>{seatName(bottom) || '—'}</p>
+        <p
+          aria-live="polite"
+          className="font-bold"
+          data-testid="mancala-status"
+        >
+          {seat < 0 && 'Spectating · '}
+          {status}
+        </p>
         <button
           className="border-windows bg-secondary px-4 py-1"
-          onClick={() => send({ t: 'stand' })}
+          onClick={() => (seat >= 0 ? send({ t: 'stand' }) : view(null))}
           type="button"
         >
           {/* Walking out on a person mid-game hands them the win. */}
-          {playing && !t.seats[1 - seat]?.ai
-            ? 'Forfeit and leave'
-            : 'Leave game'}
+          {seat < 0
+            ? 'Stop watching'
+            : playing && !t.seats[1 - seat]?.ai
+              ? 'Forfeit and leave'
+              : 'Leave game'}
         </button>
-      )}
+      </div>
     </div>
   );
 }

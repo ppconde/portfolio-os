@@ -21,23 +21,13 @@ export const icons: Icon[] = [
     icon: '/assets/paint_old-0.png',
   },
   {
-    label: AppsNames.BOOK_ROOM,
-    app: AppsNames.BOOK_ROOM,
+    label: AppsNames.BLOB_CLUB,
+    app: AppsNames.BLOB_CLUB,
     icon: '/assets/msn3-4.png',
   },
   {
     label: AppsNames.CREDITS,
     app: AppsNames.CREDITS,
     icon: '/assets/help_book_cool-4.png',
-  },
-];
-
-// Windows that open from inside an app, not from the desktop or Start menu.
-export const windowIcons: Icon[] = [
-  ...icons,
-  {
-    label: AppsNames.MANCALA,
-    app: AppsNames.MANCALA,
-    icon: '/assets/mancala.svg',
   },
 ];

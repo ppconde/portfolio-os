@@ -27,7 +27,7 @@ async function enterRoom(browser: Browser, name: string) {
   await showDesktop(page);
   await page
     .getByRole('button')
-    .filter({ has: page.getByAltText('Book Room') })
+    .filter({ has: page.getByAltText('Blob Club') })
     .press('Enter');
   await page.getByLabel('Your name').fill(name);
   await page.getByRole('button', { name: 'Enter', exact: true }).click();

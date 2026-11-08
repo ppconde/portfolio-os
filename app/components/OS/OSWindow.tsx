@@ -4,7 +4,7 @@ import Draggable, {
   type DraggableData,
   type DraggableEvent,
 } from 'react-draggable';
-import { windowIcons } from '~/constants/icons.const';
+import { icons } from '~/constants/icons.const';
 import { type DesktopWindow, useWindowsStore } from '~/store/WindowsStore';
 import WindowButton from './WindowButton';
 import ZoomOutline, { type Zoom } from './ZoomOutline';
@@ -130,7 +130,7 @@ export default function OSWindow({
                 <img
                   alt=""
                   className="mr-1 h-4 w-4"
-                  src={windowIcons.find((icon) => icon.app === window.id)?.icon}
+                  src={icons.find((icon) => icon.app === window.id)?.icon}
                 />
                 <span className="font-micro overflow-hidden text-xl whitespace-nowrap">
                   {window.id}

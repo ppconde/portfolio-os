@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { AppsNames } from '~/constants/apps-names.const';
 import { isOver, newBoard, pickMove, type Seat, sow } from '~/mancala';
 import {
   type ClientMsg,
@@ -11,7 +10,6 @@ import {
   type TableState,
   type Tile,
 } from '~/room';
-import { useWindowsStore } from './WindowsStore';
 
 const TICK_MS = 150; // one walking step / one sown stone
 export const BUBBLE_MS = 5_000;
@@ -24,13 +22,13 @@ type RoomStore = {
   bubbles: Record<string, { text: string; at: number }>;
   tables: TableState[]; // the server's truth
   display: number[][]; // what boards show right now (mid-animation, or the demo)
-  viewing: number | null; // the table in the Mancala window
+  viewing: number | null; // the table shown in the board overlay
   now: number;
   connect: (name: string, color: string) => void;
   disconnect: () => void;
   send: (msg: ClientMsg) => void;
   walkTo: (to: Tile, sit?: { tableId: number; seat: Seat }) => void;
-  view: (tableId: number) => void;
+  view: (tableId: number | null) => void;
 };
 
 export const seatName = (s: SeatInfo) =>
@@ -69,10 +67,7 @@ const queues: number[][][] = TABLES.map(() => []); // animation steps per table
 const demo = TABLES.map(() => ({ turn: 0 as Seat, wait: 0 }));
 
 export const useRoomStore = create<RoomStore>((set, get) => {
-  const openBoard = (tableId: number) => {
-    set({ viewing: tableId });
-    useWindowsStore.getState().addWindow(AppsNames.MANCALA);
-  };
+  const openBoard = (viewing: number | null) => set({ viewing });
 
   const onTable = (msg: Extract<ServerMsg, { table: TableState }>) => {
     const { tables, display, you, viewing } = get();
@@ -92,9 +87,8 @@ export const useRoomStore = create<RoomStore>((set, get) => {
     const wasMine = mySeat(old, you) >= 0;
     const isMine = mySeat(t, you) >= 0;
     if (isMine && t.seats[0] && t.seats[1] && viewing !== id) openBoard(id);
-    // Stood up (Escape, floor click): the board window goes too.
-    if (wasMine && !isMine && viewing === id)
-      useWindowsStore.getState().closeWindow(AppsNames.MANCALA);
+    // Stood up (Leave, Escape, floor click): the board goes too.
+    if (wasMine && !isMine && viewing === id) openBoard(null);
   };
 
   const onMessage = (msg: ServerMsg) => {
@@ -214,14 +208,20 @@ export const useRoomStore = create<RoomStore>((set, get) => {
 
     disconnect: () => {
       const socket = ws;
-      ws = null; // first, so closing the board window below doesn't send "stand"
+      ws = null;
       socket?.close();
       clearTimeout(retry);
       clearInterval(timer);
       route = [];
       pendingSit = null;
-      set({ status: 'idle', players: {}, tables: [], display: [], you: null });
-      useWindowsStore.getState().closeWindow(AppsNames.MANCALA);
+      set({
+        status: 'idle',
+        players: {},
+        tables: [],
+        display: [],
+        you: null,
+        viewing: null,
+      });
     },
 
     send: (msg) => {
@@ -239,15 +239,4 @@ export const useRoomStore = create<RoomStore>((set, get) => {
 
     view: openBoard,
   };
-});
-
-// Closing the board window stands you up (the server applies the forfeit rule mid-game).
-useWindowsStore.subscribe((s, prev) => {
-  const open = (w: typeof s.windows) =>
-    w.some((x) => x.id === AppsNames.MANCALA);
-  if (!open(prev.windows) || open(s.windows)) return;
-  const { tables, you, viewing, send } = useRoomStore.getState();
-  if (viewing !== null && mySeat(tables[viewing], you) >= 0)
-    send({ t: 'stand' });
-  useRoomStore.setState({ viewing: null });
 });
