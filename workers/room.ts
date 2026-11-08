@@ -84,6 +84,11 @@ export class Room extends DurableObject<Env> {
       this.save(t);
       return t;
     });
+    // The Computer may be saved at a table it has since moved away from.
+    for (const t of this.tables)
+      t.seats = t.seats.map((s) =>
+        s?.id === COMPUTER.id ? null : s
+      ) as TableState['seats'];
     this.tables[PC_TABLE].seats[1] = { ...COMPUTER };
   }
 

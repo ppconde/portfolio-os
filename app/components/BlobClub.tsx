@@ -7,8 +7,6 @@ import {
   isBlocked,
   PC_TABLE,
   ROWS,
-  SHELF_ROWS,
-  SPAWN,
   TABLES,
   TILE,
   type Tile,
@@ -20,12 +18,11 @@ import {
   tableLabel,
   useRoomStore,
 } from '~/store/RoomStore';
-import Mancala, { Board } from './Mancala';
+import Mancala from './Mancala';
 
 const W = COLS * TILE;
 const H = ROWS * TILE;
 const NAMES = ['Blu', 'Pip', 'Juno', 'Ziggy', 'Mo', 'Rex'];
-const BOOKS = ['#7f1d1d', '#1e3a8a', '#14532d', '#78350f', '#4c1d95'];
 const KEYS: Record<string, [number, number]> = {
   ArrowUp: [0, -1],
   ArrowDown: [0, 1],
@@ -58,11 +55,10 @@ const wrap = (text: string, width = 26) =>
 // A speech bubble above a blob standing on `p`.
 function bubble(p: Tile & { id: string; name: string }, text: string) {
   const lines = wrap(text);
-  const w = Math.max(...lines.map((l) => l.length)) * 5 + 10;
-  const h = lines.length * 10 + 6;
+  const w = Math.max(...lines.map((l) => l.length)) * 7 + 14;
+  const h = lines.length * 14 + 8;
   const x = Math.min(Math.max((p.x + 0.5) * TILE - w / 2, 2), W - w - 2);
-  // Back seats float a tile higher so the table's label stays readable.
-  const y = (p.y + (p.y === TABLES[0].y - 1 ? 0 : 1)) * TILE - 32 - h;
+  const y = (p.y + 1) * TILE - 46 - h;
   return (
     <g data-testid={`bubble-${p.name}`} key={p.id}>
       <rect
@@ -76,7 +72,7 @@ function bubble(p: Tile & { id: string; name: string }, text: string) {
       />
       {lines.map((l, i) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: line order is fixed
-        <text fontSize="9" key={i} x={x + 5} y={y + 12 + i * 10}>
+        <text fontSize="12" key={i} x={x + 7} y={y + 16 + i * 14}>
           {l}
         </text>
       ))}
@@ -127,7 +123,6 @@ function Scene() {
   const {
     players,
     tables,
-    display,
     you,
     bubbles,
     now,
@@ -140,6 +135,7 @@ function Scene() {
   const svgRef = useRef<SVGSVGElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const [text, setText] = useState('');
+  const [help, setHelp] = useState(false);
   useEffect(() => rootRef.current?.focus(), []);
 
   const me = you ? players[you] : undefined;
@@ -157,8 +153,8 @@ function Scene() {
         ? seat
         : free.sort(
             (a, b) =>
-              Math.abs(TABLES[id].seats[a].y - me.y) -
-              Math.abs(TABLES[id].seats[b].y - me.y)
+              Math.abs(TABLES[id].seats[a].x - me.x) -
+              Math.abs(TABLES[id].seats[b].x - me.x)
           )[0];
     walkTo(TABLES[id].seats[pick], { tableId: id, seat: pick });
   };
@@ -179,7 +175,8 @@ function Scene() {
       e.preventDefault();
       const next = { x: me.x + dir[0], y: me.y + dir[1] };
       if (!seated && !isBlocked(next)) walkTo(next);
-    } else if (e.key === 'Escape' && seated) send({ t: 'stand' });
+    } else if (e.key === 'Escape' && help) setHelp(false);
+    else if (e.key === 'Escape' && seated) send({ t: 'stand' });
     else if (e.key === 'Escape') view(null);
     else if (e.key === 'Enter' || e.key === ' ') {
       for (const t of TABLES)
@@ -192,7 +189,7 @@ function Scene() {
     }
   };
 
-  // Tables and blobs drawn back to front by where they touch the floor.
+  // Blobs drawn back to front by where they touch the floor.
   // AI seats (the resident Computer, or a stand-in) are drawn as blobs too.
   const computers = tables.flatMap((t) =>
     t.seats.flatMap((s, seat) =>
@@ -210,14 +207,9 @@ function Scene() {
   );
   const pcSeat = tables[PC_TABLE]?.seats[0];
   const myTable = tables.find((t) => mySeat(t, you) >= 0);
-  const sorted = [
-    ...TABLES.map((t) => ({ y: (t.y + 1) * TILE, key: `t${t.id}`, table: t })),
-    ...[...Object.values(players), ...computers].map((p) => ({
-      y: (p.y + 1) * TILE + 1,
-      key: p.id,
-      player: p,
-    })),
-  ].sort((a, b) => a.y - b.y);
+  const sorted = [...Object.values(players), ...computers].sort(
+    (a, b) => a.y - b.y
+  );
 
   return (
     <div
@@ -239,46 +231,46 @@ function Scene() {
           viewBox={`0 0 ${W} ${H}`}
         >
           <title>Blob Club</title>
-          <defs>
-            <pattern
-              height="16"
-              id="planks"
-              patternUnits="userSpaceOnUse"
-              width={W}
-            >
-              <rect fill="#c9a26b" height="16" width={W} />
-              <rect fill="#b48a55" height="1" width={W} y="15" />
-            </pattern>
-          </defs>
-          <rect fill="url(#planks)" height={H} width={W} />
-          {/* Bookshelves along the back wall */}
-          <rect fill="#4a2c12" height={SHELF_ROWS * TILE} width={W} />
-          {Array.from({ length: W / 8 }, (_, i) =>
-            [0, 1].map((shelf) => {
-              const h = 20 + ((i * 13 + shelf * 5) % 9);
-              return (
-                <rect
-                  fill={BOOKS[(i * 7 + shelf * 3) % BOOKS.length]}
-                  height={h}
-                  // biome-ignore lint/suspicious/noArrayIndexKey: fixed decoration
-                  key={`${i}-${shelf}`}
-                  width={7}
-                  x={i * 8}
-                  y={shelf * TILE + TILE - 3 - h}
-                />
-              );
-            })
-          )}
-          {[TILE - 3, 2 * TILE - 3].map((y) => (
-            <rect fill="#2e1a0a" height="3" key={y} width={W} y={y} />
-          ))}
+          <image height={H} href="/assets/blob-club/lounge.jpg" width={W} />
+          {/* The poster on the back wall */}
+          {/* biome-ignore lint/a11y/useSemanticElements: an SVG shape */}
           <rect
-            fill="#2e1a0a"
-            height="4"
-            width={TILE * 2}
-            x={(SPAWN.x - 0.5) * TILE}
-            y={H - 4}
+            aria-label="How to play Mancala"
+            className="cursor-pointer"
+            data-testid="how-to-play"
+            fill="transparent"
+            height={TILE * 3.2}
+            onClick={(e) => {
+              e.stopPropagation();
+              setHelp(true);
+            }}
+            onKeyDown={(e) => e.key === 'Enter' && setHelp(true)}
+            role="button"
+            tabIndex={0}
+            width={TILE * 2.7}
+            x={TILE * 15.4}
+            y={TILE * 1.4}
           />
+          {TABLES.map((t) => (
+            // biome-ignore lint/a11y/useSemanticElements: an SVG shape
+            <rect
+              aria-label={`Table ${t.id + 1}`}
+              className="cursor-pointer"
+              fill="transparent"
+              height={t.h * TILE}
+              key={t.id}
+              onClick={(e) => {
+                e.stopPropagation();
+                clickTable(t.id);
+              }}
+              onKeyDown={(e) => e.key === 'Enter' && clickTable(t.id)}
+              role="button"
+              tabIndex={-1}
+              width={t.w * TILE}
+              x={t.x * TILE}
+              y={t.y * TILE}
+            />
+          ))}
 
           {/* Seat cushions */}
           {tables.length > 0 &&
@@ -296,10 +288,9 @@ function Scene() {
                         : 'cursor-pointer'
                     }
                     cx={(spot.x + 0.5) * TILE}
-                    // The back cushion peeks out above the tabletop.
-                    cy={(spot.y + (seat ? 0.35 : 0.75)) * TILE}
+                    cy={(spot.y + 0.6) * TILE}
                     data-testid={`seat-${t.id}-${seat}`}
-                    fill="#b91c1c"
+                    fill={waiting ? '#facc1566' : 'transparent'}
                     // biome-ignore lint/suspicious/noArrayIndexKey: seat number is the identity
                     key={seat}
                     onClick={(e) => {
@@ -310,88 +301,25 @@ function Scene() {
                       e.key === 'Enter' && clickTable(t.id, seat as Seat)
                     }
                     role="button"
-                    rx={TILE * 0.45}
-                    ry={TILE * 0.2}
-                    stroke="#7f1d1d"
+                    rx={TILE * 0.8}
+                    ry={TILE * 0.45}
                     tabIndex={-1}
                   />
                 );
               })
             )}
 
-          {sorted.map((d) => {
-            if ('table' in d) {
-              const t = d.table;
-              const x = t.x * TILE;
-              const y = t.y * TILE;
-              return (
-                // biome-ignore lint/a11y/useSemanticElements: an SVG group
-                <g
-                  aria-label={`Table ${t.id + 1}`}
-                  className="cursor-pointer"
-                  key={d.key}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    clickTable(t.id);
-                  }}
-                  onKeyDown={(e) => e.key === 'Enter' && clickTable(t.id)}
-                  role="button"
-                  tabIndex={-1}
-                >
-                  {[x + 6, x + t.w * TILE - 10].map((lx) => (
-                    <rect
-                      fill="#3f2108"
-                      height="10"
-                      key={lx}
-                      width="4"
-                      x={lx}
-                      y={y + TILE - 2}
-                    />
-                  ))}
-                  <rect
-                    fill="#6b3410"
-                    height="10"
-                    rx="2"
-                    width={t.w * TILE - 4}
-                    x={x + 2}
-                    y={y + TILE - 6}
-                  />
-                  <rect
-                    fill="#a0522d"
-                    height={TILE + 4}
-                    rx="4"
-                    width={t.w * TILE - 4}
-                    x={x + 2}
-                    y={y - 10}
-                  />
-                  {display[t.id] && (
-                    <Board
-                      board={display[t.id]}
-                      h={TILE - 6}
-                      w={t.w * TILE - 24}
-                      x={x + 12}
-                      y={y - 7}
-                    />
-                  )}
-                </g>
-              );
-            }
-            const p = d.player;
+          {sorted.map((p) => {
             const seat = tables
               .flatMap((t) => t.seats)
               .find((s) => s?.id === p.id);
-            // Front seat (seat 0) faces away from us: no face.
-            const facing = seat
-              ? p.y > TABLES[0].y
-                ? 'away'
-                : 'down'
-              : 'front';
             return (
               <g
+                className="pointer-events-none"
                 data-testid={`blob-${p.name}`}
-                key={d.key}
+                key={p.id}
                 style={{
-                  transform: `translate(${(p.x + 0.5) * TILE}px, ${(p.y + 1) * TILE - (facing === 'down' ? 16 : 6)}px)`,
+                  transform: `translate(${(p.x + 0.5) * TILE}px, ${(p.y + 1) * TILE - 6}px) scale(1.5)`,
                   transition: 'transform 150ms linear',
                 }}
               >
@@ -439,18 +367,19 @@ function Scene() {
                     />
                   )}
                   {!seat?.ai &&
-                    facing !== 'away' &&
                     [-4, 4].map((ex) => (
-                      <circle
-                        cx={ex}
-                        cy={facing === 'down' ? -8 : -12}
-                        fill="#111"
-                        key={ex}
-                        r="1.6"
-                      />
+                      <circle cx={ex} cy={-12} fill="#111" key={ex} r="1.6" />
                     ))}
                 </g>
-                <text fill="#111" fontSize="8" textAnchor="middle" y="8">
+                <text
+                  fill="#111"
+                  fontSize="8"
+                  paintOrder="stroke"
+                  stroke="#fdffff"
+                  strokeWidth="2"
+                  textAnchor="middle"
+                  y="8"
+                >
                   {p.name}
                   {p.id === you && ' (you)'}
                 </text>
@@ -463,14 +392,14 @@ function Scene() {
             <text
               data-testid={`table-label-${t.id}`}
               fill="#111"
-              fontSize="10"
+              fontSize="14"
               key={t.id}
               paintOrder="stroke"
               stroke="#fdffff"
               strokeWidth="3"
               textAnchor="middle"
               x={(TABLES[t.id].x + TABLES[t.id].w / 2) * TILE}
-              y={(TABLES[t.id].y - 1) * TILE - 10}
+              y={TABLES[t.id].y * TILE - 8}
             >
               {tableLabel(t)}
             </text>
@@ -500,6 +429,7 @@ function Scene() {
           )}
         </svg>
         {viewing !== null && <Mancala />}
+        {help && <HowToPlay close={() => setHelp(false)} />}
       </div>
       <form
         className="flex gap-2 font-mono text-sm"
@@ -547,6 +477,62 @@ function Scene() {
         Click the floor to walk, a cushion to sit. Esc or a floor click stands
         you up.
       </p>
+    </div>
+  );
+}
+
+function HowToPlay({ close }: { close: () => void }) {
+  return (
+    // biome-ignore lint/a11y/useKeyWithClickEvents: Escape and the button close it
+    // biome-ignore lint/a11y/noStaticElementInteractions: backdrop click closes
+    <div
+      className="absolute inset-0 flex items-center justify-center bg-black/40 p-2"
+      onClick={close}
+    >
+      {/* biome-ignore lint/a11y/useKeyWithClickEvents: only stops the backdrop close */}
+      <div
+        aria-labelledby="how-to-play-title"
+        aria-modal="true"
+        className="border-windows flex max-h-full w-full max-w-lg flex-col gap-2 overflow-auto bg-white p-3 font-mono text-sm"
+        data-testid="how-to-play-panel"
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+      >
+        <h2 className="text-base font-bold" id="how-to-play-title">
+          How to play Mancala
+        </h2>
+        <ul className="list-disc space-y-1 pl-5">
+          <li>
+            Each player has 6 pits with 4 stones, and a store at their right
+            end.
+          </li>
+          <li>
+            On your turn, pick one of your pits. Its stones are dropped one by
+            one into the next pits, counter-clockwise, into your store but never
+            your opponent's.
+          </li>
+          <li>Last stone lands in your store? Go again.</li>
+          <li>
+            Last stone lands in an empty pit on your side? Capture it plus every
+            stone in the pit facing it.
+          </li>
+          <li>
+            When one side runs out of stones, the other player banks what's left
+            on theirs. Most stones in the store wins.
+          </li>
+        </ul>
+        <p>
+          Click a cushion to sit. When someone sits opposite you, the game
+          starts. No one around? The Computer is always up for a game.
+        </p>
+        <button
+          className="border-windows bg-secondary self-center px-4 py-1"
+          onClick={close}
+          type="button"
+        >
+          Got it
+        </button>
+      </div>
     </div>
   );
 }

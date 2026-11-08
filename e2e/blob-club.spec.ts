@@ -88,11 +88,11 @@ test('plays the resident Computer and leaves mid-game', async ({
   // One Computer table shared by both projects running in parallel.
   test.skip(isMobile, 'one shared Computer table');
   const solo = await enterRoom(browser, 'Solo');
-  const label = solo.getByTestId('table-label-2');
+  const label = solo.getByTestId('table-label-4');
   await expect(label).toHaveText('Play the computer – sit to play');
   await expect(solo.getByTestId('blob-Computer (AI)')).toBeVisible();
 
-  await solo.getByTestId('seat-2-0').click();
+  await solo.getByTestId('seat-4-0').click();
   await expect(label).toHaveText('Solo vs Computer (AI)');
   await expect(solo.getByTestId('mancala-status')).toHaveText('Your turn');
 
@@ -108,4 +108,20 @@ test('plays the resident Computer and leaves mid-game', async ({
   await expect(solo.getByTestId('mancala-board')).toBeHidden();
   await expect(label).toHaveText('Play the computer – sit to play');
   await solo.context().close();
+});
+
+test('the poster opens the rules', async ({ browser, isMobile }) => {
+  const page = await enterRoom(browser, isMobile ? 'Mia' : 'Dee');
+  await page.getByTestId('how-to-play').click();
+  const panel = page.getByTestId('how-to-play-panel');
+  await expect(panel).toContainText('How to play Mancala');
+  await page.getByRole('button', { name: 'Got it' }).click();
+  await expect(panel).toBeHidden();
+  // Both projects share the room: one table each.
+  const table = isMobile ? 3 : 1;
+  await page.getByTestId(`seat-${table}-0`).click();
+  await expect(page.getByTestId(`table-label-${table}`)).toHaveText(
+    'Waiting for opponent…'
+  );
+  await page.context().close();
 });

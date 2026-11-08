@@ -1,37 +1,48 @@
 // Blob Club layout and wire protocol, shared by the room server and the browser.
 import type { Seat } from './mancala';
 
-export const COLS = 22;
-export const ROWS = 12;
-export const TILE = 32;
-export const SHELF_ROWS = 2; // bookshelves along the back wall
-export const SPAWN = { x: 11, y: 11 }; // the door
+export const COLS = 32;
+export const ROWS = 18;
+export const TILE = 32; // 32x18 tiles = the 1024x576 lounge picture
+export const SPAWN = { x: 16, y: 17 }; // front of the room
 export const COLORS = ['#3b82f6', '#ef4444', '#22c55e', '#eab308', '#a855f7', '#f97316']; // biome-ignore format: palette
 
 export type Tile = { x: number; y: number };
 
-// Three 5-tile tables mid-floor; seat 0 sits in front (south), seat 1 behind.
-export const TABLES = [2, 9, 16].map((x, id) => ({
+// The five tables painted in the lounge picture, back to front. Each blocks the
+// tiles under it; seat 0 is the cushion on its left, seat 1 the one on its right.
+export const TABLES = (
+  [
+    [12, 8, 3, 1, { x: 11, y: 8 }, { x: 15, y: 8 }],
+    [19, 8, 2, 2, { x: 18, y: 8 }, { x: 21, y: 9 }],
+    [7, 10, 3, 3, { x: 6, y: 11 }, { x: 10, y: 12 }],
+    [15, 12, 3, 3, { x: 14, y: 13 }, { x: 18, y: 14 }],
+    [23, 12, 4, 2, { x: 22, y: 12 }, { x: 27, y: 13 }],
+  ] as const
+).map(([x, y, w, h, a, b], id) => ({
   id,
   x,
-  y: 6,
-  w: 5,
-  seats: [
-    { x: x + 2, y: 7 },
-    { x: x + 2, y: 5 },
-  ] as [Tile, Tile],
+  y,
+  w,
+  h,
+  seats: [a, b] as [Tile, Tile],
 }));
 
-// The Computer always sits at the back of the right-hand table, waiting for a game.
-export const PC_TABLE = 2;
+// The Computer always sits at the front-right table, waiting for a game.
+export const PC_TABLE = 4;
 export const COMPUTER = { id: 'computer', name: 'Computer', ai: true };
 
+// Walkable floor per row, [first, last] column; furniture and walls are off it.
+const FLOOR: Record<number, [number, number]> = {
+  8: [7, 23], 9: [7, 23], 10: [6, 25], 11: [5, 26], 12: [5, 27],
+  13: [5, 28], 14: [4, 28], 15: [4, 28], 16: [2, 28], 17: [3, 28],
+}; // biome-ignore format: a map
+
 export const isBlocked = ({ x, y }: Tile) =>
-  x < 0 ||
-  y < SHELF_ROWS ||
-  x >= COLS ||
-  y >= ROWS ||
-  TABLES.some((t) => y === t.y && x >= t.x && x < t.x + t.w);
+  !FLOOR[y] ||
+  x < FLOOR[y][0] ||
+  x > FLOOR[y][1] ||
+  TABLES.some((t) => x >= t.x && x < t.x + t.w && y >= t.y && y < t.y + t.h);
 
 export const isNear = (a: Tile, b: Tile) =>
   Math.abs(a.x - b.x) <= 1 && Math.abs(a.y - b.y) <= 1;
