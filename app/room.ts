@@ -1,4 +1,4 @@
-// Blob Club layout and wire protocol, shared by the room server and the browser.
+// Mancala lounge layout and wire protocol, shared by the room server and the browser.
 import type { Seat } from './mancala';
 
 export const COLS = 32;

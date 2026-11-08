@@ -10,7 +10,7 @@ const requestHandler = createRequestHandler(
 
 export default {
   async fetch(request, env, ctx) {
-    // The Blob Club's WebSocket goes to its one Durable Object.
+    // The Mancala lounge's WebSocket goes to its one Durable Object.
     if (new URL(request.url).pathname === '/api/room') {
       if (request.headers.get('Upgrade') !== 'websocket')
         return new Response('Expected a WebSocket', { status: 426 });

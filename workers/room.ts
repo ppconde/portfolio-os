@@ -48,7 +48,7 @@ const fresh = (t: TableState) => {
 };
 const inGame = (t: TableState) => !!(t.seats[0] && t.seats[1] && !t.result);
 
-// The Blob Club: everyone's avatar (in each socket's attachment, so it survives
+// The Mancala lounge: everyone's avatar (in each socket's attachment, so it survives
 // hibernation) and the three Mancala tables (in SQLite).
 export class Room extends DurableObject<Env> {
   tables: TableState[];

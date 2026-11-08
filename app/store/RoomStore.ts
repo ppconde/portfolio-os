@@ -26,6 +26,8 @@ type RoomStore = {
   display: number[][]; // what boards show right now (mid-animation, or the demo)
   viewing: number | null; // the table shown in the board overlay
   now: number;
+  muted: boolean; // the taskbar speaker; silences the room's jazz
+  toggleMute: () => void;
   connect: (name: string, color: string) => void;
   disconnect: () => void;
   send: (msg: ClientMsg) => void;
@@ -193,6 +195,8 @@ export const useRoomStore = create<RoomStore>((set, get) => {
     display: [],
     viewing: null,
     now: Date.now(),
+    muted: false,
+    toggleMute: () => set((s) => ({ muted: !s.muted })),
 
     connect: (name, color) => {
       clearTimeout(retry);

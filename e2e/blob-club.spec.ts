@@ -36,7 +36,7 @@ async function enterRoom(browser: Browser, name: string) {
   await showDesktop(page);
   await page
     .getByRole('button')
-    .filter({ has: page.getByAltText('Blob Club') })
+    .filter({ has: page.getByAltText('Mancala', { exact: true }) })
     .press('Enter');
   await page.getByLabel('Your name').fill(name);
   await page.getByRole('button', { name: 'Enter', exact: true }).click();
@@ -132,5 +132,38 @@ test('the poster opens the rules', async ({ browser, isMobile }) => {
   await expect(page.getByTestId(`table-label-${table}`)).toHaveText(
     'Waiting for opponent…'
   );
+  await page.context().close();
+});
+
+test('jazz plays in the room and the speaker mutes it', async ({
+  browser,
+  isMobile,
+}) => {
+  const page = await enterRoom(browser, isMobile ? 'Sax' : 'Bass');
+  const jazz = page.getByTestId('jazz');
+  const state = () =>
+    jazz.evaluate((a: HTMLAudioElement) => ({
+      playing: !a.paused,
+      muted: a.muted,
+    }));
+  await expect.poll(state).toEqual({ playing: true, muted: false });
+  // Keeps playing through the room's per-tick re-renders.
+  await expect
+    .poll(() => jazz.evaluate((a: HTMLAudioElement) => a.currentTime))
+    .toBeGreaterThan(1);
+  await page.getByRole('button', { name: 'Mute sound' }).click();
+  await expect.poll(state).toEqual({ playing: true, muted: true });
+
+  // Closing the window stops the jazz and drops its source.
+  const audio = await jazz.elementHandle();
+  await page.getByTestId('close-button-mancala').click();
+  await expect
+    .poll(() =>
+      audio?.evaluate((a: HTMLAudioElement) => ({
+        paused: a.paused,
+        src: a.getAttribute('src'),
+      }))
+    )
+    .toEqual({ paused: true, src: null });
   await page.context().close();
 });

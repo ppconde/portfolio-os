@@ -56,12 +56,13 @@ const wrap = (text: string, width = 26) =>
 // A speech bubble above a blob standing on `p`.
 function bubble(p: Tile & { id: string; name: string }, text: string) {
   const lines = wrap(text);
-  const w = Math.max(...lines.map((l) => l.length)) * 7 + 14;
+  // Monospace, so the width is exact: 0.6em per character at 12px.
+  const w = Math.max(...lines.map((l) => l.length)) * 7.2 + 14;
   const h = lines.length * 14 + 8;
   const x = Math.min(Math.max((p.x + 0.5) * TILE - w / 2, 2), W - w - 2);
   const y = (p.y + 1) * TILE - 46 - h;
   return (
-    <g data-testid={`bubble-${p.name}`} key={p.id}>
+    <g className="font-mono" data-testid={`bubble-${p.name}`} key={p.id}>
       <rect
         fill="#fdffff"
         height={h}
@@ -72,14 +73,34 @@ function bubble(p: Tile & { id: string; name: string }, text: string) {
         y={y}
       />
       {lines.map((l, i) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: line order is fixed
-        <text fontSize="12" key={i} x={x + 7} y={y + 16 + i * 14}>
+        <text
+          fontSize="12"
+          // biome-ignore lint/suspicious/noArrayIndexKey: line order is fixed
+          key={i}
+          textAnchor="middle"
+          x={x + w / 2}
+          y={y + 16 + i * 14}
+        >
           {l}
         </text>
       ))}
     </g>
   );
 }
+
+// Stable (module-level) so the room's per-tick re-renders don't re-run it.
+// Unmounting stops the jazz and frees its buffered audio.
+const jazzRef = (a: HTMLAudioElement | null) => {
+  if (!a) return;
+  a.src = '/audio/jazz.m4a';
+  a.volume = 0.3;
+  a.play().catch(() => {}); // blocked or unsupported: the room stays quiet
+  return () => {
+    a.pause();
+    a.removeAttribute('src');
+    a.load();
+  };
+};
 
 export default function BlobClub() {
   const status = useRoomStore((s) => s.status);
@@ -102,7 +123,7 @@ function Join() {
         useRoomStore.getState().connect(name, color);
       }}
     >
-      <p>Walk around the Blob Club and play Mancala with whoever's here.</p>
+      <p>Walk around the lounge and play Mancala with whoever's here.</p>
       <label className="flex items-center gap-2">
         Your name
         <input
@@ -132,20 +153,13 @@ function Scene() {
     walkTo,
     view,
     viewing,
+    muted,
   } = useRoomStore(); // re-renders every tick anyway
   const svgRef = useRef<SVGSVGElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const [text, setText] = useState('');
   const [help, setHelp] = useState(false);
   useEffect(() => rootRef.current?.focus(), []);
-  // Jazz while you're in the room. Entering was a click, so autoplay is allowed.
-  useEffect(() => {
-    const jazz = new Audio('/audio/jazz.m4a');
-    jazz.loop = true;
-    jazz.volume = 0.3;
-    jazz.play().catch(() => {}); // blocked or unsupported: the room is quiet
-    return () => jazz.pause();
-  }, []);
 
   const me = you ? players[you] : undefined;
   const seated = tables.some((t) => mySeat(t, you) >= 0);
@@ -223,7 +237,7 @@ function Scene() {
 
   return (
     <div
-      aria-label="Blob Club. Arrow keys walk, Enter sits on a cushion, Escape stands up."
+      aria-label="Mancala lounge. Arrow keys walk, Enter sits on a cushion, Escape stands up."
       className="flex h-full flex-col gap-2 outline-none"
       onKeyDown={onKey}
       ref={rootRef}
@@ -231,6 +245,8 @@ function Scene() {
       // biome-ignore lint/a11y/noNoninteractiveTabindex: the room takes arrow keys to walk
       tabIndex={0}
     >
+      {/* Jazz while you're in the room; entering was a click, so it may autoplay. */}
+      <audio data-testid="jazz" loop muted={muted} ref={jazzRef} />
       <div className="relative min-h-0 grow">
         {/* biome-ignore lint/a11y/useKeyWithClickEvents: arrow keys on the room walk */}
         <svg
@@ -240,7 +256,7 @@ function Scene() {
           ref={svgRef}
           viewBox={`0 0 ${W} ${H}`}
         >
-          <title>Blob Club</title>
+          <title>Mancala lounge</title>
           <image height={H} href="/assets/blob-club/lounge.png" width={W} />
           {/* The poster on the back wall */}
           {/* biome-ignore lint/a11y/useSemanticElements: an SVG shape */}
