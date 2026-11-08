@@ -483,19 +483,12 @@ function Scene() {
 
 function HowToPlay({ close }: { close: () => void }) {
   return (
-    // biome-ignore lint/a11y/useKeyWithClickEvents: Escape and the button close it
-    // biome-ignore lint/a11y/noStaticElementInteractions: backdrop click closes
-    <div
-      className="absolute inset-0 flex items-center justify-center bg-black/40 p-2"
-      onClick={close}
-    >
-      {/* biome-ignore lint/a11y/useKeyWithClickEvents: only stops the backdrop close */}
+    <div className="absolute inset-0 flex items-center justify-center bg-black/40 p-2">
       <div
         aria-labelledby="how-to-play-title"
         aria-modal="true"
         className="border-windows flex max-h-full w-full max-w-lg flex-col gap-2 overflow-auto bg-white p-3 font-mono text-sm"
         data-testid="how-to-play-panel"
-        onClick={(e) => e.stopPropagation()}
         role="dialog"
       >
         <h2 className="text-base font-bold" id="how-to-play-title">

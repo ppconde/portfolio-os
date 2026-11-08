@@ -47,8 +47,6 @@ function Stones({
 
 type BoardProps = {
   board: number[];
-  x?: number;
-  y?: number;
   w: number;
   h: number;
   flip?: boolean; // seat 1's view: their pits along the bottom
@@ -57,15 +55,15 @@ type BoardProps = {
 
 // A wooden tray: 6 pits per side, a store at each end. Seat 0's pits run along
 // the bottom left to right into the right store (unless flipped).
-export function Board({ board, x = 0, y = 0, w, h, flip, onPit }: BoardProps) {
+function Board({ board, w, h, flip, onPit }: BoardProps) {
   const sw = w / 8;
   const cw = (w - 2 * sw) / 6;
   const r = Math.min(cw, h / 2) * 0.4;
   const [low, high] = flip ? [7, 0] : [0, 7];
   const [right, left] = flip ? [13, 6] : [6, 13];
   const pits = Array.from({ length: 6 }, (_, c) => [
-    { i: low + c, cx: x + sw + cw * (c + 0.5), cy: y + h * 0.75 },
-    { i: high + 5 - c, cx: x + sw + cw * (c + 0.5), cy: y + h * 0.25 },
+    { i: low + c, cx: sw + cw * (c + 0.5), cy: h * 0.75 },
+    { i: high + 5 - c, cx: sw + cw * (c + 0.5), cy: h * 0.25 },
   ]).flat();
 
   return (
@@ -76,12 +74,10 @@ export function Board({ board, x = 0, y = 0, w, h, flip, onPit }: BoardProps) {
         rx={h / 5}
         stroke="#4a2c12"
         width={w}
-        x={x}
-        y={y}
       />
       {[
-        { i: left, cx: x + sw / 2 },
-        { i: right, cx: x + w - sw / 2 },
+        { i: left, cx: sw / 2 },
+        { i: right, cx: w - sw / 2 },
       ].map(({ i, cx }) => (
         <g data-testid={onPit && `store-${i}`} key={i}>
           <rect
@@ -90,9 +86,9 @@ export function Board({ board, x = 0, y = 0, w, h, flip, onPit }: BoardProps) {
             rx={sw * 0.35}
             width={sw * 0.7}
             x={cx - sw * 0.35}
-            y={y + h * 0.1}
+            y={h * 0.1}
           />
-          <Stones cx={cx} cy={y + h / 2} n={board[i]} r={r} salt={i} />
+          <Stones cx={cx} cy={h / 2} n={board[i]} r={r} salt={i} />
         </g>
       ))}
       {pits.map(({ i, cx, cy }) => {
