@@ -29,7 +29,7 @@ const ABANDON: 'ai' | 'forfeit' = 'forfeit';
 
 const seatSchema = z.union([z.literal(0), z.literal(1)]);
 const ClientMsg = z.discriminatedUnion('t', [
-  z.object({ t: z.literal('pos'), x: z.int(), y: z.int() }),
+  z.object({ t: z.literal('pos'), x: z.number(), y: z.number() }),
   z.object({ t: z.literal('say'), text: z.string().trim().min(1).max(80) }),
   z.object({ t: z.literal('sit'), tableId: z.int(), seat: seatSchema }),
   z.object({ t: z.literal('stand') }),
@@ -206,9 +206,9 @@ export class Room extends DurableObject<Env> {
 
     switch (msg.t) {
       case 'pos': {
-        // One tile at a time, on the floor, and never while seated.
-        const step = Math.abs(msg.x - me.x) + Math.abs(msg.y - me.y);
-        if (this.seatOf(me.id) || step !== 1 || isBlocked(msg))
+        // Short steps, on the floor, and never while seated.
+        const step = Math.hypot(msg.x - me.x, msg.y - me.y);
+        if (this.seatOf(me.id) || !(step <= 1) || isBlocked(msg))
           return send({ t: 'pos', id: me.id, x: me.x, y: me.y });
         ws.serializeAttachment({ ...me, x: msg.x, y: msg.y });
         return this.broadcast({ t: 'pos', id: me.id, x: msg.x, y: msg.y }, ws);

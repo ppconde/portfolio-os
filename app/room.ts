@@ -38,11 +38,33 @@ const FLOOR: Record<number, [number, number]> = {
   13: [5, 28], 14: [4, 28], 15: [4, 28], 16: [2, 28], 17: [3, 28],
 }; // biome-ignore format: a map
 
-export const isBlocked = ({ x, y }: Tile) =>
-  !FLOOR[y] ||
-  x < FLOOR[y][0] ||
-  x > FLOOR[y][1] ||
-  TABLES.some((t) => x >= t.x && x < t.x + t.w && y >= t.y && y < t.y + t.h);
+// Positions are free (fractional tiles); a spot is blocked if its nearest tile is.
+export const isBlocked = (p: Tile) => {
+  const x = Math.round(p.x);
+  const y = Math.round(p.y);
+  return (
+    !FLOOR[y] ||
+    x < FLOOR[y][0] ||
+    x > FLOOR[y][1] ||
+    TABLES.some((t) => x >= t.x && x < t.x + t.w && y >= t.y && y < t.y + t.h)
+  );
+};
+
+export const STEP = 0.8; // tiles walked per tick; the server allows up to 1
+
+// Nothing blocked on the straight line from a to b (sampled every quarter tile).
+export const lineClear = (a: Tile, b: Tile) => {
+  const n = Math.ceil(Math.hypot(b.x - a.x, b.y - a.y) * 4);
+  for (let k = 1; k <= n; k++)
+    if (
+      isBlocked({
+        x: a.x + ((b.x - a.x) * k) / n,
+        y: a.y + ((b.y - a.y) * k) / n,
+      })
+    )
+      return false;
+  return true;
+};
 
 export const isNear = (a: Tile, b: Tile) =>
   Math.abs(a.x - b.x) <= 1 && Math.abs(a.y - b.y) <= 1;

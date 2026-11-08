@@ -3,9 +3,11 @@ import { isOver, newBoard, pickMove, type Seat, sow } from '~/mancala';
 import {
   type ClientMsg,
   findPath,
+  lineClear,
   type Player,
   type SeatInfo,
   type ServerMsg,
+  STEP,
   TABLES,
   type TableState,
   type Tile,
@@ -141,12 +143,20 @@ export const useRoomStore = create<RoomStore>((set, get) => {
     const s = get();
     const patch: Partial<RoomStore> = { now: Date.now() };
     const me = s.you && s.players[s.you];
-    const next = route.shift();
-    if (me && next) {
+    const target = route[0];
+    if (me && target) {
+      // Glide toward the next waypoint; CSS smooths between ticks.
+      const d = Math.hypot(target.x - me.x, target.y - me.y);
+      const k = d <= STEP ? 1 : STEP / d;
+      if (k === 1) route.shift();
+      const next = {
+        x: me.x + (target.x - me.x) * k,
+        y: me.y + (target.y - me.y) * k,
+      };
       patch.players = { ...s.players, [me.id]: { ...me, ...next } };
       s.send({ t: 'pos', ...next });
     }
-    if (me && !next && pendingSit) {
+    if (me && !target && pendingSit) {
       s.send({ t: 'sit', ...pendingSit });
       pendingSit = null;
     }
@@ -232,9 +242,24 @@ export const useRoomStore = create<RoomStore>((set, get) => {
       const { you, players } = get();
       const me = you && players[you];
       if (!me) return;
-      route = findPath(me, to);
-      pendingSit =
-        sit && (route.length || (me.x === to.x && me.y === to.y)) ? sit : null;
+      // Route over tiles, then cut every corner the straight line can.
+      const tile = (p: Tile) => ({ x: Math.round(p.x), y: Math.round(p.y) });
+      const here = tile(me);
+      const goal = tile(to);
+      const path = findPath(here, goal);
+      const same = here.x === goal.x && here.y === goal.y;
+      route = [];
+      pendingSit = null;
+      if (!path.length && !same) return;
+      const pts = [...path.slice(0, -1), to];
+      for (let from: Tile = me, i = 0; i < pts.length; ) {
+        let j = pts.length - 1;
+        while (j > i && !lineClear(from, pts[j])) j--;
+        route.push(pts[j]);
+        from = pts[j];
+        i = j + 1;
+      }
+      pendingSit = sit ?? null;
     },
 
     view: openBoard,

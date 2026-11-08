@@ -1,5 +1,6 @@
 import { type Browser, expect, type Page, test } from '@playwright/test';
 import { isOver, newBoard, sow } from '../app/mancala';
+import { isBlocked, lineClear, SPAWN, TABLES } from '../app/room';
 import { showDesktop } from './helpers';
 
 test('mancala rules: extra turn, capture, end-of-game sweep', () => {
@@ -18,6 +19,14 @@ test('mancala rules: extra turn, capture, end-of-game sweep', () => {
   expect(end.over).toBe(true);
   expect(end.board).toEqual([0, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 10]);
   expect(isOver(end.board)).toBe(true);
+});
+
+test('free movement: fractional spots, straight lines blocked by tables', () => {
+  expect(isBlocked({ x: 16.3, y: 16.6 })).toBe(false);
+  expect(isBlocked({ x: 16, y: 4.2 })).toBe(true); // the back wall
+  const [left, right] = TABLES[3].seats; // either side of a table
+  expect(lineClear(left, right)).toBe(false);
+  expect(lineClear(SPAWN, { x: 16.4, y: 15.2 })).toBe(true);
 });
 
 async function enterRoom(browser: Browser, name: string) {

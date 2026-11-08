@@ -5,6 +5,7 @@ import {
   COLS,
   COMPUTER,
   isBlocked,
+  isNear,
   PC_TABLE,
   ROWS,
   TABLES,
@@ -137,6 +138,14 @@ function Scene() {
   const [text, setText] = useState('');
   const [help, setHelp] = useState(false);
   useEffect(() => rootRef.current?.focus(), []);
+  // Jazz while you're in the room. Entering was a click, so autoplay is allowed.
+  useEffect(() => {
+    const jazz = new Audio('/audio/jazz.m4a');
+    jazz.loop = true;
+    jazz.volume = 0.3;
+    jazz.play().catch(() => {}); // blocked or unsupported: the room is quiet
+    return () => jazz.pause();
+  }, []);
 
   const me = you ? players[you] : undefined;
   const seated = tables.some((t) => mySeat(t, you) >= 0);
@@ -165,7 +174,8 @@ function Scene() {
     const ctm = svg?.getScreenCTM();
     if (!svg || !ctm) return;
     const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(ctm.inverse());
-    walkTo({ x: Math.floor(p.x / TILE), y: Math.floor(p.y / TILE) });
+    // Feet land where you clicked.
+    walkTo({ x: p.x / TILE - 0.5, y: p.y / TILE - 0.8 });
   };
 
   const onKey = (e: React.KeyboardEvent) => {
@@ -173,7 +183,7 @@ function Scene() {
     const dir = KEYS[e.key];
     if (dir) {
       e.preventDefault();
-      const next = { x: me.x + dir[0], y: me.y + dir[1] };
+      const next = { x: me.x + dir[0] / 2, y: me.y + dir[1] / 2 };
       if (!seated && !isBlocked(next)) walkTo(next);
     } else if (e.key === 'Escape' && help) setHelp(false);
     else if (e.key === 'Escape' && seated) send({ t: 'stand' });
@@ -181,7 +191,7 @@ function Scene() {
     else if (e.key === 'Enter' || e.key === ' ') {
       for (const t of TABLES)
         t.seats.forEach((spot, seat) => {
-          if (spot.x === me.x && spot.y === me.y && !tables[t.id].seats[seat]) {
+          if (isNear(me, spot) && !tables[t.id].seats[seat]) {
             e.preventDefault();
             send({ t: 'sit', tableId: t.id, seat: seat as Seat });
           }
@@ -255,7 +265,7 @@ function Scene() {
             // biome-ignore lint/a11y/useSemanticElements: an SVG shape
             <rect
               aria-label={`Table ${t.id + 1}`}
-              className="cursor-pointer"
+              className="cursor-pointer outline-none"
               fill="transparent"
               height={t.h * TILE}
               key={t.id}
@@ -284,8 +294,8 @@ function Scene() {
                     aria-label={`Table ${t.id + 1}, ${seat ? 'back' : 'front'} seat${taken ? ' (taken)' : ''}`}
                     className={
                       waiting
-                        ? 'animate-pulse cursor-pointer'
-                        : 'cursor-pointer'
+                        ? 'animate-pulse cursor-pointer outline-none'
+                        : 'cursor-pointer outline-none'
                     }
                     cx={(spot.x + 0.5) * TILE}
                     cy={(spot.y + 0.6) * TILE}

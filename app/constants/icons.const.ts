@@ -23,7 +23,7 @@ export const icons: Icon[] = [
   {
     label: AppsNames.BLOB_CLUB,
     app: AppsNames.BLOB_CLUB,
-    icon: '/assets/msn3-4.png',
+    icon: '/assets/mancala-0.png',
   },
   {
     label: AppsNames.CREDITS,
