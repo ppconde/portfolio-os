@@ -3,6 +3,7 @@ import type { Seat } from '~/mancala';
 import {
   COLORS,
   COLS,
+  COMPUTER,
   isBlocked,
   PC_TABLE,
   ROWS,
