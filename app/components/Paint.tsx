@@ -10,6 +10,9 @@ const SIZES = [1, 3, 6, 10];
 const TOOLS = ['Pencil', 'Eraser', 'Fill'] as const;
 type Tool = (typeof TOOLS)[number];
 
+// Tile index in the classic toolbox sprite (16px tiles), from jspaint.
+const TOOL_SPRITE: Record<Tool, number> = { Pencil: 6, Eraser: 2, Fill: 3 };
+
 const getCtx = (canvas: HTMLCanvasElement | null) =>
   canvas?.getContext('2d', { willReadFrequently: true });
 const whiten = (c: CanvasRenderingContext2D) => {
@@ -56,6 +59,23 @@ export default function Paint() {
   const [tool, setTool] = useState<Tool>('Pencil');
   const [color, setColor] = useState('#000000');
   const [size, setSize] = useState(3);
+  const [menu, setMenu] = useState<string | null>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // An open menu closes on a click outside it or on Escape.
+  useEffect(() => {
+    if (!menu) return;
+    const onDown = (e: PointerEvent) => {
+      if (!menuRef.current?.contains(e.target as Node)) setMenu(null);
+    };
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setMenu(null);
+    document.addEventListener('pointerdown', onDown);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('pointerdown', onDown);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [menu]);
 
   const ctx = () => getCtx(canvasRef.current);
   // Every edit happens inside the visible area, so that's all undo needs to keep.
@@ -175,6 +195,15 @@ export default function Paint() {
     a.click();
   };
 
+  // Win98 Paint keeps New/Save/Undo in its File and Edit menus.
+  const menus: Record<string, [string, () => void][]> = {
+    File: [
+      ['New', clear],
+      ['Save', save],
+    ],
+    Edit: [['Undo', undo]],
+  };
+
   const btn = (active: boolean) =>
     classNames(
       'flex h-7 items-center justify-center px-1 text-xs',
@@ -182,31 +211,79 @@ export default function Paint() {
     );
 
   return (
-    <div className="bg-secondary -m-4 flex h-[calc(100%+2rem)] flex-col text-xs">
-      <div className="flex gap-1 p-1">
-        <button className={btn(false)} onClick={clear} type="button">
-          New
-        </button>
-        <button className={btn(false)} onClick={save} type="button">
-          Save
-        </button>
-        <button className={btn(false)} onClick={undo} type="button">
-          Undo
-        </button>
+    // biome-ignore lint/a11y/noStaticElementInteractions: window-level Alt+letter menu shortcuts
+    <div
+      className="bg-secondary -m-4 flex h-[calc(100%+2rem)] flex-col text-xs outline-none"
+      onKeyDown={(e) => {
+        // e.code, not e.key: on macOS Alt+F types "ƒ".
+        const name = Object.keys(menus).find((n) => e.code === `Key${n[0]}`);
+        if (!e.altKey || !name) return;
+        e.preventDefault();
+        setMenu(name);
+      }}
+      // Focusable so a click anywhere in Paint routes its keys here.
+      tabIndex={-1}
+    >
+      <div className="flex px-1" ref={menuRef}>
+        {Object.entries(menus).map(([name, items]) => (
+          <div className="relative" key={name}>
+            <button
+              aria-expanded={menu === name}
+              aria-haspopup="true"
+              className={classNames(
+                'border px-2 py-0.5',
+                menu === name ? 'border-windows-sunken' : 'border-transparent'
+              )}
+              onClick={() => setMenu(menu === name ? null : name)}
+              onPointerEnter={() => menu && setMenu(name)}
+              type="button"
+            >
+              <u>{name[0]}</u>
+              {name.slice(1)}
+            </button>
+            {menu === name && (
+              <div className="border-windows bg-secondary absolute top-full left-0 z-10 flex min-w-28 flex-col p-0.5">
+                {items.map(([label, run]) => (
+                  <button
+                    className="hover:bg-accent hover:text-tertiary px-4 py-0.5 text-left"
+                    key={label}
+                    onClick={() => {
+                      setMenu(null);
+                      run();
+                    }}
+                    type="button"
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
       </div>
       <div className="flex min-h-0 grow gap-1 p-1">
         <div className="flex w-16 shrink-0 flex-col gap-1">
-          {TOOLS.map((t) => (
-            <button
-              aria-pressed={tool === t}
-              className={btn(tool === t)}
-              key={t}
-              onClick={() => setTool(t)}
-              type="button"
-            >
-              {t}
-            </button>
-          ))}
+          <div className="grid grid-cols-2 gap-1">
+            {TOOLS.map((t) => (
+              <button
+                aria-label={t}
+                aria-pressed={tool === t}
+                className={btn(tool === t)}
+                key={t}
+                onClick={() => setTool(t)}
+                title={t}
+                type="button"
+              >
+                <span
+                  aria-hidden="true"
+                  className="h-4 w-4 [image-rendering:pixelated]"
+                  style={{
+                    background: `url(/assets/paint-tools.png) -${TOOL_SPRITE[t] * 16}px 0`,
+                  }}
+                />
+              </button>
+            ))}
+          </div>
           <div className="border-windows-sunken mt-1 flex flex-col gap-1 border p-1">
             {SIZES.map((s) => (
               <button
