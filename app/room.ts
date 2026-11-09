@@ -4,7 +4,7 @@ import type { Seat } from './mancala';
 export const COLS = 32;
 export const ROWS = 18;
 export const TILE = 32; // 32x18 tiles = the 1024x576 lounge picture
-export const SPAWN = { x: 16, y: 17 }; // front of the room
+export const SPAWN = { x: 16, y: 16 }; // front of the room
 export const COLORS = ['#3b82f6', '#ef4444', '#22c55e', '#eab308', '#a855f7', '#f97316']; // biome-ignore format: palette
 
 export type Tile = { x: number; y: number };
@@ -35,7 +35,7 @@ export const COMPUTER = { id: 'computer', name: 'Computer', ai: true };
 // Walkable floor per row, [first, last] column; furniture and walls are off it.
 const FLOOR: Record<number, [number, number]> = {
   8: [7, 23], 9: [7, 23], 10: [6, 25], 11: [5, 26], 12: [5, 27],
-  13: [5, 28], 14: [4, 28], 15: [4, 28], 16: [2, 28], 17: [3, 28],
+  13: [5, 28], 14: [4, 28], 15: [4, 28], 16: [2, 28],
 }; // biome-ignore format: a map
 
 // Positions are free (fractional tiles); a spot is blocked if its nearest tile is.

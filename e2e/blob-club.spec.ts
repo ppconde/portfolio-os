@@ -22,7 +22,7 @@ test('mancala rules: extra turn, capture, end-of-game sweep', () => {
 });
 
 test('free movement: fractional spots, straight lines blocked by tables', () => {
-  expect(isBlocked({ x: 16.3, y: 16.6 })).toBe(false);
+  expect(isBlocked({ x: 16.3, y: 15.6 })).toBe(false);
   expect(isBlocked({ x: 16, y: 4.2 })).toBe(true); // the back wall
   const [left, right] = TABLES[3].seats; // either side of a table
   expect(lineClear(left, right)).toBe(false);
