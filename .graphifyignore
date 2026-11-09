@@ -1,0 +1,4 @@
+# Vendored agent skills and local test screenshots are not part of this project.
+.agents/
+e2e/*-snapshots/
+.impeccable/

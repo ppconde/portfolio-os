@@ -18,3 +18,20 @@ node_modules
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+# graphify: keep the graph, report, manifest and labels; the rest is local
+/graphify-out/*
+!/graphify-out/graph.json
+!/graphify-out/GRAPH_REPORT.md
+!/graphify-out/manifest.json
+!/graphify-out/.graphify_labels.json
+!/graphify-out/.graphify_labels.json.sig
+
+# Local tooling: agent skills (and their .claude links), design critiques,
+# personal Claude settings, macOS e2e snapshots (CI uses the -linux ones)
+/.agents/
+/.claude/skills/
+/.claude/settings.local.json
+/skills-lock.json
+/.impeccable/
+e2e/**/*-darwin.png
