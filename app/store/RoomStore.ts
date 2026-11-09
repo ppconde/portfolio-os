@@ -143,7 +143,9 @@ export const useRoomStore = create<RoomStore>((set, get) => {
 
   const tick = () => {
     const s = get();
-    const patch: Partial<RoomStore> = { now: Date.now() };
+    // `now` only times bubbles, so whole seconds do: an idle room renders 1x/s, not every tick.
+    const now = Math.floor(Date.now() / 1000) * 1000;
+    const patch: Partial<RoomStore> = { now };
     const me = s.you && s.players[s.you];
     const target = route[0];
     if (me && target) {
@@ -183,7 +185,7 @@ export const useRoomStore = create<RoomStore>((set, get) => {
       return board;
     });
     if (display.some((b, i) => b !== s.display[i])) patch.display = display;
-    set(patch);
+    if (patch.players || patch.display || now !== s.now) set(patch);
   };
 
   return {
