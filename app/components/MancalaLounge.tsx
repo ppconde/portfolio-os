@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import type { Seat } from '~/mancala';
 import {
   COLORS,
@@ -204,7 +205,22 @@ function Scene() {
     view,
     viewing,
     muted,
-  } = useRoomStore(); // re-renders every tick anyway
+  } = useRoomStore(
+    // Only what the room draws: the boards animating at empty tables (display)
+    // would otherwise redraw the whole room every tick.
+    useShallow((s) => ({
+      players: s.players,
+      tables: s.tables,
+      you: s.you,
+      bubbles: s.bubbles,
+      now: s.now,
+      send: s.send,
+      walkTo: s.walkTo,
+      view: s.view,
+      viewing: s.viewing,
+      muted: s.muted,
+    }))
+  );
   const svgRef = useRef<SVGSVGElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const [help, setHelp] = useState(false);
