@@ -40,8 +40,22 @@ jobs:
         run: echo "GITHUB_KEY=${{ secrets.GH_API_TOKEN }}" > .env.local
       - name: Build project
         run: pnpm run build
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+      - name: Get Playwright version
+        id: pw
+        run: echo "version=$(npx playwright --version | cut -d' ' -f2)" >> "$GITHUB_OUTPUT"
+      - name: Cache Playwright browsers
+        id: pw-cache
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.pw.outputs.version }}
+      # iPhone 12 device (chromium-mobile project) runs on webkit
+      - name: Install Playwright browsers
+        if: steps.pw-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps chromium webkit
+      - name: Install Playwright system deps
+        if: steps.pw-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium webkit
       - name: Run Playwright tests
         run: npx playwright test
       - name: Upload HTML report
