@@ -223,12 +223,10 @@
   animation: blob-look 8s ease-in-out infinite;
 }
 @keyframes blob-look {
-  0%,
   30%,
   44%,
   56%,
-  70%,
-  100% {
+  70% {
     transform: translate(0, 0);
   }
   34%,

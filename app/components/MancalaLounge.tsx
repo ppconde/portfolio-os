@@ -89,17 +89,20 @@ function bubble(p: Tile & { id: string; name: string }, text: string) {
   );
 }
 
-// A stable pseudo-random number per player, so blobs idle out of step.
-const seed = (id: string) =>
-  [...id].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
-const idleStyle = (id: string) => ({
-  animationDuration: `${2.2 + (seed(id) % 7) / 10}s`,
-  animationDelay: `-${seed(id) % 3}s`,
-});
-const eyesStyle = (id: string) => ({
-  animationDuration: `${6 + (seed(id) % 50) / 10}s`,
-  animationDelay: `-${(seed(id) >> 4) % 11}s`,
-});
+// Breath and eye timings from a stable hash of the id, so blobs idle out of step.
+const clocks = (id: string) => {
+  const s = [...id].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
+  return [
+    {
+      animationDuration: `${2.2 + (s % 7) / 10}s`,
+      animationDelay: `-${s % 3}s`,
+    },
+    {
+      animationDuration: `${6 + (s % 50) / 10}s`,
+      animationDelay: `-${(s >> 4) % 11}s`,
+    },
+  ];
+};
 
 // Stable (module-level) so the room's per-tick re-renders don't re-run it.
 // Unmounting stops the jazz and frees its buffered audio.
@@ -359,6 +362,7 @@ function Scene() {
               const seat = tables
                 .flatMap((t) => t.seats)
                 .find((s) => s?.id === p.id);
+              const [idle, eyes] = clocks(p.id);
               return (
                 <g
                   className="pointer-events-none"
@@ -403,8 +407,7 @@ function Scene() {
                         ))}
                       </>
                     ) : (
-                      // Each blob breathes and glances on its own clock, seeded by its id.
-                      <g className="blob-idle" style={idleStyle(p.id)}>
+                      <g className="blob-idle" style={idle}>
                         <ellipse
                           cx="0"
                           cy="-10"
@@ -413,7 +416,7 @@ function Scene() {
                           ry="10"
                           stroke="#00000066"
                         />
-                        <g className="blob-eyes" style={eyesStyle(p.id)}>
+                        <g className="blob-eyes" style={eyes}>
                           {[-4, 4].map((ex) => (
                             <circle
                               cx={ex}
