@@ -26,3 +26,12 @@ node_modules
 !/graphify-out/manifest.json
 !/graphify-out/.graphify_labels.json
 !/graphify-out/.graphify_labels.json.sig
+
+# Local tooling: agent skills (and their .claude links), design critiques,
+# personal Claude settings, macOS e2e snapshots (CI uses the -linux ones)
+/.agents/
+/.claude/skills/
+/.claude/settings.local.json
+/skills-lock.json
+/.impeccable/
+e2e/**/*-darwin.png

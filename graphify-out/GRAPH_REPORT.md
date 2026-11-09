@@ -1,30 +1,31 @@
 # Graph Report - portfolio-os  (2026-11-09)
 
 ## Corpus Check
-- 89 files · ~100,605 words
-- Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 11 file(s) not represented in the graph (top: (none) 5, .woff 2, .woff2 1)
+- cluster-only mode — file stats not available
 
 ## Summary
-- 2182 nodes · 2627 edges · 185 communities (41 shown, 144 thin omitted)
+- 2168 nodes · 2615 edges · 189 communities (43 shown, 146 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 15 edges (avg confidence: 0.84)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `a094fa61`
+- Built from commit: `f54acba3`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - Workers AI Model Types
 - MancalaLounge.tsx
+- useRoomStore
 - contact.tsx
 - BiosScreen.tsx
 - Test Plan: Basic Operations for Portfolio OS App
 - Playwright CI Workflow
 - compilerOptions
+- Room
 - Dependabot Configuration
 - package.json
+- Mancala.tsx
 - Console API
 - DesktopContent.tsx
 - Compression and Transform Streams
@@ -34,6 +35,9 @@
 - Dependabot Build Check
 - dependencies
 - URLSearchParams API
+- mancala.spec.ts
+- ServiceWorkerGlobalScope
+- env.d.ts
 - Website Navigation Layout
 - Durable Object Storage
 - Biome Linter Rules
@@ -58,7 +62,7 @@
 - Artifacts
 - OSWindow.tsx
 - Biome CSS Formatter
-- ServiceWorkerGlobalScope
+- EventSource
 - Flagship Feature Flags
 - R2 Object Body
 - Stream Queuing Strategies
@@ -193,8 +197,6 @@
 - devDependencies
 - compilerOptions
 - AiSearchInstance
-- Critique: animation & motion (site-wide)
-- Critique: whole site (Ppconde OS)
 - entry.server.tsx
 - Dev Notes for portfolio-os
 
@@ -228,23 +230,27 @@
 ## Hyperedges (group relationships)
 - **Playwright plan-generate-heal test pipeline** — _github_agents_playwright_test_planner_agent_playwright_test_planner, _github_agents_playwright_test_generator_agent_playwright_test_generator, _github_agents_playwright_test_healer_agent_playwright_test_healer, e2e_readme_test_plan_basic_operations [INFERRED 0.85]
 
-## Communities (185 total, 144 thin omitted)
+## Communities (189 total, 146 thin omitted)
 
 ### Community 0 - "Workers AI Model Types"
 Cohesion: 0.00
 Nodes (785): RFC-2253, RFC-3339, RFC-5246, Ai_Cf_Ai4Bharat_Indictrans2_En_Indic_1B_Input, Ai_Cf_Ai4Bharat_Indictrans2_En_Indic_1B_Output, Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Async_Batch, Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_AsyncResponse, Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Chat_Completion_Response (+777 more)
 
 ### Community 1 - "MancalaLounge.tsx"
-Cohesion: 0.05
-Nodes (75): BEANS, Board(), BoardProps, COLS, Mancala(), Stones(), STORES, [TOP, BOTTOM, R] (+67 more)
+Cohesion: 0.12
+Nodes (29): KEYS, NAMES, Seat, COLORS, COLS, COMPUTER, findPath(), FLOOR (+21 more)
+
+### Community 2 - "useRoomStore"
+Cohesion: 0.13
+Nodes (17): Blobs(), bubble(), Bubbles(), Chat(), clocks(), Connecting(), HowToPlay(), Join() (+9 more)
 
 ### Community 3 - "contact.tsx"
 Cohesion: 0.12
-Nodes (20): Credits(), inspirations, A(), ContentEntry(), H2(), Project, ProjectCard(), Section() (+12 more)
+Nodes (19): Credits(), inspirations, A(), ContentEntry(), H2(), Project, ProjectCard(), Section() (+11 more)
 
 ### Community 4 - "BiosScreen.tsx"
-Cohesion: 0.22
-Nodes (14): BiosScreen(), session, skipToDesktop(), STEP_DELAYS, BlinkCaret(), Screen, reboot(), ShutdownScreen() (+6 more)
+Cohesion: 0.25
+Nodes (13): BiosScreen(), session, skipToDesktop(), STEP_DELAYS, BlinkCaret(), Screen, reboot(), ShutdownScreen() (+5 more)
 
 ### Community 5 - "Test Plan: Basic Operations for Portfolio OS App"
 Cohesion: 0.20
@@ -258,17 +264,25 @@ Nodes (29): GITHUB_KEY, jobs, test, typecheck, name, on, pull_request, push (+21
 Cohesion: 0.12
 Nodes (16): compilerOptions, composite, esModuleInterop, jsx, lib, module, moduleResolution, paths (+8 more)
 
+### Community 8 - "Room"
+Cohesion: 0.32
+Nodes (3): TableState, inGame(), Room
+
 ### Community 9 - "Dependabot Configuration"
 Cohesion: 0.09
 Nodes (22): patterns, prefix, actions, major-updates, minor-and-patch, security-updates, patterns, update-types (+14 more)
 
 ### Community 10 - "package.json"
 Cohesion: 0.12
-Nodes (15): name, packageManager, private, sideEffects, type, @biomejs/biome, @cloudflare/workers-types, react-draggable (+7 more)
+Nodes (15): name, packageManager, private, sideEffects, type, @biomejs/biome, @cloudflare/workers-types, @react-router/cloudflare (+7 more)
+
+### Community 11 - "Mancala.tsx"
+Cohesion: 0.18
+Nodes (14): BEANS, Board(), BoardProps, COLS, Mancala(), Stones(), STORES, [TOP, BOTTOM, R] (+6 more)
 
 ### Community 13 - "DesktopContent.tsx"
-Cohesion: 0.18
-Nodes (13): APPS, MancalaLounge, Paint, Icon(), AppsNames, CREDITS, MANCALA, PAINT (+5 more)
+Cohesion: 0.17
+Nodes (14): APPS, MancalaLounge, Paint, Icon(), AppsNames, CREDITS, MANCALA, PAINT (+6 more)
 
 ### Community 14 - "Compression and Transform Streams"
 Cohesion: 0.10
@@ -279,8 +293,8 @@ Cohesion: 0.04
 Nodes (12): CloseEvent, CustomEvent, EmailEvent, ErrorEvent, Event, ExtendableEvent, FetchEvent, MessageEvent (+4 more)
 
 ### Community 17 - "Navbar.tsx"
-Cohesion: 0.22
-Nodes (12): Clock(), DesktopContent(), Navbar(), NavBarButton(), VerticalSeparator(), icons, fmt(), useTime() (+4 more)
+Cohesion: 0.24
+Nodes (11): Clock(), DesktopContent(), Navbar(), NavBarButton(), VerticalSeparator(), fmt(), useTime(), DesktopWindow (+3 more)
 
 ### Community 18 - "Dependabot Build Check"
 Cohesion: 0.12
@@ -289,6 +303,10 @@ Nodes (16): if, runs-on, steps, jobs, build, name, on, pull_request (+8 more)
 ### Community 19 - "dependencies"
 Cohesion: 0.18
 Nodes (11): dependencies, classnames, isbot, react, react-dom, react-draggable, react-router, @react-router/cloudflare (+3 more)
+
+### Community 21 - "mancala.spec.ts"
+Cohesion: 0.20
+Nodes (13): isLegal(), isOver(), newBoard(), owns(), pickMove(), resultText(), sow(), STORE (+5 more)
 
 ### Community 24 - "Website Navigation Layout"
 Cohesion: 0.24
@@ -331,16 +349,16 @@ Cohesion: 0.18
 Nodes (11): AlreadyUploadedError, BadRequestError, ForbiddenError, InternalError, InvalidURLError, MaxFileSizeError, NotFoundError, QuotaReachedError (+3 more)
 
 ### Community 57 - "OSWindow.tsx"
-Cohesion: 0.33
-Nodes (7): OSWindow(), OSWindowProps, ButtonProps, WindowButton(), frame(), Zoom, ZoomOutline()
+Cohesion: 0.39
+Nodes (6): OSWindow(), OSWindowProps, frame(), Zoom, ZoomOutline(), react-draggable
 
 ### Community 58 - "Biome CSS Formatter"
 Cohesion: 0.20
 Nodes (10): css, formatter, parser, formatter, enabled, indentStyle, indentWidth, lineEnding (+2 more)
 
-### Community 59 - "ServiceWorkerGlobalScope"
-Cohesion: 0.04
-Nodes (7): AbortSignal, EventSource, EventTarget, MessagePort, ServiceWorkerGlobalScope, WebSocket, WorkerGlobalScope
+### Community 59 - "EventSource"
+Cohesion: 0.06
+Nodes (6): AbortSignal, EventSource, EventTarget, MessagePort, WebSocket, WorkerGlobalScope
 
 ### Community 63 - "Stream Queuing Strategies"
 Cohesion: 0.22
@@ -371,8 +389,8 @@ Cohesion: 0.67
 Nodes (3): BasicImageTransformations, RequestInitCfPropertiesImage, RequestInitCfPropertiesImageDraw
 
 ### Community 279 - "root.tsx"
-Cohesion: 0.19
-Nodes (4): BlueScreen(), restart(), App(), ErrorBoundary()
+Cohesion: 0.16
+Nodes (5): BlueScreen(), restart(), MODIFIERS, App(), ErrorBoundary()
 
 ### Community 280 - "devDependencies"
 Cohesion: 0.15
@@ -382,37 +400,29 @@ Nodes (13): devDependencies, @biomejs/biome, @cloudflare/vite-plugin, @cloudflar
 Cohesion: 0.17
 Nodes (11): compilerOptions, composite, lib, module, moduleResolution, strict, target, types (+3 more)
 
-### Community 283 - "Critique: animation & motion (site-wide)"
-Cohesion: 0.25
-Nodes (7): Critique: animation & motion (site-wide), Heuristics: 18/36 (Acceptable, 50%). 10 n/a., Minor, Personas, Priority issues, Questions, Specificity
-
-### Community 284 - "Critique: whole site (Ppconde OS)"
-Cohesion: 0.29
-Nodes (6): Critique: whole site (Ppconde OS), Heuristics: 16/32 (Acceptable, 50%). 7 and 10 n/a., Minor, Personas, Priority issues, Specificity
-
 ### Community 286 - "Dev Notes for portfolio-os"
 Cohesion: 0.50
 Nodes (3): CI, Dev Notes for portfolio-os, Local Development Checklist
 
 ## Knowledge Gaps
-- **1013 isolated node(s):** `Ai_Cf_Ai4Bharat_Indictrans2_En_Indic_1B_Input`, `Ai_Cf_Ai4Bharat_Indictrans2_En_Indic_1B_Output`, `Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Async_Batch`, `Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_AsyncResponse`, `Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Chat_Completion_Response` (+1008 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1696 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **144 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **1002 isolated node(s):** `Ai_Cf_Ai4Bharat_Indictrans2_En_Indic_1B_Input`, `Ai_Cf_Ai4Bharat_Indictrans2_En_Indic_1B_Output`, `Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Async_Batch`, `Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_AsyncResponse`, `Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Chat_Completion_Response` (+997 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1684 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **146 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `react-router` connect `Website Navigation Layout` to `contact.tsx`, `package.json`, `DesktopContent.tsx`, `root.tsx`, `entry.server.tsx`?**
-  _High betweenness centrality (0.127) - this node is a cross-community bridge._
+  _High betweenness centrality (0.114) - this node is a cross-community bridge._
 - **What connects `Ai_Cf_Ai4Bharat_Indictrans2_En_Indic_1B_Input`, `Ai_Cf_Ai4Bharat_Indictrans2_En_Indic_1B_Output`, `Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Async_Batch` to the rest of the system?**
-  _1013 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1002 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Workers AI Model Types` be split into smaller, more focused modules?**
   _Cohesion score 0.0025348542458808617 - nodes in this community are weakly interconnected._
 - **Why does `Console` connect `Console API` to `Workers AI Model Types`?**
-  _High betweenness centrality (0.035) - this node is a cross-community bridge._
+  _High betweenness centrality (0.045) - this node is a cross-community bridge._
 - **Should `MancalaLounge.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.05128205128205128 - nodes in this community are weakly interconnected._
-- **Why does `Container` connect `Cloudflare Containers API` to `Workers AI Model Types`?**
-  _High betweenness centrality (0.023) - this node is a cross-community bridge._
-- **Should `contact.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.11522048364153627 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.12436974789915967 - nodes in this community are weakly interconnected._
+- **Why does `URL` connect `URL API` to `Workers AI Model Types`?**
+  _High betweenness centrality (0.026) - this node is a cross-community bridge._
+- **Should `useRoomStore` be split into smaller, more focused modules?**
+  _Cohesion score 0.1286549707602339 - nodes in this community are weakly interconnected._
