@@ -71,24 +71,6 @@ let pendingSit: { tableId: number; seat: Seat } | null = null;
 // Animation steps per table, tagged with the seat sowing them.
 const queues: { board: number[]; seat: Seat }[][] = TABLES.map(() => []);
 let sowTick = 0; // stones drop every other tick
-let audio: AudioContext | undefined;
-
-// A short wooden "tock" per stone, synthesized: no asset to load.
-const tock = () => {
-  try {
-    audio ??= new AudioContext();
-    const t = audio.currentTime;
-    const osc = audio.createOscillator();
-    const gain = audio.createGain();
-    osc.frequency.setValueAtTime(900 + Math.random() * 300, t);
-    osc.frequency.exponentialRampToValueAtTime(300, t + 0.06);
-    gain.gain.setValueAtTime(0.15, t);
-    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.08);
-    osc.connect(gain).connect(audio.destination);
-    osc.start(t);
-    osc.stop(t + 0.08);
-  } catch {} // no audio support: play silently
-};
 const demo = TABLES.map(() => ({ turn: 0 as Seat, wait: 0 }));
 
 export const useRoomStore = create<RoomStore>((set, get) => {
@@ -198,7 +180,6 @@ export const useRoomStore = create<RoomStore>((set, get) => {
       // Long sowings catch up: a few stones per drop once the queue grows.
       if (q.length) {
         if (!drop) return board;
-        if (id === s.viewing && !s.muted) tock();
         return (
           q.splice(0, Math.ceil(q.length / 20)).at(-1) as { board: number[] }
         ).board;
