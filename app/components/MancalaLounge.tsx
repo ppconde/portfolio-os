@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import type { Seat } from '~/mancala';
 import {
   COLORS,
@@ -6,6 +7,7 @@ import {
   COMPUTER,
   isBlocked,
   isNear,
+  NAME_MAX,
   PC_TABLE,
   ROWS,
   TABLES,
@@ -13,6 +15,7 @@ import {
   type Tile,
 } from '~/room';
 import {
+  type Blob,
   BUBBLE_MS,
   mySeat,
   seatName,
@@ -89,6 +92,21 @@ function bubble(p: Tile & { id: string; name: string }, text: string) {
   );
 }
 
+// Breath and eye timings from a stable hash of the id, so blobs idle out of step.
+const clocks = (id: string) => {
+  const s = [...id].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
+  return [
+    {
+      animationDuration: `${2.2 + (s % 7) / 10}s`,
+      animationDelay: `-${s % 3}s`,
+    },
+    {
+      animationDuration: `${6 + (s % 50) / 10}s`,
+      animationDelay: `-${(s >> 4) % 11}s`,
+    },
+  ];
+};
+
 // Stable (module-level) so the room's per-tick re-renders don't re-run it.
 // Unmounting stops the jazz and frees its buffered audio.
 const jazzRef = (a: HTMLAudioElement | null) => {
@@ -107,15 +125,36 @@ export default function MancalaLounge() {
   const status = useRoomStore((s) => s.status);
   // Closing the window leaves the room.
   useEffect(() => () => useRoomStore.getState().disconnect(), []);
-  return status === 'idle' ? <Join /> : <Scene />;
+  if (status === 'idle') return <Join />;
+  if (status === 'open') return <Scene />;
+  return <Connecting again={status === 'closed'} />;
+}
+
+function Connecting({ again }: { again: boolean }) {
+  return (
+    <div className="relative h-full bg-[#2b1612]">
+      <RoomDialog title="Mancala lounge">
+        <p aria-live="polite">
+          {again ? 'Reconnecting…' : 'Connecting to the lounge…'}
+        </p>
+        {/* A Win98 marquee bar: blue blocks sliding through a sunken well. */}
+        <div className="border-windows-sunken bg-tertiary h-6 overflow-hidden border-2 p-0.5">
+          <div className="lounge-marquee h-full w-1/3 bg-[repeating-linear-gradient(90deg,var(--color-accent)_0_10px,transparent_10px_12px)]" />
+        </div>
+      </RoomDialog>
+    </div>
+  );
 }
 
 function Join() {
   const [name, setName] = useState(
-    () => store('room-name') ?? NAMES[Math.floor(Math.random() * NAMES.length)]
+    () =>
+      store('room-name')?.slice(0, NAME_MAX) ??
+      NAMES[Math.floor(Math.random() * NAMES.length)]
   );
+  const taken = useRoomStore((s) => s.nameTaken);
   return (
-    <div className="relative h-full bg-[#2b1612] bg-[url(/assets/mancala/lounge.png)] bg-cover bg-center">
+    <div className="relative h-full bg-[#2b1612] bg-[url(/assets/mancala/lounge.png)] bg-contain bg-center bg-no-repeat">
       <RoomDialog title="Mancala lounge">
         <form
           className="flex flex-col gap-3"
@@ -130,13 +169,19 @@ function Join() {
           <label className="flex items-center gap-2">
             Your name
             <input
+              aria-describedby="name-taken"
               className="border-windows-sunken bg-tertiary min-w-0 grow border-2 px-1 py-0.5"
-              maxLength={16}
+              maxLength={NAME_MAX}
               onChange={(e) => setName(e.target.value)}
               required
               value={name}
             />
           </label>
+          {taken && (
+            <p className="text-red-700" id="name-taken" role="alert">
+              Someone here is already called that. Pick another name.
+            </p>
+          )}
           <button
             className="border-windows bg-secondary active:border-windows-inverted self-end px-6 py-1"
             type="submit"
@@ -156,13 +201,27 @@ function Scene() {
     you,
     bubbles,
     now,
-    status,
     send,
     walkTo,
     view,
     viewing,
     muted,
-  } = useRoomStore(); // re-renders every tick anyway
+  } = useRoomStore(
+    // Only what the room draws: the boards animating at empty tables (display)
+    // would otherwise redraw the whole room every tick.
+    useShallow((s) => ({
+      players: s.players,
+      tables: s.tables,
+      you: s.you,
+      bubbles: s.bubbles,
+      now: s.now,
+      send: s.send,
+      walkTo: s.walkTo,
+      view: s.view,
+      viewing: s.viewing,
+      muted: s.muted,
+    }))
+  );
   const svgRef = useRef<SVGSVGElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const [help, setHelp] = useState(false);
@@ -238,14 +297,14 @@ function Scene() {
   );
   const pcSeat = tables[PC_TABLE]?.seats[0];
   const myTable = tables.find((t) => mySeat(t, you) >= 0);
-  const sorted = [...Object.values(players), ...computers].sort(
+  const sorted: Blob[] = [...Object.values(players), ...computers].sort(
     (a, b) => a.y - b.y
   );
 
   return (
     <div
       aria-label="Mancala lounge. Arrow keys walk, Enter sits on a cushion, Escape stands up."
-      className="flex h-full flex-col gap-2 outline-none"
+      className="h-full outline-none"
       onKeyDown={onKey}
       ref={rootRef}
       role="application"
@@ -255,7 +314,7 @@ function Scene() {
       {/* Jazz while you're in the room; entering was a click, so it may autoplay. */}
       <audio data-testid="jazz" loop muted={muted} ref={jazzRef} />
       {/* The stage keeps the picture's 16:9; the bands match its walls. */}
-      <div className="[container-type:size] relative flex min-h-0 grow items-center justify-center bg-[#2b1612]">
+      <div className="[container-type:size] relative flex h-full items-center justify-center bg-[#2b1612]">
         <div className="aspect-video w-[min(100cqw,calc(100cqh*16/9))]">
           {/* biome-ignore lint/a11y/useKeyWithClickEvents: arrow keys on the room walk */}
           <svg
@@ -347,6 +406,9 @@ function Scene() {
               const seat = tables
                 .flatMap((t) => t.seats)
                 .find((s) => s?.id === p.id);
+              const [idle, eyes] = clocks(p.id);
+              // Walking: eyes point where they're headed; stopped, they wander.
+              const walking = Date.now() - (p.movedAt ?? 0) < 300 && p.look;
               return (
                 <g
                   className="pointer-events-none"
@@ -379,31 +441,52 @@ function Scene() {
                           x="-9"
                           y="-17"
                         />
-                        {[-5, 3].map((ex) => (
-                          <rect
-                            fill="#4ade80"
-                            height="3"
-                            key={ex}
-                            width="2"
-                            x={ex}
-                            y="-13"
-                          />
-                        ))}
+                        <g className="blob-eyes" style={eyes}>
+                          {[-5, 3].map((ex) => (
+                            <rect
+                              fill="#4ade80"
+                              height="3"
+                              key={ex}
+                              width="2"
+                              x={ex}
+                              y="-13"
+                            />
+                          ))}
+                        </g>
                       </>
                     ) : (
-                      <ellipse
-                        cx="0"
-                        cy="-10"
-                        fill={p.color}
-                        rx="11"
-                        ry="10"
-                        stroke="#00000066"
-                      />
+                      <g className="blob-idle" style={idle}>
+                        <ellipse
+                          cx="0"
+                          cy="-10"
+                          fill={p.color}
+                          rx="11"
+                          ry="10"
+                          stroke="#00000066"
+                        />
+                        <g
+                          className="blob-eyes"
+                          style={
+                            walking
+                              ? {
+                                  animation: 'none',
+                                  transform: `translate(${walking.x * 2.5}px, ${walking.y * 2}px)`,
+                                }
+                              : eyes
+                          }
+                        >
+                          {[-4, 4].map((ex) => (
+                            <circle
+                              cx={ex}
+                              cy={-12}
+                              fill="#111"
+                              key={ex}
+                              r="1.6"
+                            />
+                          ))}
+                        </g>
+                      </g>
                     )}
-                    {!seat?.ai &&
-                      [-4, 4].map((ex) => (
-                        <circle cx={ex} cy={-12} fill="#111" key={ex} r="1.6" />
-                      ))}
                   </g>
                   <text
                     fill="#111"
@@ -451,50 +534,52 @@ function Scene() {
                 { ...COMPUTER, ...TABLES[PC_TABLE].seats[1] },
                 "Anyone for Mancala? I'm the computer!"
               )}
-            {status !== 'open' && (
-              <text
-                fill="#111"
-                fontSize="16"
-                textAnchor="middle"
-                x={W / 2}
-                y={H / 2}
-              >
-                Connecting…
-              </text>
-            )}
           </svg>
         </div>
-        {viewing !== null && <Mancala />}
-        {help && <HowToPlay close={() => setHelp(false)} />}
-      </div>
-      <Chat>
-        {myTable && (
+        {/* Floats on the picture, so it sits exactly where the join screen showed it. */}
+        <Chat>
+          {myTable && (
+            <button
+              className="border-windows bg-secondary active:border-windows-inverted px-3 whitespace-nowrap"
+              onClick={() => send({ t: 'stand' })}
+              type="button"
+            >
+              Stand up
+            </button>
+          )}
+          {/* Nobody came: swap to the Computer's table. */}
+          {myTable &&
+            myTable.id !== PC_TABLE &&
+            !full(myTable.id) &&
+            !pcSeat && (
+              <button
+                className="border-windows bg-secondary active:border-windows-inverted px-3 whitespace-nowrap"
+                onClick={() => {
+                  send({ t: 'stand' });
+                  walkTo(TABLES[PC_TABLE].seats[0], {
+                    tableId: PC_TABLE,
+                    seat: 0,
+                  });
+                }}
+                type="button"
+              >
+                Play the computer
+              </button>
+            )}
           <button
-            className="border-windows bg-secondary active:border-windows-inverted px-3 whitespace-nowrap"
-            onClick={() => send({ t: 'stand' })}
-            type="button"
-          >
-            Stand up
-          </button>
-        )}
-        {/* Nobody came: swap to the Computer's table. */}
-        {myTable && myTable.id !== PC_TABLE && !full(myTable.id) && !pcSeat && (
-          <button
-            className="border-windows bg-secondary active:border-windows-inverted px-3 whitespace-nowrap"
+            className="border-windows bg-secondary active:border-windows-inverted px-3"
             onClick={() => {
-              send({ t: 'stand' });
-              walkTo(TABLES[PC_TABLE].seats[0], { tableId: PC_TABLE, seat: 0 });
+              send({ t: 'stand' }); // a closed socket alone would hold the seat
+              useRoomStore.getState().disconnect();
             }}
             type="button"
           >
-            Play the computer
+            Leave
           </button>
-        )}
-      </Chat>
-      <p className="font-mono text-xs">
-        Click the floor to walk, a cushion to sit. Esc or a floor click stands
-        you up. The poster on the wall has the rules.
-      </p>
+        </Chat>
+        {viewing !== null && <Mancala />}
+        {help && <HowToPlay close={() => setHelp(false)} />}
+      </div>
     </div>
   );
 }
@@ -504,7 +589,7 @@ function Chat({ children }: { children: React.ReactNode }) {
   const [text, setText] = useState('');
   return (
     <form
-      className="flex gap-2 font-mono text-sm"
+      className="border-windows bg-secondary absolute bottom-2 left-1/2 flex w-[calc(100%-1rem)] -translate-x-1/2 flex-wrap gap-1 p-1 font-mono text-sm sm:w-lg"
       onSubmit={(e) => {
         e.preventDefault();
         if (text.trim()) useRoomStore.getState().send({ t: 'say', text });
@@ -513,7 +598,7 @@ function Chat({ children }: { children: React.ReactNode }) {
     >
       <input
         aria-label="Say something"
-        className="border-windows-sunken min-w-0 grow border-2 px-1"
+        className="border-windows-sunken bg-tertiary min-w-0 grow border-2 px-1"
         maxLength={80}
         onChange={(e) => setText(e.target.value)}
         placeholder="Say something…"

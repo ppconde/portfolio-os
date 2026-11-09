@@ -1,15 +1,17 @@
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router';
 import { AppsNames } from '~/constants/apps-names.const';
 import { icons } from '~/constants/icons.const';
 import { usePlaySound } from '~/hooks/use-play-sounds';
 import { useWindowsStore } from '~/store/WindowsStore';
 import Credits from '../Credits';
-import MancalaLounge from '../MancalaLounge';
 import Paint from '../Paint';
 import Icon from './Icon';
 import Navbar from './Navbar';
 import OSWindow from './OSWindow';
+
+// Loaded when the Mancala window first opens, not with the desktop.
+const MancalaLounge = lazy(() => import('../MancalaLounge'));
 
 export default function DesktopContent() {
   const windows = useWindowsStore((s) => s.windows);
@@ -45,7 +47,11 @@ export default function DesktopContent() {
               case AppsNames.PAINT:
                 return <Paint />;
               case AppsNames.MANCALA:
-                return <MancalaLounge />;
+                return (
+                  <Suspense fallback={<div className="h-full bg-[#2b1612]" />}>
+                    <MancalaLounge />
+                  </Suspense>
+                );
               default:
                 return null;
             }

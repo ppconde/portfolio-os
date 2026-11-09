@@ -4,6 +4,7 @@ import {
   type ClientMsg,
   findPath,
   lineClear,
+  NAME_TAKEN,
   type Player,
   type SeatInfo,
   type ServerMsg,
@@ -20,7 +21,7 @@ const DEMO_PAUSE = 5; // ticks between demo moves
 type RoomStore = {
   status: 'idle' | 'connecting' | 'open' | 'closed';
   you: string | null;
-  players: Record<string, Player>;
+  players: Record<string, Blob>;
   bubbles: Record<string, { text: string; at: number }>;
   tables: TableState[]; // the server's truth
   display: number[][]; // what boards show right now (mid-animation, or the demo)
@@ -28,12 +29,23 @@ type RoomStore = {
   viewing: number | null; // the table shown in the board overlay
   now: number;
   muted: boolean; // the taskbar speaker; silences the room's jazz
+  nameTaken: boolean; // the last join was refused: someone here has that name
   toggleMute: () => void;
   connect: (name: string, color: string) => void;
   disconnect: () => void;
   send: (msg: ClientMsg) => void;
   walkTo: (to: Tile, sit?: { tableId: number; seat: Seat }) => void;
   view: (tableId: number | null) => void;
+};
+
+// A player as drawn: which way they last walked, and when, so eyes can follow.
+export type Blob = Player & { look?: Tile; movedAt?: number };
+
+const moveTo = (p: Blob, to: Tile): Blob => {
+  const d = Math.hypot(to.x - p.x, to.y - p.y);
+  if (!d) return p;
+  const look = { x: (to.x - p.x) / d, y: (to.y - p.y) / d };
+  return { ...p, x: to.x, y: to.y, look, movedAt: Date.now() };
 };
 
 export const seatName = (s: SeatInfo) =>
@@ -43,8 +55,8 @@ export const tableLabel = (t: TableState) => {
   if (t.result) return t.result;
   const [a, b] = t.seats;
   if (a && b) return `${seatName(a)} vs ${seatName(b)}`;
-  if (a?.ai || b?.ai) return 'Play the computer – sit to play';
-  return a || b ? 'Waiting for opponent…' : 'Free – sit to play';
+  // Free tables and the waiting Computer go unlabelled.
+  return (a || b) && !a?.ai && !b?.ai ? 'Waiting for opponent…' : '';
 };
 
 export const mySeat = (t: TableState | undefined, you: string | null) =>
@@ -133,7 +145,7 @@ export const useRoomStore = create<RoomStore>((set, get) => {
           const p = s.players[msg.id];
           return p
             ? {
-                players: { ...s.players, [p.id]: { ...p, x: msg.x, y: msg.y } },
+                players: { ...s.players, [p.id]: moveTo(p, msg) },
               }
             : s;
         });
@@ -165,7 +177,7 @@ export const useRoomStore = create<RoomStore>((set, get) => {
         x: me.x + (target.x - me.x) * k,
         y: me.y + (target.y - me.y) * k,
       };
-      patch.players = { ...s.players, [me.id]: { ...me, ...next } };
+      patch.players = { ...s.players, [me.id]: moveTo(me, next) };
       s.send({ t: 'pos', ...next });
     }
     if (me && !target && pendingSit) {
@@ -212,12 +224,13 @@ export const useRoomStore = create<RoomStore>((set, get) => {
     viewing: null,
     now: Date.now(),
     muted: false,
+    nameTaken: false,
     toggleMute: () => set((s) => ({ muted: !s.muted })),
 
     connect: (name, color) => {
       clearTimeout(retry);
       ws?.close();
-      set({ status: 'connecting' });
+      set({ status: 'connecting', nameTaken: false });
       const proto = location.protocol === 'https:' ? 'wss' : 'ws';
       const q = new URLSearchParams({ id: playerId(), name, color });
       const socket = new WebSocket(`${proto}://${location.host}/api/room?${q}`);
@@ -226,6 +239,10 @@ export const useRoomStore = create<RoomStore>((set, get) => {
       socket.onmessage = (e) => onMessage(JSON.parse(e.data));
       socket.onclose = (e) => {
         if (ws !== socket) return; // replaced or closed on purpose
+        if (e.code === NAME_TAKEN) {
+          get().disconnect();
+          return set({ nameTaken: true });
+        }
         ws = null;
         set({ status: 'closed' });
         // Dropped: come back while the server still holds our seat.
