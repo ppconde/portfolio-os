@@ -1,9 +1,9 @@
 {
   ".claude/settings.json": {
-    "mtime": 1793740520.1838386,
-    "seen": 1793742325.771355,
-    "ast_hash": "3707580df6372d9ba56a0af797837533",
-    "semantic_hash": "3707580df6372d9ba56a0af797837533"
+    "mtime": 1794253632.0453403,
+    "seen": 1794253641.866306,
+    "ast_hash": "79d778c20c337612cf957aceb8146a94",
+    "semantic_hash": ""
   },
   ".vscode/settings.json": {
     "mtime": 1793739958.9943774,
@@ -457,8 +457,8 @@
   },
   ".vscode/mcp.json": {
     "mtime": 1793739958.994298,
-    "seen": 1794245424.055161,
-    "ast_hash": "",
+    "seen": 1794253641.8663108,
+    "ast_hash": "4dc81fb443a4578253d7dda8b9be7a47",
     "semantic_hash": ""
   },
   ".impeccable/critique/2026-11-03T23-40-56Z__app-components-os.md": {

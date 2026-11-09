@@ -1,15 +1,17 @@
 # Graph Report - portfolio-os  (2026-11-09)
 
 ## Corpus Check
-- cluster-only mode — file stats not available
+- 89 files · ~100,605 words
+- Verdict: corpus is large enough that graph structure adds value.
+- Unclassified: 11 file(s) not represented in the graph (top: (none) 5, .woff 2, .woff2 1)
 
 ## Summary
-- 2183 nodes · 2628 edges · 185 communities (41 shown, 144 thin omitted)
+- 2182 nodes · 2627 edges · 185 communities (41 shown, 144 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 15 edges (avg confidence: 0.84)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `af314e24`
+- Built from commit: `a094fa61`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -234,11 +236,11 @@ Nodes (785): RFC-2253, RFC-3339, RFC-5246, Ai_Cf_Ai4Bharat_Indictrans2_En_Indic_
 
 ### Community 1 - "MancalaLounge.tsx"
 Cohesion: 0.05
-Nodes (74): BEANS, Board(), BoardProps, COLS, Mancala(), Stones(), STORES, [TOP, BOTTOM, R] (+66 more)
+Nodes (75): BEANS, Board(), BoardProps, COLS, Mancala(), Stones(), STORES, [TOP, BOTTOM, R] (+67 more)
 
 ### Community 3 - "contact.tsx"
 Cohesion: 0.12
-Nodes (19): Credits(), inspirations, A(), ContentEntry(), H2(), Project, ProjectCard(), Section() (+11 more)
+Nodes (20): Credits(), inspirations, A(), ContentEntry(), H2(), Project, ProjectCard(), Section() (+12 more)
 
 ### Community 4 - "BiosScreen.tsx"
 Cohesion: 0.22
@@ -262,11 +264,11 @@ Nodes (22): patterns, prefix, actions, major-updates, minor-and-patch, security-
 
 ### Community 10 - "package.json"
 Cohesion: 0.12
-Nodes (15): name, packageManager, private, sideEffects, type, @biomejs/biome, @cloudflare/workers-types, @react-router/cloudflare (+7 more)
+Nodes (15): name, packageManager, private, sideEffects, type, @biomejs/biome, @cloudflare/workers-types, react-draggable (+7 more)
 
 ### Community 13 - "DesktopContent.tsx"
-Cohesion: 0.17
-Nodes (14): APPS, MancalaLounge, Paint, Icon(), AppsNames, CREDITS, MANCALA, PAINT (+6 more)
+Cohesion: 0.18
+Nodes (13): APPS, MancalaLounge, Paint, Icon(), AppsNames, CREDITS, MANCALA, PAINT (+5 more)
 
 ### Community 14 - "Compression and Transform Streams"
 Cohesion: 0.10
@@ -278,7 +280,7 @@ Nodes (12): CloseEvent, CustomEvent, EmailEvent, ErrorEvent, Event, ExtendableEv
 
 ### Community 17 - "Navbar.tsx"
 Cohesion: 0.22
-Nodes (12): Clock(), DesktopContent(), Navbar(), NavBarButton(), VerticalSeparator(), fmt(), useTime(), DesktopWindow (+4 more)
+Nodes (12): Clock(), DesktopContent(), Navbar(), NavBarButton(), VerticalSeparator(), icons, fmt(), useTime() (+4 more)
 
 ### Community 18 - "Dependabot Build Check"
 Cohesion: 0.12
@@ -329,8 +331,8 @@ Cohesion: 0.18
 Nodes (11): AlreadyUploadedError, BadRequestError, ForbiddenError, InternalError, InvalidURLError, MaxFileSizeError, NotFoundError, QuotaReachedError (+3 more)
 
 ### Community 57 - "OSWindow.tsx"
-Cohesion: 0.29
-Nodes (8): OSWindow(), OSWindowProps, ButtonProps, WindowButton(), frame(), Zoom, ZoomOutline(), react-draggable
+Cohesion: 0.33
+Nodes (7): OSWindow(), OSWindowProps, ButtonProps, WindowButton(), frame(), Zoom, ZoomOutline()
 
 ### Community 58 - "Biome CSS Formatter"
 Cohesion: 0.20
@@ -394,7 +396,7 @@ Nodes (3): CI, Dev Notes for portfolio-os, Local Development Checklist
 
 ## Knowledge Gaps
 - **1013 isolated node(s):** `Ai_Cf_Ai4Bharat_Indictrans2_En_Indic_1B_Input`, `Ai_Cf_Ai4Bharat_Indictrans2_En_Indic_1B_Output`, `Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Async_Batch`, `Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_AsyncResponse`, `Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Chat_Completion_Response` (+1008 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1697 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1696 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **144 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
@@ -409,7 +411,7 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `Console` connect `Console API` to `Workers AI Model Types`?**
   _High betweenness centrality (0.035) - this node is a cross-community bridge._
 - **Should `MancalaLounge.tsx` be split into smaller, more focused modules?**
-  _Cohesion score 0.05190440627333831 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05128205128205128 - nodes in this community are weakly interconnected._
 - **Why does `Container` connect `Cloudflare Containers API` to `Workers AI Model Types`?**
   _High betweenness centrality (0.023) - this node is a cross-community bridge._
 - **Should `contact.tsx` be split into smaller, more focused modules?**
