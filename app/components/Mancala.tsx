@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { mySeat, seatName, useRoomStore } from '~/store/RoomStore';
 import RoomDialog from './RoomDialog';
 
@@ -133,7 +134,7 @@ function Board({ board, w, h, flip, onPit }: BoardProps) {
 }
 
 // The board for the table you're at (or watching), over the room.
-export default function Mancala() {
+function Mancala() {
   const t = useRoomStore((s) =>
     s.viewing === null ? undefined : s.tables[s.viewing]
   );
@@ -218,3 +219,6 @@ export default function Mancala() {
     </RoomDialog>
   );
 }
+
+// memo: no props, so a parent re-render (window focus, lounge tick) skips it.
+export default memo(Mancala);

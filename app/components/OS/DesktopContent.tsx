@@ -1,17 +1,19 @@
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, memo, Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router';
 import { AppsNames } from '~/constants/apps-names.const';
 import { icons } from '~/constants/icons.const';
 import { usePlaySound } from '~/hooks/use-play-sounds';
 import { useWindowsStore } from '~/store/WindowsStore';
 import Credits from '../Credits';
-import Paint from '../Paint';
 import Icon from './Icon';
 import Navbar from './Navbar';
 import OSWindow from './OSWindow';
 
 // Loaded when the Mancala window first opens, not with the desktop.
 const MancalaLounge = lazy(() => import('../MancalaLounge'));
+const Paint = lazy(() => import('../Paint'));
+// Navigation still reaches it (context); window focus/drag re-renders don't.
+const Portfolio = memo(() => <Outlet />);
 
 export default function DesktopContent() {
   const windows = useWindowsStore((s) => s.windows);
@@ -41,11 +43,15 @@ export default function DesktopContent() {
           {(() => {
             switch (window.id) {
               case AppsNames.PORTFOLIO:
-                return <Outlet />;
+                return <Portfolio />;
               case AppsNames.CREDITS:
                 return <Credits />;
               case AppsNames.PAINT:
-                return <Paint />;
+                return (
+                  <Suspense fallback={null}>
+                    <Paint />
+                  </Suspense>
+                );
               case AppsNames.MANCALA:
                 return (
                   <Suspense fallback={<div className="h-full bg-[#2b1612]" />}>

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import type { Seat } from '~/mancala';
 import {
@@ -121,7 +121,7 @@ const jazzRef = (a: HTMLAudioElement | null) => {
   };
 };
 
-export default function MancalaLounge() {
+function MancalaLounge() {
   const status = useRoomStore((s) => s.status);
   // Closing the window leaves the room.
   useEffect(() => () => useRoomStore.getState().disconnect(), []);
@@ -154,7 +154,7 @@ function Join() {
   );
   const taken = useRoomStore((s) => s.nameTaken);
   return (
-    <div className="relative h-full bg-[#2b1612] bg-[url(/assets/mancala/lounge.png)] bg-contain bg-center bg-no-repeat">
+    <div className="relative h-full bg-[#2b1612] bg-[url(/assets/mancala/lounge.webp)] bg-contain bg-center bg-no-repeat">
       <RoomDialog title="Mancala lounge">
         <form
           className="flex flex-col gap-3"
@@ -195,33 +195,21 @@ function Join() {
 }
 
 function Scene() {
-  const {
-    players,
-    tables,
-    you,
-    bubbles,
-    now,
-    send,
-    walkTo,
-    view,
-    viewing,
-    muted,
-  } = useRoomStore(
-    // Only what the room draws: the boards animating at empty tables (display)
-    // would otherwise redraw the whole room every tick.
-    useShallow((s) => ({
-      players: s.players,
-      tables: s.tables,
-      you: s.you,
-      bubbles: s.bubbles,
-      now: s.now,
-      send: s.send,
-      walkTo: s.walkTo,
-      view: s.view,
-      viewing: s.viewing,
-      muted: s.muted,
-    }))
-  );
+  const { players, tables, you, send, walkTo, view, viewing, muted } =
+    useRoomStore(
+      // Only what the room draws: the boards animating at empty tables (display)
+      // would otherwise redraw the whole room every tick.
+      useShallow((s) => ({
+        players: s.players,
+        tables: s.tables,
+        you: s.you,
+        send: s.send,
+        walkTo: s.walkTo,
+        view: s.view,
+        viewing: s.viewing,
+        muted: s.muted,
+      }))
+    );
   const svgRef = useRef<SVGSVGElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const [help, setHelp] = useState(false);
@@ -324,7 +312,7 @@ function Scene() {
             viewBox={`0 0 ${W} ${H}`}
           >
             <title>Mancala lounge</title>
-            <image height={H} href="/assets/mancala/lounge.png" width={W} />
+            <image height={H} href="/assets/mancala/lounge.webp" width={W} />
             {/* The poster on the back wall */}
             {/* biome-ignore lint/a11y/useSemanticElements: an SVG shape */}
             <rect
@@ -522,18 +510,7 @@ function Scene() {
                 {tableLabel(t)}
               </text>
             ))}
-            {Object.values(players).map((p) => {
-              const b = bubbles[p.id];
-              return b && now - b.at < BUBBLE_MS && bubble(p, b.text);
-            })}
-            {/* The Computer calls out every few seconds while its seat is free. */}
-            {tables[PC_TABLE] &&
-              !pcSeat &&
-              now % 12_000 < 5_000 &&
-              bubble(
-                { ...COMPUTER, ...TABLES[PC_TABLE].seats[1] },
-                "Anyone for Mancala? I'm the computer!"
-              )}
+            <Bubbles computerFree={!!tables[PC_TABLE] && !pcSeat} />
           </svg>
         </div>
         {/* Floats on the picture, so it sits exactly where the join screen showed it. */}
@@ -581,6 +558,28 @@ function Scene() {
         {help && <HowToPlay close={() => setHelp(false)} />}
       </div>
     </div>
+  );
+}
+
+// Subscribes to the 1s clock itself, so an idle room only redraws the bubbles.
+function Bubbles({ computerFree }: { computerFree: boolean }) {
+  const players = useRoomStore((s) => s.players);
+  const bubbles = useRoomStore((s) => s.bubbles);
+  const now = useRoomStore((s) => s.now);
+  return (
+    <>
+      {Object.values(players).map((p) => {
+        const b = bubbles[p.id];
+        return b && now - b.at < BUBBLE_MS && bubble(p, b.text);
+      })}
+      {/* The Computer calls out every few seconds while its seat is free. */}
+      {computerFree &&
+        now % 12_000 < 5_000 &&
+        bubble(
+          { ...COMPUTER, ...TABLES[PC_TABLE].seats[1] },
+          "Anyone for Mancala? I'm the computer!"
+        )}
+    </>
   );
 }
 
@@ -655,3 +654,6 @@ function HowToPlay({ close }: { close: () => void }) {
     </RoomDialog>
   );
 }
+
+// memo: no props, so a parent re-render (window focus, lounge tick) skips it.
+export default memo(MancalaLounge);
