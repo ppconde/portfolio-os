@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { memo, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const COLORS = [
   '#000000', '#808080', '#800000', '#808000', '#008000', '#008080', '#000080', '#800080',
@@ -50,7 +50,7 @@ function floodFill(
   ctx.putImageData(img, 0, 0);
 }
 
-function Paint() {
+export default function Paint() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const viewRef = useRef<HTMLDivElement>(null);
   // ponytail: full snapshots of the visible area, capped; diff-based history if memory bites.
@@ -343,6 +343,3 @@ function Paint() {
     </div>
   );
 }
-
-// memo: no props, so a parent re-render (window focus, lounge tick) skips it.
-export default memo(Paint);

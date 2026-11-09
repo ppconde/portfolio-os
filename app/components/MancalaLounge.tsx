@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import type { Seat } from '~/mancala';
 import {
@@ -25,6 +25,8 @@ import {
 import Mancala from './Mancala';
 import RoomDialog from './RoomDialog';
 
+// Module-level element: Scene's tick re-renders skip the board.
+const BOARD = <Mancala />;
 const W = COLS * TILE;
 const H = ROWS * TILE;
 const NAMES = ['Blu', 'Pip', 'Juno', 'Ziggy', 'Mo', 'Rex'];
@@ -121,7 +123,7 @@ const jazzRef = (a: HTMLAudioElement | null) => {
   };
 };
 
-function MancalaLounge() {
+export default function MancalaLounge() {
   const status = useRoomStore((s) => s.status);
   // Closing the window leaves the room.
   useEffect(() => () => useRoomStore.getState().disconnect(), []);
@@ -554,7 +556,7 @@ function Scene() {
             Leave
           </button>
         </Chat>
-        {viewing !== null && <Mancala />}
+        {viewing !== null && BOARD}
         {help && <HowToPlay close={() => setHelp(false)} />}
       </div>
     </div>
@@ -654,6 +656,3 @@ function HowToPlay({ close }: { close: () => void }) {
     </RoomDialog>
   );
 }
-
-// memo: no props, so a parent re-render (window focus, lounge tick) skips it.
-export default memo(MancalaLounge);

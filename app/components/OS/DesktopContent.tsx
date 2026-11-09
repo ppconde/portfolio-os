@@ -1,4 +1,4 @@
-import { lazy, memo, Suspense, useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router';
 import { AppsNames } from '~/constants/apps-names.const';
 import { icons } from '~/constants/icons.const';
@@ -12,8 +12,23 @@ import OSWindow from './OSWindow';
 // Loaded when the Mancala window first opens, not with the desktop.
 const MancalaLounge = lazy(() => import('../MancalaLounge'));
 const Paint = lazy(() => import('../Paint'));
-// Navigation still reaches it (context); window focus/drag re-renders don't.
-const Portfolio = memo(() => <Outlet />);
+
+// Module-level elements keep their identity, so window focus/drag re-renders
+// skip the apps. <Outlet /> still updates on navigation (it reads context).
+const APPS: Record<AppsNames, React.ReactNode> = {
+  [AppsNames.PORTFOLIO]: <Outlet />,
+  [AppsNames.CREDITS]: <Credits />,
+  [AppsNames.PAINT]: (
+    <Suspense fallback={null}>
+      <Paint />
+    </Suspense>
+  ),
+  [AppsNames.MANCALA]: (
+    <Suspense fallback={<div className="h-full bg-[#2b1612]" />}>
+      <MancalaLounge />
+    </Suspense>
+  ),
+};
 
 export default function DesktopContent() {
   const windows = useWindowsStore((s) => s.windows);
@@ -40,28 +55,7 @@ export default function DesktopContent() {
           showStatusBar={window.id === AppsNames.PORTFOLIO}
           window={window}
         >
-          {(() => {
-            switch (window.id) {
-              case AppsNames.PORTFOLIO:
-                return <Portfolio />;
-              case AppsNames.CREDITS:
-                return <Credits />;
-              case AppsNames.PAINT:
-                return (
-                  <Suspense fallback={null}>
-                    <Paint />
-                  </Suspense>
-                );
-              case AppsNames.MANCALA:
-                return (
-                  <Suspense fallback={<div className="h-full bg-[#2b1612]" />}>
-                    <MancalaLounge />
-                  </Suspense>
-                );
-              default:
-                return null;
-            }
-          })()}
+          {APPS[window.id]}
         </OSWindow>
       ))}
       <Navbar />

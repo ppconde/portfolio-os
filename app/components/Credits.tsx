@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import A from './website/A';
 import H2 from './website/H2';
 
@@ -20,7 +19,7 @@ const inspirations = [
   },
 ];
 
-function Credits() {
+export default function Credits() {
   return (
     <div className="bg-tertiary flex h-full flex-col items-center justify-center p-4 font-mono">
       <H2>Credits</H2>
@@ -42,6 +41,3 @@ function Credits() {
     </div>
   );
 }
-
-// memo: no props, so a parent re-render (window focus, lounge tick) skips it.
-export default memo(Credits);
