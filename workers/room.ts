@@ -29,7 +29,7 @@ const ABANDON: 'ai' | 'forfeit' = 'forfeit';
 
 const seatSchema = z.union([z.literal(0), z.literal(1)]);
 const ClientMsg = z.discriminatedUnion('t', [
-  z.object({ t: z.literal('pos'), x: z.int(), y: z.int() }),
+  z.object({ t: z.literal('pos'), x: z.number(), y: z.number() }),
   z.object({ t: z.literal('say'), text: z.string().trim().min(1).max(80) }),
   z.object({ t: z.literal('sit'), tableId: z.int(), seat: seatSchema }),
   z.object({ t: z.literal('stand') }),
@@ -48,7 +48,7 @@ const fresh = (t: TableState) => {
 };
 const inGame = (t: TableState) => !!(t.seats[0] && t.seats[1] && !t.result);
 
-// The Blob Club: everyone's avatar (in each socket's attachment, so it survives
+// The Mancala lounge: everyone's avatar (in each socket's attachment, so it survives
 // hibernation) and the three Mancala tables (in SQLite).
 export class Room extends DurableObject<Env> {
   tables: TableState[];
@@ -84,6 +84,11 @@ export class Room extends DurableObject<Env> {
       this.save(t);
       return t;
     });
+    // The Computer may be saved at a table it has since moved away from.
+    for (const t of this.tables)
+      t.seats = t.seats.map((s) =>
+        s?.id === COMPUTER.id ? null : s
+      ) as TableState['seats'];
     this.tables[PC_TABLE].seats[1] = { ...COMPUTER };
   }
 
@@ -201,9 +206,9 @@ export class Room extends DurableObject<Env> {
 
     switch (msg.t) {
       case 'pos': {
-        // One tile at a time, on the floor, and never while seated.
-        const step = Math.abs(msg.x - me.x) + Math.abs(msg.y - me.y);
-        if (this.seatOf(me.id) || step !== 1 || isBlocked(msg))
+        // Short steps, on the floor, and never while seated.
+        const step = Math.hypot(msg.x - me.x, msg.y - me.y);
+        if (this.seatOf(me.id) || !(step <= 1) || isBlocked(msg))
           return send({ t: 'pos', id: me.id, x: me.x, y: me.y });
         ws.serializeAttachment({ ...me, x: msg.x, y: msg.y });
         return this.broadcast({ t: 'pos', id: me.id, x: msg.x, y: msg.y }, ws);

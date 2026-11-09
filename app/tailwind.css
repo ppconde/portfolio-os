@@ -187,7 +187,7 @@
   }
 }
 
-/* Blob Club blobs: a hop per tile walked; squashed while seated. */
+/* Mancala lounge blobs: a hop per tile walked; squashed while seated. */
 .blob-hop,
 .blob-sit {
   transform-box: fill-box;

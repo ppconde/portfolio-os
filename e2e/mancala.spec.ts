@@ -1,5 +1,6 @@
 import { type Browser, expect, type Page, test } from '@playwright/test';
 import { isOver, newBoard, sow } from '../app/mancala';
+import { isBlocked, lineClear, SPAWN, TABLES } from '../app/room';
 import { showDesktop } from './helpers';
 
 test('mancala rules: extra turn, capture, end-of-game sweep', () => {
@@ -20,6 +21,14 @@ test('mancala rules: extra turn, capture, end-of-game sweep', () => {
   expect(isOver(end.board)).toBe(true);
 });
 
+test('free movement: fractional spots, straight lines blocked by tables', () => {
+  expect(isBlocked({ x: 16.3, y: 15.6 })).toBe(false);
+  expect(isBlocked({ x: 16, y: 4.2 })).toBe(true); // the back wall
+  const [left, right] = TABLES[3].seats; // either side of a table
+  expect(lineClear(left, right)).toBe(false);
+  expect(lineClear(SPAWN, { x: 16.4, y: 15.2 })).toBe(true);
+});
+
 async function enterRoom(browser: Browser, name: string) {
   const page = await (await browser.newContext()).newPage();
   await page.goto('/');
@@ -27,7 +36,7 @@ async function enterRoom(browser: Browser, name: string) {
   await showDesktop(page);
   await page
     .getByRole('button')
-    .filter({ has: page.getByAltText('Blob Club') })
+    .filter({ has: page.getByAltText('Mancala', { exact: true }) })
     .press('Enter');
   await page.getByLabel('Your name').fill(name);
   await page.getByRole('button', { name: 'Enter', exact: true }).click();
@@ -88,11 +97,11 @@ test('plays the resident Computer and leaves mid-game', async ({
   // One Computer table shared by both projects running in parallel.
   test.skip(isMobile, 'one shared Computer table');
   const solo = await enterRoom(browser, 'Solo');
-  const label = solo.getByTestId('table-label-2');
+  const label = solo.getByTestId('table-label-4');
   await expect(label).toHaveText('Play the computer – sit to play');
   await expect(solo.getByTestId('blob-Computer (AI)')).toBeVisible();
 
-  await solo.getByTestId('seat-2-0').click();
+  await solo.getByTestId('seat-4-0').click();
   await expect(label).toHaveText('Solo vs Computer (AI)');
   await expect(solo.getByTestId('mancala-status')).toHaveText('Your turn');
 
@@ -108,4 +117,53 @@ test('plays the resident Computer and leaves mid-game', async ({
   await expect(solo.getByTestId('mancala-board')).toBeHidden();
   await expect(label).toHaveText('Play the computer – sit to play');
   await solo.context().close();
+});
+
+test('the poster opens the rules', async ({ browser, isMobile }) => {
+  const page = await enterRoom(browser, isMobile ? 'Mia' : 'Dee');
+  await page.getByTestId('how-to-play').click();
+  const panel = page.getByTestId('how-to-play-panel');
+  await expect(panel).toContainText('How to play Mancala');
+  await page.getByRole('button', { name: 'Got it' }).click();
+  await expect(panel).toBeHidden();
+  // Both projects share the room: one table each.
+  const table = isMobile ? 3 : 1;
+  await page.getByTestId(`seat-${table}-0`).click();
+  await expect(page.getByTestId(`table-label-${table}`)).toHaveText(
+    'Waiting for opponent…'
+  );
+  await page.context().close();
+});
+
+test('jazz plays in the room and the speaker mutes it', async ({
+  browser,
+  isMobile,
+}) => {
+  const page = await enterRoom(browser, isMobile ? 'Sax' : 'Bass');
+  const jazz = page.getByTestId('jazz');
+  const state = () =>
+    jazz.evaluate((a: HTMLAudioElement) => ({
+      playing: !a.paused,
+      muted: a.muted,
+    }));
+  await expect.poll(state).toEqual({ playing: true, muted: false });
+  // Keeps playing through the room's per-tick re-renders.
+  await expect
+    .poll(() => jazz.evaluate((a: HTMLAudioElement) => a.currentTime))
+    .toBeGreaterThan(1);
+  await page.getByRole('button', { name: 'Mute sound' }).click();
+  await expect.poll(state).toEqual({ playing: true, muted: true });
+
+  // Closing the window stops the jazz and drops its source.
+  const audio = await jazz.elementHandle();
+  await page.getByTestId('close-button-mancala').click();
+  await expect
+    .poll(() =>
+      audio?.evaluate((a: HTMLAudioElement) => ({
+        paused: a.paused,
+        src: a.getAttribute('src'),
+      }))
+    )
+    .toEqual({ paused: true, src: null });
+  await page.context().close();
 });
