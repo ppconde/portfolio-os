@@ -24,6 +24,7 @@ type RoomStore = {
   bubbles: Record<string, { text: string; at: number }>;
   tables: TableState[]; // the server's truth
   display: number[][]; // what boards show right now (mid-animation, or the demo)
+  sowing: (Seat | null)[]; // whose stones are being sown on each board right now
   viewing: number | null; // the table shown in the board overlay
   now: number;
   muted: boolean; // the taskbar speaker; silences the room's jazz
@@ -67,7 +68,9 @@ let timer: ReturnType<typeof setInterval> | undefined;
 let retry: ReturnType<typeof setTimeout> | undefined;
 let route: Tile[] = [];
 let pendingSit: { tableId: number; seat: Seat } | null = null;
-const queues: number[][][] = TABLES.map(() => []); // animation steps per table
+// Animation steps per table, tagged with the seat sowing them.
+const queues: { board: number[]; seat: Seat }[][] = TABLES.map(() => []);
+let sowTick = 0; // stones drop every other tick
 const demo = TABLES.map(() => ({ turn: 0 as Seat, wait: 0 }));
 
 export const useRoomStore = create<RoomStore>((set, get) => {
@@ -79,7 +82,12 @@ export const useRoomStore = create<RoomStore>((set, get) => {
     const t = msg.table;
     const id = t.id;
     if (msg.t === 'moveApplied' && t.version === old.version + 1)
-      queues[id].push(...sow(old.board, msg.seat, msg.pit).steps);
+      queues[id].push(
+        ...sow(old.board, msg.seat, msg.pit).steps.map((board) => ({
+          board,
+          seat: msg.seat,
+        }))
+      );
     else if (msg.t === 'tableReset' || msg.t === 'moveApplied' || isEmpty(old))
       queues[id] = []; // missed a move, new board, or the demo stops: snap
     set({
@@ -165,11 +173,14 @@ export const useRoomStore = create<RoomStore>((set, get) => {
       pendingSit = null;
     }
 
+    const drop = ++sowTick % 2 === 0;
+    const sowing = s.display.map((_, id) => queues[id][0]?.seat ?? null);
     const display = s.display.map((board, id) => {
       const q = queues[id];
-      // Long sowings catch up: a few stones per tick once the queue grows.
+      // Long sowings catch up: a few stones per drop once the queue grows.
+      if (q.length && !drop) return board;
       if (q.length)
-        return q.splice(0, Math.ceil(q.length / 12)).at(-1) as number[];
+        return q.splice(0, Math.ceil(q.length / 20)).at(-1)?.board ?? board;
       if (!isEmpty(s.tables[id])) return s.tables[id].board;
       // Nobody here: the computer plays itself, client-side.
       const d = demo[id];
@@ -180,12 +191,14 @@ export const useRoomStore = create<RoomStore>((set, get) => {
         return newBoard();
       }
       const r = sow(board, d.turn, pickMove(board, d.turn));
+      q.push(...r.steps.map((b) => ({ board: b, seat: d.turn })));
       d.turn = r.turn;
-      q.push(...r.steps);
       return board;
     });
     if (display.some((b, i) => b !== s.display[i])) patch.display = display;
-    if (patch.players || patch.display || now !== s.now) set(patch);
+    if (sowing.some((x, i) => x !== s.sowing[i])) patch.sowing = sowing;
+    if (patch.players || patch.display || patch.sowing || now !== s.now)
+      set(patch);
   };
 
   return {
@@ -195,6 +208,7 @@ export const useRoomStore = create<RoomStore>((set, get) => {
     bubbles: {},
     tables: [],
     display: [],
+    sowing: [],
     viewing: null,
     now: Date.now(),
     muted: false,
