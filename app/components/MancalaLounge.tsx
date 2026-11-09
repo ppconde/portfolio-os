@@ -122,7 +122,25 @@ export default function MancalaLounge() {
   const status = useRoomStore((s) => s.status);
   // Closing the window leaves the room.
   useEffect(() => () => useRoomStore.getState().disconnect(), []);
-  return status === 'idle' ? <Join /> : <Scene />;
+  if (status === 'idle') return <Join />;
+  if (status === 'open') return <Scene />;
+  return <Connecting again={status === 'closed'} />;
+}
+
+function Connecting({ again }: { again: boolean }) {
+  return (
+    <div className="relative h-full bg-[#2b1612]">
+      <RoomDialog title="Mancala lounge">
+        <p aria-live="polite">
+          {again ? 'Reconnecting…' : 'Connecting to the lounge…'}
+        </p>
+        {/* A Win98 marquee bar: blue blocks sliding through a sunken well. */}
+        <div className="border-windows-sunken bg-tertiary h-6 overflow-hidden border-2 p-0.5">
+          <div className="lounge-marquee h-full w-1/3 bg-[repeating-linear-gradient(90deg,var(--color-accent)_0_10px,transparent_10px_12px)]" />
+        </div>
+      </RoomDialog>
+    </div>
+  );
 }
 
 function Join() {
@@ -171,7 +189,6 @@ function Scene() {
     you,
     bubbles,
     now,
-    status,
     send,
     walkTo,
     view,
@@ -363,6 +380,9 @@ function Scene() {
                 .flatMap((t) => t.seats)
                 .find((s) => s?.id === p.id);
               const [idle, eyes] = clocks(p.id);
+              // Walking: eyes point where they're headed; stopped, they wander.
+              const walking =
+                p.look && Date.now() - (p.movedAt ?? 0) < 300 && p.look;
               return (
                 <g
                   className="pointer-events-none"
@@ -416,7 +436,17 @@ function Scene() {
                           ry="10"
                           stroke="#00000066"
                         />
-                        <g className="blob-eyes" style={eyes}>
+                        <g
+                          className="blob-eyes"
+                          style={
+                            walking
+                              ? {
+                                  animation: 'none',
+                                  transform: `translate(${walking.x * 2.5}px, ${walking.y * 2}px)`,
+                                }
+                              : eyes
+                          }
+                        >
                           {[-4, 4].map((ex) => (
                             <circle
                               cx={ex}
@@ -476,17 +506,6 @@ function Scene() {
                 { ...COMPUTER, ...TABLES[PC_TABLE].seats[1] },
                 "Anyone for Mancala? I'm the computer!"
               )}
-            {status !== 'open' && (
-              <text
-                fill="#111"
-                fontSize="16"
-                textAnchor="middle"
-                x={W / 2}
-                y={H / 2}
-              >
-                Connecting…
-              </text>
-            )}
           </svg>
         </div>
         {/* Floats on the picture, so it sits exactly where the join screen showed it. */}

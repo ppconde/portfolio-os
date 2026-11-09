@@ -58,9 +58,7 @@ test('two players sit at a table and play in sync', async ({
   const blu = await enterRoom(browser, 'Blu');
 
   for (const p of [pedro, blu])
-    await expect(p.getByTestId('table-label-1')).toHaveText(
-      /Free – sit to play|vs|Waiting/
-    );
+    await expect(p.getByTestId('table-label-1')).toHaveText(/^$|vs|Waiting/);
 
   await pedro.getByTestId('seat-0-0').click();
   await expect(pedro.getByTestId('table-label-0')).toHaveText(
@@ -98,7 +96,7 @@ test('plays the resident Computer and leaves mid-game', async ({
   test.skip(isMobile, 'one shared Computer table');
   const solo = await enterRoom(browser, 'Solo');
   const label = solo.getByTestId('table-label-4');
-  await expect(label).toHaveText('Play the computer – sit to play');
+  await expect(label).toHaveText('');
   await expect(solo.getByTestId('blob-Computer (AI)')).toBeVisible();
 
   await solo.getByTestId('seat-4-0').click();
@@ -115,7 +113,7 @@ test('plays the resident Computer and leaves mid-game', async ({
 
   await solo.getByRole('button', { name: 'Leave game' }).click();
   await expect(solo.getByTestId('mancala-board')).toBeHidden();
-  await expect(label).toHaveText('Play the computer – sit to play');
+  await expect(label).toHaveText('');
   await solo.context().close();
 });
 
@@ -165,5 +163,18 @@ test('jazz plays in the room and the speaker mutes it', async ({
       }))
     )
     .toEqual({ paused: true, src: null });
+  await page.context().close();
+});
+
+test('leaving and coming back under a new name shows the new name', async ({
+  browser,
+}) => {
+  const tag = Math.random().toString(36).slice(2, 7); // projects share the room
+  const page = await enterRoom(browser, `Old${tag}`);
+  await page.getByRole('button', { name: 'Leave', exact: true }).click();
+  await page.getByLabel('Your name').fill(`New${tag}`);
+  await page.getByRole('button', { name: 'Enter', exact: true }).click();
+  await expect(page.getByTestId(`blob-New${tag}`)).toBeVisible();
+  await expect(page.getByTestId(`blob-Old${tag}`)).toBeHidden();
   await page.context().close();
 });

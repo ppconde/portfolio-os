@@ -176,6 +176,7 @@
   .blob-hop,
   .blob-idle,
   .blob-eyes,
+  .lounge-marquee,
   .animate-blink,
   .animate-start-open,
   .animate-typing {
@@ -254,5 +255,18 @@
   }
   96% {
     transform: translate(2px, 1px);
+  }
+}
+
+/* The lounge's connecting bar. */
+.lounge-marquee {
+  animation: lounge-marquee 1.6s linear infinite;
+}
+@keyframes lounge-marquee {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(300%);
   }
 }

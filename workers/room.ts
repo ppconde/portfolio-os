@@ -156,7 +156,10 @@ export class Room extends DurableObject<Env> {
     // Same player again (reload, second tab): the newest socket wins.
     const old = this.ctx.getWebSockets(id)[0];
     const oldPlayer = old?.deserializeAttachment() as Player | undefined;
-    for (const ws of this.ctx.getWebSockets(id)) ws.close(4000, 'Replaced');
+    for (const ws of this.ctx.getWebSockets(id)) {
+      ws.serializeAttachment(null); // a closing socket's stale name can't win in players()
+      ws.close(4000, 'Replaced');
+    }
 
     const seated = this.seatOf(id);
     const at = seated
@@ -173,10 +176,11 @@ export class Room extends DurableObject<Env> {
     this.ctx.acceptWebSocket(server, [id]);
     server.serializeAttachment(player);
 
-    // Back within the hold: take the seat again.
+    // Back within the hold (maybe renamed): take the seat again.
     const seat = seated?.t.seats[seated.seat];
-    if (seated && seat?.away) {
+    if (seated && seat && (seat.away || seat.name !== name)) {
       delete seat.away;
+      seat.name = name;
       this.emit('seated', seated.t);
     }
     server.send(

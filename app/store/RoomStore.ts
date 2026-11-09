@@ -20,7 +20,7 @@ const DEMO_PAUSE = 5; // ticks between demo moves
 type RoomStore = {
   status: 'idle' | 'connecting' | 'open' | 'closed';
   you: string | null;
-  players: Record<string, Player>;
+  players: Record<string, Blob>;
   bubbles: Record<string, { text: string; at: number }>;
   tables: TableState[]; // the server's truth
   display: number[][]; // what boards show right now (mid-animation, or the demo)
@@ -36,6 +36,16 @@ type RoomStore = {
   view: (tableId: number | null) => void;
 };
 
+// A player as drawn: which way they last walked, and when, so eyes can follow.
+export type Blob = Player & { look?: Tile; movedAt?: number };
+
+const moveTo = (p: Blob, to: Tile): Blob => {
+  const d = Math.hypot(to.x - p.x, to.y - p.y);
+  if (!d) return p;
+  const look = { x: (to.x - p.x) / d, y: (to.y - p.y) / d };
+  return { ...p, x: to.x, y: to.y, look, movedAt: Date.now() };
+};
+
 export const seatName = (s: SeatInfo) =>
   s ? `${s.name}${s.ai ? ' (AI)' : ''}${s.away ? ' (away)' : ''}` : '';
 
@@ -43,8 +53,8 @@ export const tableLabel = (t: TableState) => {
   if (t.result) return t.result;
   const [a, b] = t.seats;
   if (a && b) return `${seatName(a)} vs ${seatName(b)}`;
-  if (a?.ai || b?.ai) return 'Play the computer – sit to play';
-  return a || b ? 'Waiting for opponent…' : 'Free – sit to play';
+  // Free tables and the waiting Computer go unlabelled.
+  return (a || b) && !a?.ai && !b?.ai ? 'Waiting for opponent…' : '';
 };
 
 export const mySeat = (t: TableState | undefined, you: string | null) =>
@@ -133,7 +143,7 @@ export const useRoomStore = create<RoomStore>((set, get) => {
           const p = s.players[msg.id];
           return p
             ? {
-                players: { ...s.players, [p.id]: { ...p, x: msg.x, y: msg.y } },
+                players: { ...s.players, [p.id]: moveTo(p, msg) },
               }
             : s;
         });
@@ -165,7 +175,7 @@ export const useRoomStore = create<RoomStore>((set, get) => {
         x: me.x + (target.x - me.x) * k,
         y: me.y + (target.y - me.y) * k,
       };
-      patch.players = { ...s.players, [me.id]: { ...me, ...next } };
+      patch.players = { ...s.players, [me.id]: moveTo(me, next) };
       s.send({ t: 'pos', ...next });
     }
     if (me && !target && pendingSit) {
