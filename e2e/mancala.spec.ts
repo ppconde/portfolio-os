@@ -26,7 +26,7 @@ test('free movement: fractional spots, straight lines blocked by tables', () => 
   expect(isBlocked({ x: 16, y: 4.2 })).toBe(true); // the back wall
   const [left, right] = TABLES[3].seats; // either side of a table
   expect(lineClear(left, right)).toBe(false);
-  expect(lineClear(SPAWN, { x: 16.4, y: 15.2 })).toBe(true);
+  expect(lineClear(SPAWN, { x: 16.4, y: 11.2 })).toBe(true);
 });
 
 async function enterRoom(browser: Browser, name: string) {

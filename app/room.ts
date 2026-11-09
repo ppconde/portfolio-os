@@ -4,7 +4,7 @@ import type { Seat } from './mancala';
 export const COLS = 32;
 export const ROWS = 18;
 export const TILE = 32; // 32x18 tiles = the 1024x576 lounge picture
-export const SPAWN = { x: 16, y: 16 }; // front of the room
+export const SPAWN = { x: 16, y: 10 }; // middle of the room
 export const COLORS = ['#3b82f6', '#ef4444', '#22c55e', '#eab308', '#a855f7', '#f97316']; // biome-ignore format: palette
 
 export type Tile = { x: number; y: number };

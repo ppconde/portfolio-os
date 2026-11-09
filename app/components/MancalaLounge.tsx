@@ -517,7 +517,7 @@ function Chat({ children }: { children: React.ReactNode }) {
   const [text, setText] = useState('');
   return (
     <form
-      className="border-windows bg-secondary absolute right-2 bottom-2 left-2 flex flex-wrap gap-1 p-1 font-mono text-sm sm:right-auto sm:w-lg"
+      className="border-windows bg-secondary absolute bottom-2 left-1/2 flex w-[calc(100%-1rem)] -translate-x-1/2 flex-wrap gap-1 p-1 font-mono text-sm sm:w-lg"
       onSubmit={(e) => {
         e.preventDefault();
         if (text.trim()) useRoomStore.getState().send({ t: 'say', text });
@@ -526,7 +526,7 @@ function Chat({ children }: { children: React.ReactNode }) {
     >
       <input
         aria-label="Say something"
-        className="border-windows-sunken min-w-0 grow border-2 px-1"
+        className="border-windows-sunken bg-tertiary min-w-0 grow border-2 px-1"
         maxLength={80}
         onChange={(e) => setText(e.target.value)}
         placeholder="Say something…"
@@ -539,10 +539,6 @@ function Chat({ children }: { children: React.ReactNode }) {
         Say
       </button>
       {children}
-      <p className="hidden w-full px-1 text-xs sm:block">
-        Click the floor to walk, a cushion to sit. Esc or a floor click stands
-        you up. The poster on the wall has the rules.
-      </p>
     </form>
   );
 }
