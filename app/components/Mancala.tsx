@@ -14,7 +14,7 @@ const BEANS = [
   'silver',
   'pearl',
   'purple',
-].map((c) => `/assets/mancala/bean_${c}.png`);
+].map((c) => `/assets/mancala/bean_${c}.webp`);
 
 // Up to 8 beans in a spiral, more as a number.
 function Stones({
@@ -47,7 +47,7 @@ function Stones({
         {n}
       </text>
     );
-  const b = r * 0.5; // bean size
+  const b = r * 0.6; // bean size
   return Array.from({ length: n }, (_, k) => {
     const a = k * 2.4 + salt;
     const d = n === 1 ? 0 : r * 0.22 + k * r * 0.055;
@@ -65,7 +65,7 @@ function Stones({
   });
 }
 
-// Measured off board.png (905×316): pit columns, row centres, pit radius,
+// Measured off board.webp (905×316): pit columns, row centres, pit radius,
 // store centres.
 const COLS = [200, 310, 421, 530, 640, 748];
 const [TOP, BOTTOM, R] = [92, 219, 46];
@@ -89,7 +89,7 @@ function Board({ board, flip, onPit }: BoardProps) {
 
   return (
     <g>
-      <image height={316} href="/assets/mancala/board.png" width={905} />
+      <image height={316} href="/assets/mancala/board.webp" width={905} />
       {[
         { i: left, cx: STORES[0] },
         { i: right, cx: STORES[1] },
