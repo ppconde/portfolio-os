@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@react-router/cloudflare": "^8.5.1",
-    "@tailwindcss/vite": "^4.3.3",
+    "@tailwindcss/vite": "^4.3.4",
     "classnames": "^2.5.1",
     "isbot": "^5.2.2",
     "react": "^19.3.1",
@@ -32,22 +32,22 @@
     "zustand": "^5.0.16"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.6.4",
+    "@biomejs/biome": "2.6.5",
     "@cloudflare/vite-plugin": "^1.67.0",
-    "@cloudflare/workers-types": "^5.20261102.1",
+    "@cloudflare/workers-types": "^5.20261106.1",
     "@graphql-codegen/cli": "^7.4.6",
     "@graphql-codegen/client-preset": "^6.2.3",
     "@graphql-typed-document-node/core": "^3.2.0",
-    "@playwright/test": "^1.64.1",
+    "@playwright/test": "^1.65.0",
     "@react-router/dev": "^8.5.1",
     "@types/node": "^26.6.6",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "graphql": "^17.0.2",
-    "tailwindcss": "^4.3.3",
+    "graphql": "^17.1.0",
+    "tailwindcss": "^4.3.4",
     "typescript": "^7.0.2",
-    "vite": "^8.3.5",
-    "wrangler": "^4.156.2"
+    "vite": "^8.3.6",
+    "wrangler": "^4.158.0"
   },
   "packageManager": "pnpm@12.16.1+sha512.091d1dee7927575661b25dab3c2ae31cafc1c54d6b71ed6a6600cf0c1cb10434a447eae14015f1b23e2e6bedeed79df94a932e2164d2832280dce3fb32f656d1"
 }
