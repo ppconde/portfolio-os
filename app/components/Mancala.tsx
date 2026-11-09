@@ -149,7 +149,7 @@ export default function Mancala() {
   const animating = board !== t.board;
   // The server is ahead of the animation (the AI answers instantly), so show
   // whoever's stones are being sown, not whose turn it is now.
-  const turn = animating ? (sowing ?? t.turn) : t.turn;
+  const turn = sowing ?? t.turn;
   const myTurn = playing && seat === t.turn && !animating;
   const [top, bottom] =
     seat === 1 ? [t.seats[0], t.seats[1]] : [t.seats[1], t.seats[0]];

@@ -178,12 +178,9 @@ export const useRoomStore = create<RoomStore>((set, get) => {
     const display = s.display.map((board, id) => {
       const q = queues[id];
       // Long sowings catch up: a few stones per drop once the queue grows.
-      if (q.length) {
-        if (!drop) return board;
-        return (
-          q.splice(0, Math.ceil(q.length / 20)).at(-1) as { board: number[] }
-        ).board;
-      }
+      if (q.length && !drop) return board;
+      if (q.length)
+        return q.splice(0, Math.ceil(q.length / 20)).at(-1)?.board ?? board;
       if (!isEmpty(s.tables[id])) return s.tables[id].board;
       // Nobody here: the computer plays itself, client-side.
       const d = demo[id];
