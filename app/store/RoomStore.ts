@@ -4,6 +4,7 @@ import {
   type ClientMsg,
   findPath,
   lineClear,
+  NAME_TAKEN,
   type Player,
   type SeatInfo,
   type ServerMsg,
@@ -28,6 +29,7 @@ type RoomStore = {
   viewing: number | null; // the table shown in the board overlay
   now: number;
   muted: boolean; // the taskbar speaker; silences the room's jazz
+  nameTaken: boolean; // the last join was refused: someone here has that name
   toggleMute: () => void;
   connect: (name: string, color: string) => void;
   disconnect: () => void;
@@ -222,12 +224,13 @@ export const useRoomStore = create<RoomStore>((set, get) => {
     viewing: null,
     now: Date.now(),
     muted: false,
+    nameTaken: false,
     toggleMute: () => set((s) => ({ muted: !s.muted })),
 
     connect: (name, color) => {
       clearTimeout(retry);
       ws?.close();
-      set({ status: 'connecting' });
+      set({ status: 'connecting', nameTaken: false });
       const proto = location.protocol === 'https:' ? 'wss' : 'ws';
       const q = new URLSearchParams({ id: playerId(), name, color });
       const socket = new WebSocket(`${proto}://${location.host}/api/room?${q}`);
@@ -236,6 +239,10 @@ export const useRoomStore = create<RoomStore>((set, get) => {
       socket.onmessage = (e) => onMessage(JSON.parse(e.data));
       socket.onclose = (e) => {
         if (ws !== socket) return; // replaced or closed on purpose
+        if (e.code === NAME_TAKEN) {
+          get().disconnect();
+          return set({ nameTaken: true });
+        }
         ws = null;
         set({ status: 'closed' });
         // Dropped: come back while the server still holds our seat.

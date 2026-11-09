@@ -4,6 +4,8 @@ import type { Seat } from './mancala';
 export const COLS = 32;
 export const ROWS = 18;
 export const TILE = 32; // 32x18 tiles = the 1024x576 lounge picture
+export const NAME_MAX = 10;
+export const NAME_TAKEN = 4001; // close code: someone here already has that name
 export const SPAWN = { x: 16, y: 10 }; // middle of the room
 export const COLORS = ['#3b82f6', '#ef4444', '#22c55e', '#eab308', '#a855f7', '#f97316']; // biome-ignore format: palette
 
@@ -52,18 +54,24 @@ export const isBlocked = (p: Tile) => {
 
 export const STEP = 0.8; // tiles walked per tick; the server allows up to 1
 
-// Nothing blocked on the straight line from a to b (sampled every quarter tile).
+// Nothing blocked on the straight line from a to b. Exact: the line only enters
+// a new tile where it crosses a tile edge (x or y = n + 0.5), so check a point
+// between every pair of crossings.
 export const lineClear = (a: Tile, b: Tile) => {
-  const n = Math.ceil(Math.hypot(b.x - a.x, b.y - a.y) * 4);
-  for (let k = 1; k <= n; k++)
-    if (
-      isBlocked({
-        x: a.x + ((b.x - a.x) * k) / n,
-        y: a.y + ((b.y - a.y) * k) / n,
-      })
-    )
+  const ts = [0, 1];
+  for (const k of ['x', 'y'] as const) {
+    const hi = Math.max(a[k], b[k]);
+    for (let g = Math.floor(Math.min(a[k], b[k]) - 0.5) + 1.5; g < hi; g++)
+      ts.push((g - a[k]) / (b[k] - a[k]));
+  }
+  ts.sort((p, q) => p - q);
+  // Skip the first span: it's the tile we're standing on.
+  for (let i = 2; i < ts.length; i++) {
+    const t = (ts[i - 1] + ts[i]) / 2;
+    if (isBlocked({ x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t }))
       return false;
-  return true;
+  }
+  return !isBlocked(b);
 };
 
 export const isNear = (a: Tile, b: Tile) =>

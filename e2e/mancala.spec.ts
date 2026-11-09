@@ -1,6 +1,6 @@
 import { type Browser, expect, type Page, test } from '@playwright/test';
 import { isOver, newBoard, sow } from '../app/mancala';
-import { isBlocked, lineClear, SPAWN, TABLES } from '../app/room';
+import { isBlocked, lineClear, SPAWN, STEP, TABLES } from '../app/room';
 import { showDesktop } from './helpers';
 
 test('mancala rules: extra turn, capture, end-of-game sweep', () => {
@@ -27,9 +27,29 @@ test('free movement: fractional spots, straight lines blocked by tables', () => 
   const [left, right] = TABLES[3].seats; // either side of a table
   expect(lineClear(left, right)).toBe(false);
   expect(lineClear(SPAWN, { x: 16.4, y: 11.2 })).toBe(true);
+  // Every step a walker takes along a clear line stays on the floor (the
+  // server snaps back any step that doesn't). The old sampled check had 108 here.
+  const pts = [];
+  for (let x = 2; x < 29; x += 0.9)
+    for (let y = 8; y < 17; y += 0.55) pts.push({ x, y });
+  let bad = 0;
+  for (const a of pts)
+    for (const b of pts) {
+      if (isBlocked(a) || !lineClear(a, b)) continue;
+      const n = Math.ceil(Math.hypot(b.x - a.x, b.y - a.y) / STEP);
+      for (let k = 1; k <= n; k++)
+        if (
+          isBlocked({
+            x: a.x + ((b.x - a.x) * k) / n,
+            y: a.y + ((b.y - a.y) * k) / n,
+          })
+        )
+          bad++;
+    }
+  expect(bad).toBe(0);
 });
 
-async function enterRoom(browser: Browser, name: string) {
+async function openLounge(browser: Browser) {
   const page = await (await browser.newContext()).newPage();
   await page.goto('/');
   await page.locator('nav.fixed.bottom-0').waitFor({ timeout: 15000 });
@@ -38,6 +58,11 @@ async function enterRoom(browser: Browser, name: string) {
     .getByRole('button')
     .filter({ has: page.getByAltText('Mancala', { exact: true }) })
     .press('Enter');
+  return page;
+}
+
+async function enterRoom(browser: Browser, name: string) {
+  const page = await openLounge(browser);
   await page.getByLabel('Your name').fill(name);
   await page.getByRole('button', { name: 'Enter', exact: true }).click();
   await expect(page.getByTestId(`blob-${name}`)).toBeVisible();
@@ -176,5 +201,22 @@ test('leaving and coming back under a new name shows the new name', async ({
   await page.getByRole('button', { name: 'Enter', exact: true }).click();
   await expect(page.getByTestId(`blob-New${tag}`)).toBeVisible();
   await expect(page.getByTestId(`blob-Old${tag}`)).toBeHidden();
+  await page.context().close();
+});
+
+test('names are unique in the room and at most 10 characters', async ({
+  browser,
+}) => {
+  const tag = Math.random().toString(36).slice(2, 7); // projects share the room
+  const first = await enterRoom(browser, `Dup${tag}`);
+  const page = await openLounge(browser);
+  const input = page.getByLabel('Your name');
+  await input.fill('abcdefghijklmnop');
+  await expect(input).toHaveValue('abcdefghij');
+  await input.fill(`DUP${tag}`); // any case counts
+  await page.getByRole('button', { name: 'Enter', exact: true }).click();
+  await expect(page.getByRole('alert')).toContainText('already called that');
+  await expect(input).toBeVisible();
+  await first.context().close();
   await page.context().close();
 });

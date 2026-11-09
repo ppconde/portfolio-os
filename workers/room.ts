@@ -13,6 +13,8 @@ import {
   COMPUTER,
   isBlocked,
   isNear,
+  NAME_MAX,
+  NAME_TAKEN,
   PC_TABLE,
   type Player,
   type SeatInfo,
@@ -150,8 +152,19 @@ export class Room extends DurableObject<Env> {
       (url.searchParams.get('name') ?? '')
         .replace(/[^\p{L}\p{N} _.-]/gu, '')
         .trim()
-        .slice(0, 16) || 'Guest';
+        .slice(0, NAME_MAX) || 'Guest';
     const color = url.searchParams.get('color') ?? '';
+
+    // Names are unique in the room (any case); the Computer's is taken too.
+    const taken = [...this.players(), COMPUTER].some(
+      (p) => p.id !== id && p.name.toLowerCase() === name.toLowerCase()
+    );
+    if (taken) {
+      const [client, server] = Object.values(new WebSocketPair());
+      server.accept();
+      server.close(NAME_TAKEN, 'Name taken');
+      return new Response(null, { status: 101, webSocket: client });
+    }
 
     // Same player again (reload, second tab): the newest socket wins.
     const old = this.ctx.getWebSockets(id)[0];
