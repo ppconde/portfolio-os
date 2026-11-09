@@ -1,6 +1,8 @@
 import { useLocation } from 'react-router';
 import { NavItem } from './NavItem';
 
+const LINKS = ['About', 'Experience', 'Projects', 'Contact'];
+
 export default function NavList({
   className,
   toggleMenu,
@@ -17,18 +19,11 @@ export default function NavList({
           [Home]
         </NavItem>
       )}
-      <NavItem to="/about" toggleMenu={toggleMenu}>
-        [About]
-      </NavItem>
-      <NavItem to="/experience" toggleMenu={toggleMenu}>
-        [Experience]
-      </NavItem>
-      <NavItem to="/projects" toggleMenu={toggleMenu}>
-        [Projects]
-      </NavItem>
-      <NavItem to="/contact" toggleMenu={toggleMenu}>
-        [Contact]
-      </NavItem>
+      {LINKS.map((to) => (
+        <NavItem key={to} to={`/${to.toLowerCase()}`} toggleMenu={toggleMenu}>
+          [{to}]
+        </NavItem>
+      ))}
     </nav>
   );
 }

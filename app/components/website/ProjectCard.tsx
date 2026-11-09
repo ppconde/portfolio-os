@@ -1,5 +1,14 @@
-import type { Project } from '~/normalizers/pinned-repos.normalizer';
 import A from './A';
+
+export type Project = {
+  id: string;
+  name: string;
+  description: string | null;
+  url: string;
+  homepageUrl: string | null;
+  openGraphImageUrl: string;
+  languages: { id: string; name: string; color: string }[];
+};
 
 export default function ProjectCard({
   name,

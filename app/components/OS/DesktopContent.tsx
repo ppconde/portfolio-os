@@ -46,7 +46,7 @@ export default function DesktopContent() {
     <div className="bg-primary relative flex h-screen w-screen flex-col overflow-hidden select-none">
       <div className="relative flex flex-col gap-6 p-4">
         {icons.map((icon) => (
-          <Icon key={icon.label} {...icon} />
+          <Icon key={icon.app} {...icon} />
         ))}
       </div>
       {windows.map((window) => (

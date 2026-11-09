@@ -1,14 +1,14 @@
 type ButtonProps = {
-  onClick?: () => void;
-  imageName?: string;
-  imageAlt?: string;
+  onClick: () => void;
+  imageName: string;
+  imageAlt: string;
   'data-testid'?: string;
 };
 
 export default function WindowButton({
   onClick,
   imageName,
-  imageAlt = '',
+  imageAlt,
   'data-testid': testId,
 }: ButtonProps) {
   return (
@@ -19,18 +19,16 @@ export default function WindowButton({
       onTouchEnd={(e) => {
         // Prevents the default behavior to mess up with react draggable
         e.preventDefault();
-        onClick?.();
+        onClick();
       }}
       // Needed for mobile touch events
       type="button"
     >
-      {imageName && (
-        <img
-          alt={imageAlt}
-          className="image-rendering-pixelated h-2.5 w-auto object-center"
-          src={imageName}
-        />
-      )}
+      <img
+        alt={imageAlt}
+        className="image-rendering-pixelated h-2.5 w-auto object-center"
+        src={imageName}
+      />
     </button>
   );
 }

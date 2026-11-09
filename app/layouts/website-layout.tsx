@@ -7,17 +7,13 @@ import HamburgerButton from '~/components/website/HamburgerButton';
 export default function WebsiteLayout() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const toggleMenu = (toggle: boolean = !isMenuOpen) => {
-    setIsMenuOpen(toggle);
-  };
-
   return (
     <div className="@container flex h-full flex-col bg-white">
       <div className="relative flex h-full flex-row">
         <HamburgerButton
           className="absolute right-0 flex bg-white @xl:hidden"
           isOpen={isMenuOpen}
-          onClick={() => toggleMenu()}
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
         />
         <NavList
           className={classNames(
@@ -30,7 +26,7 @@ export default function WebsiteLayout() {
                 !isMenuOpen,
             }
           )}
-          toggleMenu={() => toggleMenu(false)}
+          toggleMenu={() => setIsMenuOpen(false)}
         />
 
         {/* Main Content Area */}

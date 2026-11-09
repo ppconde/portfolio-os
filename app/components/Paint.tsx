@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { useEffect, useRef, useState } from 'react';
+import { useClickOutside } from '~/hooks/use-click-outside';
 
 const COLORS = [
   '#000000', '#808080', '#800000', '#808000', '#008000', '#008080', '#000080', '#800080',
@@ -63,18 +64,12 @@ export default function Paint() {
   const menuRef = useRef<HTMLDivElement>(null);
 
   // An open menu closes on a click outside it or on Escape.
+  useClickOutside(menuRef, () => setMenu(null));
   useEffect(() => {
     if (!menu) return;
-    const onDown = (e: PointerEvent) => {
-      if (!menuRef.current?.contains(e.target as Node)) setMenu(null);
-    };
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setMenu(null);
-    document.addEventListener('pointerdown', onDown);
     document.addEventListener('keydown', onKey);
-    return () => {
-      document.removeEventListener('pointerdown', onDown);
-      document.removeEventListener('keydown', onKey);
-    };
+    return () => document.removeEventListener('keydown', onKey);
   }, [menu]);
 
   const ctx = () => getCtx(canvasRef.current);

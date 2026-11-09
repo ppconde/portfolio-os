@@ -26,11 +26,10 @@ import {
 
 const SEAT_HOLD_MS = 30_000; // a player who drops mid-game gets this long to reconnect
 const RESULT_MS = 5_000; // how long "Blu wins 28–20" shows before the table resets
-// A seat abandoned mid-game: 'ai' = the server plays it out, 'forfeit' = the other player wins.
-const ABANDON: 'ai' | 'forfeit' = 'forfeit';
 
 const seatSchema = z.union([z.literal(0), z.literal(1)]);
-const ClientMsg = z.discriminatedUnion('t', [
+export type ClientMsg = z.infer<typeof ClientMsg>;
+export const ClientMsg = z.discriminatedUnion('t', [
   z.object({ t: z.literal('pos'), x: z.number(), y: z.number() }),
   z.object({ t: z.literal('say'), text: z.string().trim().min(1).max(80) }),
   z.object({ t: z.literal('sit'), tableId: z.int(), seat: seatSchema }),
@@ -298,23 +297,17 @@ export class Room extends DurableObject<Env> {
     this.emit('stood', t);
   }
 
+  // A seat abandoned mid-game: the other player wins.
   abandon(t: TableState, seat: Seat) {
     const other = t.seats[1 - seat];
-    if (ABANDON === 'forfeit' || !other || other.ai) {
-      t.seats[seat] = null;
-      if (!other || other.away || other.ai) return this.reset(t);
-      return this.finish(t, `${other.name} wins by forfeit`);
-    }
-    t.seats[seat] = { id: `ai-${t.id}`, name: 'Computer', ai: true };
-    this.emit('seated', t);
-    if (t.turn === seat) this.play(t, seat, pickMove(t.board, seat));
+    t.seats[seat] = null;
+    if (!other || other.away || other.ai) return this.reset(t);
+    return this.finish(t, `${other.name} wins by forfeit`);
   }
 
-  // New board; a stand-in AI and anyone still away leave (the resident
-  // Computer stays); two seated players rematch.
+  // New board; anyone still away leaves; two seated players rematch.
   reset(t: TableState) {
-    const stays = (s: SeatInfo) =>
-      s && !s.away && (!s.ai || s.id === COMPUTER.id);
+    const stays = (s: SeatInfo) => s && !s.away;
     t.seats = t.seats.map((s) => (stays(s) ? s : null)) as [
       TableState['seats'][0],
       TableState['seats'][1],

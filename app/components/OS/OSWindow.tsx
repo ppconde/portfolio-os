@@ -69,9 +69,6 @@ export default function OSWindow({
     }
   };
 
-  const handleMinimize = () => {
-    minimizeWindow(window.id);
-  };
   const toggleMaximize = () => {
     if (window.isMaximized) {
       restoreWindow(window.id);
@@ -82,10 +79,6 @@ export default function OSWindow({
       maximizeWindow(window.id);
       setWindowPosition(window.id, { x: 0, y: 0 }); // Set position to top-left corner when maximized
     }
-  };
-
-  const handleClose = () => {
-    closeWindow(window.id);
   };
 
   return (
@@ -141,7 +134,7 @@ export default function OSWindow({
                   data-testid={`minimize-button-${window.id.toLowerCase()}`}
                   imageAlt="Minimize"
                   imageName="/assets/minimize.png"
-                  onClick={handleMinimize}
+                  onClick={() => minimizeWindow(window.id)}
                 />
                 <WindowButton
                   data-testid={`maximize-button-${window.id.toLowerCase()}`}
@@ -153,7 +146,7 @@ export default function OSWindow({
                   data-testid={`close-button-${window.id.toLowerCase()}`}
                   imageAlt="Close"
                   imageName="/assets/close.png"
-                  onClick={handleClose}
+                  onClick={() => closeWindow(window.id)}
                 />
               </div>
             </div>

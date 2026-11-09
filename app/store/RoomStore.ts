@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { isOver, newBoard, pickMove, type Seat, sow } from '~/mancala';
 import {
-  type ClientMsg,
   findPath,
   lineClear,
   NAME_TAKEN,
@@ -13,6 +12,7 @@ import {
   type TableState,
   type Tile,
 } from '~/room';
+import type { ClientMsg } from '../../workers/room';
 
 const TICK_MS = 150; // one walking step / one sown stone
 export const BUBBLE_MS = 5_000;
