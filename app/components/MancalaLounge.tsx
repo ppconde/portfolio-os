@@ -165,7 +165,6 @@ function Scene() {
   } = useRoomStore(); // re-renders every tick anyway
   const svgRef = useRef<SVGSVGElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
-  const [text, setText] = useState('');
   const [help, setHelp] = useState(false);
   useEffect(() => rootRef.current?.focus(), []);
 
@@ -468,28 +467,7 @@ function Scene() {
         {viewing !== null && <Mancala />}
         {help && <HowToPlay close={() => setHelp(false)} />}
       </div>
-      <form
-        className="flex gap-2 font-mono text-sm"
-        onSubmit={(e) => {
-          e.preventDefault();
-          if (text.trim()) send({ t: 'say', text });
-          setText('');
-        }}
-      >
-        <input
-          aria-label="Say something"
-          className="border-windows-sunken min-w-0 grow border-2 px-1"
-          maxLength={80}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Say something…"
-          value={text}
-        />
-        <button
-          className="border-windows bg-secondary active:border-windows-inverted px-3"
-          type="submit"
-        >
-          Say
-        </button>
+      <Chat>
         {myTable && (
           <button
             className="border-windows bg-secondary active:border-windows-inverted px-3 whitespace-nowrap"
@@ -512,12 +490,43 @@ function Scene() {
             Play the computer
           </button>
         )}
-      </form>
+      </Chat>
       <p className="font-mono text-xs">
         Click the floor to walk, a cushion to sit. Esc or a floor click stands
         you up. The poster on the wall has the rules.
       </p>
     </div>
+  );
+}
+
+// Owns the draft text, so typing re-renders the chat box, not the whole room.
+function Chat({ children }: { children: React.ReactNode }) {
+  const [text, setText] = useState('');
+  return (
+    <form
+      className="flex gap-2 font-mono text-sm"
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (text.trim()) useRoomStore.getState().send({ t: 'say', text });
+        setText('');
+      }}
+    >
+      <input
+        aria-label="Say something"
+        className="border-windows-sunken min-w-0 grow border-2 px-1"
+        maxLength={80}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="Say something…"
+        value={text}
+      />
+      <button
+        className="border-windows bg-secondary active:border-windows-inverted px-3"
+        type="submit"
+      >
+        Say
+      </button>
+      {children}
+    </form>
   );
 }
 
