@@ -1,5 +1,34 @@
 @import "tailwindcss";
 
+/* Self-hosted (Vite hashes them): the BIOS paints with these, so they're preloaded in root.tsx. */
+@font-face {
+  font-family: "Micro 5";
+  src: url("./fonts/micro5-latin.woff2") format("woff2");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Perfect DOS VGA 437";
+  src: url("./fonts/perfect-dos-vga-437.woff") format("woff");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Perfect DOS VGA 437 Win";
+  src: url("./fonts/perfect-dos-vga-437-win.woff") format("woff");
+  font-display: swap;
+}
+/* Not ours to redistribute: hotlinked from cdnfonts, without their render-blocking CSS. */
+@font-face {
+  font-family: "PX Sans Nouveaux";
+  src: url("https://fonts.cdnfonts.com/s/7527/px_sans_nouveaux.woff")
+    format("woff");
+  font-display: optional;
+}
+@font-face {
+  font-family: "MS Reference Sans Serif";
+  src: url("https://fonts.cdnfonts.com/s/56629/REFSAN.woff") format("woff");
+  font-display: optional;
+}
+
 @theme {
   --font-sans:
     "MS Reference Sans Serif", ui-sans-serif, system-ui, sans-serif,

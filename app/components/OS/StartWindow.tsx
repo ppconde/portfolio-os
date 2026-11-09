@@ -36,6 +36,8 @@ export default function StartWindow({ setIsOpen }: StartWindowProps) {
               openApp(icon);
               setIsOpen(false);
             }}
+            onFocus={icon.preload}
+            onPointerEnter={icon.preload}
             type="button"
           >
             <img alt="" className="h-8 w-8" src={icon.icon} />
@@ -48,7 +50,7 @@ export default function StartWindow({ setIsOpen }: StartWindowProps) {
           onClick={() => setBootState('shutting_down')}
           type="button"
         >
-          <img alt="" className="h-8 w-8" src="/assets/shut_down_cool-5.png" />
+          <img alt="" className="h-8 w-8" src="/img/shut_down_cool-5.png" />
           <span>
             Sh<span className="underline">u</span>t Down...
           </span>

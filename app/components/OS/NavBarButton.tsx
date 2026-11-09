@@ -3,7 +3,7 @@ import { icons } from '~/constants/icons.const';
 import { type DesktopWindow, useWindowsStore } from '~/store/WindowsStore';
 
 export default function NavBarButton({ window }: { window: DesktopWindow }) {
-  const { toggleWindow } = useWindowsStore();
+  const toggleWindow = useWindowsStore((s) => s.toggleWindow);
 
   return (
     <button

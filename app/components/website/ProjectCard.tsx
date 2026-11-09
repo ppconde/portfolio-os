@@ -34,11 +34,11 @@ export default function ProjectCard({
             src={
               // GitHub's auto-generated card (no custom social preview) fails to load,
               // so use our own app screenshot instead.
-              // ponytail: needs public/assets/projects/<name>.png for each such repo.
+              // ponytail: needs public/img/projects/<name>.png for each such repo.
               openGraphImageUrl.startsWith(
                 'https://opengraph.githubassets.com/'
               )
-                ? `/assets/projects/${name}.png`
+                ? `/img/projects/${name}.png`
                 : openGraphImageUrl
             }
             width={1200}

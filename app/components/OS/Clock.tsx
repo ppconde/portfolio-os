@@ -16,7 +16,7 @@ export default function Clock() {
         <img
           alt="Mute sound"
           className="h-full w-auto object-contain"
-          src={`/assets/loudspeaker_${muted ? 'muted' : 'rays'}-0.png`}
+          src={`/img/loudspeaker_${muted ? 'muted' : 'rays'}-0.png`}
         />
       </button>
       <p className="text-ms-reference text-center text-xs font-thin tracking-tighter uppercase">

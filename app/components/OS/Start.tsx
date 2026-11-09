@@ -21,7 +21,7 @@ export default function Start() {
         <img
           alt="Windows logo"
           className="image-rendering-pixelated h-6 w-auto pr-1"
-          src="/assets/windows-0.png"
+          src="/img/windows-0.png"
         />
         <p className="font-micro text-2xl">Start</p>
       </button>

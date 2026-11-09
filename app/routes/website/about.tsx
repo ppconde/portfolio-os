@@ -79,7 +79,7 @@ export default function About() {
 
       <ContentEntry
         caption="Figure 1: Raising awareness of the importance of terrain management in wildfire prevention, an initiative by ESN Aveiro."
-        img="/assets/esnaveiro.webp"
+        img="/img/esnaveiro.webp"
         subtitle="[2016-2018] - Aveiro"
         title="Volunteering"
       >

@@ -273,7 +273,7 @@ export default function Paint() {
                   aria-hidden="true"
                   className="h-4 w-4 [image-rendering:pixelated]"
                   style={{
-                    background: `url(/assets/paint-tools.png) -${TOOL_SPRITE[t] * 16}px 0`,
+                    background: `url(/img/paint-tools.png) -${TOOL_SPRITE[t] * 16}px 0`,
                   }}
                 />
               </button>

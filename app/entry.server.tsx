@@ -49,8 +49,8 @@ export default async function handleRequest(
       [
         "default-src 'self'",
         "script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com",
-        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.cdnfonts.com",
-        "font-src 'self' https://fonts.gstatic.com https://fonts.cdnfonts.com",
+        "style-src 'self' 'unsafe-inline'",
+        "font-src 'self' https://fonts.cdnfonts.com",
         "connect-src 'self' https://cloudflareinsights.com",
         // Project cards show GitHub OpenGraph images.
         "img-src 'self' data: https://opengraph.githubassets.com https://repository-images.githubusercontent.com",

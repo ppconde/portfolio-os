@@ -14,6 +14,8 @@ export default function Icon(icon: IconType) {
         if (e.detail === 0 || matchMedia('(pointer: coarse)').matches) open();
       }}
       onDoubleClick={open}
+      onFocus={icon.preload}
+      onPointerEnter={icon.preload}
       type="button"
     >
       <div className="flex w-16 cursor-pointer flex-col items-center">

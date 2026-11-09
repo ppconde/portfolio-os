@@ -68,12 +68,11 @@ export default function Contact() {
 
   // Success clears the form and hides itself; errors stay until the next send.
   useEffect(() => {
-    if (fetcher.state !== 'idle') return setDismissed(false);
-    if (!success) return;
+    if (!result || !('success' in result) || !result.success) return;
     formRef.current?.reset();
     const timer = setTimeout(() => setDismissed(true), 6000);
     return () => clearTimeout(timer);
-  }, [fetcher.state, success]);
+  }, [result]);
 
   const message = !result
     ? null
@@ -96,7 +95,12 @@ export default function Contact() {
           contact@ppconde.com
         </A>
       </p>
-      <fetcher.Form className="space-y-6" method="post" ref={formRef}>
+      <fetcher.Form
+        className="space-y-6"
+        method="post"
+        onSubmit={() => setDismissed(false)}
+        ref={formRef}
+      >
         {FIELDS.map(([name, label, placeholder]) => {
           const Input = name === 'text' ? 'textarea' : 'input';
           return (
@@ -141,7 +145,7 @@ export default function Contact() {
             <img
               alt=""
               className="w-5 object-cover md:w-6"
-              src={success ? '/assets/check-0.png' : '/assets/msg_error-0.png'}
+              src={success ? '/img/check-0.png' : '/img/msg_error-0.png'}
             />
             <p className="text-center text-sm md:mt-0 md:text-left md:text-base">
               {message}
