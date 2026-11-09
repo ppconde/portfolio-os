@@ -141,11 +141,15 @@ export default function Mancala() {
   const you = useRoomStore((s) => s.you);
   const send = useRoomStore((s) => s.send);
   const view = useRoomStore((s) => s.view);
+  const sowing = useRoomStore((s) => (t ? s.sowing[t.id] : null));
   if (!t || !board) return null;
 
   const seat = mySeat(t, you);
   const playing = !!(t.seats[0] && t.seats[1] && !t.result);
   const animating = board !== t.board;
+  // The server is ahead of the animation (the AI answers instantly), so show
+  // whoever's stones are being sown, not whose turn it is now.
+  const turn = animating ? (sowing ?? t.turn) : t.turn;
   const myTurn = playing && seat === t.turn && !animating;
   const [top, bottom] =
     seat === 1 ? [t.seats[0], t.seats[1]] : [t.seats[1], t.seats[0]];
@@ -153,15 +157,15 @@ export default function Mancala() {
     t.result ??
     (!playing
       ? 'Waiting for opponent…'
-      : myTurn
+      : turn === seat
         ? 'Your turn'
-        : `${seatName(t.seats[t.turn])}'s turn`);
+        : `${seatName(t.seats[turn])}'s turn`);
 
   const topSeat = seat === 1 ? 0 : 1;
   // The player to move is highlighted like a Win98 selection.
   const name = (who: (typeof t.seats)[number], s: number) => (
     <p
-      className={`self-center px-1 ${playing && t.turn === s ? 'bg-accent text-tertiary' : ''}`}
+      className={`self-center px-1 ${playing && turn === s ? 'bg-accent text-tertiary' : ''}`}
     >
       {seatName(who) || '—'}
     </p>
