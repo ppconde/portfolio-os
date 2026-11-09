@@ -38,6 +38,24 @@ test.describe('Icon Interactions', () => {
     await expect(taskbarButton).toBeVisible();
   });
 
+  test('bringing back My Portfolio keeps the current page', async ({
+    page,
+  }) => {
+    await page.goto('/projects');
+    await page.getByTestId('minimize-button-my portfolio').click();
+    // Enter opens on desktop and touch alike.
+    await page
+      .getByRole('button')
+      .filter({ has: page.getByAltText('My Portfolio') })
+      .press('Enter');
+    await expect(
+      page.getByTestId('minimize-button-my portfolio')
+    ).toBeVisible();
+    // A stray navigation lands only after its loader fetch, so let it settle.
+    await page.waitForLoadState('networkidle');
+    await expect(page).toHaveURL(/\/projects\/?$/);
+  });
+
   test('should open Paint and draw on the canvas', async ({ page }) => {
     // Enter opens on desktop and touch alike; a double-click on touch opens on
     // the first tap and lands the second on the new window's toolbar.
