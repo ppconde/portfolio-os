@@ -14,7 +14,7 @@ const BEANS = [
   'silver',
   'pearl',
   'purple',
-].map((c) => `/assets/mancala/bean_${c}.webp`);
+].map((c) => `/img/mancala/bean_${c}.webp`);
 
 // Up to 8 beans in a spiral, more as a number.
 function Stones({
@@ -89,7 +89,7 @@ function Board({ board, flip, onPit }: BoardProps) {
 
   return (
     <g>
-      <image height={316} href="/assets/mancala/board.webp" width={905} />
+      <image height={316} href="/img/mancala/board.webp" width={905} />
       {[
         { i: left, cx: STORES[0] },
         { i: right, cx: STORES[1] },

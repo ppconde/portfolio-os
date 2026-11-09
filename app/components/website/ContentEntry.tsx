@@ -1,6 +1,3 @@
-import Article from './Article';
-import H3 from './H3';
-
 export default function ContentEntry({
   title,
   subtitle,
@@ -15,13 +12,13 @@ export default function ContentEntry({
   children: React.ReactNode;
 }) {
   return (
-    <Article>
+    <article className="my-8 text-pretty">
       <div className="flex flex-col gap-4 lg:flex-row">
         <div className="flex-1">
-          <H3>
+          <h3 className="font-ps-sans-nouveaux my-4 text-base font-bold text-gray-900">
             {title}
             {subtitle && <p className="mt-4 text-xs">{subtitle}</p>}
-          </H3>
+          </h3>
           <div>{children}</div>
         </div>
         {img && (
@@ -39,6 +36,6 @@ export default function ContentEntry({
           </figure>
         )}
       </div>
-    </Article>
+    </article>
   );
 }

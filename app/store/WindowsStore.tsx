@@ -35,19 +35,14 @@ const focusTopmost = (windows: DesktopWindow[]) => {
 
 export const useWindowsStore = create<WindowsStore>((set, get) => {
   // Bring `id` to front and focus it (applying `patch`), unfocus the rest.
-  const focus = (
-    id: string,
-    patch: (w: DesktopWindow) => Partial<DesktopWindow>
-  ) =>
+  const focus = (id: string, patch: Partial<DesktopWindow> = {}) =>
     set((state) => {
       const target = state.windows.find((w) => w.id === id);
-      const p = target && patch(target);
       // Already focused on top with nothing to change: keep state so nobody re-renders.
       if (
         target?.isFocused &&
         target.zIndex === state.currentZIndex &&
-        p &&
-        Object.keys(p).length === 0
+        Object.keys(patch).length === 0
       )
         return state;
       const zIndex = state.currentZIndex + 1;
@@ -55,7 +50,7 @@ export const useWindowsStore = create<WindowsStore>((set, get) => {
         currentZIndex: zIndex,
         windows: state.windows.map((w) =>
           w.id === id
-            ? { ...w, isFocused: true, zIndex, ...patch(w) }
+            ? { ...w, isFocused: true, zIndex, ...patch }
             : { ...w, isFocused: false }
         ),
       };
@@ -78,7 +73,7 @@ export const useWindowsStore = create<WindowsStore>((set, get) => {
       const { windows } = get();
       // Already open: bring it back instead of opening a second copy.
       if (windows.some((w) => w.id === id)) {
-        focus(id, () => ({ isMinimized: false }));
+        focus(id, { isMinimized: false });
         return;
       }
 
@@ -115,16 +110,15 @@ export const useWindowsStore = create<WindowsStore>((set, get) => {
         ),
       })),
 
-    maximizeWindow: (id) => focus(id, () => ({ isMaximized: true })),
+    maximizeWindow: (id) => focus(id, { isMaximized: true }),
     restoreWindow: (id) =>
-      focus(id, () => ({ isMinimized: false, isMaximized: false })),
+      focus(id, { isMinimized: false, isMaximized: false }),
     // Win98 taskbar: the active window minimizes, any other comes to front.
     toggleWindow: (id) => {
       const w = get().windows.find((w) => w.id === id);
       if (w && !w.isMinimized && w.isFocused) get().minimizeWindow(id);
-      else focus(id, () => ({ isMinimized: false }));
+      else focus(id, { isMinimized: false });
     },
-    setWindowPosition: (id, position) =>
-      focus(id, () => (position ? { position } : {})),
+    setWindowPosition: (id, position) => focus(id, position && { position }),
   };
 });

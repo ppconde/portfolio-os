@@ -38,6 +38,7 @@ export default function OSWindow({
   const [zoom, setZoom] = useState<Zoom | null>(null);
   const clearZoom = useCallback(() => setZoom(null), []);
   const last = useRef<{ rect?: DOMRect; min?: boolean; max?: boolean }>({});
+  // biome-ignore lint/correctness/useExhaustiveDependencies: focus and position are re-measure triggers, not inputs
   useLayoutEffect(() => {
     // Hidden while minimized: a display:none rect is all zeros, so skip it.
     const rect = window.isMinimized
@@ -61,7 +62,15 @@ export default function OSWindow({
       min: window.isMinimized,
       max: window.isMaximized,
     };
-  });
+    // Z-index-only re-renders (another window focused) skip the layout reads.
+    // Focus changes still re-measure, so a hand-resized window's rect stays fresh.
+  }, [
+    window.id,
+    window.isMinimized,
+    window.isMaximized,
+    window.isFocused,
+    window.position,
+  ]);
 
   const handleDragStop = (_event: DraggableEvent, data: DraggableData) => {
     if (!window.isMaximized) {
@@ -69,9 +78,6 @@ export default function OSWindow({
     }
   };
 
-  const handleMinimize = () => {
-    minimizeWindow(window.id);
-  };
   const toggleMaximize = () => {
     if (window.isMaximized) {
       restoreWindow(window.id);
@@ -82,10 +88,6 @@ export default function OSWindow({
       maximizeWindow(window.id);
       setWindowPosition(window.id, { x: 0, y: 0 }); // Set position to top-left corner when maximized
     }
-  };
-
-  const handleClose = () => {
-    closeWindow(window.id);
   };
 
   return (
@@ -140,20 +142,20 @@ export default function OSWindow({
                 <WindowButton
                   data-testid={`minimize-button-${window.id.toLowerCase()}`}
                   imageAlt="Minimize"
-                  imageName="/assets/minimize.png"
-                  onClick={handleMinimize}
+                  imageName="/img/minimize.png"
+                  onClick={() => minimizeWindow(window.id)}
                 />
                 <WindowButton
                   data-testid={`maximize-button-${window.id.toLowerCase()}`}
                   imageAlt="Maximize"
-                  imageName="/assets/maximize.png"
+                  imageName="/img/maximize.png"
                   onClick={toggleMaximize}
                 />
                 <WindowButton
                   data-testid={`close-button-${window.id.toLowerCase()}`}
                   imageAlt="Close"
-                  imageName="/assets/close.png"
-                  onClick={handleClose}
+                  imageName="/img/close.png"
+                  onClick={() => closeWindow(window.id)}
                 />
               </div>
             </div>
@@ -174,14 +176,14 @@ export default function OSWindow({
                 <img
                   alt=""
                   className="h-4 w-4 shrink-0"
-                  src="/assets/html-0.png"
+                  src="/img/html-0.png"
                 />
                 <span className="truncate">
                   © {new Date().getFullYear()} Pedro Conde
                 </span>
               </span>
               <span className="border-windows-sunken flex h-5 shrink-0 items-center gap-1 border px-1 whitespace-nowrap">
-                <img alt="" className="h-4 w-4" src="/assets/world-1.png" />
+                <img alt="" className="h-4 w-4" src="/img/world-1.png" />
                 Internet
               </span>
             </div>

@@ -1,15 +1,13 @@
 import { isbot } from 'isbot';
 import { renderToReadableStream } from 'react-dom/server';
 import type { EntryContext } from 'react-router';
-import { type RouterContextProvider, ServerRouter } from 'react-router';
+import { ServerRouter } from 'react-router';
 
 export default async function handleRequest(
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
-  routerContext: EntryContext,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _loadContext: RouterContextProvider
+  routerContext: EntryContext
 ) {
   let shellRendered = false;
   const userAgent = request.headers.get('user-agent');
@@ -51,8 +49,8 @@ export default async function handleRequest(
       [
         "default-src 'self'",
         "script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com",
-        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://fonts.cdnfonts.com",
-        "font-src 'self' https://fonts.gstatic.com https://fonts.cdnfonts.com",
+        "style-src 'self' 'unsafe-inline'",
+        "font-src 'self' https://fonts.cdnfonts.com",
         "connect-src 'self' https://cloudflareinsights.com",
         // Project cards show GitHub OpenGraph images.
         "img-src 'self' data: https://opengraph.githubassets.com https://repository-images.githubusercontent.com",

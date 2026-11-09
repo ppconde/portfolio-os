@@ -31,15 +31,17 @@ export default function StartWindow({ setIsOpen }: StartWindowProps) {
         {icons.map((icon) => (
           <button
             className={item}
-            key={icon.label}
+            key={icon.app}
             onClick={() => {
               openApp(icon);
               setIsOpen(false);
             }}
+            onFocus={icon.preload}
+            onPointerEnter={icon.preload}
             type="button"
           >
             <img alt="" className="h-8 w-8" src={icon.icon} />
-            <span>{icon.label}</span>
+            <span>{icon.app}</span>
           </button>
         ))}
         <hr className="border-t-quaternary border-b-tertiary mx-1 my-1 border-t border-b" />
@@ -48,7 +50,7 @@ export default function StartWindow({ setIsOpen }: StartWindowProps) {
           onClick={() => setBootState('shutting_down')}
           type="button"
         >
-          <img alt="" className="h-8 w-8" src="/assets/shut_down_cool-5.png" />
+          <img alt="" className="h-8 w-8" src="/img/shut_down_cool-5.png" />
           <span>
             Sh<span className="underline">u</span>t Down...
           </span>

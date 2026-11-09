@@ -1,13 +1,34 @@
 import H2 from '~/components/website/H2';
-import ProjectCard from '~/components/website/ProjectCard';
+import ProjectCard, { type Project } from '~/components/website/ProjectCard';
 import { appContext } from '~/context';
 import { githubQuery } from '~/graphql';
-import normalizePinnedRepos, {
-  type PinnedRepo,
-  type Project,
-} from '~/normalizers/pinned-repos.normalizer';
-import { GET_REPOS_QUERY } from '~/queries/getPinnedRepos';
 import type { Route } from './+types/projects';
+
+const QUERY = `{
+  user(login: "ppconde") {
+    pinnedItems(first: 6, types: REPOSITORY) {
+      nodes {
+        ... on Repository {
+          id
+          name
+          description
+          url
+          homepageUrl
+          openGraphImageUrl
+          languages(first: 1, orderBy: { field: SIZE, direction: DESC }) {
+            nodes { id name color }
+          }
+        }
+      }
+    }
+  }
+}`;
+
+type Repo = Omit<Project, 'languages'> & {
+  languages: {
+    nodes: ({ id: string; name: string; color: string | null } | null)[] | null;
+  } | null;
+};
 
 const CACHE_KEY = 'pinned_repos';
 const CACHE_TTL = 60 * 10; // 10 minutes
@@ -20,17 +41,25 @@ export async function loader({ context }: Route.LoaderArgs) {
     const cached = await PORTFOLIO_OS_KV.get<Project[]>(CACHE_KEY, 'json');
     if (cached) return cached;
 
-    const data = await githubQuery(await getGithubKey(), GET_REPOS_QUERY);
-    const nodes = data.user?.pinnedItems?.nodes;
+    const data = await githubQuery<{
+      user: { pinnedItems: { nodes: (Repo | null)[] } } | null;
+    }>(await getGithubKey(), QUERY);
+    const nodes = data.user?.pinnedItems.nodes;
     if (!nodes) {
       throw new Response('No repositories found', { status: 404 });
     }
 
-    const repos = nodes
-      .filter(
-        (repo): repo is PinnedRepo => !!repo && repo.__typename === 'Repository'
-      )
-      .map(normalizePinnedRepos);
+    const repos: Project[] = nodes
+      .filter((repo) => !!repo)
+      .map(({ languages, ...repo }) => ({
+        ...repo,
+        languages: (languages?.nodes ?? [])
+          .filter((l) => !!l)
+          .map((l) => ({
+            ...l,
+            color: l.color || '#000000',
+          })),
+      }));
 
     if (repos.length > 0) {
       // Off the response path: the visitor doesn't wait on the cache write.

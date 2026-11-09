@@ -51,153 +51,108 @@ export async function action({ request }: Route.ActionArgs) {
 const field =
   'border-t-quaternary border-l-quaternary border-r-secondary border-b-secondary mt-1 block w-full border-2 bg-white px-2 py-1 shadow-[inset_1px_1px_#000] placeholder:text-gray-500 focus-visible:outline-offset-0';
 
+const FIELDS = [
+  ['email', 'Your email', 'name@domain.com'],
+  ['subject', 'Subject', 'The subject of your message'],
+  ['text', 'Your message', 'Type your message here.'],
+] as const;
+
 export default function Contact() {
-  const fetcher = useFetcher();
-  const errors = fetcher.data?.errors;
-
+  const fetcher = useFetcher<typeof action>();
+  const result = fetcher.state === 'idle' ? fetcher.data : undefined;
+  const errors = result && 'errors' in result ? result.errors : undefined;
+  const success = !!result && 'success' in result && result.success;
   const formRef = useRef<HTMLFormElement>(null);
-
-  const [notification, setNotification] = useState<{
-    message: string;
-    type: 'success' | 'error';
-  } | null>(null);
-
-  useEffect(() => {
-    if (fetcher.state !== 'idle' || !fetcher.data) return;
-    if (fetcher.data.success) {
-      setNotification({
-        message: "Message sent. I'll reply to your email soon.",
-        type: 'success',
-      });
-    } else if (errors) {
-      setNotification({
-        message: 'Some fields need fixing. See the notes below each one.',
-        type: 'error',
-      });
-    } else {
-      setNotification({
-        message:
-          "Your message couldn't be sent. Try again, or email me at contact@ppconde.com.",
-        type: 'error',
-      });
-    }
-  }, [fetcher.state, fetcher.data, errors]);
+  // Hides the notice; a new submit brings it back.
+  const [dismissed, setDismissed] = useState(false);
 
   // Success clears the form and hides itself; errors stay until the next send.
   useEffect(() => {
-    if (notification?.type !== 'success') return;
+    if (!result || !('success' in result) || !result.success) return;
     formRef.current?.reset();
-    const timer = setTimeout(() => setNotification(null), 6000);
+    const timer = setTimeout(() => setDismissed(true), 6000);
     return () => clearTimeout(timer);
-  }, [notification]);
+  }, [result]);
+
+  const message = !result
+    ? null
+    : success
+      ? "Message sent. I'll reply to your email soon."
+      : errors
+        ? 'Some fields need fixing. See the notes below each one.'
+        : "Your message couldn't be sent. Try again, or email me at contact@ppconde.com.";
 
   return (
     <Section>
       <H2>Contact</H2>
-      <Section>
-        <p>
-          Feel free to reach out to me via email at{' '}
-          <A
-            ariaLabel="My professional contact email"
-            href="mailto:contact@ppconde.com"
-            title="Send me an email!"
-          >
-            contact@ppconde.com
-          </A>
-        </p>
-        <fetcher.Form className="space-y-6" method="post" ref={formRef}>
-          <div>
-            <label
-              className="block text-sm font-medium text-gray-900"
-              htmlFor="email"
-            >
-              <b>Your email</b>
-            </label>
-            <input
-              className={field}
-              id="email"
-              name="email"
-              placeholder="name@domain.com"
-              required
-              type="email"
-            />
-            {errors?.email && (
-              <p className="mt-1 text-sm text-red-600">{errors.email}</p>
-            )}
-          </div>
-          <div>
-            <label
-              className="block text-sm font-medium text-gray-900"
-              htmlFor="subject"
-            >
-              <b>Subject</b>
-            </label>
-            <input
-              className={field}
-              id="subject"
-              name="subject"
-              placeholder="The subject of your message"
-              required
-              type="text"
-            />
-            {errors?.subject && (
-              <p className="mt-1 text-sm text-red-600">{errors.subject}</p>
-            )}
-          </div>
-          <div>
-            <label
-              className="block text-sm font-medium text-gray-900"
-              htmlFor="text"
-            >
-              <b>Your message</b>
-            </label>
-            <textarea
-              className={field}
-              id="text"
-              name="text"
-              placeholder="Type your message here."
-              required
-              rows={5}
-            />
-            {errors?.text && (
-              <p className="mt-1 text-sm text-red-600">{errors.text}</p>
-            )}
-          </div>
-          <button
-            className="btn-windows active:btn-windows-inverted px-6 py-1 text-sm text-gray-900 disabled:text-gray-500"
-            disabled={fetcher.state !== 'idle'}
-            type="submit"
-          >
-            {fetcher.state === 'idle' ? 'Send' : 'Sending...'}
-          </button>
-        </fetcher.Form>
-        {notification && (
-          <div
-            className="border-windows absolute top-24 right-2 w-full max-w-xs md:max-w-sm lg:max-w-md"
-            role={notification.type === 'success' ? 'status' : 'alert'}
-          >
-            <div className="bg-accent h-3 items-center justify-between px-1"></div>
-            <div className="bg-secondary font-ms-reference flex flex-row items-center justify-evenly p-3 shadow-md">
-              {notification.type === 'success' ? (
-                <img
-                  alt=""
-                  className="w-5 object-cover md:w-6"
-                  src="/assets/check-0.png"
-                />
-              ) : (
-                <img
-                  alt=""
-                  className="w-5 object-cover md:w-6"
-                  src="/assets/msg_error-0.png"
-                />
+      <p>
+        Feel free to reach out to me via email at{' '}
+        <A
+          ariaLabel="My professional contact email"
+          href="mailto:contact@ppconde.com"
+          title="Send me an email!"
+        >
+          contact@ppconde.com
+        </A>
+      </p>
+      <fetcher.Form
+        className="space-y-6"
+        method="post"
+        onSubmit={() => setDismissed(false)}
+        ref={formRef}
+      >
+        {FIELDS.map(([name, label, placeholder]) => {
+          const Input = name === 'text' ? 'textarea' : 'input';
+          return (
+            <div key={name}>
+              <label
+                className="block text-sm font-medium text-gray-900"
+                htmlFor={name}
+              >
+                <b>{label}</b>
+              </label>
+              <Input
+                className={field}
+                id={name}
+                name={name}
+                placeholder={placeholder}
+                required
+                {...(name === 'text'
+                  ? { rows: 5 }
+                  : { type: name === 'email' ? 'email' : 'text' })}
+              />
+              {errors?.[name] && (
+                <p className="mt-1 text-sm text-red-600">{errors[name]}</p>
               )}
-              <p className="text-center text-sm md:mt-0 md:text-left md:text-base">
-                {notification.message}
-              </p>
             </div>
+          );
+        })}
+        <button
+          className="btn-windows active:btn-windows-inverted px-6 py-1 text-sm text-gray-900 disabled:text-gray-500"
+          disabled={fetcher.state !== 'idle'}
+          type="submit"
+        >
+          {fetcher.state === 'idle' ? 'Send' : 'Sending...'}
+        </button>
+      </fetcher.Form>
+      {message && !dismissed && (
+        <div
+          className="border-windows absolute top-24 right-2 w-full max-w-xs md:max-w-sm lg:max-w-md"
+          role={success ? 'status' : 'alert'}
+        >
+          <div className="bg-accent h-3 items-center justify-between px-1"></div>
+          <div className="bg-secondary font-ms-reference flex flex-row items-center justify-evenly p-3 shadow-md">
+            <img
+              alt=""
+              className="w-5 object-cover md:w-6"
+              src={success ? '/img/check-0.png' : '/img/msg_error-0.png'}
+            />
+            <p className="text-center text-sm md:mt-0 md:text-left md:text-base">
+              {message}
+            </p>
           </div>
-        )}
-      </Section>
+        </div>
+      )}
     </Section>
   );
 }

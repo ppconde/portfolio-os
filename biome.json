@@ -17,7 +17,6 @@
       "!**/playwright-report",
       "!**/test-results",
       "!**/blob-report",
-      "!app/__generated__",
       "!worker-configuration.d.ts",
       "!.agents",
       "!.claude",

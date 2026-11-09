@@ -125,13 +125,6 @@ export type TableState = {
 
 export type Player = { id: string; name: string; color: string } & Tile;
 
-export type ClientMsg =
-  | ({ t: 'pos' } & Tile)
-  | { t: 'say'; text: string }
-  | { t: 'sit'; tableId: number; seat: Seat }
-  | { t: 'stand' }
-  | { t: 'move'; tableId: number; pit: number; version: number };
-
 export type ServerMsg =
   | { t: 'snapshot'; you: string; players: Player[]; tables: TableState[] }
   | { t: 'joined'; player: Player }

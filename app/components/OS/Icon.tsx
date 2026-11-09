@@ -14,16 +14,18 @@ export default function Icon(icon: IconType) {
         if (e.detail === 0 || matchMedia('(pointer: coarse)').matches) open();
       }}
       onDoubleClick={open}
+      onFocus={icon.preload}
+      onPointerEnter={icon.preload}
       type="button"
     >
       <div className="flex w-16 cursor-pointer flex-col items-center">
         <img
-          alt={icon.label}
+          alt={icon.app}
           className="image-rendering-pixelated mb-1 h-12 w-12"
           src={icon.icon}
         />
         <span className="text-tertiary group-focus:bg-accent px-0.5 text-center text-xs">
-          {icon.label}
+          {icon.app}
         </span>
       </div>
     </button>

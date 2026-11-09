@@ -27,7 +27,7 @@ export default function RoomDialog({
           {onClose && (
             <WindowButton
               imageAlt="Close"
-              imageName="/assets/close.png"
+              imageName="/img/close.png"
               onClick={onClose}
             />
           )}

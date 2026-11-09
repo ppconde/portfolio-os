@@ -1,7 +1,6 @@
 import A from '~/components/website/A';
 import ContentEntry from '~/components/website/ContentEntry';
 import H2 from '~/components/website/H2';
-import HR from '~/components/website/HR';
 import Section from '~/components/website/Section';
 
 export default function About() {
@@ -76,11 +75,11 @@ export default function About() {
         <strong>React</strong>.
       </ContentEntry>
 
-      <HR />
+      <hr className="my-6 h-1" />
 
       <ContentEntry
         caption="Figure 1: Raising awareness of the importance of terrain management in wildfire prevention, an initiative by ESN Aveiro."
-        img="/assets/esnaveiro.webp"
+        img="/img/esnaveiro.webp"
         subtitle="[2016-2018] - Aveiro"
         title="Volunteering"
       >

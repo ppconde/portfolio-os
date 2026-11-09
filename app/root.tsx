@@ -5,40 +5,27 @@ import './tailwind.css';
 import type { Route } from './+types/root';
 import BlueScreen from './components/OS/BlueScreen';
 import { Screen } from './components/OS/Screen';
+import microFont from './fonts/micro5-latin.woff2?url';
+import dosWinFont from './fonts/perfect-dos-vga-437-win.woff?url';
 
 export const links: LinksFunction = () => [
   {
-    rel: 'preconnect',
-    href: 'https://fonts.googleapis.com',
+    rel: 'preload',
+    href: dosWinFont,
+    as: 'font',
+    type: 'font/woff',
+    crossOrigin: 'anonymous',
   },
   {
-    rel: 'preconnect',
-    href: 'https://fonts.gstatic.com',
+    rel: 'preload',
+    href: microFont,
+    as: 'font',
+    type: 'font/woff2',
     crossOrigin: 'anonymous',
   },
   {
     rel: 'preconnect',
     href: 'https://fonts.cdnfonts.com',
-    crossOrigin: 'anonymous',
-  },
-  {
-    rel: 'stylesheet',
-    href: 'https://fonts.googleapis.com/css2?family=Micro+5&display=swap',
-    crossOrigin: 'anonymous',
-  },
-  {
-    rel: 'stylesheet',
-    href: 'https://fonts.cdnfonts.com/css/px-sans-nouveaux?display=optional',
-    crossOrigin: 'anonymous',
-  },
-  {
-    rel: 'stylesheet',
-    href: 'https://fonts.cdnfonts.com/css/perfect-dos-vga-437?display=swap',
-    crossOrigin: 'anonymous',
-  },
-  {
-    rel: 'stylesheet',
-    href: 'https://fonts.cdnfonts.com/css/ms-reference-sans-serif?display=optional',
     crossOrigin: 'anonymous',
   },
 ];

@@ -1,33 +1,36 @@
 import { AppsNames } from './apps-names.const';
 
+// Lazy apps' chunks: DesktopContent lazy()-loads them, icons preload them on hover/focus.
+export const loadPaint = () => import('~/components/Paint');
+export const loadMancala = () => import('~/components/MancalaLounge');
+
 export type Icon = {
-  label: string;
   app: AppsNames;
   icon: string;
   to?: string;
+  // Fetches a lazy app's chunk on hover/focus, so opening it doesn't wait.
+  preload?: () => Promise<unknown>;
 };
 
 // Each icon is also its window's title-bar and taskbar icon.
 export const icons: Icon[] = [
   {
-    label: AppsNames.PORTFOLIO,
     app: AppsNames.PORTFOLIO,
-    icon: '/assets/html2-2.png',
+    icon: '/img/html2-2.png',
     to: '/home',
   },
   {
-    label: AppsNames.PAINT,
     app: AppsNames.PAINT,
-    icon: '/assets/paint_old-0.png',
+    icon: '/img/paint_old-0.png',
+    preload: loadPaint,
   },
   {
-    label: AppsNames.MANCALA,
     app: AppsNames.MANCALA,
-    icon: '/assets/mancala-0.png',
+    icon: '/img/mancala-0.png',
+    preload: loadMancala,
   },
   {
-    label: AppsNames.CREDITS,
     app: AppsNames.CREDITS,
-    icon: '/assets/help_book_cool-4.png',
+    icon: '/img/help_book_cool-4.png',
   },
 ];

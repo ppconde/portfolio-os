@@ -156,7 +156,7 @@ function Join() {
   );
   const taken = useRoomStore((s) => s.nameTaken);
   return (
-    <div className="relative h-full bg-[#2b1612] bg-[url(/assets/mancala/lounge.webp)] bg-contain bg-center bg-no-repeat">
+    <div className="relative h-full bg-[#2b1612] bg-[url(/img/mancala/lounge.webp)] bg-contain bg-center bg-no-repeat">
       <RoomDialog title="Mancala lounge">
         <form
           className="flex flex-col gap-3"
@@ -197,32 +197,35 @@ function Join() {
 }
 
 function Scene() {
-  const { players, tables, you, send, walkTo, view, viewing, muted } =
-    useRoomStore(
-      // Only what the room draws: the boards animating at empty tables (display)
-      // would otherwise redraw the whole room every tick.
-      useShallow((s) => ({
-        players: s.players,
-        tables: s.tables,
-        you: s.you,
-        send: s.send,
-        walkTo: s.walkTo,
-        view: s.view,
-        viewing: s.viewing,
-        muted: s.muted,
-      }))
-    );
+  const { tables, you, send, walkTo, view, viewing, muted } = useRoomStore(
+    // Only what the room draws. Players (moving every tick) are drawn by <Blobs>,
+    // and boards animating at empty tables (display) by the board overlay.
+    useShallow((s) => ({
+      tables: s.tables,
+      you: s.you,
+      send: s.send,
+      walkTo: s.walkTo,
+      view: s.view,
+      viewing: s.viewing,
+      muted: s.muted,
+    }))
+  );
   const svgRef = useRef<SVGSVGElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
   const [help, setHelp] = useState(false);
   useEffect(() => rootRef.current?.focus(), []);
 
-  const me = you ? players[you] : undefined;
+  // Read on demand, not subscribed: only handlers need where you stand.
+  const getMe = () => {
+    const s = useRoomStore.getState();
+    return s.you ? s.players[s.you] : undefined;
+  };
   const seated = tables.some((t) => mySeat(t, you) >= 0);
   const full = (id: number) => !!(tables[id].seats[0] && tables[id].seats[1]);
 
   const clickTable = (id: number, seat?: Seat) => {
     const t = tables[id];
+    const me = getMe();
     if (!me || !t) return;
     // Your own game, someone else's, or you're busy at another table: watch.
     if (seated || full(id)) return full(id) && view(id);
@@ -249,6 +252,7 @@ function Scene() {
   };
 
   const onKey = (e: React.KeyboardEvent) => {
+    const me = getMe();
     if (!me || (e.target as Element).tagName === 'INPUT') return;
     const dir = KEYS[e.key];
     if (dir) {
@@ -269,27 +273,8 @@ function Scene() {
     }
   };
 
-  // Blobs drawn back to front by where they touch the floor.
-  // AI seats (the resident Computer, or a stand-in) are drawn as blobs too.
-  const computers = tables.flatMap((t) =>
-    t.seats.flatMap((s, seat) =>
-      s?.ai
-        ? [
-            {
-              ...TABLES[t.id].seats[seat],
-              id: s.id,
-              name: seatName(s),
-              color: '#9ca3af',
-            },
-          ]
-        : []
-    )
-  );
   const pcSeat = tables[PC_TABLE]?.seats[0];
   const myTable = tables.find((t) => mySeat(t, you) >= 0);
-  const sorted: Blob[] = [...Object.values(players), ...computers].sort(
-    (a, b) => a.y - b.y
-  );
 
   return (
     <div
@@ -314,7 +299,7 @@ function Scene() {
             viewBox={`0 0 ${W} ${H}`}
           >
             <title>Mancala lounge</title>
-            <image height={H} href="/assets/mancala/lounge.webp" width={W} />
+            <image height={H} href="/img/mancala/lounge.webp" width={W} />
             {/* The poster on the back wall */}
             {/* biome-ignore lint/a11y/useSemanticElements: an SVG shape */}
             <rect
@@ -392,107 +377,7 @@ function Scene() {
                 })
               )}
 
-            {sorted.map((p) => {
-              const seat = tables
-                .flatMap((t) => t.seats)
-                .find((s) => s?.id === p.id);
-              const [idle, eyes] = clocks(p.id);
-              // Walking: eyes point where they're headed; stopped, they wander.
-              const walking = Date.now() - (p.movedAt ?? 0) < 300 && p.look;
-              return (
-                <g
-                  className="pointer-events-none"
-                  data-testid={`blob-${p.name}`}
-                  key={p.id}
-                  style={{
-                    transform: `translate(${(p.x + 0.5) * TILE}px, ${(p.y + 1) * TILE - 6}px) scale(1.5)`,
-                    transition: 'transform 150ms linear',
-                  }}
-                >
-                  <g
-                    className={seat ? 'blob-sit' : 'blob-hop'}
-                    key={seat ? 'sit' : `${p.x},${p.y}`}
-                  >
-                    {seat?.ai ? (
-                      <>
-                        <rect
-                          fill="#9ca3af"
-                          height="18"
-                          rx="3"
-                          stroke="#4b5563"
-                          width="24"
-                          x="-12"
-                          y="-20"
-                        />
-                        <rect
-                          fill="#0f172a"
-                          height="11"
-                          width="18"
-                          x="-9"
-                          y="-17"
-                        />
-                        <g className="blob-eyes" style={eyes}>
-                          {[-5, 3].map((ex) => (
-                            <rect
-                              fill="#4ade80"
-                              height="3"
-                              key={ex}
-                              width="2"
-                              x={ex}
-                              y="-13"
-                            />
-                          ))}
-                        </g>
-                      </>
-                    ) : (
-                      <g className="blob-idle" style={idle}>
-                        <ellipse
-                          cx="0"
-                          cy="-10"
-                          fill={p.color}
-                          rx="11"
-                          ry="10"
-                          stroke="#00000066"
-                        />
-                        <g
-                          className="blob-eyes"
-                          style={
-                            walking
-                              ? {
-                                  animation: 'none',
-                                  transform: `translate(${walking.x * 2.5}px, ${walking.y * 2}px)`,
-                                }
-                              : eyes
-                          }
-                        >
-                          {[-4, 4].map((ex) => (
-                            <circle
-                              cx={ex}
-                              cy={-12}
-                              fill="#111"
-                              key={ex}
-                              r="1.6"
-                            />
-                          ))}
-                        </g>
-                      </g>
-                    )}
-                  </g>
-                  <text
-                    fill="#111"
-                    fontSize="8"
-                    paintOrder="stroke"
-                    stroke="#fdffff"
-                    strokeWidth="2"
-                    textAnchor="middle"
-                    y="8"
-                  >
-                    {p.name}
-                    {p.id === you && ' (you)'}
-                  </text>
-                </g>
-              );
-            })}
+            <Blobs />
 
             {/* Labels and speech bubbles stay on top */}
             {tables.map((t) => (
@@ -560,6 +445,127 @@ function Scene() {
         {help && <HowToPlay close={() => setHelp(false)} />}
       </div>
     </div>
+  );
+}
+
+// Subscribes to players itself, so a walking tick redraws the blobs, not the room.
+function Blobs() {
+  const players = useRoomStore((s) => s.players);
+  const tables = useRoomStore((s) => s.tables);
+  const you = useRoomStore((s) => s.you);
+  // The resident Computer is drawn as a blob too.
+  const computers = tables.flatMap((t) =>
+    t.seats.flatMap((s, seat) =>
+      s?.ai
+        ? [
+            {
+              ...TABLES[t.id].seats[seat],
+              id: s.id,
+              name: seatName(s),
+              color: '#9ca3af',
+            },
+          ]
+        : []
+    )
+  );
+  const seats = new Map(
+    tables.flatMap((t) => t.seats.flatMap((s) => (s ? [[s.id, s]] : [])))
+  );
+  // Drawn back to front by where they touch the floor.
+  const sorted: Blob[] = [...Object.values(players), ...computers].sort(
+    (a, b) => a.y - b.y
+  );
+
+  return (
+    <>
+      {sorted.map((p) => {
+        const seat = seats.get(p.id);
+        const [idle, eyes] = clocks(p.id);
+        // Walking: eyes point where they're headed; stopped, they wander.
+        const walking = Date.now() - (p.movedAt ?? 0) < 300 && p.look;
+        return (
+          <g
+            className="pointer-events-none"
+            data-testid={`blob-${p.name}`}
+            key={p.id}
+            style={{
+              transform: `translate(${(p.x + 0.5) * TILE}px, ${(p.y + 1) * TILE - 6}px) scale(1.5)`,
+              transition: 'transform 150ms linear',
+            }}
+          >
+            <g
+              className={seat ? 'blob-sit' : 'blob-hop'}
+              key={seat ? 'sit' : `${p.x},${p.y}`}
+            >
+              {seat?.ai ? (
+                <>
+                  <rect
+                    fill="#9ca3af"
+                    height="18"
+                    rx="3"
+                    stroke="#4b5563"
+                    width="24"
+                    x="-12"
+                    y="-20"
+                  />
+                  <rect fill="#0f172a" height="11" width="18" x="-9" y="-17" />
+                  <g className="blob-eyes" style={eyes}>
+                    {[-5, 3].map((ex) => (
+                      <rect
+                        fill="#4ade80"
+                        height="3"
+                        key={ex}
+                        width="2"
+                        x={ex}
+                        y="-13"
+                      />
+                    ))}
+                  </g>
+                </>
+              ) : (
+                <g className="blob-idle" style={idle}>
+                  <ellipse
+                    cx="0"
+                    cy="-10"
+                    fill={p.color}
+                    rx="11"
+                    ry="10"
+                    stroke="#00000066"
+                  />
+                  <g
+                    className="blob-eyes"
+                    style={
+                      walking
+                        ? {
+                            animation: 'none',
+                            transform: `translate(${walking.x * 2.5}px, ${walking.y * 2}px)`,
+                          }
+                        : eyes
+                    }
+                  >
+                    {[-4, 4].map((ex) => (
+                      <circle cx={ex} cy={-12} fill="#111" key={ex} r="1.6" />
+                    ))}
+                  </g>
+                </g>
+              )}
+            </g>
+            <text
+              fill="#111"
+              fontSize="8"
+              paintOrder="stroke"
+              stroke="#fdffff"
+              strokeWidth="2"
+              textAnchor="middle"
+              y="8"
+            >
+              {p.name}
+              {p.id === you && ' (you)'}
+            </text>
+          </g>
+        );
+      })}
+    </>
   );
 }
 
