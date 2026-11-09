@@ -1,4 +1,4 @@
-import { createRef } from 'react';
+import { useRef } from 'react';
 import { icons } from '~/constants/icons.const';
 import { useClickOutside } from '~/hooks/use-click-outside';
 import { useOpenApp } from '~/hooks/use-open-app';
@@ -9,7 +9,7 @@ type StartWindowProps = {
 };
 
 export default function StartWindow({ setIsOpen }: StartWindowProps) {
-  const ref = createRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null);
   useClickOutside(ref, () => setIsOpen(false));
   const setBootState = useBootStore((s) => s.setBootState);
   const openApp = useOpenApp();

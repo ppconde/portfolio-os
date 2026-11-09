@@ -6,21 +6,21 @@ import H2 from '~/components/website/H2';
 import Section from '~/components/website/Section';
 import type { Route } from './+types/contact';
 
-export async function action({ request }: Route.ActionArgs) {
-  const formSchema = z
-    .object({
-      subject: z
-        .string()
-        .min(3, 'Subject must be at least 3 characters long')
-        .max(100, 'Subject cannot exceed 100 characters'),
-      email: z.string().email('Invalid email address'),
-      text: z
-        .string()
-        .min(10, 'Message must be at least 10 characters long')
-        .max(1000, 'Message cannot exceed 1000 characters'),
-    })
-    .strict();
+const formSchema = z
+  .object({
+    subject: z
+      .string()
+      .min(3, 'Subject must be at least 3 characters long')
+      .max(100, 'Subject cannot exceed 100 characters'),
+    email: z.string().email('Invalid email address'),
+    text: z
+      .string()
+      .min(10, 'Message must be at least 10 characters long')
+      .max(1000, 'Message cannot exceed 1000 characters'),
+  })
+  .strict();
 
+export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
   const entries = Object.fromEntries(formData.entries());
   const parseResult = formSchema.safeParse(entries);

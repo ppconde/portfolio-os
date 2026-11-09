@@ -5,13 +5,30 @@ import { icons } from '~/constants/icons.const';
 import { usePlaySound } from '~/hooks/use-play-sounds';
 import { useWindowsStore } from '~/store/WindowsStore';
 import Credits from '../Credits';
-import Paint from '../Paint';
 import Icon from './Icon';
 import Navbar from './Navbar';
 import OSWindow from './OSWindow';
 
 // Loaded when the Mancala window first opens, not with the desktop.
 const MancalaLounge = lazy(() => import('../MancalaLounge'));
+const Paint = lazy(() => import('../Paint'));
+
+// Module-level elements keep their identity, so window focus/drag re-renders
+// skip the apps. <Outlet /> still updates on navigation (it reads context).
+const APPS: Record<AppsNames, React.ReactNode> = {
+  [AppsNames.PORTFOLIO]: <Outlet />,
+  [AppsNames.CREDITS]: <Credits />,
+  [AppsNames.PAINT]: (
+    <Suspense fallback={null}>
+      <Paint />
+    </Suspense>
+  ),
+  [AppsNames.MANCALA]: (
+    <Suspense fallback={<div className="h-full bg-[#2b1612]" />}>
+      <MancalaLounge />
+    </Suspense>
+  ),
+};
 
 export default function DesktopContent() {
   const windows = useWindowsStore((s) => s.windows);
@@ -38,24 +55,7 @@ export default function DesktopContent() {
           showStatusBar={window.id === AppsNames.PORTFOLIO}
           window={window}
         >
-          {(() => {
-            switch (window.id) {
-              case AppsNames.PORTFOLIO:
-                return <Outlet />;
-              case AppsNames.CREDITS:
-                return <Credits />;
-              case AppsNames.PAINT:
-                return <Paint />;
-              case AppsNames.MANCALA:
-                return (
-                  <Suspense fallback={<div className="h-full bg-[#2b1612]" />}>
-                    <MancalaLounge />
-                  </Suspense>
-                );
-              default:
-                return null;
-            }
-          })()}
+          {APPS[window.id]}
         </OSWindow>
       ))}
       <Navbar />

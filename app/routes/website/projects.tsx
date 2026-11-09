@@ -33,9 +33,12 @@ export async function loader({ context }: Route.LoaderArgs) {
       .map(normalizePinnedRepos);
 
     if (repos.length > 0) {
-      await PORTFOLIO_OS_KV.put(CACHE_KEY, JSON.stringify(repos), {
-        expirationTtl: CACHE_TTL,
-      });
+      // Off the response path: the visitor doesn't wait on the cache write.
+      cloudflare.ctx.waitUntil(
+        PORTFOLIO_OS_KV.put(CACHE_KEY, JSON.stringify(repos), {
+          expirationTtl: CACHE_TTL,
+        })
+      );
     }
     return repos;
   } catch (err) {
