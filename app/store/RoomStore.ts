@@ -39,7 +39,7 @@ type RoomStore = {
 };
 
 // A player as drawn: which way they last walked, and when, so eyes can follow.
-type Blob = Player & { look?: Tile; movedAt?: number };
+export type Blob = Player & { look?: Tile; movedAt?: number };
 
 const moveTo = (p: Blob, to: Tile): Blob => {
   const d = Math.hypot(to.x - p.x, to.y - p.y);

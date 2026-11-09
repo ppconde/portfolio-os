@@ -15,6 +15,7 @@ import {
   type Tile,
 } from '~/room';
 import {
+  type Blob,
   BUBBLE_MS,
   mySeat,
   seatName,
@@ -296,7 +297,7 @@ function Scene() {
   );
   const pcSeat = tables[PC_TABLE]?.seats[0];
   const myTable = tables.find((t) => mySeat(t, you) >= 0);
-  const sorted = [...Object.values(players), ...computers].sort(
+  const sorted: Blob[] = [...Object.values(players), ...computers].sort(
     (a, b) => a.y - b.y
   );
 
