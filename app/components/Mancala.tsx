@@ -85,7 +85,6 @@ function Board({ board, w, h, flip, onPit }: BoardProps) {
           />
           {/* Stores show their total: it's the score. */}
           <text
-            data-testid={onPit && `store-count-${i}`}
             dominantBaseline="central"
             fill="#fdffff"
             fontSize={r * 1.1}

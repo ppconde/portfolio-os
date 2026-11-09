@@ -115,10 +115,7 @@ function Join() {
     () => store('room-name') ?? NAMES[Math.floor(Math.random() * NAMES.length)]
   );
   return (
-    <div
-      className="relative h-full bg-[#2b1612] bg-cover bg-center"
-      style={{ backgroundImage: 'url(/assets/mancala/lounge.png)' }}
-    >
+    <div className="relative h-full bg-[#2b1612] bg-[url(/assets/mancala/lounge.png)] bg-cover bg-center">
       <RoomDialog title="Mancala lounge">
         <form
           className="flex flex-col gap-3"
@@ -264,7 +261,6 @@ function Scene() {
           {/* biome-ignore lint/a11y/useKeyWithClickEvents: arrow keys on the room walk */}
           <svg
             className="h-full w-full"
-            data-testid="mancala-lounge"
             onClick={onFloor}
             ref={svgRef}
             viewBox={`0 0 ${W} ${H}`}
@@ -489,7 +485,7 @@ function Scene() {
           value={text}
         />
         <button
-          className="border-windows bg-secondary active:border-windows-inverted px-3 whitespace-nowrap"
+          className="border-windows bg-secondary active:border-windows-inverted px-3"
           type="submit"
         >
           Say
