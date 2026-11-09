@@ -115,7 +115,7 @@ function Join() {
     () => store('room-name') ?? NAMES[Math.floor(Math.random() * NAMES.length)]
   );
   return (
-    <div className="relative h-full bg-[#2b1612] bg-[url(/assets/mancala/lounge.png)] bg-cover bg-center">
+    <div className="relative h-full bg-[#2b1612] bg-[url(/assets/mancala/lounge.png)] bg-contain bg-center bg-no-repeat">
       <RoomDialog title="Mancala lounge">
         <form
           className="flex flex-col gap-3"
@@ -245,7 +245,7 @@ function Scene() {
   return (
     <div
       aria-label="Mancala lounge. Arrow keys walk, Enter sits on a cushion, Escape stands up."
-      className="flex h-full flex-col gap-2 outline-none"
+      className="h-full outline-none"
       onKeyDown={onKey}
       ref={rootRef}
       role="application"
@@ -255,7 +255,7 @@ function Scene() {
       {/* Jazz while you're in the room; entering was a click, so it may autoplay. */}
       <audio data-testid="jazz" loop muted={muted} ref={jazzRef} />
       {/* The stage keeps the picture's 16:9; the bands match its walls. */}
-      <div className="[container-type:size] relative flex min-h-0 grow items-center justify-center bg-[#2b1612]">
+      <div className="[container-type:size] relative flex h-full items-center justify-center bg-[#2b1612]">
         <div className="aspect-video w-[min(100cqw,calc(100cqh*16/9))]">
           {/* biome-ignore lint/a11y/useKeyWithClickEvents: arrow keys on the room walk */}
           <svg
@@ -464,37 +464,50 @@ function Scene() {
             )}
           </svg>
         </div>
-        {viewing !== null && <Mancala />}
-        {help && <HowToPlay close={() => setHelp(false)} />}
-      </div>
-      <Chat>
-        {myTable && (
+        {/* Floats on the picture, so it sits exactly where the join screen showed it. */}
+        <Chat>
+          {myTable && (
+            <button
+              className="border-windows bg-secondary active:border-windows-inverted px-3 whitespace-nowrap"
+              onClick={() => send({ t: 'stand' })}
+              type="button"
+            >
+              Stand up
+            </button>
+          )}
+          {/* Nobody came: swap to the Computer's table. */}
+          {myTable &&
+            myTable.id !== PC_TABLE &&
+            !full(myTable.id) &&
+            !pcSeat && (
+              <button
+                className="border-windows bg-secondary active:border-windows-inverted px-3 whitespace-nowrap"
+                onClick={() => {
+                  send({ t: 'stand' });
+                  walkTo(TABLES[PC_TABLE].seats[0], {
+                    tableId: PC_TABLE,
+                    seat: 0,
+                  });
+                }}
+                type="button"
+              >
+                Play the computer
+              </button>
+            )}
           <button
-            className="border-windows bg-secondary active:border-windows-inverted px-3 whitespace-nowrap"
-            onClick={() => send({ t: 'stand' })}
-            type="button"
-          >
-            Stand up
-          </button>
-        )}
-        {/* Nobody came: swap to the Computer's table. */}
-        {myTable && myTable.id !== PC_TABLE && !full(myTable.id) && !pcSeat && (
-          <button
-            className="border-windows bg-secondary active:border-windows-inverted px-3 whitespace-nowrap"
+            className="border-windows bg-secondary active:border-windows-inverted px-3"
             onClick={() => {
-              send({ t: 'stand' });
-              walkTo(TABLES[PC_TABLE].seats[0], { tableId: PC_TABLE, seat: 0 });
+              send({ t: 'stand' }); // a closed socket alone would hold the seat
+              useRoomStore.getState().disconnect();
             }}
             type="button"
           >
-            Play the computer
+            Leave
           </button>
-        )}
-      </Chat>
-      <p className="font-mono text-xs">
-        Click the floor to walk, a cushion to sit. Esc or a floor click stands
-        you up. The poster on the wall has the rules.
-      </p>
+        </Chat>
+        {viewing !== null && <Mancala />}
+        {help && <HowToPlay close={() => setHelp(false)} />}
+      </div>
     </div>
   );
 }
@@ -504,7 +517,7 @@ function Chat({ children }: { children: React.ReactNode }) {
   const [text, setText] = useState('');
   return (
     <form
-      className="flex gap-2 font-mono text-sm"
+      className="border-windows bg-secondary absolute right-2 bottom-2 left-2 flex flex-wrap gap-1 p-1 font-mono text-sm sm:right-auto sm:w-lg"
       onSubmit={(e) => {
         e.preventDefault();
         if (text.trim()) useRoomStore.getState().send({ t: 'say', text });
@@ -526,6 +539,10 @@ function Chat({ children }: { children: React.ReactNode }) {
         Say
       </button>
       {children}
+      <p className="hidden w-full px-1 text-xs sm:block">
+        Click the floor to walk, a cushion to sit. Esc or a floor click stands
+        you up. The poster on the wall has the rules.
+      </p>
     </form>
   );
 }
