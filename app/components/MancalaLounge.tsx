@@ -381,8 +381,7 @@ function Scene() {
                 .find((s) => s?.id === p.id);
               const [idle, eyes] = clocks(p.id);
               // Walking: eyes point where they're headed; stopped, they wander.
-              const walking =
-                p.look && Date.now() - (p.movedAt ?? 0) < 300 && p.look;
+              const walking = Date.now() - (p.movedAt ?? 0) < 300 && p.look;
               return (
                 <g
                   className="pointer-events-none"
