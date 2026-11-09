@@ -1,9 +1,22 @@
 import { mySeat, seatName, useRoomStore } from '~/store/RoomStore';
 import RoomDialog from './RoomDialog';
 
-const STONE = ['#e11d48', '#2563eb', '#16a34a', '#f59e0b', '#9333ea'];
+const BEANS = [
+  'red',
+  'teal',
+  'yellow',
+  'pink',
+  'blue',
+  'black',
+  'orange',
+  'copper',
+  'green',
+  'silver',
+  'pearl',
+  'purple',
+].map((c) => `/assets/mancala/bean_${c}.png`);
 
-// Up to 6 stones as dots, more as a number.
+// Up to 8 beans in a spiral, more as a number.
 function Stones({
   n,
   cx,
@@ -17,12 +30,16 @@ function Stones({
   r: number;
   salt: number;
 }) {
-  if (n > 6)
+  if (n > 8)
     return (
       <text
         dominantBaseline="central"
-        fill="#fff"
-        fontSize={r * 1.1}
+        fill="#fdffff"
+        fontSize={r * 0.9}
+        fontWeight="bold"
+        paintOrder="stroke"
+        stroke="#3b1f0a"
+        strokeWidth={r * 0.12}
         textAnchor="middle"
         x={cx}
         y={cy}
@@ -30,72 +47,70 @@ function Stones({
         {n}
       </text>
     );
+  const b = r * 0.5; // bean size
   return Array.from({ length: n }, (_, k) => {
     const a = k * 2.4 + salt;
-    const d = n === 1 ? 0 : r * 0.5;
+    const d = n === 1 ? 0 : r * 0.22 + k * r * 0.055;
     return (
-      <circle
-        cx={cx + Math.cos(a) * d}
-        cy={cy + Math.sin(a) * d}
-        fill={STONE[(k + salt) % STONE.length]}
+      <image
+        height={b}
+        href={BEANS[(k * 5 + salt) % BEANS.length]}
         // biome-ignore lint/suspicious/noArrayIndexKey: stones are interchangeable
         key={k}
-        r={r * 0.3}
+        width={b}
+        x={cx + Math.cos(a) * d - b / 2}
+        y={cy + Math.sin(a) * d - b / 2}
       />
     );
   });
 }
 
+// Measured off board.png (905×316): pit columns, row centres, pit radius,
+// store centres.
+const COLS = [200, 310, 421, 530, 640, 748];
+const [TOP, BOTTOM, R] = [92, 219, 46];
+const STORES = [87, 846];
+
 type BoardProps = {
   board: number[];
-  w: number;
-  h: number;
   flip?: boolean; // seat 1's view: their pits along the bottom
   onPit?: (pit: number) => void; // pits the viewer may play
 };
 
 // A wooden tray: 6 pits per side, a store at each end. Seat 0's pits run along
 // the bottom left to right into the right store (unless flipped).
-function Board({ board, w, h, flip, onPit }: BoardProps) {
-  const sw = w / 8;
-  const cw = (w - 2 * sw) / 6;
-  const r = Math.min(cw, h / 2) * 0.4;
+function Board({ board, flip, onPit }: BoardProps) {
   const [low, high] = flip ? [7, 0] : [0, 7];
   const [right, left] = flip ? [13, 6] : [6, 13];
-  const pits = Array.from({ length: 6 }, (_, c) => [
-    { i: low + c, cx: sw + cw * (c + 0.5), cy: h * 0.75 },
-    { i: high + 5 - c, cx: sw + cw * (c + 0.5), cy: h * 0.25 },
-  ]).flat();
+  const pits = COLS.flatMap((cx, c) => [
+    { i: low + c, cx, cy: BOTTOM },
+    { i: high + 5 - c, cx, cy: TOP },
+  ]);
 
   return (
     <g>
-      <rect fill="#8b5a2b" height={h} rx={h / 5} stroke="#4a2c12" width={w} />
+      <image height={316} href="/assets/mancala/board.png" width={905} />
       {[
-        { i: left, cx: sw / 2 },
-        { i: right, cx: w - sw / 2 },
+        { i: left, cx: STORES[0] },
+        { i: right, cx: STORES[1] },
       ].map(({ i, cx }) => (
-        <g data-testid={onPit && `store-${i}`} key={i}>
-          <rect
-            fill="#5b3a1a"
-            height={h * 0.8}
-            rx={sw * 0.35}
-            width={sw * 0.7}
-            x={cx - sw * 0.35}
-            y={h * 0.1}
-          />
-          {/* Stores show their total: it's the score. */}
-          <text
-            dominantBaseline="central"
-            fill="#fdffff"
-            fontSize={r * 1.1}
-            fontWeight="bold"
-            textAnchor="middle"
-            x={cx}
-            y={h / 2}
-          >
-            {board[i]}
-          </text>
-        </g>
+        // Stores show their total: it's the score.
+        <text
+          data-testid={onPit && `store-${i}`}
+          dominantBaseline="central"
+          fill="#fdffff"
+          fontSize={R * 1.1}
+          fontWeight="bold"
+          key={i}
+          paintOrder="stroke"
+          stroke="#3b1f0a"
+          strokeWidth={R * 0.15}
+          textAnchor="middle"
+          x={cx}
+          y={156}
+        >
+          {board[i]}
+        </text>
       ))}
       {pits.map(({ i, cx, cy }) => {
         const playable = onPit && board[i] > 0 && i >= low && i < low + 6;
@@ -116,15 +131,16 @@ function Board({ board, w, h, flip, onPit }: BoardProps) {
             role={playable ? 'button' : undefined}
             tabIndex={playable ? 0 : undefined}
           >
+            {/* Transparent fill keeps the whole pit clickable. */}
             <circle
               cx={cx}
               cy={cy}
-              fill="#5b3a1a"
-              r={r}
+              fill="transparent"
+              r={R}
               stroke={playable ? '#facc15' : 'none'}
-              strokeWidth={r * 0.12}
+              strokeWidth={6}
             />
-            <Stones cx={cx} cy={cy} n={board[i]} r={r} salt={i} />
+            <Stones cx={cx} cy={cy} n={board[i]} r={R} salt={i} />
           </g>
         );
       })}
@@ -178,19 +194,18 @@ export default function Mancala() {
       title={`Table ${t.id + 1}${seat < 0 ? ' – watching' : ''}`}
     >
       {name(top, topSeat)}
-      <svg className="w-full" viewBox="0 0 400 110">
+      {/* The art's top few rows are stray pixels: crop them. */}
+      <svg className="w-full" viewBox="0 8 905 308">
         <title>Mancala board, table {t.id + 1}</title>
         <Board
           board={board}
           flip={seat === 1}
-          h={110}
           onPit={
             myTurn
               ? (pit) =>
                   send({ t: 'move', tableId: t.id, pit, version: t.version })
               : undefined
           }
-          w={400}
         />
       </svg>
       {name(bottom, 1 - topSeat)}
