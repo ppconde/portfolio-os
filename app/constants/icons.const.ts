@@ -21,8 +21,8 @@ export const icons: Icon[] = [
     icon: '/assets/paint_old-0.png',
   },
   {
-    label: AppsNames.BLOB_CLUB,
-    app: AppsNames.BLOB_CLUB,
+    label: AppsNames.MANCALA,
+    app: AppsNames.MANCALA,
     icon: '/assets/mancala-0.png',
   },
   {

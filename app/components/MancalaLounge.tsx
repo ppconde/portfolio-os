@@ -103,7 +103,7 @@ const jazzRef = (a: HTMLAudioElement | null) => {
   };
 };
 
-export default function BlobClub() {
+export default function MancalaLounge() {
   const status = useRoomStore((s) => s.status);
   // Closing the window leaves the room.
   useEffect(() => () => useRoomStore.getState().disconnect(), []);
@@ -117,7 +117,7 @@ function Join() {
   return (
     <div
       className="relative h-full bg-[#2b1612] bg-cover bg-center"
-      style={{ backgroundImage: 'url(/assets/blob-club/lounge.png)' }}
+      style={{ backgroundImage: 'url(/assets/mancala/lounge.png)' }}
     >
       <RoomDialog title="Mancala lounge">
         <form
@@ -264,13 +264,13 @@ function Scene() {
           {/* biome-ignore lint/a11y/useKeyWithClickEvents: arrow keys on the room walk */}
           <svg
             className="h-full w-full"
-            data-testid="blob-club"
+            data-testid="mancala-lounge"
             onClick={onFloor}
             ref={svgRef}
             viewBox={`0 0 ${W} ${H}`}
           >
             <title>Mancala lounge</title>
-            <image height={H} href="/assets/blob-club/lounge.png" width={W} />
+            <image height={H} href="/assets/mancala/lounge.png" width={W} />
             {/* The poster on the back wall */}
             {/* biome-ignore lint/a11y/useSemanticElements: an SVG shape */}
             <rect
