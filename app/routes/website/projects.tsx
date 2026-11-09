@@ -26,7 +26,7 @@ const QUERY = `{
 
 type Repo = Omit<Project, 'languages'> & {
   languages: {
-    nodes: { id: string; name: string; color: string | null }[] | null;
+    nodes: ({ id: string; name: string; color: string | null } | null)[] | null;
   } | null;
 };
 
@@ -53,10 +53,12 @@ export async function loader({ context }: Route.LoaderArgs) {
       .filter((repo) => !!repo)
       .map(({ languages, ...repo }) => ({
         ...repo,
-        languages: (languages?.nodes ?? []).map((l) => ({
-          ...l,
-          color: l.color || '#000000',
-        })),
+        languages: (languages?.nodes ?? [])
+          .filter((l) => !!l)
+          .map((l) => ({
+            ...l,
+            color: l.color || '#000000',
+          })),
       }));
 
     if (repos.length > 0) {

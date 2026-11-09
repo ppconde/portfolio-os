@@ -95,13 +95,9 @@ function bubble(p: Tile & { id: string; name: string }, text: string) {
 }
 
 // Breath and eye timings from a stable hash of the id, so blobs idle out of step.
-// Cached: the style objects keep their identity across ticks.
-const clockCache = new Map<string, React.CSSProperties[]>();
 const clocks = (id: string) => {
-  const hit = clockCache.get(id);
-  if (hit) return hit;
   const s = [...id].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
-  const result = [
+  return [
     {
       animationDuration: `${2.2 + (s % 7) / 10}s`,
       animationDelay: `-${s % 3}s`,
@@ -111,8 +107,6 @@ const clocks = (id: string) => {
       animationDelay: `-${(s >> 4) % 11}s`,
     },
   ];
-  clockCache.set(id, result);
-  return result;
 };
 
 // Stable (module-level) so the room's per-tick re-renders don't re-run it.

@@ -1,5 +1,9 @@
 import { AppsNames } from './apps-names.const';
 
+// Lazy apps' chunks: DesktopContent lazy()-loads them, icons preload them on hover/focus.
+export const loadPaint = () => import('~/components/Paint');
+export const loadMancala = () => import('~/components/MancalaLounge');
+
 export type Icon = {
   app: AppsNames;
   icon: string;
@@ -18,12 +22,12 @@ export const icons: Icon[] = [
   {
     app: AppsNames.PAINT,
     icon: '/img/paint_old-0.png',
-    preload: () => import('~/components/Paint'),
+    preload: loadPaint,
   },
   {
     app: AppsNames.MANCALA,
     icon: '/img/mancala-0.png',
-    preload: () => import('~/components/MancalaLounge'),
+    preload: loadMancala,
   },
   {
     app: AppsNames.CREDITS,

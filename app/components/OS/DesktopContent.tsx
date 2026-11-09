@@ -1,7 +1,7 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router';
 import { AppsNames } from '~/constants/apps-names.const';
-import { icons } from '~/constants/icons.const';
+import { icons, loadMancala, loadPaint } from '~/constants/icons.const';
 import { usePlaySound } from '~/hooks/use-play-sounds';
 import { useWindowsStore } from '~/store/WindowsStore';
 import Credits from '../Credits';
@@ -10,8 +10,8 @@ import Navbar from './Navbar';
 import OSWindow from './OSWindow';
 
 // Loaded when the Mancala window first opens, not with the desktop.
-const MancalaLounge = lazy(() => import('../MancalaLounge'));
-const Paint = lazy(() => import('../Paint'));
+const MancalaLounge = lazy(loadMancala);
+const Paint = lazy(loadPaint);
 
 // Module-level elements keep their identity, so window focus/drag re-renders
 // skip the apps. <Outlet /> still updates on navigation (it reads context).
