@@ -23,9 +23,12 @@ export const links: LinksFunction = () => [
     type: 'font/woff2',
     crossOrigin: 'anonymous',
   },
+  // Website headers: otherwise only fetched when a window first renders one, so they'd swap in visibly.
   {
-    rel: 'preconnect',
-    href: 'https://fonts.cdnfonts.com',
+    rel: 'preload',
+    href: 'https://fonts.cdnfonts.com/s/7527/px_sans_nouveaux.woff',
+    as: 'font',
+    type: 'font/woff',
     crossOrigin: 'anonymous',
   },
 ];
