@@ -31,16 +31,8 @@ export default function ProjectCard({
             className="h-auto w-full rounded object-contain"
             height={600}
             loading="lazy"
-            src={
-              // GitHub's auto-generated card (no custom social preview) fails to load,
-              // so use our own app screenshot instead.
-              // ponytail: needs public/img/projects/<name>.png for each such repo.
-              openGraphImageUrl.startsWith(
-                'https://opengraph.githubassets.com/'
-              )
-                ? `/img/projects/${name}.png`
-                : openGraphImageUrl
-            }
+            // Pinned repos need a custom social preview: GitHub's auto-generated card fails to load.
+            src={openGraphImageUrl}
             width={1200}
           />
         </A>
