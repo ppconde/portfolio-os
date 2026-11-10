@@ -16,17 +16,17 @@
   src: url("./fonts/perfect-dos-vga-437-win.woff") format("woff");
   font-display: swap;
 }
-/* Not ours to redistribute: hotlinked from cdnfonts, without their render-blocking CSS. */
+/* Not ours to redistribute: hotlinked from cdnfonts, without their render-blocking CSS. swap, not optional: they are first requested when a window opens and always miss optional's ~100ms window. */
 @font-face {
   font-family: "PX Sans Nouveaux";
   src: url("https://fonts.cdnfonts.com/s/7527/px_sans_nouveaux.woff")
     format("woff");
-  font-display: optional;
+  font-display: swap;
 }
 @font-face {
   font-family: "MS Reference Sans Serif";
   src: url("https://fonts.cdnfonts.com/s/56629/REFSAN.woff") format("woff");
-  font-display: optional;
+  font-display: swap;
 }
 
 @theme {
