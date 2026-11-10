@@ -30,7 +30,11 @@ test.describe('Navigation Bar and Route Switching', () => {
     // Helper: stable screenshot per route
     const screenshot = async (name: string) =>
       expect(page).toHaveScreenshot(name, {
-        mask: [page.locator('nav.fixed.bottom-0')],
+        mask: [
+          page.locator('nav.fixed.bottom-0'),
+          // Project previews are GitHub social preview images, fetched live and lazy-loaded.
+          page.locator('img[alt$=" preview"]'),
+        ],
         animations: 'disabled',
         fullPage: true,
         maxDiffPixelRatio: 0.05,
