@@ -1,22 +1,15 @@
 import { useState } from 'react';
 import { COLORS, NAME_MAX } from '~/room';
+import { store } from '~/storage';
 import { useRoomStore } from '~/store/RoomStore';
 import RoomDialog from '../RoomDialog';
 
 const NAMES = ['Blu', 'Pip', 'Juno', 'Ziggy', 'Mo', 'Rex'];
 
-const store = (key: string, value?: string) => {
-  try {
-    if (value === undefined) return localStorage.getItem(key);
-    localStorage.setItem(key, value);
-  } catch {} // private mode: just don't remember
-  return null;
-};
-
 export default function Join() {
   const [name, setName] = useState(
     () =>
-      store('room-name')?.slice(0, NAME_MAX) ??
+      store('local', 'room-name')?.slice(0, NAME_MAX) ??
       NAMES[Math.floor(Math.random() * NAMES.length)]
   );
   const taken = useRoomStore((s) => s.nameTaken);
@@ -27,7 +20,7 @@ export default function Join() {
           className="flex flex-col gap-3"
           onSubmit={(e) => {
             e.preventDefault();
-            store('room-name', name);
+            store('local', 'room-name', name);
             const color = COLORS[Math.floor(Math.random() * COLORS.length)];
             useRoomStore.getState().connect(name, color);
           }}

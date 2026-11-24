@@ -34,17 +34,15 @@ export default async function handleRequest(
     await body.allReady;
   }
 
-  const headers = new Headers(responseHeaders);
-
-  headers.set('Content-Type', 'text/html');
-  headers.set('X-Content-Type-Options', 'nosniff');
-  headers.set('X-Frame-Options', 'SAMEORIGIN');
-  headers.set(
+  responseHeaders.set('Content-Type', 'text/html');
+  responseHeaders.set('X-Content-Type-Options', 'nosniff');
+  responseHeaders.set('X-Frame-Options', 'SAMEORIGIN');
+  responseHeaders.set(
     'Strict-Transport-Security',
     'max-age=31536000; includeSubDomains'
   );
   if (!import.meta.env.DEV) {
-    headers.set(
+    responseHeaders.set(
       'Content-Security-Policy',
       [
         "default-src 'self'",
@@ -60,7 +58,7 @@ export default async function handleRequest(
   }
 
   return new Response(body, {
-    headers: headers,
+    headers: responseHeaders,
     status: responseStatusCode,
   });
 }

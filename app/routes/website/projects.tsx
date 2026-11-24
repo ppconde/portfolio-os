@@ -1,7 +1,6 @@
 import H2 from '~/components/website/H2';
 import ProjectCard, { type Project } from '~/components/website/ProjectCard';
 import { appContext } from '~/context';
-import { githubQuery } from '~/graphql';
 import type { Route } from './+types/projects';
 
 const QUERY = `{
@@ -41,10 +40,24 @@ export async function loader({ context }: Route.LoaderArgs) {
     const cached = await PORTFOLIO_OS_KV.get<Project[]>(CACHE_KEY, 'json');
     if (cached) return cached;
 
-    const data = await githubQuery<{
-      user: { pinnedItems: { nodes: (Repo | null)[] } } | null;
-    }>(await getGithubKey(), QUERY);
-    const nodes = data.user?.pinnedItems.nodes;
+    const res = await fetch('https://api.github.com/graphql', {
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${await getGithubKey()}`,
+        'Content-Type': 'application/json',
+        'User-Agent': 'portfolio-os (https://os.ppconde.com/)',
+      },
+      body: JSON.stringify({ query: QUERY }),
+    });
+    const json = (await res.json()) as {
+      data?: { user: { pinnedItems: { nodes: (Repo | null)[] } } | null };
+      errors?: unknown;
+    };
+    if (!res.ok || json.errors || !json.data)
+      throw new Error(`GitHub GraphQL request failed (${res.status})`, {
+        cause: json,
+      });
+    const nodes = json.data.user?.pinnedItems.nodes;
     if (!nodes) {
       throw new Response('No repositories found', { status: 404 });
     }
