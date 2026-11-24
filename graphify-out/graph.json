@@ -11409,19 +11409,6 @@
       "source_location": "L2967"
     },
     {
-      "id": "worker_configuration_d_serviceworkerglobalscope",
-      "label": "ServiceWorkerGlobalScope",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "ServiceWorkerGlobalScope",
-      "file_type": "code",
-      "norm_label": "serviceworkerglobalscope",
-      "source_file": "worker-configuration.d.ts",
-      "source_location": "L294"
-    },
-    {
       "id": "workers_env_d_env",
       "label": "Env",
       "_callable": true,
@@ -11773,6 +11760,19 @@
       "source_location": "L5014"
     },
     {
+      "id": "app_components_paint_tool",
+      "label": "Tool",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "Paint.tsx",
+      "file_type": "code",
+      "norm_label": "tool",
+      "source_file": "app/components/Paint.tsx",
+      "source_location": "L11"
+    },
+    {
       "id": "worker_configuration_d_rpctarget",
       "label": "RpcTarget",
       "_callable": true,
@@ -12111,6 +12111,45 @@
       "source_location": "L3034"
     },
     {
+      "id": "worker_configuration_d_serviceworkerglobalscope",
+      "label": "ServiceWorkerGlobalScope",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "ServiceWorkerGlobalScope",
+      "file_type": "code",
+      "norm_label": "serviceworkerglobalscope",
+      "source_file": "worker-configuration.d.ts",
+      "source_location": "L294"
+    },
+    {
+      "id": "app_components_os_oswindow_oswindowprops",
+      "label": "OSWindowProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 39,
+      "community_name": "OSWindow.tsx",
+      "file_type": "code",
+      "norm_label": "oswindowprops",
+      "source_file": "app/components/OS/OSWindow.tsx",
+      "source_location": "L12"
+    },
+    {
+      "id": "app_components_os_zoomoutline_zoom",
+      "label": "Zoom",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 39,
+      "community_name": "OSWindow.tsx",
+      "file_type": "code",
+      "norm_label": "zoom",
+      "source_file": "app/components/OS/ZoomOutline.tsx",
+      "source_location": "L4"
+    },
+    {
       "id": "app_store_bootstore_bootstate",
       "label": "BootState",
       "_callable": true,
@@ -12122,6 +12161,19 @@
       "norm_label": "bootstate",
       "source_file": "app/store/BootStore.ts",
       "source_location": "L3"
+    },
+    {
+      "id": "app_components_os_startwindow_startwindowprops",
+      "label": "StartWindowProps",
+      "_callable": true,
+      "_callable_class": true,
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "startwindowprops",
+      "source_file": "app/components/OS/StartWindow.tsx",
+      "source_location": "L7"
     },
     {
       "id": "worker_configuration_d_durableobjectstate",
@@ -12161,19 +12213,6 @@
       "norm_label": "workerentrypointbranded",
       "source_file": "worker-configuration.d.ts",
       "source_location": "L12015"
-    },
-    {
-      "id": "app_components_paint_tool",
-      "label": "Tool",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 47,
-      "community_name": "Paint App",
-      "file_type": "code",
-      "norm_label": "tool",
-      "source_file": "app/components/Paint.tsx",
-      "source_location": "L11"
     },
     {
       "id": "worker_configuration_d_alreadyuploadederror",
@@ -12330,32 +12369,6 @@
       "norm_label": "artifacts",
       "source_file": "worker-configuration.d.ts",
       "source_location": "L10202"
-    },
-    {
-      "id": "app_components_os_oswindow_oswindowprops",
-      "label": "OSWindowProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 57,
-      "community_name": "OSWindow.tsx",
-      "file_type": "code",
-      "norm_label": "oswindowprops",
-      "source_file": "app/components/OS/OSWindow.tsx",
-      "source_location": "L12"
-    },
-    {
-      "id": "app_components_os_zoomoutline_zoom",
-      "label": "Zoom",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 57,
-      "community_name": "OSWindow.tsx",
-      "file_type": "code",
-      "norm_label": "zoom",
-      "source_file": "app/components/OS/ZoomOutline.tsx",
-      "source_location": "L4"
     },
     {
       "id": "worker_configuration_d_abortsignal",
@@ -12616,19 +12629,6 @@
       "norm_label": "writablestreamdefaultwriter",
       "source_file": "worker-configuration.d.ts",
       "source_location": "L2519"
-    },
-    {
-      "id": "app_components_os_startwindow_startwindowprops",
-      "label": "StartWindowProps",
-      "_callable": true,
-      "_callable_class": true,
-      "_origin": "ast",
-      "community": 72,
-      "community_name": "Start Menu",
-      "file_type": "code",
-      "norm_label": "startwindowprops",
-      "source_file": "app/components/OS/StartWindow.tsx",
-      "source_location": "L7"
     },
     {
       "id": "worker_configuration_d_durableobjectnamespace",
@@ -16923,112 +16923,88 @@
       "source_location": "L45"
     },
     {
-      "id": "worker_configuration_d_serviceworkerglobalscope_atob",
-      "label": ".atob()",
+      "id": "app_components_os_bluescreen_bluescreen",
+      "label": "BlueScreen()",
       "_callable": true,
       "_origin": "ast",
       "community": 22,
-      "community_name": "ServiceWorkerGlobalScope",
+      "community_name": "root.tsx",
       "file_type": "code",
-      "norm_label": ".atob()",
-      "source_file": "worker-configuration.d.ts",
-      "source_location": "L298"
+      "norm_label": "bluescreen()",
+      "source_file": "app/components/OS/BlueScreen.tsx",
+      "source_location": "L7"
     },
     {
-      "id": "worker_configuration_d_serviceworkerglobalscope_btoa",
-      "label": ".btoa()",
+      "id": "app_components_os_bluescreen_restart",
+      "label": "restart()",
       "_callable": true,
       "_origin": "ast",
       "community": 22,
-      "community_name": "ServiceWorkerGlobalScope",
+      "community_name": "root.tsx",
       "file_type": "code",
-      "norm_label": ".btoa()",
-      "source_file": "worker-configuration.d.ts",
-      "source_location": "L297"
+      "norm_label": "restart()",
+      "source_file": "app/components/OS/BlueScreen.tsx",
+      "source_location": "L5"
     },
     {
-      "id": "worker_configuration_d_serviceworkerglobalscope_clearinterval",
-      "label": ".clearInterval()",
+      "id": "app_root_app",
+      "label": "App()",
       "_callable": true,
       "_origin": "ast",
       "community": 22,
-      "community_name": "ServiceWorkerGlobalScope",
+      "community_name": "root.tsx",
       "file_type": "code",
-      "norm_label": ".clearinterval()",
-      "source_file": "worker-configuration.d.ts",
-      "source_location": "L304"
+      "norm_label": "app()",
+      "source_file": "app/root.tsx",
+      "source_location": "L85"
     },
     {
-      "id": "worker_configuration_d_serviceworkerglobalscope_fetch",
-      "label": ".fetch()",
+      "id": "app_root_errorboundary",
+      "label": "ErrorBoundary()",
       "_callable": true,
       "_origin": "ast",
       "community": 22,
-      "community_name": "ServiceWorkerGlobalScope",
+      "community_name": "root.tsx",
       "file_type": "code",
-      "norm_label": ".fetch()",
-      "source_file": "worker-configuration.d.ts",
-      "source_location": "L308"
+      "norm_label": "errorboundary()",
+      "source_file": "app/root.tsx",
+      "source_location": "L89"
     },
     {
-      "id": "worker_configuration_d_serviceworkerglobalscope_queuemicrotask",
-      "label": ".queueMicrotask()",
+      "id": "app_root_layout",
+      "label": "Layout()",
       "_callable": true,
       "_origin": "ast",
       "community": 22,
-      "community_name": "ServiceWorkerGlobalScope",
+      "community_name": "root.tsx",
       "file_type": "code",
-      "norm_label": ".queuemicrotask()",
-      "source_file": "worker-configuration.d.ts",
-      "source_location": "L305"
+      "norm_label": "layout()",
+      "source_file": "app/root.tsx",
+      "source_location": "L67"
     },
     {
-      "id": "worker_configuration_d_serviceworkerglobalscope_reporterror",
-      "label": ".reportError()",
+      "id": "app_root_links",
+      "label": "links()",
       "_callable": true,
       "_origin": "ast",
       "community": 22,
-      "community_name": "ServiceWorkerGlobalScope",
+      "community_name": "root.tsx",
       "file_type": "code",
-      "norm_label": ".reporterror()",
-      "source_file": "worker-configuration.d.ts",
-      "source_location": "L307"
+      "norm_label": "links()",
+      "source_file": "app/root.tsx",
+      "source_location": "L11"
     },
     {
-      "id": "worker_configuration_d_serviceworkerglobalscope_setinterval",
-      "label": ".setInterval()",
+      "id": "app_root_meta",
+      "label": "meta()",
       "_callable": true,
       "_origin": "ast",
       "community": 22,
-      "community_name": "ServiceWorkerGlobalScope",
+      "community_name": "root.tsx",
       "file_type": "code",
-      "norm_label": ".setinterval()",
-      "source_file": "worker-configuration.d.ts",
-      "source_location": "L302"
-    },
-    {
-      "id": "worker_configuration_d_serviceworkerglobalscope_settimeout",
-      "label": ".setTimeout()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "ServiceWorkerGlobalScope",
-      "file_type": "code",
-      "norm_label": ".settimeout()",
-      "source_file": "worker-configuration.d.ts",
-      "source_location": "L299"
-    },
-    {
-      "id": "worker_configuration_d_serviceworkerglobalscope_structuredclone",
-      "label": ".structuredClone()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 22,
-      "community_name": "ServiceWorkerGlobalScope",
-      "file_type": "code",
-      "norm_label": ".structuredclone()",
-      "source_file": "worker-configuration.d.ts",
-      "source_location": "L306"
+      "norm_label": "meta()",
+      "source_file": "app/root.tsx",
+      "source_location": "L36"
     },
     {
       "id": "worker_configuration_d_analyticsenginedataset_writedatapoint",
@@ -17060,7 +17036,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 24,
-      "community_name": "Website Navigation Layout",
+      "community_name": "react-router",
       "file_type": "code",
       "norm_label": "navitem()",
       "source_file": "app/components/OS/NavItem.tsx",
@@ -17072,7 +17048,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 24,
-      "community_name": "Website Navigation Layout",
+      "community_name": "react-router",
       "file_type": "code",
       "norm_label": "navlist()",
       "source_file": "app/components/OS/NavList.tsx",
@@ -17084,7 +17060,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 24,
-      "community_name": "Website Navigation Layout",
+      "community_name": "react-router",
       "file_type": "code",
       "norm_label": "hamburgerbutton()",
       "source_file": "app/components/website/HamburgerButton.tsx",
@@ -17096,7 +17072,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 24,
-      "community_name": "Website Navigation Layout",
+      "community_name": "react-router",
       "file_type": "code",
       "norm_label": "websitelayout()",
       "source_file": "app/layouts/website-layout.tsx",
@@ -17108,7 +17084,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 24,
-      "community_name": "Website Navigation Layout",
+      "community_name": "react-router",
       "file_type": "code",
       "norm_label": "loader()",
       "source_file": "app/routes/index.tsx",
@@ -17120,7 +17096,7 @@
       "_callable": true,
       "_origin": "ast",
       "community": 24,
-      "community_name": "Website Navigation Layout",
+      "community_name": "react-router",
       "file_type": "code",
       "norm_label": "websitehome()",
       "source_file": "app/routes/website/home.tsx",
@@ -17475,6 +17451,66 @@
       "source_location": "L11997"
     },
     {
+      "id": "app_components_paint_floodfill",
+      "label": "floodFill()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "Paint.tsx",
+      "file_type": "code",
+      "norm_label": "floodfill()",
+      "source_file": "app/components/Paint.tsx",
+      "source_location": "L24"
+    },
+    {
+      "id": "app_components_paint_getctx",
+      "label": "getCtx()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "Paint.tsx",
+      "file_type": "code",
+      "norm_label": "getctx()",
+      "source_file": "app/components/Paint.tsx",
+      "source_location": "L16"
+    },
+    {
+      "id": "app_components_paint_paint",
+      "label": "Paint()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "Paint.tsx",
+      "file_type": "code",
+      "norm_label": "paint()",
+      "source_file": "app/components/Paint.tsx",
+      "source_location": "L53"
+    },
+    {
+      "id": "app_components_paint_whiten",
+      "label": "whiten()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "Paint.tsx",
+      "file_type": "code",
+      "norm_label": "whiten()",
+      "source_file": "app/components/Paint.tsx",
+      "source_location": "L18"
+    },
+    {
+      "id": "app_constants_icons_const_loadpaint",
+      "label": "loadPaint()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "Paint.tsx",
+      "file_type": "code",
+      "norm_label": "loadpaint()",
+      "source_file": "app/constants/icons.const.ts",
+      "source_location": "L4"
+    },
+    {
       "id": "worker_configuration_d_runtimeerror_constructor",
       "label": ".constructor()",
       "_callable": true,
@@ -17581,90 +17617,6 @@
       "norm_label": ".fromtrace()",
       "source_file": "worker-configuration.d.ts",
       "source_location": "L2788"
-    },
-    {
-      "id": "app_components_os_bluescreen_bluescreen",
-      "label": "BlueScreen()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 279,
-      "community_name": "root.tsx",
-      "file_type": "code",
-      "norm_label": "bluescreen()",
-      "source_file": "app/components/OS/BlueScreen.tsx",
-      "source_location": "L7"
-    },
-    {
-      "id": "app_components_os_bluescreen_restart",
-      "label": "restart()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 279,
-      "community_name": "root.tsx",
-      "file_type": "code",
-      "norm_label": "restart()",
-      "source_file": "app/components/OS/BlueScreen.tsx",
-      "source_location": "L5"
-    },
-    {
-      "id": "app_root_app",
-      "label": "App()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 279,
-      "community_name": "root.tsx",
-      "file_type": "code",
-      "norm_label": "app()",
-      "source_file": "app/root.tsx",
-      "source_location": "L82"
-    },
-    {
-      "id": "app_root_errorboundary",
-      "label": "ErrorBoundary()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 279,
-      "community_name": "root.tsx",
-      "file_type": "code",
-      "norm_label": "errorboundary()",
-      "source_file": "app/root.tsx",
-      "source_location": "L86"
-    },
-    {
-      "id": "app_root_layout",
-      "label": "Layout()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 279,
-      "community_name": "root.tsx",
-      "file_type": "code",
-      "norm_label": "layout()",
-      "source_file": "app/root.tsx",
-      "source_location": "L64"
-    },
-    {
-      "id": "app_root_links",
-      "label": "links()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 279,
-      "community_name": "root.tsx",
-      "file_type": "code",
-      "norm_label": "links()",
-      "source_file": "app/root.tsx",
-      "source_location": "L11"
-    },
-    {
-      "id": "app_root_meta",
-      "label": "meta()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 279,
-      "community_name": "root.tsx",
-      "file_type": "code",
-      "norm_label": "meta()",
-      "source_file": "app/root.tsx",
-      "source_location": "L33"
     },
     {
       "id": "worker_configuration_d_element_after",
@@ -19083,6 +19035,150 @@
       "source_location": "L3037"
     },
     {
+      "id": "worker_configuration_d_serviceworkerglobalscope_atob",
+      "label": ".atob()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "ServiceWorkerGlobalScope",
+      "file_type": "code",
+      "norm_label": ".atob()",
+      "source_file": "worker-configuration.d.ts",
+      "source_location": "L298"
+    },
+    {
+      "id": "worker_configuration_d_serviceworkerglobalscope_btoa",
+      "label": ".btoa()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "ServiceWorkerGlobalScope",
+      "file_type": "code",
+      "norm_label": ".btoa()",
+      "source_file": "worker-configuration.d.ts",
+      "source_location": "L297"
+    },
+    {
+      "id": "worker_configuration_d_serviceworkerglobalscope_clearinterval",
+      "label": ".clearInterval()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "ServiceWorkerGlobalScope",
+      "file_type": "code",
+      "norm_label": ".clearinterval()",
+      "source_file": "worker-configuration.d.ts",
+      "source_location": "L304"
+    },
+    {
+      "id": "worker_configuration_d_serviceworkerglobalscope_fetch",
+      "label": ".fetch()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "ServiceWorkerGlobalScope",
+      "file_type": "code",
+      "norm_label": ".fetch()",
+      "source_file": "worker-configuration.d.ts",
+      "source_location": "L308"
+    },
+    {
+      "id": "worker_configuration_d_serviceworkerglobalscope_queuemicrotask",
+      "label": ".queueMicrotask()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "ServiceWorkerGlobalScope",
+      "file_type": "code",
+      "norm_label": ".queuemicrotask()",
+      "source_file": "worker-configuration.d.ts",
+      "source_location": "L305"
+    },
+    {
+      "id": "worker_configuration_d_serviceworkerglobalscope_reporterror",
+      "label": ".reportError()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "ServiceWorkerGlobalScope",
+      "file_type": "code",
+      "norm_label": ".reporterror()",
+      "source_file": "worker-configuration.d.ts",
+      "source_location": "L307"
+    },
+    {
+      "id": "worker_configuration_d_serviceworkerglobalscope_setinterval",
+      "label": ".setInterval()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "ServiceWorkerGlobalScope",
+      "file_type": "code",
+      "norm_label": ".setinterval()",
+      "source_file": "worker-configuration.d.ts",
+      "source_location": "L302"
+    },
+    {
+      "id": "worker_configuration_d_serviceworkerglobalscope_settimeout",
+      "label": ".setTimeout()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "ServiceWorkerGlobalScope",
+      "file_type": "code",
+      "norm_label": ".settimeout()",
+      "source_file": "worker-configuration.d.ts",
+      "source_location": "L299"
+    },
+    {
+      "id": "worker_configuration_d_serviceworkerglobalscope_structuredclone",
+      "label": ".structuredClone()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 38,
+      "community_name": "ServiceWorkerGlobalScope",
+      "file_type": "code",
+      "norm_label": ".structuredclone()",
+      "source_file": "worker-configuration.d.ts",
+      "source_location": "L306"
+    },
+    {
+      "id": "app_components_os_oswindow_oswindow",
+      "label": "OSWindow()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 39,
+      "community_name": "OSWindow.tsx",
+      "file_type": "code",
+      "norm_label": "oswindow()",
+      "source_file": "app/components/OS/OSWindow.tsx",
+      "source_location": "L18"
+    },
+    {
+      "id": "app_components_os_zoomoutline_frame",
+      "label": "frame()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 39,
+      "community_name": "OSWindow.tsx",
+      "file_type": "code",
+      "norm_label": "frame()",
+      "source_file": "app/components/OS/ZoomOutline.tsx",
+      "source_location": "L6"
+    },
+    {
+      "id": "app_components_os_zoomoutline_zoomoutline",
+      "label": "ZoomOutline()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 39,
+      "community_name": "OSWindow.tsx",
+      "file_type": "code",
+      "norm_label": "zoomoutline()",
+      "source_file": "app/components/OS/ZoomOutline.tsx",
+      "source_location": "L14"
+    },
+    {
       "id": "app_components_os_biosscreen_biosscreen",
       "label": "BiosScreen()",
       "_callable": true,
@@ -19177,6 +19273,42 @@
       "norm_label": ".cleartimeout()",
       "source_file": "worker-configuration.d.ts",
       "source_location": "L301"
+    },
+    {
+      "id": "app_components_os_start_start",
+      "label": "Start()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "start()",
+      "source_file": "app/components/OS/Start.tsx",
+      "source_location": "L5"
+    },
+    {
+      "id": "app_components_os_startwindow_startwindow",
+      "label": "StartWindow()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "startwindow()",
+      "source_file": "app/components/OS/StartWindow.tsx",
+      "source_location": "L11"
+    },
+    {
+      "id": "app_hooks_use_click_outside_useclickoutside",
+      "label": "useClickOutside()",
+      "_callable": true,
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "useclickoutside()",
+      "source_file": "app/hooks/use-click-outside.ts",
+      "source_location": "L3"
     },
     {
       "id": "e2e_helpers_showdesktop",
@@ -19443,66 +19575,6 @@
       "source_location": "L12164"
     },
     {
-      "id": "app_components_paint_floodfill",
-      "label": "floodFill()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 47,
-      "community_name": "Paint App",
-      "file_type": "code",
-      "norm_label": "floodfill()",
-      "source_file": "app/components/Paint.tsx",
-      "source_location": "L24"
-    },
-    {
-      "id": "app_components_paint_getctx",
-      "label": "getCtx()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 47,
-      "community_name": "Paint App",
-      "file_type": "code",
-      "norm_label": "getctx()",
-      "source_file": "app/components/Paint.tsx",
-      "source_location": "L16"
-    },
-    {
-      "id": "app_components_paint_paint",
-      "label": "Paint()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 47,
-      "community_name": "Paint App",
-      "file_type": "code",
-      "norm_label": "paint()",
-      "source_file": "app/components/Paint.tsx",
-      "source_location": "L53"
-    },
-    {
-      "id": "app_components_paint_whiten",
-      "label": "whiten()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 47,
-      "community_name": "Paint App",
-      "file_type": "code",
-      "norm_label": "whiten()",
-      "source_file": "app/components/Paint.tsx",
-      "source_location": "L18"
-    },
-    {
-      "id": "app_constants_icons_const_loadpaint",
-      "label": "loadPaint()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 47,
-      "community_name": "Paint App",
-      "file_type": "code",
-      "norm_label": "loadpaint()",
-      "source_file": "app/constants/icons.const.ts",
-      "source_location": "L4"
-    },
-    {
       "id": "worker_configuration_d_artifacts_create",
       "label": ".create()",
       "_callable": true,
@@ -19561,42 +19633,6 @@
       "norm_label": ".list()",
       "source_file": "worker-configuration.d.ts",
       "source_location": "L10256"
-    },
-    {
-      "id": "app_components_os_oswindow_oswindow",
-      "label": "OSWindow()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 57,
-      "community_name": "OSWindow.tsx",
-      "file_type": "code",
-      "norm_label": "oswindow()",
-      "source_file": "app/components/OS/OSWindow.tsx",
-      "source_location": "L18"
-    },
-    {
-      "id": "app_components_os_zoomoutline_frame",
-      "label": "frame()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 57,
-      "community_name": "OSWindow.tsx",
-      "file_type": "code",
-      "norm_label": "frame()",
-      "source_file": "app/components/OS/ZoomOutline.tsx",
-      "source_location": "L6"
-    },
-    {
-      "id": "app_components_os_zoomoutline_zoomoutline",
-      "label": "ZoomOutline()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 57,
-      "community_name": "OSWindow.tsx",
-      "file_type": "code",
-      "norm_label": "zoomoutline()",
-      "source_file": "app/components/OS/ZoomOutline.tsx",
-      "source_location": "L14"
     },
     {
       "id": "worker_configuration_d_abortsignal_abort",
@@ -20773,42 +20809,6 @@
       "norm_label": ".write()",
       "source_file": "worker-configuration.d.ts",
       "source_location": "L2556"
-    },
-    {
-      "id": "app_components_os_start_start",
-      "label": "Start()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 72,
-      "community_name": "Start Menu",
-      "file_type": "code",
-      "norm_label": "start()",
-      "source_file": "app/components/OS/Start.tsx",
-      "source_location": "L5"
-    },
-    {
-      "id": "app_components_os_startwindow_startwindow",
-      "label": "StartWindow()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 72,
-      "community_name": "Start Menu",
-      "file_type": "code",
-      "norm_label": "startwindow()",
-      "source_file": "app/components/OS/StartWindow.tsx",
-      "source_location": "L11"
-    },
-    {
-      "id": "app_hooks_use_click_outside_useclickoutside",
-      "label": "useClickOutside()",
-      "_callable": true,
-      "_origin": "ast",
-      "community": 72,
-      "community_name": "Start Menu",
-      "file_type": "code",
-      "norm_label": "useclickoutside()",
-      "source_file": "app/hooks/use-click-outside.ts",
-      "source_location": "L3"
     },
     {
       "id": "worker_configuration_d_durableobjectnamespace_get",
@@ -22764,7 +22764,7 @@
       "file_type": "code",
       "norm_label": "style",
       "source_file": "biome.json",
-      "source_location": "L65"
+      "source_location": "L66"
     },
     {
       "id": "biome_style_useimporttype",
@@ -22775,7 +22775,7 @@
       "file_type": "code",
       "norm_label": "useimporttype",
       "source_file": "biome.json",
-      "source_location": "L66"
+      "source_location": "L67"
     },
     {
       "id": "biome_style_usenodejsimportprotocol",
@@ -22786,7 +22786,7 @@
       "file_type": "code",
       "norm_label": "usenodejsimportprotocol",
       "source_file": "biome.json",
-      "source_location": "L67"
+      "source_location": "L68"
     },
     {
       "id": "biome_vcs",
@@ -23064,193 +23064,6 @@
       "source_location": "L36"
     },
     {
-      "id": "github_dependabot_build_check",
-      "label": "dependabot-build-check.yml",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "Dependabot Build Check",
-      "file_type": "code",
-      "norm_label": "dependabot-build-check.yml",
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L1"
-    },
-    {
-      "id": "github_dependabot_build_check_build_if",
-      "label": "if",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "Dependabot Build Check",
-      "file_type": "code",
-      "norm_label": "if",
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L14"
-    },
-    {
-      "id": "github_dependabot_build_check_build_runs_on",
-      "label": "runs-on",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "Dependabot Build Check",
-      "file_type": "code",
-      "norm_label": "runs-on",
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L15"
-    },
-    {
-      "id": "github_dependabot_build_check_build_steps",
-      "label": "steps",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "Dependabot Build Check",
-      "file_type": "code",
-      "norm_label": "steps",
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L17"
-    },
-    {
-      "id": "github_dependabot_build_check_jobs",
-      "label": "jobs",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "Dependabot Build Check",
-      "file_type": "code",
-      "norm_label": "jobs",
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L12"
-    },
-    {
-      "id": "github_dependabot_build_check_jobs_build",
-      "label": "build",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "Dependabot Build Check",
-      "file_type": "code",
-      "norm_label": "build",
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L13"
-    },
-    {
-      "id": "github_dependabot_build_check_name",
-      "label": "name",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "Dependabot Build Check",
-      "file_type": "code",
-      "norm_label": "name",
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L1"
-    },
-    {
-      "id": "github_dependabot_build_check_on",
-      "label": "on",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "Dependabot Build Check",
-      "file_type": "code",
-      "norm_label": "on",
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L3"
-    },
-    {
-      "id": "github_dependabot_build_check_on_pull_request",
-      "label": "pull_request",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "Dependabot Build Check",
-      "file_type": "code",
-      "norm_label": "pull_request",
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L4"
-    },
-    {
-      "id": "github_dependabot_build_check_pull_request_branches",
-      "label": "branches",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "Dependabot Build Check",
-      "file_type": "code",
-      "norm_label": "branches",
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L6"
-    },
-    {
-      "id": "github_dependabot_build_check_pull_request_paths",
-      "label": "paths",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "Dependabot Build Check",
-      "file_type": "code",
-      "norm_label": "paths",
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L8"
-    },
-    {
-      "id": "github_dependabot_build_check_pull_request_types",
-      "label": "types",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "Dependabot Build Check",
-      "file_type": "code",
-      "norm_label": "types",
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L5"
-    },
-    {
-      "id": "github_dependabot_build_check_steps_name",
-      "label": "name",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "Dependabot Build Check",
-      "file_type": "code",
-      "norm_label": "name",
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L18"
-    },
-    {
-      "id": "github_dependabot_build_check_steps_run",
-      "label": "run",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "Dependabot Build Check",
-      "file_type": "code",
-      "norm_label": "run",
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L27"
-    },
-    {
-      "id": "github_dependabot_build_check_steps_uses",
-      "label": "uses",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "Dependabot Build Check",
-      "file_type": "code",
-      "norm_label": "uses",
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L19"
-    },
-    {
-      "id": "github_dependabot_build_check_steps_with",
-      "label": "with",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "Dependabot Build Check",
-      "file_type": "code",
-      "norm_label": "with",
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L23"
-    },
-    {
-      "id": "github_dependabot_build_check_with_node_version",
-      "label": "node-version",
-      "_origin": "ast",
-      "community": 18,
-      "community_name": "Dependabot Build Check",
-      "file_type": "code",
-      "norm_label": "node-version",
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L24"
-    },
-    {
       "id": "package_dependencies",
       "label": "dependencies",
       "_origin": "ast",
@@ -23438,6 +23251,50 @@
       "source_location": "L1"
     },
     {
+      "id": "app_components_os_bluescreen",
+      "label": "BlueScreen.tsx",
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "root.tsx",
+      "file_type": "code",
+      "norm_label": "bluescreen.tsx",
+      "source_file": "app/components/OS/BlueScreen.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_hooks_use_any_key",
+      "label": "use-any-key.ts",
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "root.tsx",
+      "file_type": "code",
+      "norm_label": "use-any-key.ts",
+      "source_file": "app/hooks/use-any-key.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_hooks_use_any_key_modifiers",
+      "label": "MODIFIERS",
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "root.tsx",
+      "file_type": "code",
+      "norm_label": "modifiers",
+      "source_file": "app/hooks/use-any-key.ts",
+      "source_location": "L3"
+    },
+    {
+      "id": "app_root",
+      "label": "root.tsx",
+      "_origin": "ast",
+      "community": 22,
+      "community_name": "root.tsx",
+      "file_type": "code",
+      "norm_label": "root.tsx",
+      "source_file": "app/root.tsx",
+      "source_location": "L1"
+    },
+    {
       "id": "workers_env_d",
       "label": "env.d.ts",
       "_origin": "ast",
@@ -23453,7 +23310,7 @@
       "label": "NavItem.tsx",
       "_origin": "ast",
       "community": 24,
-      "community_name": "Website Navigation Layout",
+      "community_name": "react-router",
       "file_type": "code",
       "norm_label": "navitem.tsx",
       "source_file": "app/components/OS/NavItem.tsx",
@@ -23464,7 +23321,7 @@
       "label": "NavList.tsx",
       "_origin": "ast",
       "community": 24,
-      "community_name": "Website Navigation Layout",
+      "community_name": "react-router",
       "file_type": "code",
       "norm_label": "navlist.tsx",
       "source_file": "app/components/OS/NavList.tsx",
@@ -23475,7 +23332,7 @@
       "label": "LINKS",
       "_origin": "ast",
       "community": 24,
-      "community_name": "Website Navigation Layout",
+      "community_name": "react-router",
       "file_type": "code",
       "norm_label": "links",
       "source_file": "app/components/OS/NavList.tsx",
@@ -23486,7 +23343,7 @@
       "label": "HamburgerButton.tsx",
       "_origin": "ast",
       "community": 24,
-      "community_name": "Website Navigation Layout",
+      "community_name": "react-router",
       "file_type": "code",
       "norm_label": "hamburgerbutton.tsx",
       "source_file": "app/components/website/HamburgerButton.tsx",
@@ -23497,7 +23354,7 @@
       "label": "website-layout.tsx",
       "_origin": "ast",
       "community": 24,
-      "community_name": "Website Navigation Layout",
+      "community_name": "react-router",
       "file_type": "code",
       "norm_label": "website-layout.tsx",
       "source_file": "app/layouts/website-layout.tsx",
@@ -23508,7 +23365,7 @@
       "label": "index.tsx",
       "_origin": "ast",
       "community": 24,
-      "community_name": "Website Navigation Layout",
+      "community_name": "react-router",
       "file_type": "code",
       "norm_label": "index.tsx",
       "source_file": "app/routes/index.tsx",
@@ -23519,7 +23376,7 @@
       "label": "home.tsx",
       "_origin": "ast",
       "community": 24,
-      "community_name": "Website Navigation Layout",
+      "community_name": "react-router",
       "file_type": "code",
       "norm_label": "home.tsx",
       "source_file": "app/routes/website/home.tsx",
@@ -23530,7 +23387,7 @@
       "label": "classnames",
       "_origin": "ast",
       "community": 24,
-      "community_name": "Website Navigation Layout",
+      "community_name": "react-router",
       "file_type": "concept",
       "norm_label": "classnames",
       "source_file": "package.json",
@@ -23541,11 +23398,66 @@
       "label": "react-router",
       "_origin": "ast",
       "community": 24,
-      "community_name": "Website Navigation Layout",
+      "community_name": "react-router",
       "file_type": "concept",
       "norm_label": "react-router",
       "source_file": "package.json",
       "source_location": "L28"
+    },
+    {
+      "id": "app_components_paint",
+      "label": "Paint.tsx",
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "Paint.tsx",
+      "file_type": "code",
+      "norm_label": "paint.tsx",
+      "source_file": "app/components/Paint.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_components_paint_colors",
+      "label": "COLORS",
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "Paint.tsx",
+      "file_type": "code",
+      "norm_label": "colors",
+      "source_file": "app/components/Paint.tsx",
+      "source_location": "L4"
+    },
+    {
+      "id": "app_components_paint_sizes",
+      "label": "SIZES",
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "Paint.tsx",
+      "file_type": "code",
+      "norm_label": "sizes",
+      "source_file": "app/components/Paint.tsx",
+      "source_location": "L9"
+    },
+    {
+      "id": "app_components_paint_tool_sprite",
+      "label": "TOOL_SPRITE",
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "Paint.tsx",
+      "file_type": "code",
+      "norm_label": "tool_sprite",
+      "source_file": "app/components/Paint.tsx",
+      "source_location": "L14"
+    },
+    {
+      "id": "app_components_paint_tools",
+      "label": "TOOLS",
+      "_origin": "ast",
+      "community": 26,
+      "community_name": "Paint.tsx",
+      "file_type": "code",
+      "norm_label": "tools",
+      "source_file": "app/components/Paint.tsx",
+      "source_location": "L10"
     },
     {
       "id": "biome_a11y_preset",
@@ -23556,7 +23468,7 @@
       "file_type": "code",
       "norm_label": "preset",
       "source_file": "biome.json",
-      "source_location": "L63"
+      "source_location": "L64"
     },
     {
       "id": "biome_correctness_nounusedimports",
@@ -23567,7 +23479,7 @@
       "file_type": "code",
       "norm_label": "nounusedimports",
       "source_file": "biome.json",
-      "source_location": "L60"
+      "source_location": "L61"
     },
     {
       "id": "biome_correctness_useexhaustivedependencies",
@@ -23578,7 +23490,7 @@
       "file_type": "code",
       "norm_label": "useexhaustivedependencies",
       "source_file": "biome.json",
-      "source_location": "L58"
+      "source_location": "L59"
     },
     {
       "id": "biome_correctness_usehookattoplevel",
@@ -23589,7 +23501,7 @@
       "file_type": "code",
       "norm_label": "usehookattoplevel",
       "source_file": "biome.json",
-      "source_location": "L59"
+      "source_location": "L60"
     },
     {
       "id": "biome_linter",
@@ -23600,7 +23512,7 @@
       "file_type": "code",
       "norm_label": "linter",
       "source_file": "biome.json",
-      "source_location": "L53"
+      "source_location": "L54"
     },
     {
       "id": "biome_linter_enabled",
@@ -23611,7 +23523,7 @@
       "file_type": "code",
       "norm_label": "enabled",
       "source_file": "biome.json",
-      "source_location": "L54"
+      "source_location": "L55"
     },
     {
       "id": "biome_linter_rules",
@@ -23622,7 +23534,7 @@
       "file_type": "code",
       "norm_label": "rules",
       "source_file": "biome.json",
-      "source_location": "L55"
+      "source_location": "L56"
     },
     {
       "id": "biome_nursery_usetailwindsortedclasses",
@@ -23633,7 +23545,7 @@
       "file_type": "code",
       "norm_label": "usetailwindsortedclasses",
       "source_file": "biome.json",
-      "source_location": "L73"
+      "source_location": "L74"
     },
     {
       "id": "biome_rules_a11y",
@@ -23644,7 +23556,7 @@
       "file_type": "code",
       "norm_label": "a11y",
       "source_file": "biome.json",
-      "source_location": "L62"
+      "source_location": "L63"
     },
     {
       "id": "biome_rules_correctness",
@@ -23655,7 +23567,7 @@
       "file_type": "code",
       "norm_label": "correctness",
       "source_file": "biome.json",
-      "source_location": "L57"
+      "source_location": "L58"
     },
     {
       "id": "biome_rules_nursery",
@@ -23666,7 +23578,7 @@
       "file_type": "code",
       "norm_label": "nursery",
       "source_file": "biome.json",
-      "source_location": "L72"
+      "source_location": "L73"
     },
     {
       "id": "biome_rules_preset",
@@ -23677,7 +23589,7 @@
       "file_type": "code",
       "norm_label": "preset",
       "source_file": "biome.json",
-      "source_location": "L56"
+      "source_location": "L57"
     },
     {
       "id": "biome_rules_suspicious",
@@ -23688,7 +23600,7 @@
       "file_type": "code",
       "norm_label": "suspicious",
       "source_file": "biome.json",
-      "source_location": "L69"
+      "source_location": "L70"
     },
     {
       "id": "biome_suspicious_noexplicitany",
@@ -23699,7 +23611,7 @@
       "file_type": "code",
       "norm_label": "noexplicitany",
       "source_file": "biome.json",
-      "source_location": "L70"
+      "source_location": "L71"
     },
     {
       "id": "biome_usetailwindsortedclasses_level",
@@ -23710,7 +23622,7 @@
       "file_type": "code",
       "norm_label": "level",
       "source_file": "biome.json",
-      "source_location": "L74"
+      "source_location": "L75"
     },
     {
       "id": "worker_configuration_d_durable_object_brand",
@@ -23777,50 +23689,6 @@
       "norm_label": "__workflow_entrypoint_brand",
       "source_file": "worker-configuration.d.ts",
       "source_location": "L12011"
-    },
-    {
-      "id": "app_components_os_bluescreen",
-      "label": "BlueScreen.tsx",
-      "_origin": "ast",
-      "community": 279,
-      "community_name": "root.tsx",
-      "file_type": "code",
-      "norm_label": "bluescreen.tsx",
-      "source_file": "app/components/OS/BlueScreen.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_hooks_use_any_key",
-      "label": "use-any-key.ts",
-      "_origin": "ast",
-      "community": 279,
-      "community_name": "root.tsx",
-      "file_type": "code",
-      "norm_label": "use-any-key.ts",
-      "source_file": "app/hooks/use-any-key.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_hooks_use_any_key_modifiers",
-      "label": "MODIFIERS",
-      "_origin": "ast",
-      "community": 279,
-      "community_name": "root.tsx",
-      "file_type": "code",
-      "norm_label": "modifiers",
-      "source_file": "app/hooks/use-any-key.ts",
-      "source_location": "L3"
-    },
-    {
-      "id": "app_root",
-      "label": "root.tsx",
-      "_origin": "ast",
-      "community": 279,
-      "community_name": "root.tsx",
-      "file_type": "code",
-      "norm_label": "root.tsx",
-      "source_file": "app/root.tsx",
-      "source_location": "L1"
     },
     {
       "id": "package_devdependencies",
@@ -24177,17 +24045,6 @@
       "norm_label": "local development checklist",
       "source_file": "DEV-NOTES.md",
       "source_location": "L3"
-    },
-    {
-      "id": "server_build",
-      "label": "virtual:react-router/server-build",
-      "_origin": "ast",
-      "community": 3,
-      "community_name": "contact.tsx",
-      "confidence": "EXTRACTED",
-      "file_type": "code",
-      "norm_label": "virtual:react-router/server-build",
-      "source_file": "virtual:react-router/server-build"
     },
     {
       "id": "app_components_credits",
@@ -24663,6 +24520,39 @@
       "source_location": "L3"
     },
     {
+      "id": "app_components_os_oswindow",
+      "label": "OSWindow.tsx",
+      "_origin": "ast",
+      "community": 39,
+      "community_name": "OSWindow.tsx",
+      "file_type": "code",
+      "norm_label": "oswindow.tsx",
+      "source_file": "app/components/OS/OSWindow.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_components_os_zoomoutline",
+      "label": "ZoomOutline.tsx",
+      "_origin": "ast",
+      "community": 39,
+      "community_name": "OSWindow.tsx",
+      "file_type": "code",
+      "norm_label": "zoomoutline.tsx",
+      "source_file": "app/components/OS/ZoomOutline.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "ref_react_draggable",
+      "label": "react-draggable",
+      "_origin": "ast",
+      "community": 39,
+      "community_name": "OSWindow.tsx",
+      "file_type": "concept",
+      "norm_label": "react-draggable",
+      "source_file": "package.json",
+      "source_location": "L27"
+    },
+    {
       "id": "app_components_os_biosscreen",
       "label": "BiosScreen.tsx",
       "_origin": "ast",
@@ -24773,6 +24663,50 @@
       "source_location": "L5"
     },
     {
+      "id": "app_components_os_start",
+      "label": "Start.tsx",
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "start.tsx",
+      "source_file": "app/components/OS/Start.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_components_os_startwindow",
+      "label": "StartWindow.tsx",
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "startwindow.tsx",
+      "source_file": "app/components/OS/StartWindow.tsx",
+      "source_location": "L1"
+    },
+    {
+      "id": "app_hooks_use_click_outside",
+      "label": "use-click-outside.ts",
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "react",
+      "file_type": "code",
+      "norm_label": "use-click-outside.ts",
+      "source_file": "app/hooks/use-click-outside.ts",
+      "source_location": "L1"
+    },
+    {
+      "id": "ref_react",
+      "label": "react",
+      "_origin": "ast",
+      "community": 40,
+      "community_name": "react",
+      "file_type": "concept",
+      "norm_label": "react",
+      "source_file": "package.json",
+      "source_location": "L25"
+    },
+    {
       "id": "e2e_contact_form_spec",
       "label": "contact-form.spec.ts",
       "_origin": "ast",
@@ -24881,61 +24815,6 @@
       "norm_label": "@playwright/test",
       "source_file": "package.json",
       "source_location": "L36"
-    },
-    {
-      "id": "app_components_paint",
-      "label": "Paint.tsx",
-      "_origin": "ast",
-      "community": 47,
-      "community_name": "Paint App",
-      "file_type": "code",
-      "norm_label": "paint.tsx",
-      "source_file": "app/components/Paint.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_components_paint_colors",
-      "label": "COLORS",
-      "_origin": "ast",
-      "community": 47,
-      "community_name": "Paint App",
-      "file_type": "code",
-      "norm_label": "colors",
-      "source_file": "app/components/Paint.tsx",
-      "source_location": "L4"
-    },
-    {
-      "id": "app_components_paint_sizes",
-      "label": "SIZES",
-      "_origin": "ast",
-      "community": 47,
-      "community_name": "Paint App",
-      "file_type": "code",
-      "norm_label": "sizes",
-      "source_file": "app/components/Paint.tsx",
-      "source_location": "L9"
-    },
-    {
-      "id": "app_components_paint_tool_sprite",
-      "label": "TOOL_SPRITE",
-      "_origin": "ast",
-      "community": 47,
-      "community_name": "Paint App",
-      "file_type": "code",
-      "norm_label": "tool_sprite",
-      "source_file": "app/components/Paint.tsx",
-      "source_location": "L14"
-    },
-    {
-      "id": "app_components_paint_tools",
-      "label": "TOOLS",
-      "_origin": "ast",
-      "community": 47,
-      "community_name": "Paint App",
-      "file_type": "code",
-      "norm_label": "tools",
-      "source_file": "app/components/Paint.tsx",
-      "source_location": "L10"
     },
     {
       "id": "app_routes",
@@ -25056,7 +24935,7 @@
       "file_type": "code",
       "norm_label": "parser",
       "source_file": "biome.json",
-      "source_location": "L48"
+      "source_location": "L49"
     },
     {
       "id": "biome_overrides",
@@ -25067,7 +24946,7 @@
       "file_type": "code",
       "norm_label": "overrides",
       "source_file": "biome.json",
-      "source_location": "L96"
+      "source_location": "L97"
     },
     {
       "id": "biome_parser_allowcomments",
@@ -25078,7 +24957,7 @@
       "file_type": "code",
       "norm_label": "allowcomments",
       "source_file": "biome.json",
-      "source_location": "L49"
+      "source_location": "L50"
     },
     {
       "id": "biome_parser_allowtrailingcommas",
@@ -25089,7 +24968,7 @@
       "file_type": "code",
       "norm_label": "allowtrailingcommas",
       "source_file": "biome.json",
-      "source_location": "L50"
+      "source_location": "L51"
     },
     {
       "id": "biome_schema",
@@ -25111,7 +24990,7 @@
       "file_type": "code",
       "norm_label": "tailwind",
       "source_file": "biome.json",
-      "source_location": "L118"
+      "source_location": "L119"
     },
     {
       "id": "biome_tailwind_attributes",
@@ -25122,7 +25001,7 @@
       "file_type": "code",
       "norm_label": "attributes",
       "source_file": "biome.json",
-      "source_location": "L119"
+      "source_location": "L120"
     },
     {
       "id": "biome_tailwind_mergefunctions",
@@ -25133,7 +25012,7 @@
       "file_type": "code",
       "norm_label": "mergefunctions",
       "source_file": "biome.json",
-      "source_location": "L120"
+      "source_location": "L121"
     },
     {
       "id": "readme",
@@ -25293,39 +25172,6 @@
       "source_location": "L10"
     },
     {
-      "id": "app_components_os_oswindow",
-      "label": "OSWindow.tsx",
-      "_origin": "ast",
-      "community": 57,
-      "community_name": "OSWindow.tsx",
-      "file_type": "code",
-      "norm_label": "oswindow.tsx",
-      "source_file": "app/components/OS/OSWindow.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_components_os_zoomoutline",
-      "label": "ZoomOutline.tsx",
-      "_origin": "ast",
-      "community": 57,
-      "community_name": "OSWindow.tsx",
-      "file_type": "code",
-      "norm_label": "zoomoutline.tsx",
-      "source_file": "app/components/OS/ZoomOutline.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "ref_react_draggable",
-      "label": "react-draggable",
-      "_origin": "ast",
-      "community": 57,
-      "community_name": "OSWindow.tsx",
-      "file_type": "concept",
-      "norm_label": "react-draggable",
-      "source_file": "package.json",
-      "source_location": "L27"
-    },
-    {
       "id": "biome_css",
       "label": "css",
       "_origin": "ast",
@@ -25334,7 +25180,7 @@
       "file_type": "code",
       "norm_label": "css",
       "source_file": "biome.json",
-      "source_location": "L88"
+      "source_location": "L89"
     },
     {
       "id": "biome_css_formatter",
@@ -25345,7 +25191,7 @@
       "file_type": "code",
       "norm_label": "formatter",
       "source_file": "biome.json",
-      "source_location": "L89"
+      "source_location": "L90"
     },
     {
       "id": "biome_css_parser",
@@ -25356,7 +25202,7 @@
       "file_type": "code",
       "norm_label": "parser",
       "source_file": "biome.json",
-      "source_location": "L92"
+      "source_location": "L93"
     },
     {
       "id": "biome_formatter",
@@ -25367,7 +25213,7 @@
       "file_type": "code",
       "norm_label": "formatter",
       "source_file": "biome.json",
-      "source_location": "L27"
+      "source_location": "L28"
     },
     {
       "id": "biome_formatter_enabled",
@@ -25378,7 +25224,7 @@
       "file_type": "code",
       "norm_label": "enabled",
       "source_file": "biome.json",
-      "source_location": "L28"
+      "source_location": "L29"
     },
     {
       "id": "biome_formatter_indentstyle",
@@ -25389,7 +25235,7 @@
       "file_type": "code",
       "norm_label": "indentstyle",
       "source_file": "biome.json",
-      "source_location": "L29"
+      "source_location": "L30"
     },
     {
       "id": "biome_formatter_indentwidth",
@@ -25400,7 +25246,7 @@
       "file_type": "code",
       "norm_label": "indentwidth",
       "source_file": "biome.json",
-      "source_location": "L30"
+      "source_location": "L31"
     },
     {
       "id": "biome_formatter_lineending",
@@ -25411,7 +25257,7 @@
       "file_type": "code",
       "norm_label": "lineending",
       "source_file": "biome.json",
-      "source_location": "L32"
+      "source_location": "L33"
     },
     {
       "id": "biome_formatter_linewidth",
@@ -25422,7 +25268,7 @@
       "file_type": "code",
       "norm_label": "linewidth",
       "source_file": "biome.json",
-      "source_location": "L31"
+      "source_location": "L32"
     },
     {
       "id": "biome_parser_tailwinddirectives",
@@ -25433,7 +25279,7 @@
       "file_type": "code",
       "norm_label": "tailwinddirectives",
       "source_file": "biome.json",
-      "source_location": "L93"
+      "source_location": "L94"
     },
     {
       "id": "github_workflows_playwright",
@@ -25953,50 +25799,6 @@
       "source_location": "L2"
     },
     {
-      "id": "app_components_os_start",
-      "label": "Start.tsx",
-      "_origin": "ast",
-      "community": 72,
-      "community_name": "Start Menu",
-      "file_type": "code",
-      "norm_label": "start.tsx",
-      "source_file": "app/components/OS/Start.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_components_os_startwindow",
-      "label": "StartWindow.tsx",
-      "_origin": "ast",
-      "community": 72,
-      "community_name": "Start Menu",
-      "file_type": "code",
-      "norm_label": "startwindow.tsx",
-      "source_file": "app/components/OS/StartWindow.tsx",
-      "source_location": "L1"
-    },
-    {
-      "id": "app_hooks_use_click_outside",
-      "label": "use-click-outside.ts",
-      "_origin": "ast",
-      "community": 72,
-      "community_name": "Start Menu",
-      "file_type": "code",
-      "norm_label": "use-click-outside.ts",
-      "source_file": "app/hooks/use-click-outside.ts",
-      "source_location": "L1"
-    },
-    {
-      "id": "ref_react",
-      "label": "react",
-      "_origin": "ast",
-      "community": 72,
-      "community_name": "Start Menu",
-      "file_type": "concept",
-      "norm_label": "react",
-      "source_file": "package.json",
-      "source_location": "L25"
-    },
-    {
       "id": "biome_formatter_arrowparentheses",
       "label": "arrowParentheses",
       "_origin": "ast",
@@ -26005,7 +25807,7 @@
       "file_type": "code",
       "norm_label": "arrowparentheses",
       "source_file": "biome.json",
-      "source_location": "L40"
+      "source_location": "L41"
     },
     {
       "id": "biome_formatter_jsxquotestyle",
@@ -26016,7 +25818,7 @@
       "file_type": "code",
       "norm_label": "jsxquotestyle",
       "source_file": "biome.json",
-      "source_location": "L37"
+      "source_location": "L38"
     },
     {
       "id": "biome_formatter_quotestyle",
@@ -26027,7 +25829,7 @@
       "file_type": "code",
       "norm_label": "quotestyle",
       "source_file": "biome.json",
-      "source_location": "L36"
+      "source_location": "L37"
     },
     {
       "id": "biome_formatter_semicolons",
@@ -26038,7 +25840,7 @@
       "file_type": "code",
       "norm_label": "semicolons",
       "source_file": "biome.json",
-      "source_location": "L39"
+      "source_location": "L40"
     },
     {
       "id": "biome_formatter_trailingcommas",
@@ -26049,7 +25851,7 @@
       "file_type": "code",
       "norm_label": "trailingcommas",
       "source_file": "biome.json",
-      "source_location": "L38"
+      "source_location": "L39"
     },
     {
       "id": "biome_javascript",
@@ -26060,7 +25862,7 @@
       "file_type": "code",
       "norm_label": "javascript",
       "source_file": "biome.json",
-      "source_location": "L34"
+      "source_location": "L35"
     },
     {
       "id": "biome_javascript_formatter",
@@ -26071,7 +25873,7 @@
       "file_type": "code",
       "norm_label": "formatter",
       "source_file": "biome.json",
-      "source_location": "L35"
+      "source_location": "L36"
     },
     {
       "id": "biome_json_formatter",
@@ -26082,7 +25884,7 @@
       "file_type": "code",
       "norm_label": "formatter",
       "source_file": "biome.json",
-      "source_location": "L44"
+      "source_location": "L45"
     },
     {
       "id": "github_dependabot",
@@ -26346,7 +26148,7 @@
       "file_type": "code",
       "norm_label": "source",
       "source_file": "biome.json",
-      "source_location": "L82"
+      "source_location": "L83"
     },
     {
       "id": "biome_assist",
@@ -26357,7 +26159,7 @@
       "file_type": "code",
       "norm_label": "assist",
       "source_file": "biome.json",
-      "source_location": "L79"
+      "source_location": "L80"
     },
     {
       "id": "biome_assist_actions",
@@ -26368,7 +26170,7 @@
       "file_type": "code",
       "norm_label": "actions",
       "source_file": "biome.json",
-      "source_location": "L81"
+      "source_location": "L82"
     },
     {
       "id": "biome_assist_enabled",
@@ -26379,7 +26181,7 @@
       "file_type": "code",
       "norm_label": "enabled",
       "source_file": "biome.json",
-      "source_location": "L80"
+      "source_location": "L81"
     },
     {
       "id": "biome_source_organizeimports",
@@ -26390,7 +26192,7 @@
       "file_type": "code",
       "norm_label": "organizeimports",
       "source_file": "biome.json",
-      "source_location": "L83"
+      "source_location": "L84"
     },
     {
       "id": "biome_source_usesortedattributes",
@@ -26401,7 +26203,7 @@
       "file_type": "code",
       "norm_label": "usesortedattributes",
       "source_file": "biome.json",
-      "source_location": "L84"
+      "source_location": "L85"
     },
     {
       "id": "claude_graphify_rules",
@@ -26548,22 +26350,10 @@
       "type": "external"
     },
     {
-      "id": "app_generated_index_gql",
-      "label": "app_generated_index_gql",
-      "_origin": "semantic",
-      "community": 270,
-      "community_name": "Generated GraphQL Index",
-      "external": true,
-      "file_type": "concept",
-      "norm_label": "app_generated_index_gql",
-      "source_file": "",
-      "type": "external"
-    },
-    {
       "id": "app_tailwind",
       "label": "app_tailwind",
       "_origin": "semantic",
-      "community": 279,
+      "community": 22,
       "community_name": "root.tsx",
       "external": true,
       "file_type": "concept",
@@ -26575,7 +26365,7 @@
       "id": "ref_fonts_micro5_latin_woff2_url",
       "label": "ref_fonts_micro5_latin_woff2_url",
       "_origin": "semantic",
-      "community": 279,
+      "community": 22,
       "community_name": "root.tsx",
       "external": true,
       "file_type": "concept",
@@ -26587,7 +26377,7 @@
       "id": "ref_fonts_perfect_dos_vga_437_win_woff_url",
       "label": "ref_fonts_perfect_dos_vga_437_win_woff_url",
       "_origin": "semantic",
-      "community": 279,
+      "community": 22,
       "community_name": "root.tsx",
       "external": true,
       "file_type": "concept",
@@ -26599,11 +26389,23 @@
       "id": "ref_types_root",
       "label": "ref_types_root",
       "_origin": "semantic",
-      "community": 279,
+      "community": 22,
       "community_name": "root.tsx",
       "external": true,
       "file_type": "concept",
       "norm_label": "ref_types_root",
+      "source_file": "",
+      "type": "external"
+    },
+    {
+      "id": "app_generated_index_gql",
+      "label": "app_generated_index_gql",
+      "_origin": "semantic",
+      "community": 270,
+      "community_name": "Generated GraphQL Index",
+      "external": true,
+      "file_type": "concept",
+      "norm_label": "app_generated_index_gql",
       "source_file": "",
       "type": "external"
     },
@@ -26669,70 +26471,6 @@
     }
   ],
   "links": [
-    {
-      "source": "github_dependabot_build_check_build_steps",
-      "target": "github_dependabot_build_check_steps_name",
-      "relation": "contains",
-      "_origin": "ast",
-      "also_seen": [
-        {
-          "confidence": "EXTRACTED",
-          "source_file": ".github/dependabot-build-check.yml",
-          "source_location": "L18"
-        },
-        {
-          "confidence": "EXTRACTED",
-          "source_file": ".github/dependabot-build-check.yml",
-          "source_location": "L21"
-        },
-        {
-          "confidence": "EXTRACTED",
-          "source_file": ".github/dependabot-build-check.yml",
-          "source_location": "L26"
-        }
-      ],
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L29",
-      "weight": 1.0
-    },
-    {
-      "source": "github_dependabot_build_check_build_steps",
-      "target": "github_dependabot_build_check_steps_uses",
-      "relation": "contains",
-      "_origin": "ast",
-      "also_seen": [
-        {
-          "confidence": "EXTRACTED",
-          "source_file": ".github/dependabot-build-check.yml",
-          "source_location": "L19"
-        }
-      ],
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L22",
-      "weight": 1.0
-    },
-    {
-      "source": "github_dependabot_build_check_build_steps",
-      "target": "github_dependabot_build_check_steps_run",
-      "relation": "contains",
-      "_origin": "ast",
-      "also_seen": [
-        {
-          "confidence": "EXTRACTED",
-          "source_file": ".github/dependabot-build-check.yml",
-          "source_location": "L27"
-        }
-      ],
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L30",
-      "weight": 1.0
-    },
     {
       "source": "github_dependabot_updates",
       "target": "github_dependabot_updates_target_branch",
@@ -28128,7 +27866,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app/root.tsx",
-      "source_location": "L83",
+      "source_location": "L86",
       "weight": 1.0
     },
     {
@@ -28140,7 +27878,7 @@
       "confidence_score": 1.0,
       "context": "call",
       "source_file": "app/root.tsx",
-      "source_location": "L87",
+      "source_location": "L90",
       "weight": 1.0
     },
     {
@@ -35204,7 +34942,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/root.tsx",
-      "source_location": "L33",
+      "source_location": "L36",
       "weight": 1.0
     },
     {
@@ -35215,7 +34953,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/root.tsx",
-      "source_location": "L64",
+      "source_location": "L67",
       "weight": 1.0
     },
     {
@@ -35226,7 +34964,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/root.tsx",
-      "source_location": "L82",
+      "source_location": "L85",
       "weight": 1.0
     },
     {
@@ -35237,7 +34975,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/root.tsx",
-      "source_location": "L86",
+      "source_location": "L89",
       "weight": 1.0
     },
     {
@@ -35578,7 +35316,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L118",
+      "source_location": "L119",
       "weight": 1.0
     },
     {
@@ -35600,7 +35338,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L27",
+      "source_location": "L28",
       "weight": 1.0
     },
     {
@@ -35622,7 +35360,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L34",
+      "source_location": "L35",
       "weight": 1.0
     },
     {
@@ -35633,7 +35371,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L44",
+      "source_location": "L45",
       "weight": 1.0
     },
     {
@@ -35644,7 +35382,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L48",
+      "source_location": "L49",
       "weight": 1.0
     },
     {
@@ -35655,18 +35393,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L53",
-      "weight": 1.0
-    },
-    {
-      "source": "biome",
-      "target": "biome_assist",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "biome.json",
-      "source_location": "L79",
+      "source_location": "L54",
       "weight": 1.0
     },
     {
@@ -35682,13 +35409,24 @@
     },
     {
       "source": "biome",
+      "target": "biome_assist",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "biome.json",
+      "source_location": "L80",
+      "weight": 1.0
+    },
+    {
+      "source": "biome",
       "target": "biome_css",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L88",
+      "source_location": "L89",
       "weight": 1.0
     },
     {
@@ -35699,7 +35437,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L96",
+      "source_location": "L97",
       "weight": 1.0
     },
     {
@@ -35710,7 +35448,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L83",
+      "source_location": "L84",
       "weight": 1.0
     },
     {
@@ -35721,7 +35459,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L84",
+      "source_location": "L85",
       "weight": 1.0
     },
     {
@@ -35732,7 +35470,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L80",
+      "source_location": "L81",
       "weight": 1.0
     },
     {
@@ -35743,7 +35481,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L81",
+      "source_location": "L82",
       "weight": 1.0
     },
     {
@@ -35754,7 +35492,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L82",
+      "source_location": "L83",
       "weight": 1.0
     },
     {
@@ -35765,7 +35503,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L89",
+      "source_location": "L90",
       "weight": 1.0
     },
     {
@@ -35776,7 +35514,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L92",
+      "source_location": "L93",
       "weight": 1.0
     },
     {
@@ -35787,7 +35525,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L90",
+      "source_location": "L91",
       "weight": 1.0
     },
     {
@@ -35798,7 +35536,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L93",
+      "source_location": "L94",
       "weight": 1.0
     },
     {
@@ -35820,7 +35558,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L28",
+      "source_location": "L29",
       "weight": 1.0
     },
     {
@@ -35831,7 +35569,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L29",
+      "source_location": "L30",
       "weight": 1.0
     },
     {
@@ -35842,7 +35580,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L30",
+      "source_location": "L31",
       "weight": 1.0
     },
     {
@@ -35853,7 +35591,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L31",
+      "source_location": "L32",
       "weight": 1.0
     },
     {
@@ -35864,7 +35602,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L32",
+      "source_location": "L33",
       "weight": 1.0
     },
     {
@@ -35875,7 +35613,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L35",
+      "source_location": "L36",
       "weight": 1.0
     },
     {
@@ -35886,7 +35624,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L36",
+      "source_location": "L37",
       "weight": 1.0
     },
     {
@@ -35897,23 +35635,12 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L37",
-      "weight": 1.0
-    },
-    {
-      "source": "biome_javascript_formatter",
-      "target": "biome_formatter_trailingcommas",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "biome.json",
       "source_location": "L38",
       "weight": 1.0
     },
     {
       "source": "biome_javascript_formatter",
-      "target": "biome_formatter_semicolons",
+      "target": "biome_formatter_trailingcommas",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
@@ -35924,13 +35651,24 @@
     },
     {
       "source": "biome_javascript_formatter",
-      "target": "biome_formatter_arrowparentheses",
+      "target": "biome_formatter_semicolons",
       "relation": "contains",
       "_origin": "ast",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
       "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "biome_javascript_formatter",
+      "target": "biome_formatter_arrowparentheses",
+      "relation": "contains",
+      "_origin": "ast",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "biome.json",
+      "source_location": "L41",
       "weight": 1.0
     },
     {
@@ -35941,7 +35679,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L45",
+      "source_location": "L46",
       "weight": 1.0
     },
     {
@@ -35952,7 +35690,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L46",
+      "source_location": "L47",
       "weight": 1.0
     },
     {
@@ -35963,7 +35701,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L49",
+      "source_location": "L50",
       "weight": 1.0
     },
     {
@@ -35974,7 +35712,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L50",
+      "source_location": "L51",
       "weight": 1.0
     },
     {
@@ -35985,7 +35723,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L54",
+      "source_location": "L55",
       "weight": 1.0
     },
     {
@@ -35996,7 +35734,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L55",
+      "source_location": "L56",
       "weight": 1.0
     },
     {
@@ -36007,7 +35745,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L56",
+      "source_location": "L57",
       "weight": 1.0
     },
     {
@@ -36018,7 +35756,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L57",
+      "source_location": "L58",
       "weight": 1.0
     },
     {
@@ -36029,7 +35767,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L62",
+      "source_location": "L63",
       "weight": 1.0
     },
     {
@@ -36040,7 +35778,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L65",
+      "source_location": "L66",
       "weight": 1.0
     },
     {
@@ -36051,7 +35789,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L69",
+      "source_location": "L70",
       "weight": 1.0
     },
     {
@@ -36062,7 +35800,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L72",
+      "source_location": "L73",
       "weight": 1.0
     },
     {
@@ -36073,7 +35811,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L74",
+      "source_location": "L75",
       "weight": 1.0
     },
     {
@@ -36084,7 +35822,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L63",
+      "source_location": "L64",
       "weight": 1.0
     },
     {
@@ -36095,7 +35833,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L58",
+      "source_location": "L59",
       "weight": 1.0
     },
     {
@@ -36106,7 +35844,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L59",
+      "source_location": "L60",
       "weight": 1.0
     },
     {
@@ -36117,7 +35855,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L60",
+      "source_location": "L61",
       "weight": 1.0
     },
     {
@@ -36128,7 +35866,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L73",
+      "source_location": "L74",
       "weight": 1.0
     },
     {
@@ -36139,7 +35877,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L66",
+      "source_location": "L67",
       "weight": 1.0
     },
     {
@@ -36150,7 +35888,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L67",
+      "source_location": "L68",
       "weight": 1.0
     },
     {
@@ -36161,7 +35899,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L70",
+      "source_location": "L71",
       "weight": 1.0
     },
     {
@@ -36172,7 +35910,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L119",
+      "source_location": "L120",
       "weight": 1.0
     },
     {
@@ -36183,7 +35921,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "biome.json",
-      "source_location": "L120",
+      "source_location": "L121",
       "weight": 1.0
     },
     {
@@ -36283,149 +36021,6 @@
       "confidence_score": 1.0,
       "source_file": ".github/dependabot.yml",
       "source_location": "L2",
-      "weight": 1.0
-    },
-    {
-      "source": "github_dependabot_build_check",
-      "target": "github_dependabot_build_check_name",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L1",
-      "weight": 1.0
-    },
-    {
-      "source": "github_dependabot_build_check",
-      "target": "github_dependabot_build_check_jobs",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L12",
-      "weight": 1.0
-    },
-    {
-      "source": "github_dependabot_build_check",
-      "target": "github_dependabot_build_check_on",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L3",
-      "weight": 1.0
-    },
-    {
-      "source": "github_dependabot_build_check_build_steps",
-      "target": "github_dependabot_build_check_steps_with",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L23",
-      "weight": 1.0
-    },
-    {
-      "source": "github_dependabot_build_check_jobs",
-      "target": "github_dependabot_build_check_jobs_build",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L13",
-      "weight": 1.0
-    },
-    {
-      "source": "github_dependabot_build_check_jobs_build",
-      "target": "github_dependabot_build_check_build_if",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L14",
-      "weight": 1.0
-    },
-    {
-      "source": "github_dependabot_build_check_jobs_build",
-      "target": "github_dependabot_build_check_build_runs_on",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L15",
-      "weight": 1.0
-    },
-    {
-      "source": "github_dependabot_build_check_jobs_build",
-      "target": "github_dependabot_build_check_build_steps",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L17",
-      "weight": 1.0
-    },
-    {
-      "source": "github_dependabot_build_check_on",
-      "target": "github_dependabot_build_check_on_pull_request",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L4",
-      "weight": 1.0
-    },
-    {
-      "source": "github_dependabot_build_check_on_pull_request",
-      "target": "github_dependabot_build_check_pull_request_types",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L5",
-      "weight": 1.0
-    },
-    {
-      "source": "github_dependabot_build_check_on_pull_request",
-      "target": "github_dependabot_build_check_pull_request_branches",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L6",
-      "weight": 1.0
-    },
-    {
-      "source": "github_dependabot_build_check_on_pull_request",
-      "target": "github_dependabot_build_check_pull_request_paths",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L8",
-      "weight": 1.0
-    },
-    {
-      "source": "github_dependabot_build_check_steps_with",
-      "target": "github_dependabot_build_check_with_node_version",
-      "relation": "contains",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": ".github/dependabot-build-check.yml",
-      "source_location": "L24",
       "weight": 1.0
     },
     {
@@ -48699,15 +48294,6 @@
       "source_file": "worker-configuration.d.ts"
     },
     {
-      "source": "workers_app",
-      "target": "server_build",
-      "relation": "dynamic_import",
-      "_origin": "ast",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "workers/app.ts"
-    },
-    {
       "source": "workers_env_d",
       "target": "workers_room",
       "relation": "dynamic_import",
@@ -56268,5 +55854,5 @@
       "source_file": ".github/agents/playwright-test-planner.agent.md"
     }
   ],
-  "built_at_commit": "f54acba370da04c57377dcc9026beedf20d89486"
+  "built_at_commit": "6c987658f10e33b50d9ee6c593a57257b7e744b8"
 }
