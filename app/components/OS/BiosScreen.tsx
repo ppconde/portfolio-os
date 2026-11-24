@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAnyKey } from '~/hooks/use-any-key';
+import { store } from '~/storage';
 import { useBootStore } from '~/store/BootStore';
 import BlinkCaret from './BlinkCaret';
 
@@ -7,18 +8,8 @@ const STEP_DELAYS = [1500, 1700, 2000, 2500];
 const BOOTED_KEY = 'booted';
 
 export const session = {
-  booted: () => {
-    try {
-      return sessionStorage.getItem(BOOTED_KEY) === '1';
-    } catch {
-      return false;
-    }
-  },
-  markBooted: () => {
-    try {
-      sessionStorage.setItem(BOOTED_KEY, '1');
-    } catch {}
-  },
+  booted: () => store('session', BOOTED_KEY) === '1',
+  markBooted: () => store('session', BOOTED_KEY, '1'),
 };
 
 const skipToDesktop = () => {

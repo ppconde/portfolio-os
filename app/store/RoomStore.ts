@@ -12,6 +12,7 @@ import {
   type TableState,
   type Tile,
 } from '~/room';
+import { store } from '~/storage';
 import type { ClientMsg } from '../../workers/room';
 
 const TICK_MS = 150; // one walking step / one sown stone
@@ -65,13 +66,9 @@ export const mySeat = (t: TableState | undefined, you: string | null) =>
 const isEmpty = (t: TableState) => !t.seats[0] && !t.seats[1] && !t.result;
 
 const playerId = () => {
-  try {
-    const id = sessionStorage.getItem('room-id') ?? crypto.randomUUID();
-    sessionStorage.setItem('room-id', id); // survives a reload, so the seat hold works
-    return id;
-  } catch {
-    return crypto.randomUUID();
-  }
+  const id = store('session', 'room-id') ?? crypto.randomUUID();
+  store('session', 'room-id', id); // survives a reload, so the seat hold works
+  return id;
 };
 
 // Module-level, not state: nothing renders from these.

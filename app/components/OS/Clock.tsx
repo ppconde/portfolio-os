@@ -1,8 +1,19 @@
-import { useTime } from '~/hooks/use-time';
+import { useEffect, useState } from 'react';
 import { useRoomStore } from '~/store/RoomStore';
 
+const fmt = () =>
+  new Date().toLocaleTimeString('en-us', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true,
+  });
+
 export default function Clock() {
-  const time = useTime();
+  const [time, setTime] = useState(fmt);
+  useEffect(() => {
+    const interval = setInterval(() => setTime(fmt()), 1000);
+    return () => clearInterval(interval);
+  }, []);
   const muted = useRoomStore((s) => s.muted);
   const toggleMute = useRoomStore((s) => s.toggleMute);
   return (

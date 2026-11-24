@@ -4,6 +4,8 @@ import type { Seat } from './mancala';
 export const COLS = 32;
 export const ROWS = 18;
 export const TILE = 32; // 32x18 tiles = the 1024x576 lounge picture
+export const W = COLS * TILE;
+export const H = ROWS * TILE;
 export const NAME_MAX = 10;
 export const NAME_TAKEN = 4001; // close code: someone here already has that name
 export const SPAWN = { x: 16, y: 10 }; // middle of the room

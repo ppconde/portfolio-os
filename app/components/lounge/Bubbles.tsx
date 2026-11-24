@@ -1,7 +1,5 @@
-import { COLS, COMPUTER, PC_TABLE, TABLES, TILE, type Tile } from '~/room';
+import { COMPUTER, PC_TABLE, TABLES, TILE, type Tile, W } from '~/room';
 import { BUBBLE_MS, useRoomStore } from '~/store/RoomStore';
-
-const W = COLS * TILE;
 
 // Greedy word wrap for speech bubbles.
 const wrap = (text: string, width = 26) =>

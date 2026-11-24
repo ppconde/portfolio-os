@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import type { Seat } from '~/mancala';
-import { COLS, isBlocked, isNear, PC_TABLE, ROWS, TABLES, TILE } from '~/room';
+import { H, isBlocked, isNear, PC_TABLE, TABLES, TILE, W } from '~/room';
 import { mySeat, tableLabel, useRoomStore } from '~/store/RoomStore';
 import Blobs from './lounge/Blobs';
 import Bubbles from './lounge/Bubbles';
@@ -13,8 +13,6 @@ import RoomDialog from './RoomDialog';
 
 // Module-level element: Scene's tick re-renders skip the board.
 const BOARD = <Mancala />;
-const W = COLS * TILE;
-const H = ROWS * TILE;
 const KEYS: Record<string, [number, number]> = {
   ArrowUp: [0, -1],
   ArrowDown: [0, 1],

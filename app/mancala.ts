@@ -1,7 +1,7 @@
 // Kalah rules, shared by the room server and the browser.
 // Board: pits 0-5 + store 6 belong to seat 0; pits 7-12 + store 13 to seat 1.
 export type Seat = 0 | 1;
-export const STORE = [6, 13] as const;
+const STORE = [6, 13] as const;
 
 export const newBoard = () => [4, 4, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 0];
 
