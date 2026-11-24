@@ -160,6 +160,7 @@ test('the poster opens the rules', async ({ browser, isMobile }) => {
 
 test('jazz plays in the room and the speaker mutes it', async ({
   browser,
+  browserName,
   isMobile,
 }) => {
   const page = await enterRoom(browser, isMobile ? 'Sax' : 'Bass');
@@ -171,9 +172,20 @@ test('jazz plays in the room and the speaker mutes it', async ({
     }));
   await expect.poll(state).toEqual({ playing: true, muted: false });
   // Keeps playing through the room's per-tick re-renders.
-  await expect
-    .poll(() => jazz.evaluate((a: HTMLAudioElement) => a.currentTime))
-    .toBeGreaterThan(1);
+  if (browserName === 'webkit') {
+    // Headless WebKit on Linux CI has no audio device, so its clock can stay
+    // at 0. Instead: the same element (a remount drops the mark) still plays.
+    await jazz.evaluate((a: HTMLAudioElement) => {
+      a.dataset.mark = '1';
+    });
+    await page.waitForTimeout(1500);
+    await expect(jazz).toHaveAttribute('data-mark', '1');
+    await expect.poll(state).toEqual({ playing: true, muted: false });
+  } else {
+    await expect
+      .poll(() => jazz.evaluate((a: HTMLAudioElement) => a.currentTime))
+      .toBeGreaterThan(1);
+  }
   await page.getByRole('button', { name: 'Mute sound' }).click();
   await expect.poll(state).toEqual({ playing: true, muted: true });
 
