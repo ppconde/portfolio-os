@@ -20,6 +20,8 @@
       "id": "4024c012098c4498922e7af3e1fab339"
     }
   ],
+  // The contact form sends through the email worker, which has no public URL.
+  "services": [{ "binding": "EMAIL", "service": "email-with-resend" }],
   // The Book Room: one SQLite-backed Durable Object holds avatars and Mancala tables.
   "durable_objects": {
     "bindings": [{ "name": "ROOM", "class_name": "Room" }]
@@ -35,6 +37,7 @@
   // Worker Previews don't inherit production bindings. Sharing these is fine:
   // the KV only caches pinned GitHub repos, and the secret is read-only.
   "previews": {
+    "services": [{ "binding": "EMAIL", "service": "email-with-resend" }],
     "durable_objects": {
       "bindings": [{ "name": "ROOM", "class_name": "Room" }]
     },
@@ -55,6 +58,7 @@
   "env": {
     "development": {
       "name": "portfolio-os-dev",
+      "services": [{ "binding": "EMAIL", "service": "email-with-resend" }],
       "durable_objects": {
         "bindings": [{ "name": "ROOM", "class_name": "Room" }]
       },
