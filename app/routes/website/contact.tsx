@@ -32,15 +32,29 @@ export async function action({ request, context }: Route.ActionArgs) {
   }
 
   try {
-    // Service binding: the email worker has no public URL, so the hostname is ignored.
-    const { EMAIL } = context.get(appContext).cloudflare.env;
-    const res = await EMAIL.fetch('https://email/', {
+    // Dev: plain env var. Prod: Cloudflare Secrets Store.
+    const { env } = context.get(appContext).cloudflare;
+    const key = env.RESEND_API_KEY || (await env.RESEND_SECRET?.get());
+    if (!key) throw new Error('RESEND_API_KEY is not configured');
+
+    const { email, subject, text } = parseResult.data;
+    const res = await fetch('https://api.resend.com/emails', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(parseResult.data),
+      headers: {
+        Authorization: `Bearer ${key}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'No-reply <no-reply@ppconde.com>',
+        to: 'contact@ppconde.com',
+        reply_to: email,
+        subject,
+        text,
+      }),
       signal: AbortSignal.timeout(10_000),
     });
-    if (!res.ok) throw new Error(`Email service responded ${res.status}`);
+    if (!res.ok)
+      throw new Error(`Resend responded ${res.status}: ${await res.text()}`);
     return data({ success: true }, { status: 200 });
   } catch (error) {
     console.error('Error sending email: ', error);
