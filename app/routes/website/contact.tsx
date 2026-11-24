@@ -4,6 +4,7 @@ import { z } from 'zod';
 import A from '~/components/website/A';
 import H2 from '~/components/website/H2';
 import Section from '~/components/website/Section';
+import { appContext } from '~/context';
 import type { Route } from './+types/contact';
 
 const formSchema = z
@@ -20,7 +21,7 @@ const formSchema = z
   })
   .strict();
 
-export async function action({ request }: Route.ActionArgs) {
+export async function action({ request, context }: Route.ActionArgs) {
   const formData = await request.formData();
   const entries = Object.fromEntries(formData.entries());
   const parseResult = formSchema.safeParse(entries);
@@ -31,15 +32,14 @@ export async function action({ request }: Route.ActionArgs) {
   }
 
   try {
-    const res = await fetch(
-      'https://email-with-resend.pepconde-1993.workers.dev/',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(parseResult.data),
-        signal: AbortSignal.timeout(10_000),
-      }
-    );
+    // Service binding: the email worker has no public URL, so the hostname is ignored.
+    const { EMAIL } = context.get(appContext).cloudflare.env;
+    const res = await EMAIL.fetch('https://email/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(parseResult.data),
+      signal: AbortSignal.timeout(10_000),
+    });
     if (!res.ok) throw new Error(`Email service responded ${res.status}`);
     return data({ success: true }, { status: 200 });
   } catch (error) {
