@@ -33,36 +33,31 @@ export const links: LinksFunction = () => [
   },
 ];
 
-export const meta: MetaFunction = () => {
-  return [
-    // HTML Meta Tags
-    { title: 'Ppconde OS' },
-    { name: 'description', content: 'Welcome to Ppconde OS' },
+const SITE = 'https://os.ppconde.com';
+const TITLE = 'Pedro Conde · Software Engineer';
+const DESCRIPTION =
+  'Portfolio of Pedro Conde, a fullstack software engineer from Portugal';
+const IMAGE = `${SITE}/img/og.png`;
 
-    // Facebook Meta Tags (Open Graph)
-    { property: 'og:url', content: 'https://os.ppconde.com' },
-    { property: 'og:type', content: 'website' },
-    { property: 'og:title', content: 'Ppconde OS' },
-    { property: 'og:description', content: 'Welcome to Ppconde OS' },
-    {
-      property: 'og:image',
-      content:
-        'https://repository-images.githubusercontent.com/870859488/48c376c0-ef9e-4197-8912-f5c4cbeafc51',
-    },
+export const meta: MetaFunction = () => [
+  { title: TITLE },
+  { name: 'description', content: DESCRIPTION },
 
-    // Twitter Meta Tags
-    { name: 'twitter:card', content: 'summary_large_image' },
-    { property: 'twitter:domain', content: 'os.ppconde.com' },
-    { property: 'twitter:url', content: 'https://os.ppconde.com' },
-    { name: 'twitter:title', content: 'Ppconde OS' },
-    { name: 'twitter:description', content: 'Welcome to Ppconde OS' },
-    {
-      name: 'twitter:image',
-      content:
-        'https://repository-images.githubusercontent.com/870859488/48c376c0-ef9e-4197-8912-f5c4cbeafc51',
-    },
-  ];
-};
+  // Open Graph (also read by LinkedIn, Slack, Discord, X)
+  { property: 'og:url', content: SITE },
+  { property: 'og:type', content: 'website' },
+  { property: 'og:site_name', content: 'Ppconde OS' },
+  { property: 'og:title', content: TITLE },
+  { property: 'og:description', content: DESCRIPTION },
+  { property: 'og:image', content: IMAGE },
+  { property: 'og:image:width', content: '1200' },
+  { property: 'og:image:height', content: '630' },
+  {
+    property: 'og:image:alt',
+    content: 'A Windows 98 desktop with a window titled My Portfolio',
+  },
+  { name: 'twitter:card', content: 'summary_large_image' },
+];
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
