@@ -130,7 +130,7 @@ test.describe('Responsiveness', () => {
       .getByRole('button')
       .filter({ has: page.getByAltText('Credits') });
     await creditsIcon.dblclick();
-    await expect(page.getByText('This project was created by:')).toBeVisible();
+    await expect(page.getByText('Created by')).toBeVisible();
 
     // 3. Resize to mobile
     await page.setViewportSize({ width: 375, height: 667 });
