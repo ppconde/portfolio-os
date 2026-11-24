@@ -198,6 +198,29 @@
   }
 }
 
+/* Movie end credits: enter below the window, exit off the top, loop.
+   cqh is the window's height, so the roll starts just out of frame at any size. */
+.credits {
+  container-type: size;
+  overflow: hidden;
+  mask-image: linear-gradient(transparent, #000 15%, #000 85%, transparent);
+}
+.credits-roll {
+  animation: credits-roll 40s linear infinite;
+}
+.credits:hover .credits-roll,
+.credits:focus-within .credits-roll {
+  animation-play-state: paused;
+}
+@keyframes credits-roll {
+  from {
+    transform: translateY(100cqh);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
 /* Reduced motion: no blinking, unrolling or typing; state changes snap.
    The window zoom checks the same query in ZoomOutline.tsx.
    Unlayered on purpose, so it beats Tailwind's utility layer. */
@@ -206,10 +229,16 @@
   .blob-idle,
   .blob-eyes,
   .lounge-marquee,
+  .credits-roll,
   .animate-blink,
   .animate-start-open,
   .animate-typing {
     animation: none;
+  }
+
+  /* No roll: the credits scroll by hand. */
+  .credits {
+    overflow-y: auto;
   }
 
   *,
