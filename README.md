@@ -34,7 +34,8 @@ The Projects page needs a GitHub token. See [DEV-NOTES.md](DEV-NOTES.md) for tha
 | Command | What it does |
 | --- | --- |
 | `pnpm run dev` | Start the dev server |
-| `pnpm run typecheck` | Generate route types and type-check |
+| `pnpm run typecheck` | Check the Worker types are current, generate route types and type-check |
+| `pnpm typegen` | Regenerate the Worker types after changing `wrangler.jsonc` |
 | `pnpm run check` | Lint and format with Biome, applying fixes |
 | `pnpm test` | Run the Playwright tests |
 | `pnpm run deploy` | Build and deploy to Cloudflare |
