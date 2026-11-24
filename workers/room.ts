@@ -27,6 +27,26 @@ import {
 const SEAT_HOLD_MS = 30_000; // a player who drops mid-game gets this long to reconnect
 const RESULT_MS = 5_000; // how long "Blu wins 28–20" shows before the table resets
 
+// Per socket and message kind: [burst, refill per second]. A walking client sends
+// a pos every 150ms (~7/s); chat is typed by hand.
+const LIMITS = { pos: [10, 10], say: [3, 1], other: [10, 5] } as const;
+type Bucket = { tokens: number; at: number };
+// ponytail: in memory, so hibernation resets the buckets; fine for a lounge.
+const buckets = new WeakMap<WebSocket, Record<string, Bucket>>();
+const allow = (ws: WebSocket, t: string) => {
+  const kind = t === 'pos' || t === 'say' ? t : 'other';
+  const [burst, rate] = LIMITS[kind];
+  const mine = buckets.get(ws) ?? {};
+  buckets.set(ws, mine);
+  const now = Date.now();
+  const b = (mine[kind] ??= { tokens: burst, at: now });
+  b.tokens = Math.min(burst, b.tokens + ((now - b.at) / 1000) * rate);
+  b.at = now;
+  if (b.tokens < 1) return false;
+  b.tokens--;
+  return true;
+};
+
 const seatSchema = z.union([z.literal(0), z.literal(1)]);
 export type ClientMsg = z.infer<typeof ClientMsg>;
 export const ClientMsg = z.discriminatedUnion('t', [
@@ -219,6 +239,12 @@ export class Room extends DurableObject<Env> {
     const msg = parsed.data;
     const me = ws.deserializeAttachment() as Player;
     const send = (m: ServerMsg) => ws.send(JSON.stringify(m));
+
+    // Over the limit: drop it. A dropped step snaps the walker back, as a bad one does.
+    if (!allow(ws, msg.t))
+      return msg.t === 'pos'
+        ? send({ t: 'pos', id: me.id, x: me.x, y: me.y })
+        : undefined;
 
     switch (msg.t) {
       case 'pos': {
