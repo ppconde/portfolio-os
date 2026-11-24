@@ -232,3 +232,27 @@ test('names are unique in the room and at most 10 characters', async ({
   await first.context().close();
   await page.context().close();
 });
+
+test('the room rate-limits chat floods', async ({ page }) => {
+  await page.goto('/home');
+  // A raw socket, as a script would use: 10 messages at once, count the echoes.
+  const echoed = await page.evaluate(async () => {
+    const q = new URLSearchParams({
+      id: `flood-${crypto.randomUUID()}`,
+      name: `F${Math.random().toString(36).slice(2, 8)}`,
+      color: '#ff0000',
+    });
+    const ws = new WebSocket(`ws://${location.host}/api/room?${q}`);
+    let says = 0;
+    ws.onmessage = (e) => {
+      if (JSON.parse(e.data).t === 'say') says++;
+    };
+    await new Promise((r) => ws.addEventListener('open', r));
+    for (let i = 0; i < 10; i++)
+      ws.send(JSON.stringify({ t: 'say', text: `spam ${i}` }));
+    await new Promise((r) => setTimeout(r, 1000));
+    ws.close();
+    return says;
+  });
+  expect(echoed).toBe(3); // the burst; the rest are dropped
+});
