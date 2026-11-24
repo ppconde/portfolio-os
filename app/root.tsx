@@ -36,7 +36,7 @@ export const links: LinksFunction = () => [
 const SITE = 'https://os.ppconde.com';
 const TITLE = 'Pedro Conde · Software Engineer';
 const DESCRIPTION =
-  'Portfolio of Pedro Conde, a fullstack software engineer in Porto, built as a Windows 98 desktop: browse projects and experience, paint, or play Mancala with other visitors.';
+  'Portfolio of Pedro Conde, a fullstack software engineer from Portugal';
 const IMAGE = `${SITE}/img/og.png`;
 
 export const meta: MetaFunction = () => [
