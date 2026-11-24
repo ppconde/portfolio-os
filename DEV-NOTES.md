@@ -15,6 +15,7 @@
     ```sh
     pnpm wrangler secrets-store secret create <store_id> --name GITHUB_KEY --value <your_github_key> --scopes workers
     ```
+- The contact form sends through [Resend](https://resend.com) with `RESEND_API_KEY`, read the same way: `.env.local` first, then the Secrets Store (`--name RESEND_API_KEY`). Without it the form shows its "couldn't be sent" message.
 
 ## CI
 
