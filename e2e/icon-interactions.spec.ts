@@ -117,9 +117,9 @@ test.describe('Icon Interactions', () => {
     await creditsIcon.dblclick();
 
     // 2. Verify correct window opens with Credits content
-    await expect(page.getByText('This project was created by:')).toBeVisible();
+    await expect(page.getByText('Created by')).toBeVisible();
     await expect(
-      page.getByRole('listitem').filter({ hasText: 'Pedro Conde' })
+      page.getByRole('link', { name: "Visit Mr.doob's website" })
     ).toBeVisible();
 
     // 3. Verify window is visible

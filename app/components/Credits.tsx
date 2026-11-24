@@ -1,6 +1,3 @@
-import A from './website/A';
-import H2 from './website/H2';
-
 const inspirations = [
   {
     name: 'Henry Heffernan',
@@ -19,25 +16,50 @@ const inspirations = [
   },
 ];
 
+const role =
+  'font-perfect-dos-vga text-xs uppercase tracking-[0.3em] text-quaternary';
+
+// Movie end credits: a black screen rolling upward, paused while a link has keyboard focus.
 export default function Credits() {
   return (
-    <div className="bg-tertiary flex h-full flex-col items-center justify-center p-4 font-mono">
-      <H2>Credits</H2>
-      <p className="my-2">This project was created by:</p>
-      <ul className="mb-4 list-inside list-disc">
-        <li>Pedro Conde</li>
-      </ul>
-      <p className="my-2">Inspiration and thanks:</p>
-      <ul className="mb-4 list-inside list-disc">
-        {inspirations.map(({ name, href, note }) => (
-          <li key={name}>
-            <A ariaLabel={`Visit ${name}'s website`} href={href} title={name}>
-              {name}
-            </A>{' '}
-            {note}
-          </li>
-        ))}
-      </ul>
+    <div className="text-tertiary h-full bg-black">
+      <div className="credits h-full">
+        <div className="credits-roll flex flex-col items-center gap-16 px-4 py-12 text-center">
+          <header className="flex flex-col items-center gap-3">
+            <p className={role}>A Pedro Conde production</p>
+            <h2 className="font-micro text-7xl leading-none">Portfolio OS</h2>
+          </header>
+
+          <section className="flex flex-col items-center gap-2">
+            <h3 className={role}>Created by</h3>
+            <p className="font-ps-sans-nouveaux text-xl">Pedro Conde</p>
+          </section>
+
+          <section className="flex flex-col items-center gap-6">
+            <h3 className={role}>Inspiration and thanks</h3>
+            <ul className="flex flex-col gap-6">
+              {inspirations.map(({ name, href, note }) => (
+                <li className="flex flex-col gap-1" key={name}>
+                  <a
+                    aria-label={`Visit ${name}'s website`}
+                    className="font-ps-sans-nouveaux text-xl hover:underline"
+                    href={href}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    {name}
+                  </a>
+                  <span className="text-secondary font-mono text-sm">
+                    {note}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <p className="font-micro text-5xl">Fin</p>
+        </div>
+      </div>
     </div>
   );
 }
