@@ -1,15 +1,17 @@
-# Graph Report - portfolio-os  (2026-11-09)
+# Graph Report - portfolio-os  (2026-11-24)
 
 ## Corpus Check
-- cluster-only mode — file stats not available
+- 85 files · ~97,595 words
+- Verdict: corpus is large enough that graph structure adds value.
+- Unclassified: 11 file(s) not represented in the graph (top: (none) 5, .woff 2, .woff2 1)
 
 ## Summary
-- 2168 nodes · 2615 edges · 189 communities (43 shown, 146 thin omitted)
+- 2150 nodes · 2598 edges · 188 communities (42 shown, 146 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 15 edges (avg confidence: 0.84)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `f54acba3`
+- Built from commit: `6c987658`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -32,14 +34,14 @@
 - URL API
 - Event
 - Navbar.tsx
-- Dependabot Build Check
 - dependencies
 - URLSearchParams API
 - mancala.spec.ts
-- ServiceWorkerGlobalScope
+- root.tsx
 - env.d.ts
-- Website Navigation Layout
+- react-router
 - Durable Object Storage
+- Paint.tsx
 - Biome Linter Rules
 - HTML Rewriter Element
 - Headers API
@@ -51,16 +53,17 @@
 - Cloudflare Containers API
 - FormData API
 - URLPattern API
+- ServiceWorkerGlobalScope
+- OSWindow.tsx
+- react
 - @playwright/test
 - Durable Object State
 - Worker Entrypoint
-- Paint App
 - @react-router/dev
 - Biome File Settings
 - pnpm Workspace Config
 - Image Upload Errors
 - Artifacts
-- OSWindow.tsx
 - Biome CSS Formatter
 - EventSource
 - Flagship Feature Flags
@@ -72,7 +75,6 @@
 - ReadableStream API
 - TCP Socket API
 - Writable Stream Writer
-- Start Menu
 - Biome JavaScript Formatter
 - Durable Object Namespace
 - R2 Bucket API
@@ -193,7 +195,6 @@
 - RPC Target Brand
 - Worker Entrypoint Brand
 - Workflow Entrypoint Brand
-- root.tsx
 - devDependencies
 - compilerOptions
 - AiSearchInstance
@@ -230,7 +231,7 @@
 ## Hyperedges (group relationships)
 - **Playwright plan-generate-heal test pipeline** — _github_agents_playwright_test_planner_agent_playwright_test_planner, _github_agents_playwright_test_generator_agent_playwright_test_generator, _github_agents_playwright_test_healer_agent_playwright_test_healer, e2e_readme_test_plan_basic_operations [INFERRED 0.85]
 
-## Communities (189 total, 146 thin omitted)
+## Communities (188 total, 146 thin omitted)
 
 ### Community 0 - "Workers AI Model Types"
 Cohesion: 0.00
@@ -296,10 +297,6 @@ Nodes (12): CloseEvent, CustomEvent, EmailEvent, ErrorEvent, Event, ExtendableEv
 Cohesion: 0.24
 Nodes (11): Clock(), DesktopContent(), Navbar(), NavBarButton(), VerticalSeparator(), fmt(), useTime(), DesktopWindow (+3 more)
 
-### Community 18 - "Dependabot Build Check"
-Cohesion: 0.12
-Nodes (16): if, runs-on, steps, jobs, build, name, on, pull_request (+8 more)
-
 ### Community 19 - "dependencies"
 Cohesion: 0.18
 Nodes (11): dependencies, classnames, isbot, react, react-dom, react-draggable, react-router, @react-router/cloudflare (+3 more)
@@ -308,9 +305,17 @@ Nodes (11): dependencies, classnames, isbot, react, react-dom, react-draggable, 
 Cohesion: 0.20
 Nodes (13): isLegal(), isOver(), newBoard(), owns(), pickMove(), resultText(), sow(), STORE (+5 more)
 
-### Community 24 - "Website Navigation Layout"
+### Community 22 - "root.tsx"
+Cohesion: 0.16
+Nodes (5): BlueScreen(), restart(), MODIFIERS, App(), ErrorBoundary()
+
+### Community 24 - "react-router"
 Cohesion: 0.24
 Nodes (8): NavItem(), LINKS, NavList(), HamburgerButton(), WebsiteLayout(), WebsiteHome(), classnames, react-router
+
+### Community 26 - "Paint.tsx"
+Cohesion: 0.24
+Nodes (10): COLORS, floodFill(), getCtx(), Paint(), SIZES, Tool, TOOL_SPRITE, TOOLS (+2 more)
 
 ### Community 27 - "Biome Linter Rules"
 Cohesion: 0.13
@@ -328,9 +333,13 @@ Nodes (12): compilerOptions, allowJs, checkJs, module, moduleResolution, noEmit,
 Cohesion: 0.15
 Nodes (3): Body, Request, Response
 
-### Community 47 - "Paint App"
-Cohesion: 0.24
-Nodes (10): COLORS, floodFill(), getCtx(), Paint(), SIZES, Tool, TOOL_SPRITE, TOOLS (+2 more)
+### Community 39 - "OSWindow.tsx"
+Cohesion: 0.39
+Nodes (6): OSWindow(), OSWindowProps, frame(), Zoom, ZoomOutline(), react-draggable
+
+### Community 40 - "react"
+Cohesion: 0.46
+Nodes (5): Start(), StartWindow(), StartWindowProps, useClickOutside(), react
 
 ### Community 48 - "@react-router/dev"
 Cohesion: 0.29
@@ -348,10 +357,6 @@ Nodes (10): allowBuilds, esbuild, msgpackr-extract, @parcel/watcher, sharp, @tai
 Cohesion: 0.18
 Nodes (11): AlreadyUploadedError, BadRequestError, ForbiddenError, InternalError, InvalidURLError, MaxFileSizeError, NotFoundError, QuotaReachedError (+3 more)
 
-### Community 57 - "OSWindow.tsx"
-Cohesion: 0.39
-Nodes (6): OSWindow(), OSWindowProps, frame(), Zoom, ZoomOutline(), react-draggable
-
 ### Community 58 - "Biome CSS Formatter"
 Cohesion: 0.20
 Nodes (10): css, formatter, parser, formatter, enabled, indentStyle, indentWidth, lineEnding (+2 more)
@@ -363,10 +368,6 @@ Nodes (6): AbortSignal, EventSource, EventTarget, MessagePort, WebSocket, Worker
 ### Community 63 - "Stream Queuing Strategies"
 Cohesion: 0.22
 Nodes (3): ByteLengthQueuingStrategy, CountQueuingStrategy, QueuingStrategy
-
-### Community 72 - "Start Menu"
-Cohesion: 0.46
-Nodes (5): Start(), StartWindow(), StartWindowProps, useClickOutside(), react
 
 ### Community 73 - "Biome JavaScript Formatter"
 Cohesion: 0.25
@@ -388,10 +389,6 @@ Nodes (4): vcs, clientKind, enabled, useIgnoreFile
 Cohesion: 0.67
 Nodes (3): BasicImageTransformations, RequestInitCfPropertiesImage, RequestInitCfPropertiesImageDraw
 
-### Community 279 - "root.tsx"
-Cohesion: 0.16
-Nodes (5): BlueScreen(), restart(), MODIFIERS, App(), ErrorBoundary()
-
 ### Community 280 - "devDependencies"
 Cohesion: 0.15
 Nodes (13): devDependencies, @biomejs/biome, @cloudflare/vite-plugin, @cloudflare/workers-types, @playwright/test, @react-router/dev, tailwindcss, @types/node (+5 more)
@@ -405,24 +402,24 @@ Cohesion: 0.50
 Nodes (3): CI, Dev Notes for portfolio-os, Local Development Checklist
 
 ## Knowledge Gaps
-- **1002 isolated node(s):** `Ai_Cf_Ai4Bharat_Indictrans2_En_Indic_1B_Input`, `Ai_Cf_Ai4Bharat_Indictrans2_En_Indic_1B_Output`, `Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Async_Batch`, `Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_AsyncResponse`, `Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Chat_Completion_Response` (+997 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1684 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **992 isolated node(s):** `$schema`, `enabled`, `clientKind`, `useIgnoreFile`, `includes` (+987 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1673 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **146 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `react-router` connect `Website Navigation Layout` to `contact.tsx`, `package.json`, `DesktopContent.tsx`, `root.tsx`, `entry.server.tsx`?**
-  _High betweenness centrality (0.114) - this node is a cross-community bridge._
-- **What connects `Ai_Cf_Ai4Bharat_Indictrans2_En_Indic_1B_Input`, `Ai_Cf_Ai4Bharat_Indictrans2_En_Indic_1B_Output`, `Ai_Cf_Aisingapore_Gemma_Sea_Lion_V4_27B_It_Async_Batch` to the rest of the system?**
-  _1002 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Why does `react-router` connect `react-router` to `contact.tsx`, `package.json`, `DesktopContent.tsx`, `root.tsx`, `entry.server.tsx`?**
+  _High betweenness centrality (0.139) - this node is a cross-community bridge._
+- **What connects `$schema`, `enabled`, `clientKind` to the rest of the system?**
+  _992 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Workers AI Model Types` be split into smaller, more focused modules?**
   _Cohesion score 0.0025348542458808617 - nodes in this community are weakly interconnected._
-- **Why does `Console` connect `Console API` to `Workers AI Model Types`?**
-  _High betweenness centrality (0.045) - this node is a cross-community bridge._
+- **Why does `ServiceWorkerGlobalScope` connect `ServiceWorkerGlobalScope` to `Workers AI Model Types`, `EventSource`, `BiosScreen.tsx`?**
+  _High betweenness centrality (0.035) - this node is a cross-community bridge._
 - **Should `MancalaLounge.tsx` be split into smaller, more focused modules?**
   _Cohesion score 0.12436974789915967 - nodes in this community are weakly interconnected._
-- **Why does `URL` connect `URL API` to `Workers AI Model Types`?**
-  _High betweenness centrality (0.026) - this node is a cross-community bridge._
+- **Why does `URLPattern` connect `URLPattern API` to `Workers AI Model Types`?**
+  _High betweenness centrality (0.033) - this node is a cross-community bridge._
 - **Should `useRoomStore` be split into smaller, more focused modules?**
   _Cohesion score 0.1286549707602339 - nodes in this community are weakly interconnected._
