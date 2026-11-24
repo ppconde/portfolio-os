@@ -46,7 +46,6 @@ export default function Credits() {
                     href={href}
                     rel="noopener noreferrer"
                     target="_blank"
-                    title={name}
                   >
                     {name}
                   </a>
