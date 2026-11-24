@@ -1,27 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import type { Seat } from '~/mancala';
-import {
-  COLORS,
-  COLS,
-  COMPUTER,
-  isBlocked,
-  isNear,
-  NAME_MAX,
-  PC_TABLE,
-  ROWS,
-  TABLES,
-  TILE,
-  type Tile,
-} from '~/room';
-import {
-  type Blob,
-  BUBBLE_MS,
-  mySeat,
-  seatName,
-  tableLabel,
-  useRoomStore,
-} from '~/store/RoomStore';
+import { COLS, isBlocked, isNear, PC_TABLE, ROWS, TABLES, TILE } from '~/room';
+import { mySeat, tableLabel, useRoomStore } from '~/store/RoomStore';
+import Blobs from './lounge/Blobs';
+import Bubbles from './lounge/Bubbles';
+import Chat from './lounge/Chat';
+import HowToPlay from './lounge/HowToPlay';
+import Join from './lounge/Join';
 import Mancala from './Mancala';
 import RoomDialog from './RoomDialog';
 
@@ -29,7 +15,6 @@ import RoomDialog from './RoomDialog';
 const BOARD = <Mancala />;
 const W = COLS * TILE;
 const H = ROWS * TILE;
-const NAMES = ['Blu', 'Pip', 'Juno', 'Ziggy', 'Mo', 'Rex'];
 const KEYS: Record<string, [number, number]> = {
   ArrowUp: [0, -1],
   ArrowDown: [0, 1],
@@ -39,74 +24,6 @@ const KEYS: Record<string, [number, number]> = {
   s: [0, 1],
   a: [-1, 0],
   d: [1, 0],
-};
-
-const store = (key: string, value?: string) => {
-  try {
-    if (value === undefined) return localStorage.getItem(key);
-    localStorage.setItem(key, value);
-  } catch {} // private mode: just don't remember
-  return null;
-};
-
-// Greedy word wrap for speech bubbles.
-const wrap = (text: string, width = 26) =>
-  text.split(' ').reduce<string[]>((lines, word) => {
-    const last = lines.at(-1);
-    if (last !== undefined && (last + word).length < width)
-      lines[lines.length - 1] = `${last} ${word}`.trim();
-    else lines.push(word);
-    return lines;
-  }, []);
-
-// A speech bubble above a blob standing on `p`.
-function bubble(p: Tile & { id: string; name: string }, text: string) {
-  const lines = wrap(text);
-  // Monospace, so the width is exact: 0.6em per character at 12px.
-  const w = Math.max(...lines.map((l) => l.length)) * 7.2 + 14;
-  const h = lines.length * 14 + 8;
-  const x = Math.min(Math.max((p.x + 0.5) * TILE - w / 2, 2), W - w - 2);
-  const y = (p.y + 1) * TILE - 46 - h;
-  return (
-    <g className="font-mono" data-testid={`bubble-${p.name}`} key={p.id}>
-      <rect
-        fill="#fdffff"
-        height={h}
-        rx="4"
-        stroke="#111"
-        width={w}
-        x={x}
-        y={y}
-      />
-      {lines.map((l, i) => (
-        <text
-          fontSize="12"
-          // biome-ignore lint/suspicious/noArrayIndexKey: line order is fixed
-          key={i}
-          textAnchor="middle"
-          x={x + w / 2}
-          y={y + 16 + i * 14}
-        >
-          {l}
-        </text>
-      ))}
-    </g>
-  );
-}
-
-// Breath and eye timings from a stable hash of the id, so blobs idle out of step.
-const clocks = (id: string) => {
-  const s = [...id].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
-  return [
-    {
-      animationDuration: `${2.2 + (s % 7) / 10}s`,
-      animationDelay: `-${s % 3}s`,
-    },
-    {
-      animationDuration: `${6 + (s % 50) / 10}s`,
-      animationDelay: `-${(s >> 4) % 11}s`,
-    },
-  ];
 };
 
 // Stable (module-level) so the room's per-tick re-renders don't re-run it.
@@ -143,54 +60,6 @@ function Connecting({ again }: { again: boolean }) {
         <div className="border-windows-sunken bg-tertiary h-6 overflow-hidden border-2 p-0.5">
           <div className="lounge-marquee h-full w-1/3 bg-[repeating-linear-gradient(90deg,var(--color-accent)_0_10px,transparent_10px_12px)]" />
         </div>
-      </RoomDialog>
-    </div>
-  );
-}
-
-function Join() {
-  const [name, setName] = useState(
-    () =>
-      store('room-name')?.slice(0, NAME_MAX) ??
-      NAMES[Math.floor(Math.random() * NAMES.length)]
-  );
-  const taken = useRoomStore((s) => s.nameTaken);
-  return (
-    <div className="relative h-full bg-[#2b1612] bg-[url(/img/mancala/lounge.webp)] bg-contain bg-center bg-no-repeat">
-      <RoomDialog title="Mancala lounge">
-        <form
-          className="flex flex-col gap-3"
-          onSubmit={(e) => {
-            e.preventDefault();
-            store('room-name', name);
-            const color = COLORS[Math.floor(Math.random() * COLORS.length)];
-            useRoomStore.getState().connect(name, color);
-          }}
-        >
-          <p>Walk around the lounge and play Mancala with whoever's here.</p>
-          <label className="flex items-center gap-2">
-            Your name
-            <input
-              aria-describedby="name-taken"
-              className="border-windows-sunken bg-tertiary min-w-0 grow border-2 px-1 py-0.5"
-              maxLength={NAME_MAX}
-              onChange={(e) => setName(e.target.value)}
-              required
-              value={name}
-            />
-          </label>
-          {taken && (
-            <p className="text-red-700" id="name-taken" role="alert">
-              Someone here is already called that. Pick another name.
-            </p>
-          )}
-          <button
-            className="border-windows bg-secondary active:border-windows-inverted self-end px-6 py-1"
-            type="submit"
-          >
-            Enter
-          </button>
-        </form>
       </RoomDialog>
     </div>
   );
@@ -445,220 +314,5 @@ function Scene() {
         {help && <HowToPlay close={() => setHelp(false)} />}
       </div>
     </div>
-  );
-}
-
-// Subscribes to players itself, so a walking tick redraws the blobs, not the room.
-function Blobs() {
-  const players = useRoomStore((s) => s.players);
-  const tables = useRoomStore((s) => s.tables);
-  const you = useRoomStore((s) => s.you);
-  // The resident Computer is drawn as a blob too.
-  const computers = tables.flatMap((t) =>
-    t.seats.flatMap((s, seat) =>
-      s?.ai
-        ? [
-            {
-              ...TABLES[t.id].seats[seat],
-              id: s.id,
-              name: seatName(s),
-              color: '#9ca3af',
-            },
-          ]
-        : []
-    )
-  );
-  const seats = new Map(
-    tables.flatMap((t) => t.seats.flatMap((s) => (s ? [[s.id, s]] : [])))
-  );
-  // Drawn back to front by where they touch the floor.
-  const sorted: Blob[] = [...Object.values(players), ...computers].sort(
-    (a, b) => a.y - b.y
-  );
-
-  return (
-    <>
-      {sorted.map((p) => {
-        const seat = seats.get(p.id);
-        const [idle, eyes] = clocks(p.id);
-        // Walking: eyes point where they're headed; stopped, they wander.
-        const walking = Date.now() - (p.movedAt ?? 0) < 300 && p.look;
-        return (
-          <g
-            className="pointer-events-none"
-            data-testid={`blob-${p.name}`}
-            key={p.id}
-            style={{
-              transform: `translate(${(p.x + 0.5) * TILE}px, ${(p.y + 1) * TILE - 6}px) scale(1.5)`,
-              transition: 'transform 150ms linear',
-            }}
-          >
-            <g
-              className={seat ? 'blob-sit' : 'blob-hop'}
-              key={seat ? 'sit' : `${p.x},${p.y}`}
-            >
-              {seat?.ai ? (
-                <>
-                  <rect
-                    fill="#9ca3af"
-                    height="18"
-                    rx="3"
-                    stroke="#4b5563"
-                    width="24"
-                    x="-12"
-                    y="-20"
-                  />
-                  <rect fill="#0f172a" height="11" width="18" x="-9" y="-17" />
-                  <g className="blob-eyes" style={eyes}>
-                    {[-5, 3].map((ex) => (
-                      <rect
-                        fill="#4ade80"
-                        height="3"
-                        key={ex}
-                        width="2"
-                        x={ex}
-                        y="-13"
-                      />
-                    ))}
-                  </g>
-                </>
-              ) : (
-                <g className="blob-idle" style={idle}>
-                  <ellipse
-                    cx="0"
-                    cy="-10"
-                    fill={p.color}
-                    rx="11"
-                    ry="10"
-                    stroke="#00000066"
-                  />
-                  <g
-                    className="blob-eyes"
-                    style={
-                      walking
-                        ? {
-                            animation: 'none',
-                            transform: `translate(${walking.x * 2.5}px, ${walking.y * 2}px)`,
-                          }
-                        : eyes
-                    }
-                  >
-                    {[-4, 4].map((ex) => (
-                      <circle cx={ex} cy={-12} fill="#111" key={ex} r="1.6" />
-                    ))}
-                  </g>
-                </g>
-              )}
-            </g>
-            <text
-              fill="#111"
-              fontSize="8"
-              paintOrder="stroke"
-              stroke="#fdffff"
-              strokeWidth="2"
-              textAnchor="middle"
-              y="8"
-            >
-              {p.name}
-              {p.id === you && ' (you)'}
-            </text>
-          </g>
-        );
-      })}
-    </>
-  );
-}
-
-// Subscribes to the 1s clock itself, so an idle room only redraws the bubbles.
-function Bubbles({ computerFree }: { computerFree: boolean }) {
-  const players = useRoomStore((s) => s.players);
-  const bubbles = useRoomStore((s) => s.bubbles);
-  const now = useRoomStore((s) => s.now);
-  return (
-    <>
-      {Object.values(players).map((p) => {
-        const b = bubbles[p.id];
-        return b && now - b.at < BUBBLE_MS && bubble(p, b.text);
-      })}
-      {/* The Computer calls out every few seconds while its seat is free. */}
-      {computerFree &&
-        now % 12_000 < 5_000 &&
-        bubble(
-          { ...COMPUTER, ...TABLES[PC_TABLE].seats[1] },
-          "Anyone for Mancala? I'm the computer!"
-        )}
-    </>
-  );
-}
-
-// Owns the draft text, so typing re-renders the chat box, not the whole room.
-function Chat({ children }: { children: React.ReactNode }) {
-  const [text, setText] = useState('');
-  return (
-    <form
-      className="border-windows bg-secondary absolute bottom-2 left-1/2 flex w-[calc(100%-1rem)] -translate-x-1/2 flex-wrap gap-1 p-1 font-mono text-sm sm:w-lg"
-      onSubmit={(e) => {
-        e.preventDefault();
-        if (text.trim()) useRoomStore.getState().send({ t: 'say', text });
-        setText('');
-      }}
-    >
-      <input
-        aria-label="Say something"
-        className="border-windows-sunken bg-tertiary min-w-0 grow border-2 px-1"
-        maxLength={80}
-        onChange={(e) => setText(e.target.value)}
-        placeholder="Say something…"
-        value={text}
-      />
-      <button
-        className="border-windows bg-secondary active:border-windows-inverted px-3"
-        type="submit"
-      >
-        Say
-      </button>
-      {children}
-    </form>
-  );
-}
-
-function HowToPlay({ close }: { close: () => void }) {
-  return (
-    <RoomDialog
-      data-testid="how-to-play-panel"
-      onClose={close}
-      title="How to play Mancala"
-    >
-      <ul className="list-disc space-y-1.5 pl-5">
-        <li>
-          Each player has 6 pits with 4 stones, and a store at their right end.
-        </li>
-        <li>
-          On your turn, pick one of your pits. Its stones are dropped one by one
-          into the next pits, counter-clockwise, into your store but never your
-          opponent's.
-        </li>
-        <li>Last stone lands in your store? Go again.</li>
-        <li>
-          Last stone lands in an empty pit on your side? Capture it plus every
-          stone in the pit facing it.
-        </li>
-        <li>
-          When one side runs out of stones, the other player banks what's left
-          on theirs. Most stones in the store wins.
-        </li>
-      </ul>
-      <p>
-        Click a cushion to sit. When someone sits opposite you, the game starts.
-        No one around? The Computer is always up for a game.
-      </p>
-      <button
-        className="border-windows bg-secondary active:border-windows-inverted self-end px-6 py-1"
-        onClick={close}
-        type="button"
-      >
-        Got it
-      </button>
-    </RoomDialog>
   );
 }
