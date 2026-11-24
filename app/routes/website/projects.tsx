@@ -71,6 +71,7 @@ export async function loader({ context }: Route.LoaderArgs) {
     }
     return repos;
   } catch (err) {
+    if (err instanceof Response) throw err; // our own 404 above, keep its status
     console.error('Failed to load repos', err);
     throw new Response('Failed to fetch repositories', { status: 500 });
   }
