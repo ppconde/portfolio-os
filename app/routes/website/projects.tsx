@@ -1,6 +1,7 @@
 import H2 from '~/components/website/H2';
 import ProjectCard, { type Project } from '~/components/website/ProjectCard';
 import { appContext } from '~/context';
+import { cachedList } from '~/kv-cache';
 import type { Route } from './+types/projects';
 
 const QUERY = `{
@@ -33,56 +34,49 @@ const CACHE_KEY = 'pinned_repos';
 const CACHE_TTL = 60 * 10; // 10 minutes
 
 export async function loader({ context }: Route.LoaderArgs) {
+  const { cloudflare, getGithubKey } = context.get(appContext);
   try {
-    const { cloudflare, getGithubKey } = context.get(appContext);
-    const { PORTFOLIO_OS_KV } = cloudflare.env;
+    return await cachedList(
+      cloudflare.env.PORTFOLIO_OS_KV,
+      CACHE_KEY,
+      CACHE_TTL,
+      (p) => cloudflare.ctx.waitUntil(p),
+      async (): Promise<Project[]> => {
+        const res = await fetch('https://api.github.com/graphql', {
+          method: 'POST',
+          headers: {
+            authorization: `Bearer ${await getGithubKey()}`,
+            'Content-Type': 'application/json',
+            'User-Agent': 'portfolio-os (https://os.ppconde.com/)',
+          },
+          body: JSON.stringify({ query: QUERY }),
+        });
+        const json = (await res.json()) as {
+          data?: { user: { pinnedItems: { nodes: (Repo | null)[] } } | null };
+          errors?: unknown;
+        };
+        if (!res.ok || json.errors || !json.data)
+          throw new Error(`GitHub GraphQL request failed (${res.status})`, {
+            cause: json,
+          });
+        const nodes = json.data.user?.pinnedItems.nodes;
+        if (!nodes) {
+          throw new Response('No repositories found', { status: 404 });
+        }
 
-    const cached = await PORTFOLIO_OS_KV.get<Project[]>(CACHE_KEY, 'json');
-    if (cached) return cached;
-
-    const res = await fetch('https://api.github.com/graphql', {
-      method: 'POST',
-      headers: {
-        authorization: `Bearer ${await getGithubKey()}`,
-        'Content-Type': 'application/json',
-        'User-Agent': 'portfolio-os (https://os.ppconde.com/)',
-      },
-      body: JSON.stringify({ query: QUERY }),
-    });
-    const json = (await res.json()) as {
-      data?: { user: { pinnedItems: { nodes: (Repo | null)[] } } | null };
-      errors?: unknown;
-    };
-    if (!res.ok || json.errors || !json.data)
-      throw new Error(`GitHub GraphQL request failed (${res.status})`, {
-        cause: json,
-      });
-    const nodes = json.data.user?.pinnedItems.nodes;
-    if (!nodes) {
-      throw new Response('No repositories found', { status: 404 });
-    }
-
-    const repos: Project[] = nodes
-      .filter((repo) => !!repo)
-      .map(({ languages, ...repo }) => ({
-        ...repo,
-        languages: (languages?.nodes ?? [])
-          .filter((l) => !!l)
-          .map((l) => ({
-            ...l,
-            color: l.color || '#000000',
-          })),
-      }));
-
-    if (repos.length > 0) {
-      // Off the response path: the visitor doesn't wait on the cache write.
-      cloudflare.ctx.waitUntil(
-        PORTFOLIO_OS_KV.put(CACHE_KEY, JSON.stringify(repos), {
-          expirationTtl: CACHE_TTL,
-        })
-      );
-    }
-    return repos;
+        return nodes
+          .filter((repo) => !!repo)
+          .map(({ languages, ...repo }) => ({
+            ...repo,
+            languages: (languages?.nodes ?? [])
+              .filter((l) => !!l)
+              .map((l) => ({
+                ...l,
+                color: l.color || '#000000',
+              })),
+          }));
+      }
+    );
   } catch (err) {
     if (err instanceof Response) throw err; // our own 404 above, keep its status
     console.error('Failed to load repos', err);
