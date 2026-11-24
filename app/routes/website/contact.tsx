@@ -22,7 +22,9 @@ const formSchema = z
 
 export async function action({ request }: Route.ActionArgs) {
   const formData = await request.formData();
-  const entries = Object.fromEntries(formData.entries());
+  const { website, ...entries } = Object.fromEntries(formData.entries());
+  // Honeypot: people never see this field, bots fill it. Fake a success so they move on.
+  if (website) return data({ success: true }, { status: 200 });
   const parseResult = formSchema.safeParse(entries);
 
   if (!parseResult.success) {
@@ -101,6 +103,14 @@ export default function Contact() {
         onSubmit={() => setDismissed(false)}
         ref={formRef}
       >
+        {/* Honeypot: off-screen rather than display:none, which some bots skip. */}
+        <input
+          aria-hidden="true"
+          autoComplete="off"
+          className="absolute -left-[9999px]"
+          name="website"
+          tabIndex={-1}
+        />
         {FIELDS.map(([name, label, placeholder]) => {
           const Input = name === 'text' ? 'textarea' : 'input';
           return (

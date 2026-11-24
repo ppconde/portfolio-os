@@ -131,3 +131,15 @@ test.describe
       await expect(page.getByLabel('Your message')).toHaveValue('');
     });
   });
+
+// A bot fills the hidden honeypot: it gets the success message, and the server
+// returns before calling the email service, so nothing is sent.
+test('honeypot fakes success for bots', async ({ page }) => {
+  await page.goto('/contact');
+  await page.getByLabel('Your email').fill('bot@example.com');
+  await page.getByLabel('Subject').fill('Cheap pills');
+  await page.getByLabel('Your message').fill('Buy now, limited offer!!!');
+  await page.locator('input[name="website"]').fill('https://spam.example');
+  await page.getByRole('button', { name: 'Send' }).click();
+  await expect(page.getByRole('status')).toContainText('Message sent.');
+});
