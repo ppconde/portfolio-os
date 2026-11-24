@@ -2,6 +2,7 @@ import { lazy, Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router';
 import { AppsNames } from '~/constants/apps-names.const';
 import { icons, loadMancala, loadPaint } from '~/constants/icons.const';
+import { usePlaySound } from '~/hooks/use-play-sounds';
 import { useWindowsStore } from '~/store/WindowsStore';
 import Credits from '../Credits';
 import Icon from './Icon';
@@ -31,19 +32,7 @@ const APPS: Record<AppsNames, React.ReactNode> = {
 
 export default function DesktopContent() {
   const windows = useWindowsStore((s) => s.windows);
-
-  // The Win98 click on every click on the desktop.
-  useEffect(() => {
-    const audio = new Audio('/audio/windows98-click.mp3');
-    const play = () => {
-      audio.currentTime = 0;
-      audio
-        .play()
-        .catch((error) => console.error('Error playing audio:', error));
-    };
-    document.addEventListener('click', play);
-    return () => document.removeEventListener('click', play);
-  }, []);
+  usePlaySound('/audio/windows98-click.mp3');
 
   // Phones: start the portfolio maximized so it isn't squeezed beside the icons.
   useEffect(() => {
