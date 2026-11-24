@@ -19,7 +19,7 @@ const inspirations = [
 const role =
   'font-perfect-dos-vga text-xs uppercase tracking-[0.3em] text-quaternary';
 
-// Movie end credits: a black screen rolling upward, paused on hover/focus so the links can be clicked.
+// Movie end credits: a black screen rolling upward, paused while a link has keyboard focus.
 export default function Credits() {
   return (
     <div className="text-tertiary h-full bg-black">

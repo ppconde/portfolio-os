@@ -208,8 +208,8 @@
 .credits-roll {
   animation: credits-roll 40s linear infinite;
 }
-.credits:hover .credits-roll,
-.credits:focus-within .credits-roll {
+/* Keyboard focus only, so a tabbed-to link holds still; the mouse never pauses it. */
+.credits:has(:focus-visible) .credits-roll {
   animation-play-state: paused;
 }
 @keyframes credits-roll {
