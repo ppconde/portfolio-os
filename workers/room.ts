@@ -39,7 +39,8 @@ const allow = (ws: WebSocket, t: string) => {
   const mine = buckets.get(ws) ?? {};
   buckets.set(ws, mine);
   const now = Date.now();
-  const b = (mine[kind] ??= { tokens: burst, at: now });
+  mine[kind] ??= { tokens: burst, at: now };
+  const b = mine[kind];
   b.tokens = Math.min(burst, b.tokens + ((now - b.at) / 1000) * rate);
   b.at = now;
   if (b.tokens < 1) return false;
